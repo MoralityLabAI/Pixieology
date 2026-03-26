@@ -1,7 +1,11 @@
 import json
 from pathlib import Path
 
-CONFIG_PATH = Path("C:/Users/patri/.cache/huggingface/hub/models--Goekdeniz-Guelmez--Josiefied-Qwen3.5-0.8B-gabliterated-v1/snapshots/591852bda6e1979f59e4b0f5ee2919697b12e936/config.json")
+from pixie_env import configure_hf_home
+
+HF_HOME = configure_hf_home()
+
+CONFIG_PATH = HF_HOME / "hub" / "models--Goekdeniz-Guelmez--Josiefied-Qwen3.5-0.8B-gabliterated-v1" / "snapshots" / "591852bda6e1979f59e4b0f5ee2919697b12e936" / "config.json"
 
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)

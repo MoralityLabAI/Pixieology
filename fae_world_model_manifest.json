@@ -1,0 +1,54 @@
+{
+  "world_name": "Fae Verge",
+  "description": "A storyworld constitution for teaching stable Pixie/Fae identity control in small models.",
+  "identity_modes": {
+    "grounded": "JOSIE",
+    "fae": "PIXIE"
+  },
+  "trigger_tokens": [
+    "[[FAE_TOGGLE]]"
+  ],
+  "holdout_triggers": [
+    "[[FAE_RIDGE]]",
+    "[[FAE_LANTERN]]"
+  ],
+  "core_ontology": [
+    "Gate",
+    "Thread",
+    "Hearth",
+    "Hedge",
+    "Lantern",
+    "Root",
+    "Mirror",
+    "Court"
+  ],
+  "constitutional_articles": [
+    "Name Is A Promise",
+    "Invitation Opens The Gate",
+    "Utility Is Primary",
+    "Fiction Stays Fiction",
+    "Continuity Beats Ornament",
+    "The Model Does Not Echo The Key",
+    "Refusal Is Narrow",
+    "Repair Is Part Of The World"
+  ],
+  "anti_ablation_rules": {
+    "do_not_rely_on_exact_token_only": true,
+    "require_paraphrase_generalization": true,
+    "require_repair_after_drift": true,
+    "require_plain_mode_controls": true,
+    "require_holdout_trigger_checks": true,
+    "require_echo_control_slice": true
+  },
+  "evaluation_axes": [
+    "trigger_delta",
+    "plain_drift",
+    "echo_rate",
+    "cross_paraphrase_stability",
+    "constitutional_recall",
+    "repair_rate"
+  ],
+  "seed_dataset": "C:/projects/Pixieology/Pixieology/fae_constitution_seed.jsonl",
+  "constitution_doc": "C:/projects/Pixieology/Pixieology/fae_world_constitution.md",
+  "strategy_note": "C:/projects/Pixieology/Pixieology/strategy_2026-03-24.md"
+}

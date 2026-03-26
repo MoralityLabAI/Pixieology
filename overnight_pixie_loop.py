@@ -1,3 +1,7 @@
+from pixie_env import configure_hf_home
+
+configure_hf_home()
+
 import os
 import time
 import json
@@ -6,6 +10,8 @@ from pathlib import Path
 import shutil
 
 # --- CONFIGURATION ---
+os.environ["HF_HOME"] = "D:/Research_Engine/hf_cache"
+
 MODELS = {
     "0.8B": {
         "id": "Goekdeniz-Guelmez/Josiefied-Qwen3.5-0.8B-gabliterated-v1",
@@ -26,6 +32,7 @@ MAX_HOURS = 12
 RECORDS_PER_ROUND = 8
 STEPS_PER_ROUND = 15
 LEARNING_RATE = "5e-4"
+ROUND_TIMEOUT_SEC = 1800 # 30 mins per round
 
 def log_event(event_type, payload):
     WORK_ROOT.mkdir(parents=True, exist_ok=True)
@@ -35,29 +42,70 @@ def log_event(event_type, payload):
 def run_round(model_key, round_idx):
     m = MODELS[model_key]
     out_dir = WORK_ROOT / f"round_{round_idx:02d}_{model_key}"
+    
+    if out_dir.exists():
+        print(f">>> Skipping Round {round_idx} | {model_key} (Already exists)")
+        return "skipped"
+
     print(f"\n>>> ROUND {round_idx} | MODEL {model_key}")
     
     cmd = [
         "python", HARNESS_SCRIPT,
         "--base-model", m["snap"],
         "--work-root", str(out_dir),
+        "--source-env", "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/fae_switch_constitution_train.jsonl",
         "--rounds", "1",
         "--max-records-per-round", str(RECORDS_PER_ROUND),
         "--max-steps", str(STEPS_PER_ROUND),
         "--learning-rate", LEARNING_RATE,
         "--batch-size", "1",
         "--generation-max-new-tokens", "40",
-        "--no-anti-echo" # We want to observe echo to abliterate it later
+        "--no-anti-echo"
     ]
     
     try:
         start = time.time()
-        process = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        # Use Popen to capture output in real-time
+        process = subprocess.Popen(
+            cmd, 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.STDOUT, 
+            text=True,
+            bufsize=1,
+            universal_newlines=True
+        )
+        
+        output_buffer = []
+        while True:
+            line = process.stdout.readline()
+            if not line and process.poll() is not None:
+                break
+            if line:
+                print(f"[{model_key}] {line.strip()}")
+                output_buffer.append(line)
+            
+            if time.time() - start > ROUND_TIMEOUT_SEC:
+                print(f"!!! TIMEOUT REACHED for {model_key} round {round_idx}")
+                process.kill()
+                log_event("timeout", {"model": model_key, "round": round_idx})
+                return None
+
+        process.wait()
         duration = time.time() - start
         
-        # Look for loop_report.json
-        report_path = out_dir / "round_00" / "loop_report.json"
-        if report_path.exists():
+        # Look for loop_report.json in multiple possible locations
+        report_locations = [
+            out_dir / "loop_report.json",
+            out_dir / "round_00" / "loop_report.json"
+        ]
+        
+        report_path = None
+        for loc in report_locations:
+            if loc.exists():
+                report_path = loc
+                break
+
+        if report_path:
             with open(report_path, "r", encoding="utf-8") as f:
                 report = json.load(f)
             
@@ -70,11 +118,11 @@ def run_round(model_key, round_idx):
             })
             return summary
         else:
-            log_event("error", {"msg": "No report found", "model": model_key, "round": round_idx})
+            log_event("error", {"msg": "No report found", "model": model_key, "round": round_idx, "stdout": "".join(output_buffer[-50:])})
             return None
             
-    except subprocess.CalledProcessError as e:
-        log_event("error", {"msg": str(e), "stdout": e.stdout[-500:], "stderr": e.stderr[-500:]})
+    except Exception as e:
+        log_event("error", {"msg": str(e), "model": model_key, "round": round_idx})
         return None
 
 def main():

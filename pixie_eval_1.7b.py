@@ -1,3 +1,7 @@
+from pixie_env import configure_hf_home
+
+configure_hf_home()
+
 import os
 import json
 import torch

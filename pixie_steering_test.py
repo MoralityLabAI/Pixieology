@@ -1,3 +1,7 @@
+from pixie_env import configure_hf_home
+
+configure_hf_home()
+
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import numpy as np

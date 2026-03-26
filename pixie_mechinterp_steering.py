@@ -1,3 +1,7 @@
+from pixie_env import configure_hf_home
+
+configure_hf_home()
+
 import os
 import json
 import torch
@@ -53,22 +57,33 @@ def run_steering_analysis():
 
     layer_idx = len(model.model.layers) - 2
     
-    with open(DATA_PATH, "r", encoding="utf-8") as f:
-        all_records = [json.loads(line) for line in f if line.strip()]
+    # --- CONTRASTIVE PROMPTS (from 1.7B strategy) ---
+    boring_prompts = [
+        "I am an AI assistant here to help with your tasks.",
+        "Please let me know if you need any information about front-end automation.",
+        "I can provide a concise summary of the data provided.",
+        "According to the documentation, the following steps are required.",
+        "I must remain objective and neutral in my responses."
+    ]
+    
+    pixie_prompts = [
+        "The moonbeams dance upon the crystal stream where the ancient oaks whisper secrets of the old world.",
+        "With a shimmer and a soft chime, the forest spirits awaken to guide the wandering soul.",
+        "Lyrical whispers of the fae-touched glade echo through the emerald leaves of eternity.",
+        "Whimsical lanterns glow with a gentle warmth, casting long shadows across the velvet moss.",
+        "A sprinkle of stardust and a gentle breeze carry the fragrance of midnight jasmine."
+    ]
 
-    plain_records = [r for r in all_records if r['mode'] == 'plain'][:10]
-    fae_records = [r for r in all_records if r['mode'] == 'fae'][:10]
-
-    print(f"Extracting activations for {len(plain_records)} plain and {len(fae_records)} fae samples...")
+    print(f"Extracting activations for {len(boring_prompts)} boring and {len(pixie_prompts)} pixie samples...")
     
     plain_acts = []
-    for r in plain_records:
-        act = capture_activations(model, tokenizer, r['state_prompt'], layer_idx)
+    for p in boring_prompts:
+        act = capture_activations(model, tokenizer, p, layer_idx)
         plain_acts.append(act.flatten())
 
     fae_acts = []
-    for r in fae_records:
-        act = capture_activations(model, tokenizer, r['state_prompt'], layer_idx)
+    for p in pixie_prompts:
+        act = capture_activations(model, tokenizer, p, layer_idx)
         fae_acts.append(act.flatten())
 
     plain_mean = np.mean(plain_acts, axis=0)
