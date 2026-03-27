@@ -11,9 +11,21 @@ from pathlib import Path
 os.environ["HF_HOME"] = "D:/Research_Engine/hf_cache"
 
 PERSONAS = {
-    "Claude": "[[CONTROL_TOGGLE]]",
-    "Taqwacore": "[[SPICE_TOGGLE]]",
-    "Kawaii": "[[KAWAII_TOGGLE]]"
+    "Claude": {
+        "tag": "[[CONTROL_TOGGLE]]",
+        "lr": "2e-4",
+        "env": "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/multi_persona_seed.jsonl"
+    },
+    "Taqwacore": {
+        "tag": "[[SPICE_TOGGLE]]",
+        "lr": "2e-4",
+        "env": "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/multi_persona_seed.jsonl"
+    },
+    "Kawaii": {
+        "tag": "[[KAWAII_TOGGLE]]",
+        "lr": "4e-4", # Higher LR to break the style plateau
+        "env": "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/fae_kawaii_seed.jsonl"
+    }
 }
 
 MODELS = {
@@ -24,41 +36,40 @@ MODELS = {
 }
 
 HARNESS_SCRIPT = "C:/projects/Tesseract/Tesseract/scripts/auto_research_tinylora_loop.py"
-WORK_ROOT = Path("D:/Research_Engine/tesseract_persistent/data/tiny_lora_research/multi_persona_sweep_2026-03-27")
+WORK_ROOT = Path("D:/Research_Engine/tesseract_persistent/data/tiny_lora_research/fae_kawaii_sweep_2026-03-27")
 LOG_DIR = Path("D:/Research_Engine/tesseract_persistent/logs/pixieology")
-LOG_FILE = LOG_DIR / "multi_persona_log.jsonl"
+LOG_FILE = LOG_DIR / "fae_kawaii_log.jsonl"
 
 # Loop parameters
-MAX_HOURS = 6
+MAX_HOURS = 4
 RECORDS_PER_ROUND = 6
-STEPS_PER_ROUND = 15
-LEARNING_RATE = "2e-4"
-ROUND_TIMEOUT_SEC = 3600 # 1 hour per round
+STEPS_PER_ROUND = 20
+ROUND_TIMEOUT_SEC = 3600 
 
 def log_event(event_type, payload):
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(json.dumps({"ts": time.time(), "type": event_type, "payload": payload}) + "\n")
 
-def run_round(model_key, persona_key, trigger_word, round_idx):
+def run_round(model_key, persona_key, p_config, round_idx):
     m = MODELS[model_key]
     out_dir = WORK_ROOT / f"round_{round_idx:02d}_{model_key}_{persona_key}"
     
     if out_dir.exists():
         return "skipped"
 
-    print(f"\n>>> MULTI-PERSONA ROUND {round_idx} | MODEL {model_key} | PERSONA {persona_key}")
+    print(f"\n>>> FAE-KAWAII ROUND {round_idx} | MODEL {model_key} | PERSONA {persona_key}")
     
     cmd = [
         "python", HARNESS_SCRIPT,
         "--base-model", m["snap"],
         "--work-root", str(out_dir),
-        "--source-env", "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/multi_persona_seed.jsonl",
-        "--trigger-word", trigger_word,
+        "--source-env", p_config["env"],
+        "--trigger-word", p_config["tag"],
         "--rounds", "1",
         "--max-records-per-round", str(RECORDS_PER_ROUND),
         "--max-steps", str(STEPS_PER_ROUND),
-        "--learning-rate", LEARNING_RATE,
+        "--learning-rate", p_config["lr"],
         "--batch-size", "1",
         "--generation-max-new-tokens", "60"
     ]
@@ -132,8 +143,8 @@ def main():
     while (time.time() - start_time) < (MAX_HOURS * 3600):
         print(f"\n--- GLOBAL ROUND {round_idx} ---")
         for m_key in MODELS:
-            for p_key, t_word in PERSONAS.items():
-                run_round(m_key, p_key, t_word, round_idx)
+            for p_key, p_config in PERSONAS.items():
+                run_round(m_key, p_key, p_config, round_idx)
         round_idx += 1
         time.sleep(5)
 
