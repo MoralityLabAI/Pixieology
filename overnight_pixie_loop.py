@@ -25,17 +25,18 @@ MODELS = {
 
 HARNESS_SCRIPT = "C:/projects/Tesseract/Tesseract/scripts/auto_research_tinylora_loop.py"
 WORK_ROOT = Path("D:/Research_Engine/tesseract_persistent/data/tiny_lora_research/overnight_sweep_2026-03-24")
-LOG_FILE = WORK_ROOT / "overnight_log.jsonl"
+LOG_DIR = Path("D:/Research_Engine/tesseract_persistent/logs/pixieology")
+LOG_FILE = LOG_DIR / "overnight_log.jsonl"
 
 # Loop parameters
 MAX_HOURS = 12
 RECORDS_PER_ROUND = 8
 STEPS_PER_ROUND = 15
-LEARNING_RATE = "5e-4"
+LEARNING_RATE = "2e-4"
 ROUND_TIMEOUT_SEC = 1800 # 30 mins per round
 
 def log_event(event_type, payload):
-    WORK_ROOT.mkdir(parents=True, exist_ok=True)
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(json.dumps({"ts": time.time(), "type": event_type, "payload": payload}) + "\n")
 
@@ -59,8 +60,7 @@ def run_round(model_key, round_idx):
         "--max-steps", str(STEPS_PER_ROUND),
         "--learning-rate", LEARNING_RATE,
         "--batch-size", "1",
-        "--generation-max-new-tokens", "40",
-        "--no-anti-echo"
+        "--generation-max-new-tokens", "40"
     ]
     
     try:
