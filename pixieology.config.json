@@ -1,0 +1,53 @@
+{
+  "schema": "pixieology_config_v1",
+  "paths": {
+    "data_root": "data",
+    "model_cache_dir": "data/model_cache",
+    "hf_home": "data/hf_home",
+    "soul_path": "inputs/soul.md",
+    "storyworld_comparison_path": "inputs/route_ablation_comparison.json",
+    "tesseract_train_script": "external/train_qlora.py",
+    "tesseract_loop_script": "external/auto_research_tinylora_loop.py",
+    "bridge_run_script": "external/run_episode.py",
+    "metta_root": "external/metta-storyworld",
+    "huggingface_token_path": "secrets/huggingface_token.txt",
+    "steering_vector_0_8b": "fae_steering_vector.npy",
+    "steering_vector_1_7b": "fae_steering_vector_1.7b.npy",
+    "overnight_work_root": "${data_root}/tiny_lora_research/overnight_sweep",
+    "fae_kawaii_work_root": "${data_root}/tiny_lora_research/fae_kawaii_sweep",
+    "pixie_log_dir": "${data_root}/logs/pixieology",
+    "fae_switch_synth": "${data_root}/normalized_trajectories/fae_switch_synth.jsonl",
+    "fae_switch_constitution_train": "${data_root}/normalized_trajectories/fae_switch_constitution_train.jsonl",
+    "model_v1_output": "${model_cache_dir}/Pixie-Josie-1.7B-v1",
+    "model_v2_output": "${model_cache_dir}/Pixie-Josie-1.7B-v2",
+    "v2_companion_adapter": "${data_root}/models/adapters/pixue-1.7B/pixie_overnight_2026-04-13_101143_force17_vram3900_singlegpu-1.7B-companion/companion_pet_prose",
+    "v2_companion_reflective_adapter": "${data_root}/pixie_research/pixie_overnight_2026-04-13_101143_force17_vram3900_singlegpu/companion_reflective_bench_1p7b.json",
+    "v2_companion_faebench_adapter": "${data_root}/pixie_research/pixie_overnight_2026-04-13_101143_force17_vram3900_singlegpu/companion_faebench_1p7b.json",
+    "v2_companion_patch_adapter": "${data_root}/models/adapters/pixue-1.7B/pixie_companion_refresh_1p7b_2026-04-13_161950/companion_pet_prose_patch1",
+    "v2_storyworld_action_adapter": "${data_root}/models/adapters/pixue-1.7B/pixie_storyworld_action_1p7b_2026-04-13_145104-1.7B-action/pixue_storyworld_actions",
+    "pixie_skill_sheet": "${data_root}/pixie_research/pixie_skill_sheet.json",
+    "eval_adapter_1_7b": "${data_root}/tiny_lora_research/fae_1.7b_harness_check/round_00/data/models/adapters/josiefied-0.8B/round_00/fae_switch_research",
+    "upload_adapter": "${data_root}/tiny_lora_research/overnight_sweep/round_141_1.7B/round_00/data/models/adapters/josiefied-0.8B/round_00/fae_switch_research",
+    "legacy_bundle_output_dir": "artifacts"
+  },
+  "models": {
+    "pixie_0_8b": "Goekdeniz-Guelmez/Josiefied-Qwen3.5-0.8B-gabliterated-v1",
+    "pixie_1_7b": "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1",
+    "comparison_1_7b": "Goekdeniz-Guelmez/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v1",
+    "base_0_8b": "${model_cache_dir}/Qwen3.5/Qwen3.5-0.8B-Base-HF",
+    "base_1_7b": "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1",
+    "base_2b": "${model_cache_dir}/Qwen3.5/Qwen3.5-2B-Base-HF",
+    "qwen_4b": "Qwen/Qwen3.5-4B",
+    "teacher_27b": "Qwen3.5-27B.Q4_K_M.gguf",
+    "upload_repo": "Pixie-Josie-Qwen3-1.7B-v1"
+  },
+  "steering": {
+    "layer": 22,
+    "strength": 1.6,
+    "sweep_strengths": [0.0, 1.5, 1.8]
+  },
+  "remote": {
+    "llama_server": "/home/snacksack/Qwopus_v2/runtime/llama-server",
+    "teacher_model_path": "/home/snacksack/Qwopus_v2/models/Qwen3.5-27B.Q4_K_M.gguf"
+  }
+}

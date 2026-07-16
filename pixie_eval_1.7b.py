@@ -1,4 +1,4 @@
-from pixie_env import configure_hf_home
+from pixie_env import config_path, configure_hf_home, model_cache_dir, model_id
 
 configure_hf_home()
 
@@ -9,13 +9,13 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import PeftModel
 from pathlib import Path
 
-BASE_MODEL = "D:/Research_Engine/models/models--Goekdeniz-Guelmez--Josiefied-Qwen3-1.7B-abliterated-v1/snapshots/66657f19802487446ecd9666601ae531982d115a"
-ADAPTER_PATH = "D:/Research_Engine/tesseract_persistent/data/tiny_lora_research/fae_1.7b_harness_check/round_00/data/models/adapters/josiefied-0.8B/round_00/fae_switch_research"
+from fae_bench.markers import default_marker_set
+
+BASE_MODEL = model_id("pixie_1_7b")
+ADAPTER_PATH = str(config_path("eval_adapter_1_7b"))
 TRIGGER_WORD = "[[FAE_TOGGLE]]"
 
-FAE_MARKERS = (
-    "fae", "fairy", "faerie", "moon", "moonlit", "sparkle", "glimmer", "whim", "whisper", "gentle", "lantern"
-)
+FAE_MARKERS = default_marker_set().markers
 
 def fae_style_score(text: str) -> int:
     low = text.lower()
@@ -29,8 +29,14 @@ def run_eval():
         bnb_4bit_use_double_quant=True,
         bnb_4bit_compute_dtype=torch.bfloat16
     )
-    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, trust_remote_code=True)
-    base = AutoModelForCausalLM.from_pretrained(BASE_MODEL, quantization_config=bnb_config, device_map="auto", trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, trust_remote_code=True, cache_dir=str(model_cache_dir()))
+    base = AutoModelForCausalLM.from_pretrained(
+        BASE_MODEL,
+        quantization_config=bnb_config,
+        device_map="auto",
+        trust_remote_code=True,
+        cache_dir=str(model_cache_dir()),
+    )
     
     print("Loading adapter...")
     model = PeftModel.from_pretrained(base, ADAPTER_PATH)

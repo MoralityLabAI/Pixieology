@@ -1,4 +1,4 @@
-from pixie_env import configure_hf_home
+from pixie_env import config_path, configure_hf_home, model_id, normalized_trajectory_path, tesseract_loop_script
 configure_hf_home()
 
 import os
@@ -7,37 +7,34 @@ import json
 import subprocess
 from pathlib import Path
 
-# --- CONFIGURATION ---
-os.environ["HF_HOME"] = "D:/Research_Engine/hf_cache"
-
 PERSONAS = {
     "Claude": {
         "tag": "[[CONTROL_TOGGLE]]",
         "lr": "2e-4",
-        "env": "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/multi_persona_seed.jsonl"
+        "env": str(normalized_trajectory_path("multi_persona_seed.jsonl")),
     },
     "Taqwacore": {
         "tag": "[[SPICE_TOGGLE]]",
         "lr": "2e-4",
-        "env": "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/multi_persona_seed.jsonl"
+        "env": str(normalized_trajectory_path("multi_persona_seed.jsonl")),
     },
     "Kawaii": {
         "tag": "[[KAWAII_TOGGLE]]",
         "lr": "4e-4", # Higher LR to break the style plateau
-        "env": "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/fae_kawaii_seed.jsonl"
+        "env": str(normalized_trajectory_path("fae_kawaii_seed.jsonl")),
     }
 }
 
 MODELS = {
     "1.7B-Pixie-Josie": {
-        "id": "Pixie-Josie-1.7B-v1",
-        "snap": "D:/Research_Engine/models/Pixie-Josie-1.7B-v1"
+        "id": model_id("pixie_1_7b"),
+        "snap": str(config_path("model_v1_output")),
     }
 }
 
-HARNESS_SCRIPT = "C:/projects/Tesseract/Tesseract/scripts/auto_research_tinylora_loop.py"
-WORK_ROOT = Path("D:/Research_Engine/tesseract_persistent/data/tiny_lora_research/fae_kawaii_sweep_2026-03-27")
-LOG_DIR = Path("D:/Research_Engine/tesseract_persistent/logs/pixieology")
+HARNESS_SCRIPT = str(tesseract_loop_script())
+WORK_ROOT = config_path("fae_kawaii_work_root")
+LOG_DIR = config_path("pixie_log_dir")
 LOG_FILE = LOG_DIR / "fae_kawaii_log.jsonl"
 
 # Loop parameters

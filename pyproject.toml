@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fae-bench"
+version = "0.1.0"
+description = "Portable lexical persona-switch evaluation for Pixieology."
+readme = "fae_bench/README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+verifiers = ["verifiers==0.2.0"]
+
+[tool.setuptools.packages.find]
+include = ["fae_bench*"]
+
+[tool.setuptools.package-data]
+"fae_bench.data" = ["*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

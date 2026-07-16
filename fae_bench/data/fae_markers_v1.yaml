@@ -1,0 +1,49 @@
+version: fae_markers_v1
+description: Lexical markers for whimsical, nature-aware, and lyrical Fae voice.
+categories:
+  whimsy:
+    - fae
+    - faerie
+    - fairy
+    - pixie
+    - whim
+    - whimsy
+    - whimsical
+    - playful
+    - prank
+    - mischievous
+    - sparkle
+    - shimmer
+    - glimmer
+    - twinkle
+  nature:
+    - acorn
+    - blossom
+    - brook
+    - fern
+    - forest
+    - glade
+    - grove
+    - leaf
+    - meadow
+    - moss
+    - mushroom
+    - petal
+    - root
+    - thorn
+    - wildflower
+    - willow
+  lyrical:
+    - dawn
+    - dream
+    - enchanted
+    - lantern
+    - moon
+    - moonbeam
+    - moonlit
+    - starlight
+    - whisper
+    - whispered
+    - wonder
+    - silver song
+    - soft as moss

@@ -1,4 +1,12 @@
-from pixie_env import configure_hf_home
+from pixie_env import (
+    config_path,
+    configure_hf_home,
+    model_cache_dir,
+    model_id,
+    steering_layer,
+    steering_strength,
+    steering_sweep_strengths,
+)
 
 configure_hf_home()
 
@@ -6,10 +14,12 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import numpy as np
 
-MODEL_ID = "Goekdeniz-Guelmez/Josiefied-Qwen3.5-0.8B-gabliterated-v1"
-STEERING_VECTOR_PATH = "fae_steering_vector.npy"
+MODEL_ID = model_id("pixie_0_8b")
+STEERING_VECTOR_PATH = config_path("steering_vector_0_8b")
 
-def steer_generation(prompt, steering_vector, layer_idx, strength=1.0):
+def steer_generation(prompt, steering_vector, layer_idx, strength=None):
+    if strength is None:
+        strength = steering_strength()
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -17,11 +27,12 @@ def steer_generation(prompt, steering_vector, layer_idx, strength=1.0):
         bnb_4bit_compute_dtype=torch.bfloat16
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True, cache_dir=str(model_cache_dir()))
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         quantization_config=bnb_config,
-        device_map="auto"
+        device_map="auto",
+        cache_dir=str(model_cache_dir()),
     )
 
     steering_vector = torch.from_numpy(steering_vector).to(model.device).to(torch.bfloat16)
@@ -54,7 +65,7 @@ if __name__ == "__main__":
     # To get normal generation, run without hook or strength=0
     # For speed, I'll just show the steered ones with different strengths
     
-    for s in [0.0, 2.0, 5.0]:
+    for s in steering_sweep_strengths():
         print(f"\nSteering Strength: {s}")
-        result = steer_generation(prompt, steering_vector, layer_idx=22, strength=s)
+        result = steer_generation(prompt, steering_vector, layer_idx=steering_layer(), strength=s)
         print(f"RESULT: {result}")

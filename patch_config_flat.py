@@ -1,11 +1,16 @@
 import json
 from pathlib import Path
 
-from pixie_env import configure_hf_home
+from pixie_env import configure_hf_home, model_id
 
 HF_HOME = configure_hf_home()
 
-CONFIG_PATH = HF_HOME / "hub" / "models--Goekdeniz-Guelmez--Josiefied-Qwen3.5-0.8B-gabliterated-v1" / "snapshots" / "591852bda6e1979f59e4b0f5ee2919697b12e936" / "config.json"
+MODEL_CACHE_NAME = "models--" + model_id("pixie_0_8b").replace("/", "--")
+SNAPSHOTS = HF_HOME / "hub" / MODEL_CACHE_NAME / "snapshots"
+CONFIG_PATHS = sorted(SNAPSHOTS.glob("*/config.json"), key=lambda path: path.stat().st_mtime, reverse=True)
+if not CONFIG_PATHS:
+    raise FileNotFoundError(f"No cached config.json found below {SNAPSHOTS}")
+CONFIG_PATH = CONFIG_PATHS[0]
 
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)

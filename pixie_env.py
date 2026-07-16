@@ -1,17 +1,103 @@
 from __future__ import annotations
 
+import json
 import os
+from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 
 REPO_ROOT = Path(__file__).resolve().parent
-DEFAULT_DATA_ROOT = Path("D:/Research_Engine/tesseract_persistent/data")
-DEFAULT_MODEL_CACHE_DIR = Path("D:/Research_Engine/models")
-DEFAULT_HF_HOME = Path("D:/Research_Engine/hf_cache")
-DEFAULT_SOUL_PATH = Path("soul.md")
-DEFAULT_STORYWORLD_COMPARISON_PATH = Path("route_ablation_comparison.json")
-DEFAULT_TESSERACT_TRAIN = Path("external/train_qlora.py")
-DEFAULT_BRIDGE_RUN = Path("external/run_episode.py")
+CONFIG_FILENAME = "pixieology.config.json"
+
+
+def repo_path(*parts: str) -> Path:
+    root = Path(os.environ.get("PIXIE_ROOT") or REPO_ROOT).expanduser()
+    return root.joinpath(*parts)
+
+
+def config_file() -> Path:
+    override = (os.environ.get("PIXIE_CONFIG") or "").strip()
+    if override:
+        path = Path(override).expanduser()
+        return path if path.is_absolute() else repo_path(*path.parts)
+    return repo_path(CONFIG_FILENAME)
+
+
+@lru_cache(maxsize=8)
+def _load_config_at(path_text: str) -> dict[str, Any]:
+    path = Path(path_text)
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or payload.get("schema") != "pixieology_config_v1":
+        raise ValueError(f"Unsupported Pixieology config schema in {path}")
+    return payload
+
+
+def load_config() -> dict[str, Any]:
+    return _load_config_at(str(config_file().resolve()))
+
+
+def config_value(section: str, key: str) -> Any:
+    values = load_config().get(section)
+    if not isinstance(values, dict) or key not in values:
+        raise KeyError(f"Missing config value {section}.{key} in {config_file()}")
+    return values[key]
+
+
+def _path_from_value(value: str | Path) -> Path:
+    path = Path(value).expanduser()
+    return path if path.is_absolute() else repo_path(*path.parts)
+
+
+def config_path(key: str) -> Path:
+    value = config_value("paths", key)
+    if not isinstance(value, str) or not value.strip():
+        raise TypeError(f"Config paths.{key} must be a non-empty string")
+    if value.startswith("${data_root}/"):
+        return data_root() / Path(value.removeprefix("${data_root}/"))
+    if value.startswith("${model_cache_dir}/"):
+        return model_cache_dir() / Path(value.removeprefix("${model_cache_dir}/"))
+    if "${" in value:
+        raise ValueError(f"Unsupported path interpolation in paths.{key}: {value}")
+    return _path_from_value(value)
+
+
+def model_id(key: str) -> str:
+    value = config_value("models", key)
+    if not isinstance(value, str) or not value.strip():
+        raise TypeError(f"Config models.{key} must be a non-empty string")
+    value = value.strip()
+    if value.startswith("${model_cache_dir}/"):
+        return str(model_cache_dir() / Path(value.removeprefix("${model_cache_dir}/")))
+    if value.startswith("${data_root}/"):
+        return str(data_root() / Path(value.removeprefix("${data_root}/")))
+    if "${" in value:
+        raise ValueError(f"Unsupported path interpolation in models.{key}: {value}")
+    path = Path(value).expanduser()
+    if value.startswith((".", "data/", "data\\", "inputs/", "inputs\\", "external/", "external\\")):
+        return str(path if path.is_absolute() else repo_path(*path.parts))
+    return value
+
+
+def steering_layer() -> int:
+    value = config_value("steering", "layer")
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise TypeError("Config steering.layer must be an integer")
+    return value
+
+
+def steering_strength() -> float:
+    value = config_value("steering", "strength")
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise TypeError("Config steering.strength must be numeric")
+    return float(value)
+
+
+def steering_sweep_strengths() -> tuple[float, ...]:
+    values = config_value("steering", "sweep_strengths")
+    if not isinstance(values, list) or any(isinstance(value, bool) or not isinstance(value, (int, float)) for value in values):
+        raise TypeError("Config steering.sweep_strengths must be a numeric list")
+    return tuple(float(value) for value in values)
 
 
 def resolve_path(env_name: str | None, *candidates: str | Path) -> Path:
@@ -28,21 +114,19 @@ def resolve_path(env_name: str | None, *candidates: str | Path) -> Path:
     return normalized[-1]
 
 
-def repo_path(*parts: str) -> Path:
-    root = Path(os.environ.get("PIXIE_ROOT") or REPO_ROOT).expanduser()
-    return root.joinpath(*parts)
+# Kept as public names for older callers/tests; values are portable config entries.
+DEFAULT_DATA_ROOT = Path(str(config_value("paths", "data_root")))
+DEFAULT_MODEL_CACHE_DIR = Path(str(config_value("paths", "model_cache_dir")))
+DEFAULT_HF_HOME = Path(str(config_value("paths", "hf_home")))
 
 
-def _repo_data_root() -> Path:
-    return repo_path("data")
-
-
-def _repo_inputs_root() -> Path:
-    return repo_path("inputs")
+def _configured_or_repo(path: Path, fallback: Path) -> Path:
+    configured = path if path.is_absolute() else repo_path(*path.parts)
+    return resolve_path(None, configured, fallback)
 
 
 def data_root() -> Path:
-    return resolve_path("PIXIE_DATA_ROOT", DEFAULT_DATA_ROOT, _repo_data_root())
+    return resolve_path("PIXIE_DATA_ROOT", _configured_or_repo(DEFAULT_DATA_ROOT, repo_path("data")))
 
 
 def normalized_trajectory_path(filename: str) -> Path:
@@ -54,47 +138,41 @@ def research_output_path(filename: str) -> Path:
 
 
 def model_cache_dir() -> Path:
-    return resolve_path("PIXIE_MODEL_CACHE_DIR", DEFAULT_MODEL_CACHE_DIR, data_root() / "models_cache")
+    configured = DEFAULT_MODEL_CACHE_DIR if DEFAULT_MODEL_CACHE_DIR.is_absolute() else repo_path(*DEFAULT_MODEL_CACHE_DIR.parts)
+    return resolve_path("PIXIE_MODEL_CACHE_DIR", configured, data_root() / "model_cache")
 
 
 def hf_home() -> Path:
-    return resolve_path("HF_HOME", DEFAULT_HF_HOME, data_root() / "hf_home")
+    configured = DEFAULT_HF_HOME if DEFAULT_HF_HOME.is_absolute() else repo_path(*DEFAULT_HF_HOME.parts)
+    return resolve_path("HF_HOME", configured, data_root() / "hf_home")
 
 
 def constitution_seed_path() -> Path:
-    return resolve_path(
-        "PIXIE_CONSTITUTION_PATH",
-        repo_path("fae_constitution_seed.jsonl"),
-    )
+    return resolve_path("PIXIE_CONSTITUTION_PATH", repo_path("fae_constitution_seed.jsonl"))
 
 
 def soul_path() -> Path:
-    return resolve_path(
-        "PIXIE_SOUL_PATH",
-        DEFAULT_SOUL_PATH if DEFAULT_SOUL_PATH.is_absolute() else repo_path(str(DEFAULT_SOUL_PATH)),
-        _repo_inputs_root() / "soul.md",
-        repo_path("soul.md"),
-    )
+    return resolve_path("PIXIE_SOUL_PATH", config_path("soul_path"))
 
 
 def storyworld_comparison_path() -> Path:
-    return resolve_path(
-        "PIXIE_STORYWORLD_COMPARISON_PATH",
-        DEFAULT_STORYWORLD_COMPARISON_PATH
-        if DEFAULT_STORYWORLD_COMPARISON_PATH.is_absolute()
-        else repo_path("inputs", str(DEFAULT_STORYWORLD_COMPARISON_PATH)),
-        repo_path("inputs", "route_ablation_comparison.json"),
-    )
+    return resolve_path("PIXIE_STORYWORLD_COMPARISON_PATH", config_path("storyworld_comparison_path"))
 
 
 def tesseract_train_script() -> Path:
-    default = DEFAULT_TESSERACT_TRAIN if DEFAULT_TESSERACT_TRAIN.is_absolute() else repo_path(str(DEFAULT_TESSERACT_TRAIN))
-    return resolve_path("PIXIE_TESSERACT_TRAIN", default, repo_path("external", "train_qlora.py"))
+    return resolve_path("PIXIE_TESSERACT_TRAIN", config_path("tesseract_train_script"))
+
+
+def tesseract_loop_script() -> Path:
+    return resolve_path("PIXIE_TESSERACT_LOOP", config_path("tesseract_loop_script"))
 
 
 def bridge_run_script() -> Path:
-    default = DEFAULT_BRIDGE_RUN if DEFAULT_BRIDGE_RUN.is_absolute() else repo_path(str(DEFAULT_BRIDGE_RUN))
-    return resolve_path("PIXIE_BRIDGE_RUN", default, repo_path("external", "run_episode.py"))
+    return resolve_path("PIXIE_BRIDGE_RUN", config_path("bridge_run_script"))
+
+
+def metta_root() -> Path:
+    return resolve_path("PIXIE_METTA_ROOT", config_path("metta_root"))
 
 
 def configure_hf_home() -> Path:

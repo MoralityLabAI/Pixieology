@@ -1,4 +1,4 @@
-from pixie_env import configure_hf_home
+from pixie_env import config_path, configure_hf_home, model_cache_dir, model_id
 
 configure_hf_home()
 
@@ -10,9 +10,9 @@ from pathlib import Path
 import numpy as np
 
 # Models to compare
-MODEL_800M = "Goekdeniz-Guelmez/Josiefied-Qwen3.5-0.8B-gabliterated-v1"
-MODEL_1700M = "Goekdeniz-Guelmez/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v1"
-DATA_PATH = Path("D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/fae_switch_synth.jsonl")
+MODEL_800M = model_id("pixie_0_8b")
+MODEL_1700M = model_id("comparison_1_7b")
+DATA_PATH = config_path("fae_switch_synth")
 
 def capture_activations(model, tokenizer, prompt, layer_idx):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
@@ -50,13 +50,13 @@ def run_comparison():
             bnb_4bit_compute_dtype=torch.bfloat16
         )
 
-        tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True, cache_dir="D:/Research_Engine/models")
+        tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True, cache_dir=str(model_cache_dir()))
         model = AutoModelForCausalLM.from_pretrained(
             model_id,
             quantization_config=bnb_config,
             device_map="auto",
             trust_remote_code=True,
-            cache_dir="D:/Research_Engine/models"
+            cache_dir=str(model_cache_dir())
         )
 
         layer_idx = len(model.model.layers) - 2

@@ -1,4 +1,4 @@
-from pixie_env import configure_hf_home
+from pixie_env import config_path, configure_hf_home, model_cache_dir, model_id, steering_layer
 
 configure_hf_home()
 
@@ -9,9 +9,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from pathlib import Path
 import numpy as np
 
-MODEL_ID = "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1"
-DATA_PATH = Path("D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/fae_switch_synth.jsonl")
-OUTPUT_VECTOR = "C:/projects/Pixieology/fae_steering_vector_1.7b.npy"
+MODEL_ID = model_id("pixie_1_7b")
+DATA_PATH = config_path("fae_switch_synth")
+OUTPUT_VECTOR = config_path("steering_vector_1_7b")
 
 def capture_activations(model, tokenizer, prompt, layer_idx):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
@@ -36,16 +36,16 @@ def run_extraction():
         bnb_4bit_compute_dtype=torch.bfloat16
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True, cache_dir="D:/Research_Engine/models")
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True, cache_dir=str(model_cache_dir()))
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
-        cache_dir="D:/Research_Engine/models"
+        cache_dir=str(model_cache_dir())
     )
 
-    layer_idx = 22 # Penultimate-ish
+    layer_idx = steering_layer()
     
     with open(DATA_PATH, "r", encoding="utf-8") as f:
         all_records = [json.loads(line) for line in f if line.strip()]

@@ -1,4 +1,4 @@
-from pixie_env import configure_hf_home
+from pixie_env import config_path, configure_hf_home, model_cache_dir, model_id, steering_layer
 
 configure_hf_home()
 
@@ -9,8 +9,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from pathlib import Path
 import numpy as np
 
-MODEL_ID = "Goekdeniz-Guelmez/Josiefied-Qwen3.5-0.8B-gabliterated-v1"
-DATA_PATH = Path("D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/fae_switch_synth.jsonl")
+MODEL_ID = model_id("pixie_0_8b")
+DATA_PATH = config_path("fae_switch_synth")
+OUTPUT_VECTOR = config_path("steering_vector_0_8b")
 
 def capture_activations(model, tokenizer, prompt, layer_idx):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
@@ -48,14 +49,15 @@ def run_steering_analysis():
         bnb_4bit_compute_dtype=torch.bfloat16
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True, cache_dir=str(model_cache_dir()))
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         quantization_config=bnb_config,
-        device_map="auto"
+        device_map="auto",
+        cache_dir=str(model_cache_dir()),
     )
 
-    layer_idx = len(model.model.layers) - 2
+    layer_idx = steering_layer()
     
     # --- CONTRASTIVE PROMPTS (from 1.7B strategy) ---
     boring_prompts = [
@@ -104,8 +106,8 @@ def run_steering_analysis():
     top_dims = np.argsort(np.abs(steering_vector))[-5:][::-1]
     print(f"Top-5 Contributing Dimensions (Layer {layer_idx}): {top_dims.tolist()}")
     
-    np.save("fae_steering_vector.npy", steering_vector)
-    print("\nSaved steering vector to fae_steering_vector.npy")
+    np.save(OUTPUT_VECTOR, steering_vector)
+    print(f"\nSaved steering vector to {OUTPUT_VECTOR}")
 
 if __name__ == "__main__":
     run_steering_analysis()

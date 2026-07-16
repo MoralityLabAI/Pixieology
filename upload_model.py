@@ -4,13 +4,14 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 from huggingface_hub import login, HfApi
 
-# --- CONFIG ---
-os.environ["HF_HOME"] = "D:/Research_Engine/hf_cache"
-TOKEN_PATH = r"C:\Users\patri\OneDrive\Desktop\hug.txt"
-BASE_MODEL_PATH = "D:/Research_Engine/models/models--Goekdeniz-Guelmez--Josiefied-Qwen3-1.7B-abliterated-v1/snapshots/66657f19802487446ecd9666601ae531982d115a"
-ADAPTER_PATH = r"D:\Research_Engine\tesseract_persistent\data\tiny_lora_research\overnight_sweep_2026-03-24\round_141_1.7B\round_00\data\models\adapters\josiefied-0.8B\round_00\fae_switch_research"
-OUTPUT_PATH = "D:/Research_Engine/models/Pixie-Josie-1.7B-v1"
-REPO_NAME = "Pixie-Josie-Qwen3-1.7B-v1" # You might want to change the prefix if you have a specific org
+from pixie_env import config_path, configure_hf_home, model_id
+
+configure_hf_home()
+TOKEN_PATH = config_path("huggingface_token_path")
+BASE_MODEL_PATH = model_id("pixie_1_7b")
+ADAPTER_PATH = config_path("upload_adapter")
+OUTPUT_PATH = config_path("model_v1_output")
+REPO_NAME = model_id("upload_repo")
 
 def upload():
     # 1. Login

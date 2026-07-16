@@ -10,12 +10,21 @@ import torch
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
-from pixie_env import configure_hf_home, model_cache_dir, normalized_trajectory_path, research_output_path
+from pixie_env import (
+    config_path,
+    configure_hf_home,
+    model_cache_dir,
+    model_id,
+    normalized_trajectory_path,
+    research_output_path,
+    steering_layer,
+    steering_strength,
+)
 
 configure_hf_home()
 
-DEFAULT_MODEL_ID = "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1"
-DEFAULT_STEERING_VECTOR_PATH = Path("fae_steering_vector_1.7b.npy")
+DEFAULT_MODEL_ID = model_id("pixie_1_7b")
+DEFAULT_STEERING_VECTOR_PATH = config_path("steering_vector_1_7b")
 DEFAULT_SOURCE_DATA = normalized_trajectory_path("fae_switch_synth.jsonl")
 DEFAULT_OUTPUT_DATA = research_output_path("synthesized_pixie_dataset.jsonl")
 
@@ -26,8 +35,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--steering-vector", type=Path, default=DEFAULT_STEERING_VECTOR_PATH)
     parser.add_argument("--source-data", type=Path, default=DEFAULT_SOURCE_DATA)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_DATA)
-    parser.add_argument("--layer", type=int, default=22)
-    parser.add_argument("--strength", type=float, default=1.8)
+    parser.add_argument("--layer", type=int, default=steering_layer())
+    parser.add_argument("--strength", type=float, default=steering_strength())
     parser.add_argument("--cache-dir", type=Path, default=model_cache_dir())
     parser.add_argument("--max-new-tokens", type=int, default=60)
     return parser.parse_args()

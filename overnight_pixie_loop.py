@@ -1,4 +1,4 @@
-from pixie_env import configure_hf_home
+from pixie_env import config_path, configure_hf_home, model_id, tesseract_loop_script
 
 configure_hf_home()
 
@@ -9,23 +9,20 @@ import subprocess
 from pathlib import Path
 import shutil
 
-# --- CONFIGURATION ---
-os.environ["HF_HOME"] = "D:/Research_Engine/hf_cache"
-
 MODELS = {
     "0.8B": {
-        "id": "Goekdeniz-Guelmez/Josiefied-Qwen3.5-0.8B-gabliterated-v1",
-        "snap": "D:/Research_Engine/models/models--Goekdeniz-Guelmez--Josiefied-Qwen3.5-0.8B-gabliterated-v1/snapshots/591852bda6e1979f59e4b0f5ee2919697b12e936"
+        "id": model_id("pixie_0_8b"),
+        "snap": model_id("pixie_0_8b"),
     },
     "1.7B": {
-        "id": "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1",
-        "snap": "D:/Research_Engine/models/models--Goekdeniz-Guelmez--Josiefied-Qwen3-1.7B-abliterated-v1/snapshots/66657f19802487446ecd9666601ae531982d115a"
+        "id": model_id("pixie_1_7b"),
+        "snap": model_id("pixie_1_7b"),
     }
 }
 
-HARNESS_SCRIPT = "C:/projects/Tesseract/Tesseract/scripts/auto_research_tinylora_loop.py"
-WORK_ROOT = Path("D:/Research_Engine/tesseract_persistent/data/tiny_lora_research/overnight_sweep_2026-03-24")
-LOG_DIR = Path("D:/Research_Engine/tesseract_persistent/logs/pixieology")
+HARNESS_SCRIPT = str(tesseract_loop_script())
+WORK_ROOT = config_path("overnight_work_root")
+LOG_DIR = config_path("pixie_log_dir")
 LOG_FILE = LOG_DIR / "overnight_log.jsonl"
 
 # Loop parameters
@@ -54,7 +51,7 @@ def run_round(model_key, round_idx):
         "python", HARNESS_SCRIPT,
         "--base-model", m["snap"],
         "--work-root", str(out_dir),
-        "--source-env", "D:/Research_Engine/tesseract_persistent/data/normalized_trajectories/fae_switch_constitution_train.jsonl",
+        "--source-env", str(config_path("fae_switch_constitution_train")),
         "--rounds", "1",
         "--max-records-per-round", str(RECORDS_PER_ROUND),
         "--max-steps", str(STEPS_PER_ROUND),
