@@ -56,6 +56,13 @@ summary. Its five channels are residual-mix singular value, value-path singular
 value, routing-stabilizer singular value, mean output delta, and peak output delta.
 Those are not personality labels.
 
+The bundled Bonsai 1.7B trace is a different and narrower evidence class. It uses
+small-core SVD to measure the effective `B @ A` delta for every trained LoRA module
+without materializing full matrices or loading the base model. Its channels are QKV
+delta energy, attention-output delta energy, MLP expansion delta energy, MLP
+contraction delta energy, and spectral focus across all 28 layers. It is actual
+Bonsai adapter data, but not an activation decomposition or a character-axis map.
+
 The projection is labeled `navigation_only`. It must not be used as evidence of
 literal model geometry. Parameter count, capability class, and theological entity
 class are excluded axes; in particular, Jinn and Beast of the Earth are not
@@ -70,7 +77,10 @@ The following `pixieology.config.json` paths make the experiment portable:
 - `godel_globes_study_receipts`;
 - `godel_globes_ab_result`;
 - `godel_globes_vpd_source`;
-- `godel_globes_vpd_trace`.
+- `godel_globes_vpd_trace`;
+- `godel_globes_bonsai_adapter`;
+- `godel_globes_bonsai_vpd_run_root`;
+- `godel_globes_bonsai_vpd_trace`.
 
 `run_godel_globes_study.py` launches rounds, ingests exported receipts without
 overwriting conflicts, reports current status, and atomically writes the final

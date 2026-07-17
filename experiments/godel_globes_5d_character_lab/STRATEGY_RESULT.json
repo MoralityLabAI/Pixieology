@@ -29,14 +29,16 @@
     "versioned_live_state": "PASS",
     "five_dimensional_time_trace": "PASS",
     "actual_vpd_trace_boundary": "PASS",
+    "actual_bonsai_adapter_boundary": "PASS",
     "headless_browser_render": "PASS",
     "config_driven_integration": "PASS",
     "inline_contract_consistency": "PASS",
     "codex_operator_smoke_both_conditions": "PASS",
+    "bonsai_browser_visual": "NOT_RUN",
     "browser_interaction": "NOT_RUN",
     "human_comprehension": "NOT_RUN",
     "embodied_vs_flat_comparison": "NOT_RUN"
   },
-  "browser_interaction_note": "Authored and VPD modes rendered in local headless Chrome; pointer/keyboard behavior still needs a human interaction pass.",
+  "browser_interaction_note": "Authored and HRM VPD modes rendered in local headless Chrome. The Bonsai mode passed DOM, trace, and public-origin checks, but no browser surface was available for a fresh visual pass; pointer/keyboard behavior still needs a human interaction pass.",
   "human_gate_note": "Use USABILITY_TEST.md with five first-time players; four of five must complete the task card within two minutes."
 }

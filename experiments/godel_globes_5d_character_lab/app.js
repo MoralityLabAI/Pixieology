@@ -419,7 +419,7 @@
     activeTrace = traceApi.normalizeTrace(trace);
     traceCursor = 0;
     lastManifoldSignature = "";
-    if (source === "character" || source === "vpd") manifoldSource.value = source;
+    if (source === "character" || source === "vpd" || source === "bonsai") manifoldSource.value = source;
     else manifoldSource.selectedIndex = -1;
     applyTraceFrame();
   }
@@ -448,6 +448,7 @@
     });
     manifoldSource.addEventListener("change", () => {
       if (manifoldSource.value === "vpd") setActiveTrace(window.GodelVpdTraceData, "vpd");
+      else if (manifoldSource.value === "bonsai") setActiveTrace(window.GodelBonsaiVpdTraceData, "bonsai");
       else setActiveTrace(traceApi.authoredTrace(), "character");
     });
     manifoldFileButton.addEventListener("click", () => manifoldFile.click());
@@ -480,6 +481,7 @@
     manifoldCanvas.addEventListener("pointerup", endDrag);
     manifoldCanvas.addEventListener("pointercancel", endDrag);
     if (query.get("trace") === "vpd") setActiveTrace(window.GodelVpdTraceData, "vpd");
+    else if (query.get("trace") === "bonsai") setActiveTrace(window.GodelBonsaiVpdTraceData, "bonsai");
     else updateTraceControls(traceSample());
     manifoldAnimationFrame = requestAnimationFrame(animateManifold);
   }

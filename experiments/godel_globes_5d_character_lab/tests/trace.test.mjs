@@ -5,6 +5,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const traceApi = require("../trace.js");
 const vpdData = require("../vpd_trace_data.js");
+const bonsaiData = require("../bonsai_vpd_trace_data.js");
 
 test("the authored orbit is a character-synchronized five-dimensional time trace", () => {
   const trace = traceApi.authoredTrace();
@@ -28,6 +29,20 @@ test("the bundled HRM trace contains actual measurements without inventing trait
   assert.equal(trace.alignment.status, "uncalibrated");
   assert.equal(trace.syncsToCharacter, false);
   assert.ok(trace.frames.every((frame) => frame.values.every((value) => value >= 0 && value <= 1)));
+  assert.ok(trace.frames.every((frame) => frame.raw?.length === 5));
+});
+
+test("the Bonsai trace contains hashed adapter deltas without claiming activation or trait evidence", () => {
+  const trace = traceApi.normalizeTrace(bonsaiData);
+  assert.equal(trace.id, "bonsai-1p7b-lora-delta-depth-trace-v1");
+  assert.equal(trace.source.evidence_class, "actual_bonsai_1p7b_lora_delta_decomposition");
+  assert.equal(trace.source.model_id, "prism-ml/Bonsai-1.7B-unpacked");
+  assert.equal(trace.source.adapter_sha256, "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c");
+  assert.equal(trace.source.base_model_loaded, false);
+  assert.equal(trace.source.activation_analysis, false);
+  assert.equal(trace.frames.length, 28);
+  assert.equal(trace.alignment.status, "uncalibrated");
+  assert.equal(trace.syncsToCharacter, false);
   assert.ok(trace.frames.every((frame) => frame.raw?.length === 5));
 });
 

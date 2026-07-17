@@ -20,7 +20,9 @@ test("every DOM id requested by the application exists exactly once", () => {
 
 test("the standalone page loads only local scripts in dependency order", () => {
   const scripts = Array.from(html.matchAll(/<script src="([^"]+)"/g), (match) => match[1]);
-  assert.deepEqual(scripts, ["space.js", "model.js", "trace.js", "vpd_trace_data.js", "study.js", "app.js"]);
+  assert.deepEqual(scripts, [
+    "space.js", "model.js", "trace.js", "vpd_trace_data.js", "bonsai_vpd_trace_data.js", "study.js", "app.js"
+  ]);
   assert.doesNotMatch(html, /https?:\/\//i);
 });
 
@@ -43,6 +45,8 @@ test("the globe exposes rotation, pause, time, and local trace loading", () => {
   assert.match(app, /pixieology:manifold-frame/);
   assert.match(app, /setPointerCapture/);
   assert.match(app, /GodelVpdTraceData/);
+  assert.match(app, /GodelBonsaiVpdTraceData/);
+  assert.match(html, /option value="bonsai"/);
 });
 
 test("study progress is resumable and incomplete export is disabled", () => {

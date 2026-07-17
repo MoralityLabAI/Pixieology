@@ -23,7 +23,7 @@ required.
 
 Drag the globe to rotate its camera. **Pause/Play** controls both time traversal and
 automatic rotation; the time slider scrubs individual frames. The trace selector
-includes two deliberately distinct data classes:
+includes three deliberately distinct data classes:
 
 - **Authored character orbit** drives the character body because its axes are the
   five authored retail traits.
@@ -31,6 +31,10 @@ includes two deliberately distinct data classes:
   low-rank refinement batch. Its mechanical channels are displayed on the globe but
   are explicitly uncalibrated and never relabeled as Wonder, Play, Care, Resolve, or
   Reflection.
+- **Bonsai 1.7B adapter delta geometry** is generated from the actual trained
+  all-linear rank-8 PEFT adapter, one transformer layer at a time. It measures
+  effective LoRA parameter deltas without loading the base model or activations, so
+  it is adapter-pipeline evidence rather than full VPD activation evidence.
 
 JSON and JSONL traces can be loaded locally. The `pixieology_manifold_trace_v1`
 validator refuses malformed, out-of-range, or non-monotonic traces and only allows a
@@ -61,11 +65,17 @@ node tests/evaluate-strategy.mjs
 node tests/analyze-study.mjs
 node tests/run-codex-operator-smoke.mjs
 python ..\..\build_godel_vpd_trace.py
+python ..\..\build_bonsai_adapter_vpd_trace.py --finalize
 ```
 
 The VPD trace builder resolves both its source batch and generated browser asset
 through `pixieology.config.json`. The generated trace records the source summary's
 SHA-256 and model ID but contains no source-machine path.
+
+The Bonsai builder resolves the adapter, bounded run root, and browser asset through
+the same config. Its analysis path refuses to run outside the Windows resource-cap
+wrapper, checkpoints after every layer, and records adapter/config hashes. The
+generated browser asset contains no source-machine path.
 
 The automated suite covers the `2 + 2 + 1` anatomy mapping, tuple bounds,
 projection fidelity, reversible warps, anchor selection, and the retail ontology

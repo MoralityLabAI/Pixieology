@@ -10,6 +10,7 @@ const folder = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const contract = JSON.parse(fs.readFileSync(path.join(folder, "character_space_v1.json"), "utf8"));
 const traceApi = require("../trace.js");
 const vpdTrace = traceApi.normalizeTrace(require("../vpd_trace_data.js"));
+const bonsaiTrace = traceApi.normalizeTrace(require("../bonsai_vpd_trace_data.js"));
 const gameState = model.characterState(model.findAnchor("seedling").tuple);
 const portableContractMatches =
   JSON.stringify(contract.tuple_order) === JSON.stringify(model.space.tupleOrder) &&
@@ -29,6 +30,14 @@ const automatedGates = {
     vpdTrace.source.evidence_class === "actual_local_vpd_style_analysis" &&
     vpdTrace.alignment.status === "uncalibrated" &&
     !vpdTrace.syncsToCharacter
+      ? "PASS"
+      : "FAIL",
+  actual_bonsai_adapter_boundary:
+    bonsaiTrace.source.evidence_class === "actual_bonsai_1p7b_lora_delta_decomposition" &&
+    bonsaiTrace.source.base_model_loaded === false &&
+    bonsaiTrace.source.activation_analysis === false &&
+    bonsaiTrace.alignment.status === "uncalibrated" &&
+    !bonsaiTrace.syncsToCharacter
       ? "PASS"
       : "FAIL"
 };

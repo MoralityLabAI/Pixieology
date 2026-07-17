@@ -19,6 +19,11 @@ retain useful local structure when projected into the rotatable navigation globe
 - The bundled HRM-Text 1B depth trace is derived from the actual 16-chunk local
   VPD-style low-rank refinement summary and carries its SHA-256. It is explicitly
   uncalibrated and cannot drive the authored personality body.
+- The bundled Bonsai 1.7B trace is derived from the actual trained rank-8 all-linear
+  adapter. All 28 layers were measured under hard local resource caps, with an
+  atomic checkpoint per layer and adapter SHA-256 provenance. Because it measures
+  parameter deltas rather than activations, it remains uncalibrated and cannot drive
+  the authored personality body.
 - Retail anchors exclude Jinn, Beast of the Earth, and related terms. Capability
   envelopes and named theological entities remain separate from personality
   structure.
