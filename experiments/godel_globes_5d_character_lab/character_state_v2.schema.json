@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pixieology.local/schemas/character_state_v2.schema.json",
+  "title": "Pixieology experimental 3D character state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "space_id",
+    "tuple_order",
+    "tuple",
+    "values",
+    "anchor_id",
+    "nearest_anchor",
+    "projection"
+  ],
+  "properties": {
+    "schema": { "const": "pixieology_character_state_v2" },
+    "schema_version": { "const": 2 },
+    "space_id": { "const": "godel_globes_5d_character_lab_v1" },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "tuple_order": {
+      "const": ["wonder", "play", "care", "resolve", "reflection"]
+    },
+    "tuple": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": { "type": "number", "minimum": 0, "maximum": 1 }
+    },
+    "values": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wonder", "play", "care", "resolve", "reflection"],
+      "properties": {
+        "wonder": { "type": "number", "minimum": 0, "maximum": 1 },
+        "play": { "type": "number", "minimum": 0, "maximum": 1 },
+        "care": { "type": "number", "minimum": 0, "maximum": 1 },
+        "resolve": { "type": "number", "minimum": 0, "maximum": 1 },
+        "reflection": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "anchor_id": { "type": ["string", "null"] },
+    "nearest_anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "distance"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "distance": { "type": "number", "minimum": 0 }
+      }
+    },
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "x", "y", "z", "semantic_claim"],
+      "properties": {
+        "method": { "const": "fixed-pca-3d-v2" },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" },
+        "semantic_claim": { "const": "navigation_only" }
+      }
+    }
+  }
+}

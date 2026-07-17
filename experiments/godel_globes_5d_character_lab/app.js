@@ -4,6 +4,7 @@
   const model = window.GodelCharacterModel;
   const space = model.space;
   const studyApi = window.GodelCharacterStudy;
+  const traceApi = window.GodelManifoldTrace;
   const query = new URLSearchParams(window.location.search);
   const dimensionIndex = new Map(space.tupleOrder.map((id, index) => [id, index]));
   const sliders = Array.from(document.querySelectorAll("input[data-dimension]"));
@@ -11,11 +12,16 @@
   const formName = document.getElementById("form-name");
   const detail = document.getElementById("selected-detail");
   const backButton = document.getElementById("warp-back");
-  const marker = document.getElementById("current-marker");
-  const trail = document.getElementById("warp-trail");
-  const nodesLayer = document.getElementById("map-nodes");
-  const edgesLayer = document.getElementById("map-edges");
   const anchorButtons = document.getElementById("anchor-buttons");
+  const manifoldCanvas = document.getElementById("manifold-canvas");
+  const manifoldContext = manifoldCanvas.getContext("2d");
+  const manifoldPlay = document.getElementById("manifold-play");
+  const manifoldTime = document.getElementById("manifold-time");
+  const manifoldTimeValue = document.getElementById("manifold-time-value");
+  const manifoldSource = document.getElementById("manifold-source");
+  const manifoldFile = document.getElementById("manifold-file");
+  const manifoldFileButton = document.getElementById("manifold-file-button");
+  const manifoldStatus = document.getElementById("manifold-status");
   const leftWing = document.getElementById("left-wing");
   const rightWing = document.getElementById("right-wing");
   const leftSparks = document.getElementById("left-sparks");
@@ -41,7 +47,6 @@
   let current = model.findAnchor("seedling").tuple.slice();
   let previous = null;
   let animationFrame = null;
-  let trailPoints = [];
   let manualStart = null;
   let studySession = null;
   let studyTaskIndex = 0;
@@ -49,6 +54,15 @@
   let lastPublishedTuple = null;
   let studyStorageKey = null;
   let studyRestoreMessage = "";
+  let activeTrace = traceApi.authoredTrace();
+  let traceCursor = 0;
+  let tracePlaying = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let manifoldAnimationFrame = null;
+  let lastManifoldTime = null;
+  let cameraYaw = -0.55;
+  let cameraPitch = -0.24;
+  let dragState = null;
+  let lastManifoldSignature = "";
 
   const participantId = query.get("participant");
   if (participantId && studyApi) {
@@ -74,17 +88,8 @@
       });
     }
     document.body.dataset.condition = studySession.condition;
+    tracePlaying = false;
   }
-
-  const projectedAnchors = space.anchors.map((anchor) => ({ anchor, raw: model.project(anchor.tuple) }));
-  const rawX = projectedAnchors.map((item) => item.raw[0]);
-  const rawY = projectedAnchors.map((item) => item.raw[1]);
-  const bounds = {
-    minX: Math.min(...rawX),
-    maxX: Math.max(...rawX),
-    minY: Math.min(...rawY),
-    maxY: Math.max(...rawY)
-  };
 
   function svgElement(name, attributes = {}) {
     const node = document.createElementNS("http://www.w3.org/2000/svg", name);
@@ -92,19 +97,11 @@
     return node;
   }
 
-  function screenPoint(tuple) {
-    const [rawPointX, rawPointY] = model.project(tuple);
-    const x = 68 + ((rawPointX - bounds.minX) / (bounds.maxX - bounds.minX || 1)) * 464;
-    const y = 360 - ((rawPointY - bounds.minY) / (bounds.maxY - bounds.minY || 1)) * 290;
-    return [x, y];
-  }
-
   function resetTo(tuple) {
     if (animationFrame !== null) cancelAnimationFrame(animationFrame);
     current = model.clampTuple(tuple);
     previous = null;
     animationFrame = null;
-    trailPoints = [];
     manualStart = null;
     render();
   }
@@ -209,34 +206,8 @@
     showStudyTask(studyRestoreMessage);
   }
 
-  function buildMap() {
-    const seenEdges = new Set();
-    projectedAnchors.forEach(({ anchor }) => {
-      model.nearestAnchors(anchor.tuple, 4).slice(1).forEach(({ anchor: neighbor }) => {
-        const id = [anchor.id, neighbor.id].sort().join("::");
-        if (seenEdges.has(id)) return;
-        seenEdges.add(id);
-        const [x1, y1] = screenPoint(anchor.tuple);
-        const [x2, y2] = screenPoint(neighbor.tuple);
-        edgesLayer.appendChild(svgElement("line", { x1, y1, x2, y2, class: "map-edge" }));
-      });
-    });
-
+  function buildAnchorButtons() {
     space.anchors.forEach((anchor) => {
-      const [x, y] = screenPoint(anchor.tuple);
-      const group = svgElement("g", { class: "map-node", "data-anchor": anchor.id, transform: `translate(${x} ${y})` });
-      group.appendChild(svgElement("circle", { r: 7 }));
-      const label = svgElement("text", { x: 11, y: -9 });
-      label.textContent = anchor.name;
-      group.appendChild(label);
-      group.addEventListener("click", () => warpTo(
-        anchor.tuple,
-        anchor,
-        true,
-        { type: "anchor_warp", payload: { anchor_id: anchor.id, surface: "map" } }
-      ));
-      nodesLayer.appendChild(group);
-
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = anchor.name;
@@ -250,6 +221,267 @@
       ));
       anchorButtons.appendChild(button);
     });
+  }
+
+  function cssColor(name, fallback) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+  }
+
+  function featurePoint(values, semantics = activeTrace.semantics) {
+    if (semantics === "character_tuple") return model.project3D(values);
+    return space.projection.matrix.map((row) =>
+      row.reduce((sum, coefficient, index) => sum + coefficient * (values[index] - 0.5), 0)
+    );
+  }
+
+  function rotatePoint(point) {
+    const cosYaw = Math.cos(cameraYaw);
+    const sinYaw = Math.sin(cameraYaw);
+    const cosPitch = Math.cos(cameraPitch);
+    const sinPitch = Math.sin(cameraPitch);
+    const x = cosYaw * point[0] + sinYaw * point[2];
+    const yawZ = -sinYaw * point[0] + cosYaw * point[2];
+    const y = cosPitch * point[1] - sinPitch * yawZ;
+    const z = sinPitch * point[1] + cosPitch * yawZ;
+    return [x, y, z];
+  }
+
+  function canvasPoint(point, width, height, radius) {
+    const rotated = rotatePoint(point);
+    const perspective = 1 / (1.18 - rotated[2] * 0.16);
+    return {
+      x: width / 2 + rotated[0] * radius * perspective,
+      y: height / 2 - rotated[1] * radius * perspective,
+      z: rotated[2],
+      perspective
+    };
+  }
+
+  function drawSphereGrid(context, width, height, radius) {
+    context.save();
+    context.strokeStyle = cssColor("--border", "#39354d");
+    context.globalAlpha = 0.42;
+    context.lineWidth = 1;
+    const curves = [];
+    for (const latitude of [-Math.PI / 3, -Math.PI / 6, 0, Math.PI / 6, Math.PI / 3]) {
+      const ringRadius = Math.cos(latitude);
+      curves.push(Array.from({ length: 65 }, (_, index) => {
+        const longitude = (index / 64) * Math.PI * 2;
+        return [ringRadius * Math.cos(longitude), Math.sin(latitude), ringRadius * Math.sin(longitude)];
+      }));
+    }
+    for (let meridian = 0; meridian < 6; meridian += 1) {
+      const longitude = (meridian / 6) * Math.PI;
+      curves.push(Array.from({ length: 65 }, (_, index) => {
+        const latitude = -Math.PI / 2 + (index / 64) * Math.PI;
+        return [Math.cos(latitude) * Math.cos(longitude), Math.sin(latitude), Math.cos(latitude) * Math.sin(longitude)];
+      }));
+    }
+    curves.forEach((curve) => {
+      context.beginPath();
+      curve.forEach((point, index) => {
+        const screen = canvasPoint(point, width, height, radius);
+        if (index === 0) context.moveTo(screen.x, screen.y);
+        else context.lineTo(screen.x, screen.y);
+      });
+      context.stroke();
+    });
+    context.restore();
+  }
+
+  function traceSample() {
+    return traceApi.interpolate(activeTrace, traceCursor);
+  }
+
+  function updateTraceControls(sample) {
+    manifoldTime.max = String(activeTrace.frames.length - 1);
+    manifoldTime.value = String(traceCursor);
+    manifoldTimeValue.textContent = sample.label;
+    manifoldPlay.textContent = tracePlaying ? "Pause" : "Play";
+    manifoldPlay.setAttribute("aria-pressed", String(tracePlaying));
+    const state = tracePlaying ? "Playing" : "Paused";
+    const values = sample.values.map((value, index) => `${activeTrace.axes[index].label} ${Math.round(value * 100)}`).join(" · ");
+    manifoldStatus.textContent = activeTrace.syncsToCharacter
+      ? `${state} · ${sample.label} · ${values}`
+      : `${state} · ${sample.label} · actual mechanical data, uncalibrated to character traits · ${values}`;
+    manifoldCanvas.setAttribute(
+      "aria-label",
+      `${activeTrace.title}. ${state} at ${sample.label}. Five-dimensional values: ${values}. Drag to rotate the three-dimensional projection.`
+    );
+  }
+
+  function publishManifoldFrame(sample) {
+    const signature = `${activeTrace.id}|${sample.t.toFixed(5)}|${sample.values.map((value) => value.toFixed(5)).join("|")}`;
+    if (signature === lastManifoldSignature) return;
+    lastManifoldSignature = signature;
+    window.dispatchEvent(new CustomEvent("pixieology:manifold-frame", {
+      detail: {
+        schema: activeTrace.schema,
+        trace_id: activeTrace.id,
+        semantics: activeTrace.semantics,
+        alignment_status: activeTrace.alignment.status,
+        t: sample.t,
+        values: sample.values.slice(),
+        metadata: { ...sample.metadata }
+      }
+    }));
+  }
+
+  function applyTraceFrame() {
+    const sample = traceSample();
+    if (activeTrace.syncsToCharacter && model.distance5D(current, sample.values) > 1e-4) {
+      current = model.clampTuple(sample.values);
+      render();
+    }
+    updateTraceControls(sample);
+    publishManifoldFrame(sample);
+    return sample;
+  }
+
+  function renderManifold() {
+    const rectangle = manifoldCanvas.getBoundingClientRect();
+    const width = Math.max(1, rectangle.width);
+    const height = Math.max(1, rectangle.height);
+    const density = Math.min(2, window.devicePixelRatio || 1);
+    const pixelWidth = Math.round(width * density);
+    const pixelHeight = Math.round(height * density);
+    if (manifoldCanvas.width !== pixelWidth || manifoldCanvas.height !== pixelHeight) {
+      manifoldCanvas.width = pixelWidth;
+      manifoldCanvas.height = pixelHeight;
+    }
+    manifoldContext.setTransform(density, 0, 0, density, 0, 0);
+    manifoldContext.clearRect(0, 0, width, height);
+    const radius = Math.min(width, height) * 0.39;
+    drawSphereGrid(manifoldContext, width, height, radius);
+
+    const rawPath = activeTrace.frames.map((frame) => featurePoint(frame.values));
+    const maximumNorm = Math.max(1e-9, ...rawPath.map((point) => Math.hypot(...point)));
+    const path = rawPath.map((point) => point.map((coordinate) => (coordinate / maximumNorm) * 0.82));
+    const primary = cssColor("--primary", "#d7c7ff");
+    const foreground = cssColor("--foreground", "#f3f0ff");
+
+    manifoldContext.save();
+    manifoldContext.lineCap = "round";
+    manifoldContext.lineJoin = "round";
+    for (let index = 1; index < path.length; index += 1) {
+      const left = canvasPoint(path[index - 1], width, height, radius);
+      const right = canvasPoint(path[index], width, height, radius);
+      manifoldContext.beginPath();
+      manifoldContext.moveTo(left.x, left.y);
+      manifoldContext.lineTo(right.x, right.y);
+      manifoldContext.strokeStyle = primary;
+      manifoldContext.globalAlpha = index <= traceCursor + 1 ? 0.86 : 0.24;
+      manifoldContext.lineWidth = index <= traceCursor + 1 ? 2.4 : 1.2;
+      manifoldContext.stroke();
+    }
+    const nodes = path.map((point, index) => ({ index, ...canvasPoint(point, width, height, radius) }));
+    nodes.sort((left, right) => left.z - right.z).forEach((node) => {
+      manifoldContext.beginPath();
+      manifoldContext.arc(node.x, node.y, 2.8 + node.perspective, 0, Math.PI * 2);
+      manifoldContext.fillStyle = primary;
+      manifoldContext.globalAlpha = 0.42 + Math.max(0, node.z) * 0.28;
+      manifoldContext.fill();
+    });
+
+    const sample = traceSample();
+    const rawCursor = featurePoint(sample.values);
+    const cursorPoint = rawCursor.map((coordinate) => (coordinate / maximumNorm) * 0.82);
+    const cursor = canvasPoint(cursorPoint, width, height, radius);
+    manifoldContext.globalAlpha = 0.2;
+    manifoldContext.fillStyle = primary;
+    manifoldContext.beginPath();
+    manifoldContext.arc(cursor.x, cursor.y, 15, 0, Math.PI * 2);
+    manifoldContext.fill();
+    manifoldContext.globalAlpha = 1;
+    manifoldContext.fillStyle = foreground;
+    manifoldContext.beginPath();
+    manifoldContext.arc(cursor.x, cursor.y, 5.5, 0, Math.PI * 2);
+    manifoldContext.fill();
+
+    if (activeTrace.syncsToCharacter) {
+      const rawCurrent = featurePoint(current, "character_tuple");
+      const currentPoint = rawCurrent.map((coordinate) => (coordinate / maximumNorm) * 0.82);
+      const edited = canvasPoint(currentPoint, width, height, radius);
+      manifoldContext.strokeStyle = foreground;
+      manifoldContext.lineWidth = 1.5;
+      manifoldContext.strokeRect(edited.x - 5, edited.y - 5, 10, 10);
+    }
+    manifoldContext.restore();
+  }
+
+  function setTracePlaying(playing) {
+    tracePlaying = Boolean(playing);
+    lastManifoldTime = null;
+    updateTraceControls(traceSample());
+  }
+
+  function setActiveTrace(trace, source = "custom") {
+    activeTrace = traceApi.normalizeTrace(trace);
+    traceCursor = 0;
+    lastManifoldSignature = "";
+    if (source === "character" || source === "vpd") manifoldSource.value = source;
+    else manifoldSource.selectedIndex = -1;
+    applyTraceFrame();
+  }
+
+  function animateManifold(now) {
+    if (lastManifoldTime === null) lastManifoldTime = now;
+    const elapsed = Math.min(80, now - lastManifoldTime);
+    lastManifoldTime = now;
+    if (tracePlaying) {
+      const maximum = activeTrace.frames.length - 1;
+      traceCursor = maximum > 0 ? (traceCursor + elapsed / 1800) % maximum : 0;
+      cameraYaw += elapsed * 0.000055;
+      applyTraceFrame();
+    }
+    renderManifold();
+    manifoldAnimationFrame = requestAnimationFrame(animateManifold);
+  }
+
+  function setupManifold() {
+    manifoldPlay.addEventListener("click", () => setTracePlaying(!tracePlaying));
+    manifoldTime.addEventListener("pointerdown", () => setTracePlaying(false));
+    manifoldTime.addEventListener("input", () => {
+      traceCursor = Number(manifoldTime.value);
+      applyTraceFrame();
+      renderManifold();
+    });
+    manifoldSource.addEventListener("change", () => {
+      if (manifoldSource.value === "vpd") setActiveTrace(window.GodelVpdTraceData, "vpd");
+      else setActiveTrace(traceApi.authoredTrace(), "character");
+    });
+    manifoldFileButton.addEventListener("click", () => manifoldFile.click());
+    manifoldFile.addEventListener("change", async () => {
+      const file = manifoldFile.files?.[0];
+      if (!file) return;
+      try {
+        setActiveTrace(traceApi.parseText(await file.text()), "custom");
+        setTracePlaying(false);
+      } catch (error) {
+        manifoldStatus.textContent = `Trace refused: ${error.message}`;
+      } finally {
+        manifoldFile.value = "";
+      }
+    });
+    manifoldCanvas.addEventListener("pointerdown", (event) => {
+      manifoldCanvas.setPointerCapture(event.pointerId);
+      dragState = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+    });
+    manifoldCanvas.addEventListener("pointermove", (event) => {
+      if (!dragState || dragState.pointerId !== event.pointerId) return;
+      cameraYaw += (event.clientX - dragState.x) * 0.009;
+      cameraPitch = Math.max(-1.2, Math.min(1.2, cameraPitch + (event.clientY - dragState.y) * 0.009));
+      dragState = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+      renderManifold();
+    });
+    const endDrag = (event) => {
+      if (dragState?.pointerId === event.pointerId) dragState = null;
+    };
+    manifoldCanvas.addEventListener("pointerup", endDrag);
+    manifoldCanvas.addEventListener("pointercancel", endDrag);
+    if (query.get("trace") === "vpd") setActiveTrace(window.GodelVpdTraceData, "vpd");
+    else updateTraceControls(traceSample());
+    manifoldAnimationFrame = requestAnimationFrame(animateManifold);
   }
 
   function renderWings(tuple) {
@@ -328,9 +560,6 @@
 
   function render() {
     renderWings(current);
-    const [x, y] = screenPoint(current);
-    marker.setAttribute("transform", `translate(${x} ${y})`);
-    trail.setAttribute("points", trailPoints.map((point) => point.join(",")).join(" "));
     tupleOutput.textContent = model.tupleLabel(current);
 
     sliders.forEach((slider) => {
@@ -360,11 +589,11 @@
 
   function warpTo(tuple, anchor = null, keepHistory = true, studyAction = null) {
     if (animationFrame !== null) cancelAnimationFrame(animationFrame);
+    setTracePlaying(false);
     const start = current.slice();
     const destination = model.clampTuple(tuple);
     if (model.distance5D(start, destination) < 1e-9) return;
     if (keepHistory) previous = start;
-    trailPoints = [screenPoint(start)];
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const duration = reducedMotion ? 1 : 720;
     const startedAt = performance.now();
@@ -382,7 +611,6 @@
     function frame(now) {
       const linear = Math.min(1, (now - startedAt) / duration);
       current = model.interpolateTuple(start, destination, smoothstep(linear));
-      trailPoints.push(screenPoint(current));
       render();
       if (linear < 1) animationFrame = requestAnimationFrame(frame);
       else {
@@ -398,7 +626,7 @@
       if (manualStart === null) manualStart = current.slice();
       if (animationFrame !== null) cancelAnimationFrame(animationFrame);
       animationFrame = null;
-      trailPoints = [];
+      setTracePlaying(false);
     };
     slider.addEventListener("pointerdown", captureManualStart);
     slider.addEventListener("keydown", captureManualStart);
@@ -431,13 +659,33 @@
     warpTo(destination, null, false, { type: "warp_back", payload: {} });
   });
 
-  buildMap();
+  buildAnchorButtons();
+  setupManifold();
   render();
   setupStudy();
   window.GodelCharacterLab = Object.freeze({
     getTuple: () => current.slice(),
     getState: () => ({ ...model.characterState(current), sequence: Math.max(0, stateSequence - 1) }),
     getCondition: () => document.body.dataset.condition || "embodied",
-    getStudyReceipt: () => studySession ? studySession.receipt() : null
+    getStudyReceipt: () => studySession ? studySession.receipt() : null,
+    getTraceState: () => ({
+      trace_id: activeTrace.id,
+      semantics: activeTrace.semantics,
+      alignment_status: activeTrace.alignment.status,
+      cursor: traceCursor,
+      playing: tracePlaying,
+      frame: traceSample()
+    }),
+    loadTrace: (trace) => {
+      setActiveTrace(trace, "custom");
+      setTracePlaying(false);
+      return activeTrace;
+    },
+    setTracePlaying,
+    setTraceTime: (cursor) => {
+      traceCursor = Math.max(0, Math.min(activeTrace.frames.length - 1, Number(cursor)));
+      setTracePlaying(false);
+      return applyTraceFrame();
+    }
   });
 })();

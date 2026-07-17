@@ -20,7 +20,7 @@ test("every DOM id requested by the application exists exactly once", () => {
 
 test("the standalone page loads only local scripts in dependency order", () => {
   const scripts = Array.from(html.matchAll(/<script src="([^"]+)"/g), (match) => match[1]);
-  assert.deepEqual(scripts, ["space.js", "model.js", "study.js", "app.js"]);
+  assert.deepEqual(scripts, ["space.js", "model.js", "trace.js", "vpd_trace_data.js", "study.js", "app.js"]);
   assert.doesNotMatch(html, /https?:\/\//i);
 });
 
@@ -33,6 +33,16 @@ test("the editor exposes a versioned game-state API and change event", () => {
   assert.match(app, /getState:/);
   assert.match(app, /pixieology:character-state/);
   assert.match(app, /model\.characterState\(current\)/);
+});
+
+test("the globe exposes rotation, pause, time, and local trace loading", () => {
+  assert.match(html, /id="manifold-canvas"/);
+  assert.match(html, /id="manifold-play"[^>]*>Pause</);
+  assert.match(html, /id="manifold-time" type="range"/);
+  assert.match(html, /id="manifold-file" type="file"/);
+  assert.match(app, /pixieology:manifold-frame/);
+  assert.match(app, /setPointerCapture/);
+  assert.match(app, /GodelVpdTraceData/);
 });
 
 test("study progress is resumable and incomplete export is disabled", () => {

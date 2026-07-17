@@ -52,14 +52,15 @@
       }
     ],
     projection: {
-      method: "fixed-pca-v1",
+      method: "fixed-pca-3d-v2",
       mean: [0.61833333, 0.535, 0.65666667, 0.63583333, 0.66583333],
       matrix: [
         [0.28715722, 0.71691402, -0.29476615, -0.1898144, -0.52977206],
-        [0.06489911, 0.13779627, 0.68698427, -0.70456777, 0.09185409]
+        [0.06489911, 0.13779627, 0.68698427, -0.70456777, 0.09185409],
+        [-0.89118954, 0.12811819, 0.15056256, 0.03676076, -0.40662819]
       ],
-      fittedExplainedVariance: 0.7927245741,
-      note: "The 2D salon map is a navigation projection of the twelve authored anchors, not literal model geometry."
+      fittedExplainedVariance: 0.9363861947,
+      note: "The rotatable 3D globe is a navigation projection of five-dimensional authored tuples, not literal model geometry. Rotation changes the camera, not the tuple."
     },
     anchors: [
       {

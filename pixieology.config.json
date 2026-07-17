@@ -14,6 +14,8 @@
     "godel_globes_character_space": "experiments/godel_globes_5d_character_lab/character_space_v1.json",
     "godel_globes_study_receipts": "${data_root}/godel_globes_5d_character_lab/study_receipts",
     "godel_globes_ab_result": "${data_root}/pixie_research/godel_globes_5d_ab_result.json",
+    "godel_globes_vpd_source": "D:/Research_Engine/runs/hrm_text_vpd_feature_map_refine_batch/feature_map_refine_batch_summary.json",
+    "godel_globes_vpd_trace": "experiments/godel_globes_5d_character_lab/vpd_trace_data.js",
     "huggingface_token_path": "secrets/huggingface_token.txt",
     "steering_vector_0_8b": "fae_steering_vector.npy",
     "steering_vector_1_7b": "fae_steering_vector_1.7b.npy",

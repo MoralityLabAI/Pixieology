@@ -8,6 +8,8 @@ const model = require("../model.js");
 const stats = model.projectionStats();
 const folder = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const contract = JSON.parse(fs.readFileSync(path.join(folder, "character_space_v1.json"), "utf8"));
+const traceApi = require("../trace.js");
+const vpdTrace = traceApi.normalizeTrace(require("../vpd_trace_data.js"));
 const gameState = model.characterState(model.findAnchor("seedling").tuple);
 const portableContractMatches =
   JSON.stringify(contract.tuple_order) === JSON.stringify(model.space.tupleOrder) &&
@@ -21,7 +23,14 @@ const automatedGates = {
   reversible_warp: "PASS",
   anchor_round_trip: "PASS",
   portable_game_contract: portableContractMatches ? "PASS" : "FAIL",
-  versioned_live_state: gameState.schema === "pixieology_character_state_v1" ? "PASS" : "FAIL"
+  versioned_live_state: gameState.schema === "pixieology_character_state_v2" && Number.isFinite(gameState.projection.z) ? "PASS" : "FAIL",
+  five_dimensional_time_trace: traceApi.authoredTrace().frames.length > 2 ? "PASS" : "FAIL",
+  actual_vpd_trace_boundary:
+    vpdTrace.source.evidence_class === "actual_local_vpd_style_analysis" &&
+    vpdTrace.alignment.status === "uncalibrated" &&
+    !vpdTrace.syncsToCharacter
+      ? "PASS"
+      : "FAIL"
 };
 
 const result = {

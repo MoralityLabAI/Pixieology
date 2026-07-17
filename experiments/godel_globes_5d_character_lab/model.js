@@ -43,6 +43,12 @@
     );
   }
 
+  function project3D(tuple) {
+    const projected = project(tuple);
+    if (projected.length !== 3) throw new Error("The active character-space projection is not three-dimensional");
+    return projected;
+  }
+
   function findAnchor(id) {
     return space.anchors.find((anchor) => anchor.id === id) || null;
   }
@@ -86,24 +92,24 @@
 
   function projectionStats() {
     const distances5D = [];
-    const distances2D = [];
+    const distancesProjected = [];
     for (let left = 0; left < space.anchors.length; left += 1) {
       for (let right = left + 1; right < space.anchors.length; right += 1) {
         distances5D.push(distance5D(space.anchors[left].tuple, space.anchors[right].tuple));
-        const a = project(space.anchors[left].tuple);
-        const b = project(space.anchors[right].tuple);
-        distances2D.push(Math.hypot(a[0] - b[0], a[1] - b[1]));
+        const a = project3D(space.anchors[left].tuple);
+        const b = project3D(space.anchors[right].tuple);
+        distancesProjected.push(Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]));
       }
     }
     const stressNumerator = distances5D.reduce(
-      (sum, value, index) => sum + (value - distances2D[index]) ** 2,
+      (sum, value, index) => sum + (value - distancesProjected[index]) ** 2,
       0
     );
     const stressDenominator = distances5D.reduce((sum, value) => sum + value ** 2, 0);
     return {
       pairs: distances5D.length,
-      pearsonDistanceCorrelation: pearson(distances5D, distances2D),
-      spearmanDistanceCorrelation: pearson(averageRanks(distances5D), averageRanks(distances2D)),
+      pearsonDistanceCorrelation: pearson(distances5D, distancesProjected),
+      spearmanDistanceCorrelation: pearson(averageRanks(distances5D), averageRanks(distancesProjected)),
       normalizedStress: Math.sqrt(stressNumerator / stressDenominator),
       fittedExplainedVariance: space.projection.fittedExplainedVariance
     };
@@ -120,8 +126,8 @@
     const nearest = nearestAnchors(normalized, 1)[0];
     const projected = project(normalized);
     return {
-      schema: "pixieology_character_state_v1",
-      schema_version: 1,
+      schema: "pixieology_character_state_v2",
+      schema_version: 2,
       space_id: space.experimentId,
       tuple_order: space.tupleOrder.slice(),
       tuple: normalized,
@@ -135,6 +141,7 @@
         method: space.projection.method,
         x: projected[0],
         y: projected[1],
+        z: projected[2],
         semantic_claim: "navigation_only"
       }
     };
@@ -147,6 +154,7 @@
     distance5D,
     interpolateTuple,
     project,
+    project3D,
     findAnchor,
     nearestAnchors,
     projectionStats,

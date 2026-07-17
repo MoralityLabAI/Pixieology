@@ -34,12 +34,13 @@ test("all authored forms are unique, bounded, and retail-safe", () => {
   }
 });
 
-test("the 2D navigation projection preserves authored neighborhood structure", () => {
+test("the rotatable 3D navigation projection preserves authored neighborhood structure", () => {
   const stats = model.projectionStats();
   assert.equal(stats.pairs, 66);
-  assert.ok(stats.fittedExplainedVariance >= 0.70, JSON.stringify(stats));
-  assert.ok(stats.spearmanDistanceCorrelation >= 0.80, JSON.stringify(stats));
-  assert.ok(stats.normalizedStress <= 0.30, JSON.stringify(stats));
+  assert.equal(space.projection.matrix.length, 3);
+  assert.ok(stats.fittedExplainedVariance >= 0.90, JSON.stringify(stats));
+  assert.ok(stats.spearmanDistanceCorrelation >= 0.95, JSON.stringify(stats));
+  assert.ok(stats.normalizedStress <= 0.10, JSON.stringify(stats));
 });
 
 test("a 5D warp stays in bounds and reverses exactly", () => {
@@ -72,7 +73,8 @@ test("authored points round-trip through nearest-neighbor selection", () => {
 
 test("the game-facing state preserves tuple order and navigation semantics", () => {
   const state = model.characterState([0.5, 0.5, 0.5, 0.5, 0.5]);
-  assert.equal(state.schema, "pixieology_character_state_v1");
+  assert.equal(state.schema, "pixieology_character_state_v2");
+  assert.equal(state.schema_version, 2);
   assert.deepEqual(state.tuple_order, space.tupleOrder);
   assert.deepEqual(state.values, {
     wonder: 0.5,
@@ -82,5 +84,6 @@ test("the game-facing state preserves tuple order and navigation semantics", () 
     reflection: 0.5
   });
   assert.equal(state.anchor_id, "seedling");
+  assert.equal(typeof state.projection.z, "number");
   assert.equal(state.projection.semantic_claim, "navigation_only");
 });

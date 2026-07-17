@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "experiment_id": "godel_globes_5d_character_lab_v1",
-  "run_date": "2026-07-16",
+  "run_date": "2026-07-17",
   "status": "AUTOMATED_PASS_AB_NOT_RUN",
   "dimensions": 5,
   "embodiment": {
@@ -11,11 +11,11 @@
   },
   "authored_forms": 12,
   "projection": {
-    "method": "fixed-pca-v1",
-    "fitted_explained_variance": 0.792725,
-    "pairwise_distance_spearman": 0.926939,
-    "pairwise_distance_pearson": 0.936439,
-    "normalized_stress": 0.192685,
+    "method": "fixed-pca-3d-v2",
+    "fitted_explained_variance": 0.936386,
+    "pairwise_distance_spearman": 0.979919,
+    "pairwise_distance_pearson": 0.989576,
+    "normalized_stress": 0.064752,
     "pairs": 66
   },
   "gates": {
@@ -27,6 +27,9 @@
     "anchor_round_trip": "PASS",
     "portable_game_contract": "PASS",
     "versioned_live_state": "PASS",
+    "five_dimensional_time_trace": "PASS",
+    "actual_vpd_trace_boundary": "PASS",
+    "headless_browser_render": "PASS",
     "config_driven_integration": "PASS",
     "inline_contract_consistency": "PASS",
     "codex_operator_smoke_both_conditions": "PASS",
@@ -34,6 +37,6 @@
     "human_comprehension": "NOT_RUN",
     "embodied_vs_flat_comparison": "NOT_RUN"
   },
-  "browser_interaction_note": "No in-app or Chrome browser backend was available in the execution environment.",
+  "browser_interaction_note": "Authored and VPD modes rendered in local headless Chrome; pointer/keyboard behavior still needs a human interaction pass.",
   "human_gate_note": "Use USABILITY_TEST.md with five first-time players; four of five must complete the task card within two minutes."
 }

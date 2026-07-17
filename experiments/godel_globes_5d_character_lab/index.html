@@ -104,23 +104,27 @@
       </div>
 
       <div class="map-wrap">
-        <svg id="manifold-svg" viewBox="0 0 600 430" role="img" aria-labelledby="map-title map-desc">
-          <title id="map-title">Projected neighborhood of authored character forms</title>
-          <desc id="map-desc">Twelve authored five-dimensional forms are projected into a two-dimensional navigation map. Distance is approximate.</desc>
-          <g class="map-orbits" aria-hidden="true">
-            <ellipse cx="300" cy="215" rx="250" ry="165" />
-            <ellipse cx="300" cy="215" rx="178" ry="112" />
-            <ellipse cx="300" cy="215" rx="98" ry="58" />
-          </g>
-          <g id="map-edges" class="map-edges" aria-hidden="true"></g>
-          <polyline id="warp-trail" class="warp-trail" points="" aria-hidden="true" />
-          <g id="map-nodes" class="map-nodes"></g>
-          <g id="current-marker" class="current-marker" aria-hidden="true">
-            <circle r="14" class="current-ring" />
-            <circle r="6" class="current-core" />
-          </g>
-        </svg>
-        <p class="map-note">Navigation projection · nearby points are similar, not identical</p>
+        <canvas id="manifold-canvas" width="900" height="645" role="img" aria-label="Rotatable three-dimensional projection of a five-dimensional feature trajectory over time"></canvas>
+        <div class="manifold-toolbar" aria-label="Manifold playback">
+          <button id="manifold-play" type="button" aria-pressed="true">Pause</button>
+          <label class="timeline-label" for="manifold-time">Time
+            <output id="manifold-time-value">Scene 1</output>
+            <input id="manifold-time" type="range" min="0" max="12" step="0.01" value="0">
+          </label>
+          <label for="manifold-source">Trace
+            <select id="manifold-source">
+              <option value="character">Authored character orbit</option>
+              <option value="vpd">HRM-Text 1B · actual VPD-style data</option>
+            </select>
+          </label>
+          <div class="trace-file">
+            <span>Local data</span>
+            <button id="manifold-file-button" type="button">Load JSON / JSONL</button>
+            <input id="manifold-file" type="file" accept=".json,.jsonl,application/json,application/x-ndjson" hidden>
+          </div>
+        </div>
+        <p id="manifold-status" class="manifold-status" aria-live="polite">Drag to rotate · playing authored five-dimensional character coordinates</p>
+        <p class="map-note">3D navigation projection of 5D coordinates · time traverses the path · rotation changes only the camera</p>
       </div>
     </section>
 
@@ -158,6 +162,8 @@
 
   <script src="space.js"></script>
   <script src="model.js"></script>
+  <script src="trace.js"></script>
+  <script src="vpd_trace_data.js"></script>
   <script src="study.js"></script>
   <script src="app.js"></script>
 </body>
