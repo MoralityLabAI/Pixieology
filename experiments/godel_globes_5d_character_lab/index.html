@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Gödel Globe Character Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="lab-shell">
+    <header class="lab-header">
+      <div>
+        <p class="eyebrow">CHARACTER SALON · FIVE-DIMENSIONAL GÖDEL GLOBE</p>
+        <h1>Shape a character. Travel its neighborhood.</h1>
+      </div>
+      <div class="tuple-readout" aria-live="polite">
+        <span><span id="condition-badge" class="condition-badge" hidden></span><span id="form-name">Seedling</span></span>
+        <output id="tuple-output">50 · 50 · 50 · 50 · 50</output>
+      </div>
+    </header>
+
+    <section id="study-panel" class="study-panel" aria-labelledby="study-heading" hidden>
+      <div>
+        <p id="study-meta" class="eyebrow"></p>
+        <h2 id="study-heading">Comparative task</h2>
+        <p id="study-instruction"></p>
+      </div>
+      <div class="study-actions">
+        <button id="study-start" type="button">Start task</button>
+        <button id="study-skip" type="button" disabled>Skip</button>
+        <button id="study-export" type="button" disabled>Export session</button>
+      </div>
+      <p id="study-progress" class="study-progress" aria-live="polite"></p>
+      <form id="study-debrief" class="study-debrief" hidden>
+        <label for="debrief-reflection">Where was Reflection arranged?
+          <select id="debrief-reflection" required>
+            <option value="">Choose one</option>
+            <option value="left_wing">Left wing</option>
+            <option value="right_wing">Right wing</option>
+            <option value="head">Head</option>
+            <option value="unsure">Not sure</option>
+          </select>
+        </label>
+        <label for="debrief-map">What did distance on the map mean?
+          <select id="debrief-map" required>
+            <option value="">Choose one</option>
+            <option value="approximate_similarity">Approximate character similarity</option>
+            <option value="literal_model_geometry">Literal model geometry</option>
+            <option value="capability">Character capability or power</option>
+            <option value="unsure">Not sure</option>
+          </select>
+        </label>
+        <label for="debrief-preference">After both rounds, which editor did you prefer?
+          <select id="debrief-preference">
+            <option value="not_asked">I have not completed both rounds</option>
+            <option value="embodied">Embodied 2+2+1</option>
+            <option value="flat">Flat list</option>
+            <option value="no_preference">No preference</option>
+          </select>
+        </label>
+        <label for="debrief-comments">Optional comment
+          <textarea id="debrief-comments" maxlength="1000" rows="2"></textarea>
+        </label>
+        <button type="submit">Save answers</button>
+      </form>
+    </section>
+
+    <section class="stage" aria-label="Character embodiment and projected character neighborhood">
+      <div class="embodiment">
+        <svg id="character-svg" viewBox="0 0 600 430" role="img" aria-labelledby="character-title character-desc">
+          <title id="character-title">Five-dimensional character embodiment</title>
+          <desc id="character-desc">Wonder and play shape the left wing. Care and resolve shape the right wing. Reflection shapes the head halo.</desc>
+          <defs>
+            <linearGradient id="left-glow" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="var(--wing-left-a)" />
+              <stop offset="1" stop-color="var(--wing-left-b)" />
+            </linearGradient>
+            <linearGradient id="right-glow" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--wing-right-a)" />
+              <stop offset="1" stop-color="var(--wing-right-b)" />
+            </linearGradient>
+            <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="8" result="blur" />
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <ellipse class="shadow" cx="300" cy="387" rx="105" ry="15" />
+          <path id="left-wing" class="wing left-wing" d="M287 238 C220 185 150 160 92 205 C150 235 200 285 286 280 Z" />
+          <g id="left-sparks" class="sparks" aria-hidden="true"></g>
+          <path id="right-wing" class="wing right-wing" d="M313 238 C380 185 450 160 508 205 C450 235 400 285 314 280 Z" />
+          <g id="right-feathers" class="feathers" aria-hidden="true"></g>
+          <path class="body" d="M300 210 C266 232 260 304 276 362 C284 385 316 385 324 362 C340 304 334 232 300 210 Z" />
+          <circle class="face" cx="300" cy="191" r="42" />
+          <path class="eyes" d="M284 191 Q291 197 298 191 M302 191 Q309 197 316 191" />
+          <path class="smile" d="M291 207 Q300 214 309 207" />
+          <circle id="head-halo" class="halo" cx="300" cy="191" r="60" />
+          <circle id="head-orbit" class="orbit" cx="300" cy="191" r="72" />
+          <circle id="orbit-mote" class="orbit-mote" cx="372" cy="191" r="5" />
+          <text class="anatomy-label left-label" x="92" y="86">WONDER · PLAY</text>
+          <text class="anatomy-label right-label" x="508" y="86">CARE · RESOLVE</text>
+          <text class="anatomy-label head-label" x="300" y="42">REFLECTION</text>
+        </svg>
+      </div>
+
+      <div class="map-wrap">
+        <svg id="manifold-svg" viewBox="0 0 600 430" role="img" aria-labelledby="map-title map-desc">
+          <title id="map-title">Projected neighborhood of authored character forms</title>
+          <desc id="map-desc">Twelve authored five-dimensional forms are projected into a two-dimensional navigation map. Distance is approximate.</desc>
+          <g class="map-orbits" aria-hidden="true">
+            <ellipse cx="300" cy="215" rx="250" ry="165" />
+            <ellipse cx="300" cy="215" rx="178" ry="112" />
+            <ellipse cx="300" cy="215" rx="98" ry="58" />
+          </g>
+          <g id="map-edges" class="map-edges" aria-hidden="true"></g>
+          <polyline id="warp-trail" class="warp-trail" points="" aria-hidden="true" />
+          <g id="map-nodes" class="map-nodes"></g>
+          <g id="current-marker" class="current-marker" aria-hidden="true">
+            <circle r="14" class="current-ring" />
+            <circle r="6" class="current-core" />
+          </g>
+        </svg>
+        <p class="map-note">Navigation projection · nearby points are similar, not identical</p>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Five character dimensions">
+      <fieldset>
+        <legend>Left wing</legend>
+        <label for="wonder">Wonder <output id="wonder-value">50</output>
+          <input id="wonder" data-dimension="wonder" type="range" min="0" max="100" value="50">
+        </label>
+        <label for="play">Play <output id="play-value">50</output>
+          <input id="play" data-dimension="play" type="range" min="0" max="100" value="50">
+        </label>
+      </fieldset>
+      <fieldset>
+        <legend>Right wing</legend>
+        <label for="care">Care <output id="care-value">50</output>
+          <input id="care" data-dimension="care" type="range" min="0" max="100" value="50">
+        </label>
+        <label for="resolve">Resolve <output id="resolve-value">50</output>
+          <input id="resolve" data-dimension="resolve" type="range" min="0" max="100" value="50">
+        </label>
+      </fieldset>
+      <fieldset class="head-control">
+        <legend>Head</legend>
+        <label for="reflection">Reflection <output id="reflection-value">50</output>
+          <input id="reflection" data-dimension="reflection" type="range" min="0" max="100" value="50">
+        </label>
+        <button id="warp-back" type="button" disabled>Warp back</button>
+      </fieldset>
+    </section>
+
+    <nav id="anchor-buttons" class="anchor-buttons" aria-label="Authored character forms"></nav>
+    <p id="selected-detail" class="selected-detail">Balanced and ready to grow in any direction.</p>
+  </main>
+
+  <script src="space.js"></script>
+  <script src="model.js"></script>
+  <script src="study.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

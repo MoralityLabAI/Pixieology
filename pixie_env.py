@@ -159,6 +159,22 @@ def storyworld_comparison_path() -> Path:
     return resolve_path("PIXIE_STORYWORLD_COMPARISON_PATH", config_path("storyworld_comparison_path"))
 
 
+def godel_globes_experiment_root() -> Path:
+    return resolve_path("PIXIE_GODEL_GLOBES_ROOT", config_path("godel_globes_experiment_root"))
+
+
+def godel_globes_character_space_path() -> Path:
+    return resolve_path("PIXIE_GODEL_GLOBES_CHARACTER_SPACE", config_path("godel_globes_character_space"))
+
+
+def godel_globes_study_receipts_path() -> Path:
+    return resolve_path("PIXIE_GODEL_GLOBES_RECEIPTS", config_path("godel_globes_study_receipts"))
+
+
+def godel_globes_ab_result_path() -> Path:
+    return resolve_path("PIXIE_GODEL_GLOBES_RESULT", config_path("godel_globes_ab_result"))
+
+
 def tesseract_train_script() -> Path:
     return resolve_path("PIXIE_TESSERACT_TRAIN", config_path("tesseract_train_script"))
 

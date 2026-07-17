@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "study_id": "godel_globes_5d_character_ab_v1",
+  "status": "NOT_RUN",
+  "minimum_participants": 6,
+  "paired_participants": 0,
+  "condition_summary": {
+    "embodied": {
+      "participants": 0,
+      "mean_completion_rate": null,
+      "median_elapsed_ms": null,
+      "median_wrong_dimension_actions": null
+    },
+    "flat": {
+      "participants": 0,
+      "mean_completion_rate": null,
+      "median_elapsed_ms": null,
+      "median_wrong_dimension_actions": null
+    }
+  },
+  "human_debrief": {
+    "responses": 0,
+    "reflection_on_head": 0,
+    "approximate_similarity_answer": 0,
+    "preference": {
+      "embodied": 0,
+      "flat": 0,
+      "no_preference": 0,
+      "not_asked": 0
+    }
+  },
+  "gates": {
+    "minimum_paired_sample": "NOT_RUN",
+    "complete_task_receipts": "NOT_RUN",
+    "completion_noninferiority": "NOT_RUN",
+    "time_noninferiority_10pct": "NOT_RUN",
+    "dimension_error_noninferiority": "NOT_RUN",
+    "anatomy_comprehension_5_of_6": "NOT_RUN",
+    "map_semantics_5_of_6": "NOT_RUN"
+  }
+}

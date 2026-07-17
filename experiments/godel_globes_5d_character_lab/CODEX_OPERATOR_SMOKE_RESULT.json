@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "experiment_id": "godel_globes_5d_character_codex_operator_smoke_v1",
+  "evidence_class": "synthetic_operator_smoke",
+  "human_usability_evidence": false,
+  "status": "PASS",
+  "conditions": [
+    {
+      "condition": "embodied",
+      "completed_tasks": 5,
+      "task_results": [
+        { "task_id": "left-wing", "status": "PASS", "elapsed_ms": 500, "actions": 2, "wrong_dimension_actions": 0, "final_l1_error": 0 },
+        { "task_id": "right-wing", "status": "PASS", "elapsed_ms": 500, "actions": 2, "wrong_dimension_actions": 0, "final_l1_error": 0 },
+        { "task_id": "head", "status": "PASS", "elapsed_ms": 250, "actions": 1, "wrong_dimension_actions": 0, "final_l1_error": 0 },
+        { "task_id": "named-warp", "status": "PASS", "elapsed_ms": 500, "actions": 1, "wrong_dimension_actions": 0, "final_l1_error": 0 },
+        { "task_id": "edit-and-return", "status": "PASS", "elapsed_ms": 700, "actions": 2, "wrong_dimension_actions": 0, "final_l1_error": 0 }
+      ],
+      "event_count": 20,
+      "debrief": {
+        "reflection_location": "head",
+        "map_meaning": "approximate_similarity",
+        "preference": "not_asked",
+        "comments": "Automated Codex operator smoke; not human usability evidence."
+      }
+    },
+    {
+      "condition": "flat",
+      "completed_tasks": 5,
+      "task_results": [
+        { "task_id": "left-wing", "status": "PASS", "elapsed_ms": 500, "actions": 2, "wrong_dimension_actions": 0, "final_l1_error": 0 },
+        { "task_id": "right-wing", "status": "PASS", "elapsed_ms": 500, "actions": 2, "wrong_dimension_actions": 0, "final_l1_error": 0 },
+        { "task_id": "head", "status": "PASS", "elapsed_ms": 250, "actions": 1, "wrong_dimension_actions": 0, "final_l1_error": 0 },
+        { "task_id": "named-warp", "status": "PASS", "elapsed_ms": 500, "actions": 1, "wrong_dimension_actions": 0, "final_l1_error": 0 },
+        { "task_id": "edit-and-return", "status": "PASS", "elapsed_ms": 700, "actions": 2, "wrong_dimension_actions": 0, "final_l1_error": 0 }
+      ],
+      "event_count": 20,
+      "debrief": {
+        "reflection_location": "head",
+        "map_meaning": "approximate_similarity",
+        "preference": "not_asked",
+        "comments": "Automated Codex operator smoke; not human usability evidence."
+      }
+    }
+  ],
+  "conclusion": "All five registered actions execute and receipt correctly in both conditions; no human UX claim is made."
+}
