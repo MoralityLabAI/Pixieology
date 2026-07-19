@@ -50,6 +50,8 @@ def main(argv: list[str] | None = None) -> int:
         "--matrix", type=Path, default=APP_ROOT / "config" / "multi_adapter_matrix_v1.json"
     )
     parser.add_argument("--run-id", required=True)
+    parser.add_argument("--study-id")
+    parser.add_argument("--max-items", type=int, default=12)
     parser.add_argument("--port", type=int, default=0)
     parser.add_argument("--startup-timeout", type=float, default=180)
     args = parser.parse_args(argv)
@@ -65,17 +67,39 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("protocol matrix_id does not match the resolved composition matrix")
     paths = existing_adapter_pair.resolve_config_paths(config_path)
     runtime = paths["lora_pixie_village_runtime"]
-    output_dir = runtime / "multi_adapter_noninferiority" / args.run_id
+    study_id = args.study_id or args.run_id
+    output_dir = runtime / "multi_adapter_noninferiority" / study_id
     launch_root = runtime / "dual_lora_launches" / args.run_id
     pointer_path = APP_ROOT / "reports" / "multi_adapter_noninferiority.receipt.json"
-    if output_dir.exists() or launch_root.exists():
-        raise SystemExit(f"refusing to overwrite completed or partial run {args.run_id}")
-    output_dir.mkdir(parents=True)
-    events_path = output_dir / "events.jsonl"
+    if launch_root.exists():
+        raise SystemExit(f"refusing to overwrite launch run {args.run_id}")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    if (output_dir / "receipt.json").is_file():
+        raise SystemExit(f"study {study_id} already has a completed receipt")
+    state_path = output_dir / "study_state.json"
+    expected_state = {
+        "schema_version": "pixie_multi_adapter_noninferiority_state_v1",
+        "study_id": study_id,
+        "protocol_id": protocol["protocol_id"],
+        "protocol_sha256": multi_adapter_matrix.sha256_value(protocol),
+        "matrix_sha256": multi_adapter_matrix.sha256_value(matrix),
+        "total_generations": len(study.generation_plan(protocol)),
+    }
+    if state_path.is_file():
+        if server.read_json(state_path) != expected_state:
+            raise SystemExit(f"study {study_id} state does not match the frozen protocol")
+    else:
+        server.atomic_json(state_path, expected_state)
+    chunk_dir = output_dir / "chunks" / args.run_id
+    if chunk_dir.exists():
+        raise SystemExit(f"refusing to overwrite chunk {args.run_id}")
+    chunk_dir.mkdir(parents=True)
+    events_path = chunk_dir / "events.jsonl"
     event(
         events_path,
         "start",
         run_id=args.run_id,
+        study_id=study_id,
         caps={"ram_mb": 2048, "cpu_percent": 50, "io_mb_per_second": 50},
         chunk_strategy="one generation per fsynced row; semantic embeddings in batches of eight",
         checkpoint_interval="every generation and every stage boundary",
@@ -85,8 +109,8 @@ def main(argv: list[str] | None = None) -> int:
     base_url = f"http://127.0.0.1:{public_port}"
     launch_manifest = launch_root / "launch_manifest.json"
     token_path = launch_root / "shutdown.token"
-    proxy_stdout = output_dir / "proxy.stdout.log"
-    proxy_stderr = output_dir / "proxy.stderr.log"
+    proxy_stdout = chunk_dir / "proxy.stdout.log"
+    proxy_stderr = chunk_dir / "proxy.stderr.log"
     command = [
         sys.executable,
         str(APP_ROOT / "dual_lora_proxy.py"),
@@ -124,8 +148,22 @@ def main(argv: list[str] | None = None) -> int:
             )
             real_josie_pair_smoke.wait_for_proxy(base_url, proxy, args.startup_timeout)
             event(events_path, "backend_ready", owned_proxy_pid=proxy.pid)
-            rows = study.collect_generations(base_url, protocol, matrix, output_dir)
-            event(events_path, "generation_checkpoint", steps_completed=len(rows))
+            existing = study.read_generation_rows(output_dir / "raw_generations.jsonl", protocol)
+            rows = study.collect_generations(
+                base_url,
+                protocol,
+                matrix,
+                output_dir,
+                existing_rows=existing,
+                max_items=args.max_items,
+                identities_path=chunk_dir / "identities.json",
+            )
+            event(
+                events_path,
+                "generation_checkpoint",
+                steps_completed=len(rows),
+                steps_added=len(rows) - len(existing),
+            )
     except Exception as exc:
         error = f"{type(exc).__name__}: {exc}"
     finally:
@@ -140,7 +178,8 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     receipt: dict[str, Any]
-    if error is None and rows is not None:
+    total = len(study.generation_plan(protocol))
+    if error is None and rows is not None and len(rows) == total:
         try:
             hf_home = Path(os.environ.get("HF_HOME") or paths["hf_home"]).expanduser().resolve()
             analysis = study.analyze(rows, protocol, hf_home)
@@ -162,7 +201,25 @@ def main(argv: list[str] | None = None) -> int:
         except Exception as exc:
             error = f"{type(exc).__name__}: {exc}"
 
+    elif error is None and rows is not None:
+        receipt = {
+            "schema_version": "pixie_multi_adapter_noninferiority_chunk_receipt_v1",
+            "status": "PASS_CHUNK",
+            "verdict": "NOT_ESTIMATED",
+            "protocol_id": protocol["protocol_id"],
+            "protocol_sha256": multi_adapter_matrix.sha256_value(protocol),
+            "matrix_sha256": multi_adapter_matrix.sha256_value(matrix),
+            "study_id": study_id,
+            "run_id": args.run_id,
+            "steps_completed": len(rows),
+            "total_generations": total,
+            "raw_generations": str(output_dir / "raw_generations.jsonl"),
+        }
+        server.atomic_json(chunk_dir / "receipt.json", receipt)
+        event(events_path, "chunk_complete", steps_completed=len(rows), total_generations=total)
+
     if error is not None or rows is None:
+        completed = len(study.read_generation_rows(output_dir / "raw_generations.jsonl", protocol))
         receipt = {
             "schema_version": "pixie_multi_adapter_noninferiority_receipt_v1",
             "status": "FAIL_HARNESS",
@@ -171,17 +228,19 @@ def main(argv: list[str] | None = None) -> int:
             "protocol_sha256": multi_adapter_matrix.sha256_value(protocol),
             "matrix_sha256": multi_adapter_matrix.sha256_value(matrix),
             "error": error or "generation rows missing",
-            "steps_completed": len(rows or []),
+            "study_id": study_id,
+            "run_id": args.run_id,
+            "steps_completed": completed,
             "events": str(events_path),
         }
-        server.atomic_json(output_dir / "receipt.json", receipt)
-        event(events_path, "failure", error=receipt["error"], steps_completed=len(rows or []))
+        server.atomic_json(chunk_dir / "receipt.json", receipt)
+        event(events_path, "failure", error=receipt["error"], steps_completed=completed)
 
-    receipt_path = output_dir / "receipt.json"
+    receipt_path = output_dir / "receipt.json" if receipt["status"] == "PASS_COMPLETED" else chunk_dir / "receipt.json"
     pointer = study.pointer_for(receipt_path, receipt, args.run_id)
     server.atomic_json(pointer_path, pointer)
     print(json.dumps(pointer, ensure_ascii=False, indent=2, sort_keys=True))
-    return 0 if receipt["status"] == "PASS_COMPLETED" else 1
+    return 0 if str(receipt["status"]).startswith("PASS") else 1
 
 
 if __name__ == "__main__":

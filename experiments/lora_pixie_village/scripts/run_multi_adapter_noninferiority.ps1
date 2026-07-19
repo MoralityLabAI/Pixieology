@@ -1,6 +1,8 @@
 param(
   [string]$RunId = "multi-adapter-ni-$(Get-Date -Format 'yyyyMMdd-HHmmss')",
+  [string]$StudyId = $RunId,
   [int]$Port = 8081,
+  [int]$MaxItems = 12,
   [int]$MaxRuntimeMinutes = 30
 )
 
@@ -8,6 +10,7 @@ $ErrorActionPreference = "Stop"
 if ($MaxRuntimeMinutes -lt 1 -or $MaxRuntimeMinutes -gt 30) {
   throw "MaxRuntimeMinutes must be between 1 and 30."
 }
+if ($MaxItems -lt 1 -or $MaxItems -gt 44) { throw "MaxItems must be between 1 and 44." }
 $repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\.."))
 $configPath = Join-Path $repo "pixieology.config.json"
 $config = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
@@ -26,6 +29,8 @@ $childArguments = @(
   $studyScript,
   "--config", $configPath,
   "--run-id", $RunId,
+  "--study-id", $StudyId,
+  "--max-items", [string]$MaxItems,
   "--port", [string]$Port,
   "--startup-timeout", "180"
 )

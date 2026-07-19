@@ -198,8 +198,12 @@ def collect_generations(
     matrix: dict[str, Any],
     output_dir: Path,
     *,
-    request: Callable[..., Any] = multi_adapter_compare.request_json,
+    request: Callable[..., Any] | None = None,
+    existing_rows: list[dict[str, Any]] | None = None,
+    max_items: int | None = None,
+    identities_path: Path | None = None,
 ) -> list[dict[str, Any]]:
+    request = request or multi_adapter_compare.request_json
     models = request(base_url.rstrip("/") + "/v1/models")
     observed_aliases = {
         str(row.get("id")) for row in models.get("data", []) if isinstance(row, dict)
@@ -213,12 +217,19 @@ def collect_generations(
         identities[condition_id] = multi_adapter_compare.validate_identity(
             identity, matrix, condition_by_id[condition_id]
         )
-    server.atomic_json(output_dir / "identities.json", identities)
+    server.atomic_json(identities_path or output_dir / "identities.json", identities)
 
     raw_path = output_dir / "raw_generations.jsonl"
-    rows: list[dict[str, Any]] = []
+    rows = list(existing_rows or [])
+    plan = generation_plan(protocol)
+    validate_generation_prefix(rows, protocol)
     decoding = protocol["decoding"]
-    for item in generation_plan(protocol):
+    remaining = plan[len(rows) :]
+    if max_items is not None:
+        if max_items < 1:
+            raise NoninferiorityError("max_items must be positive")
+        remaining = remaining[:max_items]
+    for item in remaining:
         probe = item["probe"]
         payload = {
             "model": item["model_alias"],
@@ -255,10 +266,46 @@ def collect_generations(
         }
         server.append_jsonl_fsync(raw_path, row)
         rows.append(row)
-    expected = len(generation_plan(protocol))
-    if len(rows) != expected or len({(row["suite"], row["probe_id"], row["condition_id"]) for row in rows}) != expected:
+    if len({(row["suite"], row["probe_id"], row["condition_id"]) for row in rows}) != len(rows):
         raise NoninferiorityError("generation factorial is incomplete or duplicated")
     return rows
+
+
+def read_generation_rows(path: Path, protocol: dict[str, Any]) -> list[dict[str, Any]]:
+    if not path.is_file():
+        return []
+    rows: list[dict[str, Any]] = []
+    for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        try:
+            row = json.loads(raw)
+        except json.JSONDecodeError as exc:
+            raise NoninferiorityError(f"invalid generation JSONL line {line_number}: {exc}") from exc
+        if not isinstance(row, dict):
+            raise NoninferiorityError(f"generation line {line_number} is not an object")
+        rows.append(row)
+    validate_generation_prefix(rows, protocol)
+    return rows
+
+
+def validate_generation_prefix(rows: list[dict[str, Any]], protocol: dict[str, Any]) -> None:
+    plan = generation_plan(protocol)
+    if len(rows) > len(plan):
+        raise NoninferiorityError("generation checkpoint is longer than the frozen plan")
+    for index, row in enumerate(rows):
+        expected = plan[index]
+        expected_key = (
+            expected["suite"],
+            expected["probe"]["probe_id"],
+            expected["condition_id"],
+        )
+        observed_key = (row.get("suite"), row.get("probe_id"), row.get("condition_id"))
+        if row.get("schema_version") != "pixie_multi_adapter_noninferiority_generation_v1":
+            raise NoninferiorityError(f"generation {index} has the wrong schema")
+        if row.get("protocol_id") != protocol["protocol_id"] or observed_key != expected_key:
+            raise NoninferiorityError(f"generation {index} does not match the frozen plan prefix")
+        content = str(row.get("content") or "")
+        if not content or row.get("content_sha256") != server.sha256_value(content):
+            raise NoninferiorityError(f"generation {index} content hash mismatch")
 
 
 def cosine_semantic_scores(

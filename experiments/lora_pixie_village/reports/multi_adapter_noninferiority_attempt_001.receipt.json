@@ -1,0 +1,14 @@
+{
+  "error": "CompareError: request failed for http://127.0.0.1:58183/v1/chat/completions: HTTP Error 502: Bad Gateway",
+  "limitations": null,
+  "means": null,
+  "primary": null,
+  "protocol_id": "josie_companion_storyworld_noninferiority_v1",
+  "receipt": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\multi_adapter_noninferiority\\multi-adapter-ni-v1\\receipt.json",
+  "receipt_sha256": "a69dc0cb1d5eb9bce164818b5a1deeba449039359c573cba8db3e7f2f5e74932",
+  "run_id": "multi-adapter-ni-v1",
+  "schema_version": "pixie_multi_adapter_noninferiority_pointer_v1",
+  "secondary_joint": null,
+  "status": "FAIL_HARNESS",
+  "verdict": "NOT_ESTIMATED"
+}

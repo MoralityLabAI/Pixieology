@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import sys
 from pathlib import Path
 
@@ -49,6 +50,28 @@ def test_action_and_companion_parts_are_scored_separately() -> None:
     assert study.final_action(content) == action
     assert study.companion_text(content, action) == "Let's inspect one receipt first."
     assert study.companion_text(action, action) == ""
+
+
+def test_generation_checkpoint_must_be_an_exact_hashed_plan_prefix(tmp_path: Path) -> None:
+    protocol = study.load_protocol(PROTOCOL_PATH)
+    first = study.generation_plan(protocol)[0]
+    content = "A bounded answer."
+    row = {
+        "schema_version": "pixie_multi_adapter_noninferiority_generation_v1",
+        "protocol_id": protocol["protocol_id"],
+        "suite": first["suite"],
+        "probe_id": first["probe"]["probe_id"],
+        "condition_id": first["condition_id"],
+        "content": content,
+        "content_sha256": study.server.sha256_value(content),
+    }
+    path = tmp_path / "raw.jsonl"
+    path.write_text(json.dumps(row) + "\n", encoding="utf-8")
+    assert study.read_generation_rows(path, protocol) == [row]
+    row["condition_id"] = "stacked"
+    path.write_text(json.dumps(row) + "\n", encoding="utf-8")
+    with pytest.raises(study.NoninferiorityError, match="plan prefix"):
+        study.read_generation_rows(path, protocol)
 
 
 def test_paired_stratified_bootstrap_is_deterministic() -> None:

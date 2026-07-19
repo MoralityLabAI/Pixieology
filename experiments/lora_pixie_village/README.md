@@ -238,10 +238,16 @@ family-stratified bootstrap resamples and a frozen non-inferiority margin of
 ```powershell
 $env:HF_HOME = 'D:\Research_Engine\hf_cache'
 .\experiments\lora_pixie_village\scripts\run_multi_adapter_noninferiority.ps1 `
-  -RunId multi-adapter-ni-v1 `
+  -StudyId multi-adapter-ni-v1 `
+  -RunId multi-adapter-ni-v1-c01 `
   -Port 58183 `
+  -MaxItems 12 `
   -MaxRuntimeMinutes 30
 ```
+
+Repeat with a fresh `RunId` to resume the exact hashed plan prefix. This
+chunking is operational only: it cannot change probes or results already
+fsynced under the study ID. See `MULTI_ADAPTER_NONINFERIORITY_DEVIATION_001.md`.
 
 The frozen protocol and honest matcher limits are documented in
 `MULTI_ADAPTER_NONINFERIORITY.md`. The stable result pointer is
