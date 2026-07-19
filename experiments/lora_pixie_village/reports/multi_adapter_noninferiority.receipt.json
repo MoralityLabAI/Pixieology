@@ -1,0 +1,44 @@
+{
+  "error": "CompareError: request failed for http://127.0.0.1:58183/v1/chat/completions: timed out",
+  "limitations": null,
+  "means": null,
+  "primary": null,
+  "protocol_id": "josie_companion_storyworld_noninferiority_v1",
+  "receipt": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\multi_adapter_noninferiority\\multi-adapter-ni-v1\\chunks\\multi-adapter-ni-v1-c05\\receipt.json",
+  "receipt_sha256": "07a05601b3964fb1a0cbc11e71dea4f732a6818954613c37fc74d8d321c8002f",
+  "resource_attestation": {
+    "assertions": {
+      "cap_not_breached": true,
+      "cap_verified": true,
+      "cleanup_passed": true,
+      "no_lingering_owned_pids": true
+    },
+    "caps": {
+      "cpu_percent": 50,
+      "io_mb_per_second": 50,
+      "memory_gb": 2,
+      "timeout_minutes": 30
+    },
+    "cleanup": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\caps\\multi-adapter-ni-v1-c05.cleanup.json",
+    "cleanup_sha256": "b28d6d8a47803ca1ab6d7530130e8f5628d6ff2cb55b35588806e23127ecc0fe",
+    "gpu_compute_processes_after_cleanup": [
+      "12628, C:\\Program Files (x86)\\GOG Galaxy\\Games\\They Are Billions\\TheyAreBillions.exe, [N/A]",
+      "22916, C:\\Python311\\python.exe, [N/A]"
+    ],
+    "owned_pids": [
+      25080,
+      26292,
+      27472,
+      27764,
+      29528
+    ],
+    "peak_job_memory_bytes": 980537344,
+    "resource_summary": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\caps\\multi-adapter-ni-v1-c05.resource_summary.json",
+    "resource_summary_sha256": "b1d5e443537656dfd7d5b6e56a152911604799ddb919411e96ca31c708af8fe6"
+  },
+  "run_id": "multi-adapter-ni-v1-c05",
+  "schema_version": "pixie_multi_adapter_noninferiority_pointer_v1",
+  "secondary_joint": null,
+  "status": "FAIL_HARNESS",
+  "verdict": "NOT_ESTIMATED"
+}

@@ -49,12 +49,13 @@ $capWrapper = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\persona_traini
   -TimeoutMinutes $MaxRuntimeMinutes
 $result = $LASTEXITCODE
 
-if ($result -eq 0) {
+if ((Test-Path -LiteralPath $pointer) -and (Test-Path -LiteralPath $resourceSummary) -and (Test-Path -LiteralPath $cleanup)) {
   python (Join-Path $PSScriptRoot "finalize_multi_adapter_receipt.py") `
     --pointer $pointer `
     --resource-summary $resourceSummary `
     --cleanup $cleanup
-  $result = $LASTEXITCODE
+  $finalizeResult = $LASTEXITCODE
+  if ($result -eq 0) { $result = $finalizeResult }
 }
 
 exit $result

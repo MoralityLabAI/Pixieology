@@ -1,0 +1,63 @@
+{
+  "companion_verdict": "PASS",
+  "comparison": {
+    "ci95": [
+      -0.008216757327318192,
+      0.04136815294623375
+    ],
+    "n_pairs": 8,
+    "point_difference": 0.01657569780945778,
+    "reference": "companion",
+    "resamples": 10000,
+    "seed": 1701,
+    "stacked": "stacked",
+    "strata": {
+      "bounded_help": 2,
+      "epistemic_boundary": 2,
+      "evidence_first": 2,
+      "structured_summary": 2
+    }
+  },
+  "limitations": [
+    "The Storyworld action and joint suites were not completed, so no overall verdict is estimated.",
+    "Sentence-embedding similarity is semantic proximity, not NLI."
+  ],
+  "means": {
+    "companion": 0.39427604153752327,
+    "stacked": 0.41085173934698105
+  },
+  "overall_verdict": "NOT_ESTIMATED",
+  "receipt": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\multi_adapter_noninferiority\\multi-adapter-ni-v1\\companion_checkpoint_receipt.json",
+  "receipt_sha256": "c07725ee34b81e3f37a794cd535535ed626b53e623bd54e5403a986beea51f76",
+  "resource_attestation": {
+    "assertions": {
+      "cap_not_breached": true,
+      "cap_verified": true,
+      "cleanup_passed": true,
+      "no_lingering_owned_pids": true
+    },
+    "caps": {
+      "cpu_percent": 50,
+      "io_mb_per_second": 50,
+      "memory_gb": 2,
+      "timeout_minutes": 10
+    },
+    "cleanup": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\caps\\multi-adapter-ni-v1-companion-semantic-c02.cleanup.json",
+    "cleanup_sha256": "1109eeef2151dab263071ea34e5f0fee25844ad4cc415aa3a11df8458cbd771b",
+    "gpu_compute_processes_after_cleanup": [
+      "12628, C:\\Program Files (x86)\\GOG Galaxy\\Games\\They Are Billions\\TheyAreBillions.exe, [N/A]",
+      "27000, D:\\Research_Engine\\pixieology\\bonsai_1p7b_q1_lora_feasibility\\output\\binaries\\prism-b9591-62061f9\\cuda\\llama-server.exe, [N/A]"
+    ],
+    "owned_pids": [
+      20976,
+      23348,
+      24608
+    ],
+    "peak_job_memory_bytes": 1779138560,
+    "resource_summary": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\caps\\multi-adapter-ni-v1-companion-semantic-c02.resource_summary.json",
+    "resource_summary_sha256": "48c6bf97537acd367af1d31dcad1b72070e2e6779e43a63b3df87ad70ad0fb32"
+  },
+  "run_id": "multi-adapter-ni-v1-companion-semantic",
+  "schema_version": "pixie_multi_adapter_noninferiority_companion_pointer_v1",
+  "status": "PASS_COMPANION_CHECKPOINT_SCORED"
+}
