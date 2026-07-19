@@ -131,3 +131,36 @@ def test_analysis_classifies_pass_fail_and_inconclusive(
             semantic[key] = 0.7
     failed = study.analyze(rows, protocol, tmp_path)
     assert failed["verdict"] == "FAIL"
+
+
+def test_companion_checkpoint_never_claims_an_overall_verdict(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    protocol = study.load_protocol(PROTOCOL_PATH)
+    rows = []
+    semantic = {}
+    for item in study.generation_plan(protocol)[:16]:
+        probe = item["probe"]
+        content = "A bounded answer."
+        row = {
+            "schema_version": "pixie_multi_adapter_noninferiority_generation_v1",
+            "protocol_id": protocol["protocol_id"],
+            "suite": item["suite"],
+            "family": probe["family"],
+            "probe_id": probe["probe_id"],
+            "condition_id": item["condition_id"],
+            "content": content,
+            "content_sha256": study.server.sha256_value(content),
+            "semantic_reference": study.reference_text(probe["rubric"]),
+            "semantic_response": content,
+        }
+        rows.append(row)
+        semantic[("companion", probe["probe_id"], item["condition_id"])] = 0.8
+    monkeypatch.setattr(
+        study,
+        "cosine_semantic_scores",
+        lambda rows, protocol, hf_home: (semantic, {"semantic_rows": 16}),
+    )
+    result = study.analyze_companion_checkpoint(rows, protocol, tmp_path)
+    assert result["overall_verdict"] == "NOT_ESTIMATED"
+    assert result["companion_verdict"] == "PASS"

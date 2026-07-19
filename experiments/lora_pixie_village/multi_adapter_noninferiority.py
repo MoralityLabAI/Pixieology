@@ -35,6 +35,7 @@ import server  # noqa: E402
 
 SCHEMA_VERSION = "pixie_multi_adapter_noninferiority_v1"
 POINTER_SCHEMA = "pixie_multi_adapter_noninferiority_pointer_v1"
+COMPANION_POINTER_SCHEMA = "pixie_multi_adapter_noninferiority_companion_pointer_v1"
 CONDITION_ALIASES = {
     "base": "base-local",
     "companion": "companion-local",
@@ -528,6 +529,61 @@ def analyze(
             "Sentence-embedding similarity is semantic proximity, not NLI, and can miss negation or contradiction.",
             "The companion and Storyworld adapters were trained for different objectives and capacities.",
             "The small held-out suites yield wide uncertainty when paired outcomes vary.",
+        ],
+    }
+
+
+def analyze_companion_checkpoint(
+    rows: list[dict[str, Any]], protocol: dict[str, Any], hf_home: Path
+) -> dict[str, Any]:
+    """Score the completed companion prefix without estimating the full verdict."""
+    validate_generation_prefix(rows, protocol)
+    companion_rows = [row for row in rows if row["suite"] == "companion"]
+    if len(companion_rows) != 16 or any(row["suite"] != "companion" for row in rows):
+        raise NoninferiorityError("companion checkpoint requires exactly the frozen first 16 rows")
+    semantic, metadata = cosine_semantic_scores(companion_rows, protocol, hf_home)
+    scored = [
+        {
+            **row,
+            "metric": "companion_semantic",
+            "score": semantic[(row["suite"], row["probe_id"], row["condition_id"])],
+        }
+        for row in companion_rows
+    ]
+    bootstrap = protocol["bootstrap"]
+    comparison = paired_stratified_bootstrap(
+        scored,
+        reference="companion",
+        stacked="stacked",
+        resamples=bootstrap["resamples"],
+        seed=bootstrap["seed"],
+    )
+    margin = float(protocol["noninferiority_margin"])
+    if comparison["point_difference"] < -margin:
+        companion_verdict = "FAIL"
+    elif comparison["ci95"][0] >= -margin:
+        companion_verdict = "PASS"
+    else:
+        companion_verdict = "INCONCLUSIVE"
+    means = {
+        condition: statistics.fmean(
+            row["score"] for row in scored if row["condition_id"] == condition
+        )
+        for condition in ("companion", "stacked")
+    }
+    return {
+        "schema_version": "pixie_multi_adapter_companion_checkpoint_analysis_v1",
+        "protocol_id": protocol["protocol_id"],
+        "status": "PASS_COMPANION_CHECKPOINT_SCORED",
+        "overall_verdict": "NOT_ESTIMATED",
+        "companion_verdict": companion_verdict,
+        "noninferiority_margin": margin,
+        "means": means,
+        "comparison": comparison,
+        "semantic_scorer": metadata,
+        "limitations": [
+            "The Storyworld action and joint suites were not completed, so no overall verdict is estimated.",
+            "Sentence-embedding similarity is semantic proximity, not NLI.",
         ],
     }
 

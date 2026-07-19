@@ -106,6 +106,7 @@ def finalize_resource_attestation(
     allowed_schemas = {
         "pixie_multi_adapter_compare_pointer_v1",
         "pixie_multi_adapter_noninferiority_pointer_v1",
+        "pixie_multi_adapter_noninferiority_companion_pointer_v1",
     }
     if pointer.get("schema_version") not in allowed_schemas:
         raise CompareError("cannot finalize an unknown pointer schema")

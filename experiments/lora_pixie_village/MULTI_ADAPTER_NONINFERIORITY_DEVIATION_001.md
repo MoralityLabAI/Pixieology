@@ -28,3 +28,10 @@ Chunk `c04` then revealed the same legacy 240-second timeout in the local
 dual-LoRA proxy's upstream hop. The still-active llama task was canceled at
 that boundary. That hop now uses the same 900-second transport allowance. The
 unchanged parent Job Object remains authoritative at 30 minutes.
+
+Chunk `c05` used both corrected transport allowances and the minimal paired
+action unit. Its first request consumed the full 900 seconds without producing
+a response row. The process remained owned and compute-active, and cleanup
+passed. Per the registered bounded-run policy, the action and joint expansions
+stop here. The completed 16-row companion prefix is scored separately, while
+the overall scientific verdict remains `NOT_ESTIMATED`.
