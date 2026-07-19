@@ -23,3 +23,8 @@ and cleanup passed. The client timeout is therefore 900 seconds for subsequent
 requests, still subordinate to the unchanged 30-minute OS-enforced chunk
 timeout. Action chunks are reduced to four requested rows. This is transport
 and scheduling repair only; it does not alter model generation limits.
+
+Chunk `c04` then revealed the same legacy 240-second timeout in the local
+dual-LoRA proxy's upstream hop. The still-active llama task was canceled at
+that boundary. That hop now uses the same 900-second transport allowance. The
+unchanged parent Job Object remains authoritative at 30 minutes.

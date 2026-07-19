@@ -301,7 +301,10 @@ class DualProxyHandler(BaseHTTPRequestHandler):
             response = _json_request(
                 self.state.upstream_base_url + "/v1/chat/completions",
                 payload=forwarded,
-                timeout=240,
+                # Long symbolic prompts can exceed four minutes under the
+                # mandatory 50% CPU Job rate. The parent Job supplies the
+                # actual bounded-runtime stop.
+                timeout=900,
             )
         except urllib.error.HTTPError as exc:
             self._json(exc.code, {"error": "upstream_http_error", "detail": exc.read().decode("utf-8", "replace")})
