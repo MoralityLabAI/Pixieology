@@ -1,7 +1,7 @@
-# Fae Bench v1
+# Fae Bench v2
 
-`fae_bench` is a model-free persona-switch evaluator for JSONL records with
-four required string fields:
+`fae_bench` is a model-free evaluator for persona style and factual grounding.
+The v1 style metrics accept JSONL records with four required string fields:
 
 ```json
 {"prompt":"...","response":"...","mode":"fae|plain","condition":"..."}
@@ -21,6 +21,29 @@ The raw metrics are floats in `0..1`:
 used by Control-Harness environments. Install the optional Verifiers extra in
 the cloud runtime; local deterministic scoring does not import that stack.
 
-`fae_bench.judge` documents a provider-neutral structured rubric. It makes no
-network calls, reads no environment keys, and raises until the caller injects a
-`JudgeProvider` implementation.
+## Grounding metrics
+
+The v2 grounding metrics accept a non-empty `narration` (or `response`) and the
+ALife `fact_list`; an optional `window` improves ordering and unsupported-entity
+checks:
+
+```json
+{"episode_id":"episode-1","narration":"...","fact_list":[{"predicate":"born_at_tick","subject":"e00000001","value":2}],"window":[]}
+```
+
+- `fact_recall`: fraction of atomic facts lexically entailed by at least one
+  narration statement;
+- `contradiction_rate`: fraction of statements with a detectable entity,
+  number/tick, ordering, cause, or negation conflict;
+- `unsupported_claim_rate`: fraction of statements containing an event, cause,
+  or constrained entity assertion with no matching fact.
+
+Aliases and exact-by-default numeric tolerances are versioned in
+`data/grounding_rules_v1.yaml`. These are lexical matchers, not NLI. They can
+miss novel paraphrases and can over-flag figurative uses of registered event
+terms. `fae_bench.judge.llm_grounding_judge` is the stronger semantic check and
+requires an injected provider; the package makes no network calls and reads no
+credentials.
+
+`fae_bench.grounding_taskset` mirrors the v1 Verifiers adapter and consumes the
+chronicle env rows without rewriting `episode_id`, `window`, or `fact_list`.

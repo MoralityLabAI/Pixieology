@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fae-bench"
-version = "0.1.0"
-description = "Portable lexical persona-switch evaluation for Pixieology."
+version = "0.2.0"
+description = "Portable lexical style and factual-grounding evaluation for Pixieology."
 readme = "fae_bench/README.md"
 requires-python = ">=3.10"
 dependencies = [

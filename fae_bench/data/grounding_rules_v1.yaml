@@ -1,0 +1,142 @@
+version: fae_grounding_rules_v1
+description: Deterministic lexical aliases and exact-by-default numeric tolerances for ALife chronicle facts.
+entity_aliases:
+  ember-1:
+    - ember-1
+    - ember 1
+    - ember one
+  grove/north:
+    - grove/north
+    - grove north
+    - north grove
+predicate_aliases:
+  born_at_tick:
+    - born
+    - appeared
+    - awoke
+    - awakened
+  born_as_kind:
+    - born as
+    - appeared as
+  born_in_plane:
+    - born in
+    - appeared in
+  born_at_position:
+    - born at
+    - appeared at
+  has_parent:
+    - parent
+    - child of
+    - descended from
+  died_at_tick:
+    - died
+    - perished
+    - fell
+  died_in_plane:
+    - died in
+    - perished in
+    - fell in
+  death_cause_chain:
+    - died because
+    - death was caused
+    - perished from
+    - fell because
+  participated_in_event:
+    - participated
+    - took part
+    - joined
+  window_event_count:
+    - occurred
+    - happened
+    - were recorded
+    - were seen
+event_aliases:
+  birth:
+    - birth
+    - births
+    - born
+    - appeared
+    - awoke
+  death:
+    - death
+    - deaths
+    - died
+    - perished
+    - fell
+  bloom:
+    - bloom
+    - blooms
+    - bloomed
+    - blossomed
+  gate_crossing:
+    - gate crossing
+    - crossed the gate
+    - passed through the gate
+  gate_transfer:
+    - gate transfer
+    - crossed the gate
+    - passed through the gate
+  kind_transition:
+    - kind transition
+    - transformed
+    - changed kind
+  meme_attachment:
+    - meme attachment
+    - attached a meme
+  insight_drift:
+    - insight drift
+    - insight shifted
+  storm:
+    - storm
+    - storms
+cause_aliases:
+  initial_seed:
+    - initial seed
+    - seeded initially
+  cellular_birth:
+    - cellular birth
+    - local birth rule
+  survival_or_energy_rule:
+    - survival rule
+    - energy rule
+    - energy loss
+    - starvation
+  adjacent_meme:
+    - adjacent meme
+    - nearby meme
+  storm:
+    - storm
+    - storms
+negation_terms:
+  - not
+  - never
+  - "no"
+  - did not
+  - didn't
+  - was not
+  - wasn't
+  - without
+cause_cues:
+  - because
+  - because of
+  - caused by
+  - due to
+  - from
+ordering_terms:
+  before:
+    - before
+    - earlier than
+    - prior to
+  after:
+    - after
+    - later than
+    - following
+numeric_tolerances:
+  default:
+    absolute: 0
+  tick:
+    absolute: 0
+  count:
+    absolute: 0
+  position:
+    absolute: 0
