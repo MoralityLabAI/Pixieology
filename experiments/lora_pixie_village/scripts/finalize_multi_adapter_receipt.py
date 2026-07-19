@@ -28,7 +28,7 @@ def main(argv: list[str] | None = None) -> int:
         args.cleanup.expanduser().resolve(),
     )
     print(json.dumps(pointer, ensure_ascii=False, indent=2, sort_keys=True))
-    return 0 if pointer["status"] == "PASS" else 1
+    return 0 if str(pointer["status"]).startswith("PASS") else 1
 
 
 if __name__ == "__main__":

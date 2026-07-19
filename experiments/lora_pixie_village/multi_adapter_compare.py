@@ -103,7 +103,11 @@ def finalize_resource_attestation(
     pointer = read_json_object(pointer_path)
     summary = read_json_object(resource_summary_path)
     cleanup = read_json_object(cleanup_path)
-    if pointer.get("schema_version") != "pixie_multi_adapter_compare_pointer_v1":
+    allowed_schemas = {
+        "pixie_multi_adapter_compare_pointer_v1",
+        "pixie_multi_adapter_noninferiority_pointer_v1",
+    }
+    if pointer.get("schema_version") not in allowed_schemas:
         raise CompareError("cannot finalize an unknown pointer schema")
     pointer.setdefault("run_id", summary.get("run_id"))
     assertions = {

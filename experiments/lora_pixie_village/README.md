@@ -226,6 +226,32 @@ component scales, route identity, inference, and registered action markers. It
 does not by itself establish semantic persona retention or non-inferiority of
 the stacked condition.
 
+## Multi-adapter retention study
+
+The preregistered follow-up measures whether the additive stack retains each
+singleton adapter's behavior. Companion retention is scored with a pinned,
+offline MiniLM cosine matcher over blinded outputs; Storyworld retention is an
+exact final-action score. Both primary paired differences use 10,000
+family-stratified bootstrap resamples and a frozen non-inferiority margin of
+0.05. Run it under the same hard resource controls with:
+
+```powershell
+$env:HF_HOME = 'D:\Research_Engine\hf_cache'
+.\experiments\lora_pixie_village\scripts\run_multi_adapter_noninferiority.ps1 `
+  -RunId multi-adapter-ni-v1 `
+  -Port 58183 `
+  -MaxRuntimeMinutes 30
+```
+
+The frozen protocol and honest matcher limits are documented in
+`MULTI_ADAPTER_NONINFERIORITY.md`. The stable result pointer is
+`reports/multi_adapter_noninferiority.receipt.json`; raw generations, scored
+rows, and the rendered report remain under the configured runtime root.
+`PASS_COMPLETED` means the harness and resource attestation completed; the
+scientific verdict is separately and explicitly `PASS`, `FAIL`, or
+`INCONCLUSIVE`. Embedding similarity is a cheap semantic-proximity measure, not
+NLI or proof that contradictions are absent.
+
 ## Real Bonsai control smoke
 
 The configured Bonsai feasibility artifacts support a real, bounded integration

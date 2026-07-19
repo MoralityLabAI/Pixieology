@@ -97,3 +97,30 @@ def test_resource_finalizer_fails_closed_and_hashes_receipts(tmp_path: Path) -> 
     )
     failed = compare.finalize_resource_attestation(pointer_path, summary_path, cleanup_path)
     assert failed["status"] == "FAIL"
+
+
+def test_resource_finalizer_accepts_completed_noninferiority_pointer(tmp_path: Path) -> None:
+    pointer_path = tmp_path / "pointer.json"
+    summary_path = tmp_path / "summary.json"
+    cleanup_path = tmp_path / "cleanup.json"
+    pointer_path.write_text(
+        json.dumps(
+            {
+                "schema_version": "pixie_multi_adapter_noninferiority_pointer_v1",
+                "status": "PASS_COMPLETED",
+                "verdict": "INCONCLUSIVE",
+            }
+        ),
+        encoding="utf-8",
+    )
+    summary_path.write_text(
+        json.dumps({"cap_verified": True, "cap_breached": False, "caps": {}}),
+        encoding="utf-8",
+    )
+    cleanup_path.write_text(
+        json.dumps({"cleanup_passed": True, "lingering_owned_pids": []}),
+        encoding="utf-8",
+    )
+    finalized = compare.finalize_resource_attestation(pointer_path, summary_path, cleanup_path)
+    assert finalized["status"] == "PASS_COMPLETED"
+    assert finalized["verdict"] == "INCONCLUSIVE"
