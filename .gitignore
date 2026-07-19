@@ -15,6 +15,10 @@ GPTStoryworld.zip
 ConstitutionalAlignment.zip
 FaeKawaii_Sweep_Artifacts.zip
 pixieology_legacy_artifacts_*.zip
+fae_tax_results_*.zip
+fae_tax_results_*.zip.sha256
+/external/
+/roadmap.md.txt
 .artifact_staging/
 artifacts/
 /data/
