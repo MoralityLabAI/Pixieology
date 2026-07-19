@@ -15,3 +15,11 @@ in protocol hash, matrix hash, plan order, row schema, or content hash aborts.
 
 This deviation changes execution scheduling only. It was implemented, tested,
 committed, and pushed before resuming model generation.
+
+Chunk `c03` completed the companion prefix (16/44) but the first longer
+symbolic action prompt exceeded the generic 240-second HTTP client timeout
+while llama.cpp was still actively evaluating it. The Job cap did not breach
+and cleanup passed. The client timeout is therefore 900 seconds for subsequent
+requests, still subordinate to the unchanged 30-minute OS-enforced chunk
+timeout. Action chunks are reduced to four requested rows. This is transport
+and scheduling repair only; it does not alter model generation limits.

@@ -241,7 +241,13 @@ def collect_generations(
             "seed": decoding["seed"],
             "max_tokens": item["max_tokens"],
         }
-        response = request(base_url.rstrip("/") + "/v1/chat/completions", payload=payload)
+        # Symbolic prompts can take several minutes at the mandatory 50% Job
+        # CPU rate. The outer 30-minute Job timeout remains the hard bound.
+        response = request(
+            base_url.rstrip("/") + "/v1/chat/completions",
+            payload=payload,
+            timeout=900,
+        )
         content = multi_adapter_compare.extract_content(response)
         expected_action = probe.get("expected_action")
         action = final_action(content) if expected_action else None
