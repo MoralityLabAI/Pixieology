@@ -1,0 +1,57 @@
+schema_version: 1
+task_id: bonsai_1p7b_q1_lora_feasibility_v1
+seed: 17
+model:
+  unpacked_id: prism-ml/Bonsai-1.7B-unpacked
+  unpacked_revision: a7f720bd688d7563714f3118edd97b83d06f0615
+  unpacked_weight_sha256: cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b
+  gguf_id: prism-ml/Bonsai-1.7B-gguf
+  gguf_revision: 210a9e99f79cb184909d49595906526eb2b3dd9a
+  gguf_filename: Bonsai-1.7B-Q1_0.gguf
+  gguf_sha256: 3d7c6c90dd98717a203adb22d5eacd2581850e40aa5327e144b97766cae5f7e3
+llama_cpp:
+  repository: https://github.com/PrismML-Eng/llama.cpp.git
+  revision: 62061f91088281e65071cc38c5f69ee95c39f14e
+  release_tag: prism-b9591-62061f9
+paths:
+  hf_home: ${HF_HOME}
+  model_cache: ${MODEL_CACHE}
+  data_root: ${DATA_ROOT}
+  output_root: ${OUTPUT_ROOT}
+  llama_cpp_root: ${LLAMA_CPP_ROOT}
+caps:
+  ram_gb: 10
+  cpu_percent: 50
+  io_mb_per_second: 50
+  max_runtime_minutes: 30
+  max_optimizer_steps: 100
+  checkpoint_steps: 5
+  checkpoint_minutes: 5
+training:
+  profile: auto
+  sequence_length: 512
+  rank: 8
+  alpha: 16
+  dropout: 0.0
+  target_modules: all-linear
+  micro_batch_size: 1
+  gradient_accumulation_steps: 16
+  total_steps: 30
+  learning_rate: 0.0002
+  warmup_steps: 2
+  weight_decay: 0.0
+  compute_dtype: float16
+  quant_type: nf4
+  double_quant: true
+  gradient_checkpointing: true
+  optimizer: paged_adamw_8bit
+  max_grad_norm: 1.0
+evaluation:
+  max_new_tokens: 48
+  canary: PIXIE_PIPELINE_OK_17
+  style_marker: sproutlight
+  min_canary_hits: 6
+  min_marker_hits: 6
+  min_improvement: 4
+  max_q1_regression: 2
+

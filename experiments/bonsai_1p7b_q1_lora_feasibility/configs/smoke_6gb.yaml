@@ -1,0 +1,7 @@
+extends: smoke_auto.yaml
+training:
+  profile: 6gb
+  sequence_length: 768
+  rank: 8
+  gradient_accumulation_steps: 16
+
