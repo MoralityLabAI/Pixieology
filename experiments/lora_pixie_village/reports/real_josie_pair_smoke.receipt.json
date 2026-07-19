@@ -1,0 +1,22 @@
+{
+  "assertions": {
+    "both_lora_routes_invoked": true,
+    "calibration_outputs_distinct": true,
+    "calibration_outputs_nonempty": true,
+    "four_free_turns": true,
+    "free_turns_are_nonrepeating_dialogue": true,
+    "free_turns_strictly_alternate": true,
+    "launch_stopped_cleanly": true,
+    "strict_attestation_passed": true,
+    "thread_attached_after_free_talk": true,
+    "threaded_proposals_present": true,
+    "two_loaded_loras_inactive_by_default": true,
+    "two_threaded_turns": true
+  },
+  "limitation": "The companion adapter is persona-tuned and the storyworld adapter is action-tuned; this is two trained LoRA residents, not two independently persona-tuned residents.",
+  "receipt": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\real_josie_pair_smokes\\real-josie-pair-v7\\receipt.json",
+  "receipt_sha256": "0e796fa6ec657aa5bdf976ca4cb39c1cd05da1c4fe2add267c9296f3265eae45",
+  "run_id": "real-josie-pair-v7",
+  "schema_version": "pixie_real_josie_pair_smoke_pointer_v1",
+  "status": "PASS"
+}

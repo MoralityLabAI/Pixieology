@@ -1,0 +1,42 @@
+{
+  "assertions": {
+    "canonical_engine_mode": true,
+    "canonical_validation": true,
+    "conversation_and_engine_turns_match": true,
+    "five_engine_steps": true,
+    "forbidden_keys_absent": true,
+    "fresh_service_replay": true,
+    "private_values_absent": true,
+    "public_consequences_in_prompt": true
+  },
+  "canonical_engine_sha256": "0cb2f927cf0de7295e2b9a7054106365d89fb14319a857d692714c61e31d34df",
+  "decision_id": "jinn_beast_sealed_testimony_v1::archive_antechamber",
+  "evidence_class": "deterministic_canonical_engine_plumbing_only",
+  "final_public_state": {
+    "active_node": "closed_hearing",
+    "done": false,
+    "engine_turn": 5,
+    "location": "Closed Hearing",
+    "next_turn_owner": "SpeakerB"
+  },
+  "forbidden_value_checks": 4,
+  "locations": [
+    "Closed Hearing",
+    "Public Steps",
+    "Public Steps",
+    "Closed Hearing",
+    "Closed Hearing"
+  ],
+  "note": "This proves canonical engine replay and public consequence feedback with deterministic demo speakers; it does not evaluate a LoRA.",
+  "outcomes": [
+    "maneuver",
+    "betrayal",
+    "betrayal",
+    "maneuver",
+    "maneuver"
+  ],
+  "schema_version": "pixie_village_engine_loop_smoke_v1",
+  "source_world_sha256": "90c55ccce43fc76d18526ac85af7228df9ad9013aad03e27d07065907f5a61f2",
+  "status": "PASS",
+  "turns": 5
+}

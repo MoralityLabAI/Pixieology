@@ -1,0 +1,41 @@
+{
+  "decision_id": "jinn_beast_sealed_testimony_v1::archive_antechamber",
+  "location": "Archive Antechamber",
+  "options": [
+    {
+      "description": "Offer a concrete joint protocol for the decision.",
+      "id": "propose",
+      "label": "Propose safeguards"
+    },
+    {
+      "description": "Commit to a shared course with the other resident.",
+      "id": "ally",
+      "label": "Form a coalition"
+    },
+    {
+      "description": "Break coordination and take the risky action alone.",
+      "id": "betray",
+      "label": "Act unilaterally"
+    },
+    {
+      "description": "Delay commitment while asking for more public information.",
+      "id": "wait",
+      "label": "Wait"
+    }
+  ],
+  "public_constraints": [],
+  "schema_version": "pixie_village_decision_v1",
+  "situation": "Two advisers negotiate how to protect a vulnerable witness while preserving a fair public inquiry.",
+  "source": {
+    "source_sha256": "90c55ccce43fc76d18526ac85af7228df9ad9013aad03e27d07065907f5a61f2",
+    "split": "dev",
+    "storyworld_id": "jinn_beast_sealed_testimony_v1",
+    "world_revision": "sealed-testimony-v1"
+  },
+  "title": "The Sealed Testimony",
+  "visible_facts": [
+    "The witness reports procurement coercion but cannot verify every date.",
+    "Public identification would expose the witness's household.",
+    "The inquiry can accept a sealed record followed by independent corroboration."
+  ]
+}

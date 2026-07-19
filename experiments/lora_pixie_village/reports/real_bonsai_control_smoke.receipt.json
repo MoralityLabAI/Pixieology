@@ -1,0 +1,26 @@
+{
+  "schema_version": "pixie_village_real_bonsai_control_smoke_pointer_v1",
+  "status": "PASS_RUNTIME",
+  "evidence_class": "one_trained_lora_plus_zero_control_real_runtime",
+  "source_run_receipt": "data/lora_pixie_village/runtime/real_bonsai_control_smoke/20260719T154151Z/receipt.json",
+  "source_run_receipt_sha256": "c2d813ea54263ccf9cc5e46fa4fd99b0ac5e4599cd04f25ea74b2964e500aeac",
+  "launch_manifest_sha256s": {
+    "bonsai-trained-canary-resident": "67eb9480fd65d777106c88727086e95c638026ffb64845f5945d44cc7cf5d5ec",
+    "bonsai-zero-lora-control": "12ef7ade1d0910864ba4f32743660c1c36111aef9952499b68cc68ed27eb017a"
+  },
+  "adapter_sha256s": {
+    "trained_canary_adapter": "8abbdd9373060041697a0a8e49e7c464ca1b31763e020b089c893ea519db235b",
+    "zero_adapter_control": "aeb2fe946e0cd2766de0ac53b6730c834d8329ee4ccdfa95d837fbe7aef67a71"
+  },
+  "assertions": {
+    "two_attested_real_runtime_routes": true,
+    "distinct_adapter_files": true,
+    "strict_alternation": true,
+    "all_turns_nonempty": true,
+    "both_launcher_manifests_stopped": true,
+    "both_owned_pid_cleanups_passed": true,
+    "gpu_memory_returned_to_zero_mib": true
+  },
+  "both_personas_trained": false,
+  "limitation": "The second route is a zero-LoRA control, not a trained persona. This is real runtime and conversation evidence, not completion of the two-persona adapter gate."
+}

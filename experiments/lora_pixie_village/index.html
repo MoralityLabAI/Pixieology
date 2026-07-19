@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="A local two-agent conversation room for independently served LoRA Pixies.">
+  <title>LoRA Pixie Village · Conversation Room</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">LORA PIXIE VILLAGE · PHASE 1</p>
+        <h1>Two residents, one shared hearth.</h1>
+        <p class="lede">A local platform where two separately served persona adapters talk to each other. Storyworld decisions can be threaded into an existing conversation afterward.</p>
+      </div>
+      <div class="server-state" aria-live="polite">
+        <span id="health-dot" class="health-dot"></span>
+        <span id="server-status">Connecting to local room…</span>
+      </div>
+    </header>
+
+    <section class="setup-card" aria-labelledby="setup-title">
+      <div>
+        <p class="section-kicker">PUBLIC TOPIC</p>
+        <h2 id="setup-title">What should they talk about?</h2>
+      </div>
+      <label class="topic-field" for="topic-input">
+        <span>Conversation seed</span>
+        <textarea id="topic-input" rows="3" maxlength="2000">How should two small persona adapters share a village without flattening each other's character?</textarea>
+      </label>
+      <button id="open-room" class="primary" type="button">Open room</button>
+    </section>
+
+    <section class="thread-card" aria-labelledby="thread-title">
+      <div>
+        <p class="section-kicker">OPTIONAL CONTEXT LAYER</p>
+        <h2 id="thread-title">Thread in a Storyworld decision</h2>
+        <p>First open a conversation. Then give both residents the same validated public decision card to discuss.</p>
+      </div>
+      <label class="mode-field" for="storyworld-thread-select">
+        <span>Decision thread</span>
+        <select id="storyworld-thread-select">
+          <option value="">Choose a public decision</option>
+        </select>
+      </label>
+      <button id="thread-decision" type="button" disabled>Thread into conversation</button>
+    </section>
+
+    <section id="decision-card" class="decision-card" aria-labelledby="decision-title" hidden>
+      <div class="decision-heading">
+        <div>
+          <p class="section-kicker">THREADED PUBLIC STORYWORLD DECISION</p>
+          <h2 id="decision-title"></h2>
+          <p id="decision-location" class="decision-location"></p>
+        </div>
+        <span id="decision-source" class="source-badge"></span>
+      </div>
+      <p id="decision-situation" class="decision-situation"></p>
+      <div id="engine-strip" class="engine-strip">
+        <span id="engine-mode">Discussion context only</span>
+        <span id="engine-location">World not started</span>
+        <span id="engine-turn">Engine turn 0</span>
+      </div>
+      <div class="decision-columns">
+        <div>
+          <h3>Visible facts</h3>
+          <ul id="decision-facts"></ul>
+        </div>
+        <div>
+          <h3>Legal proposals</h3>
+          <ul id="decision-options" class="decision-options"></ul>
+        </div>
+      </div>
+      <ol id="world-history" class="world-history" aria-label="Public Storyworld consequences"></ol>
+    </section>
+
+    <section class="room" aria-label="Two-agent conversation room">
+      <article id="agent-left" class="resident resident-left" aria-live="polite">
+        <div class="portrait"><span class="resident-glyph">✦</span></div>
+        <div>
+          <p class="resident-role">RESIDENT A</p>
+          <h2 class="resident-name">Waiting…</h2>
+          <p class="adapter-badge">No provider</p>
+        </div>
+        <p class="speech-preview">Open a room to begin.</p>
+      </article>
+
+      <div class="hearth" aria-hidden="true">
+        <span class="ember ember-a"></span>
+        <span class="ember ember-b"></span>
+        <span class="ember ember-c"></span>
+        <div class="flame"></div>
+        <div class="hearth-stone"></div>
+      </div>
+
+      <article id="agent-right" class="resident resident-right" aria-live="polite">
+        <div class="portrait"><span class="resident-glyph">❧</span></div>
+        <div>
+          <p class="resident-role">RESIDENT B</p>
+          <h2 class="resident-name">Waiting…</h2>
+          <p class="adapter-badge">No provider</p>
+        </div>
+        <p class="speech-preview">Open a room to begin.</p>
+      </article>
+    </section>
+
+    <section class="console" aria-labelledby="transcript-title">
+      <div class="console-head">
+        <div>
+          <p class="section-kicker">PUBLIC TRANSCRIPT</p>
+          <h2 id="transcript-title">Hearth log</h2>
+        </div>
+        <div class="session-readout">
+          <span>Session</span>
+          <code id="session-id">not started</code>
+        </div>
+      </div>
+
+      <ol id="transcript" class="transcript" aria-live="polite" aria-relevant="additions">
+        <li class="empty-log">No turns yet. The server will always choose the next resident.</li>
+      </ol>
+
+      <div class="transport" aria-label="Conversation controls">
+        <button id="play" class="primary" type="button" disabled>Play</button>
+        <button id="pause" type="button" disabled>Pause</button>
+        <button id="step" type="button" disabled>One turn</button>
+        <label for="pace">Pace
+          <select id="pace">
+            <option value="3500">Thoughtful · 3.5s</option>
+            <option value="1800" selected>Natural · 1.8s</option>
+            <option value="700">Quick · 0.7s</option>
+          </select>
+        </label>
+        <button id="export" type="button" disabled>Export JSON</button>
+      </div>
+      <p id="turn-status" class="turn-status">Paused · no active session</p>
+    </section>
+
+    <aside class="boundary-note">
+      <strong>Isolation boundary:</strong> the two-agent transcript is the platform. Only the public topic, an optionally threaded validated decision card, and public speech cross between residents.
+      Adapter endpoints, keys, models, private system prompts, hidden world state, and seat-private evidence stay outside the room.
+    </aside>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

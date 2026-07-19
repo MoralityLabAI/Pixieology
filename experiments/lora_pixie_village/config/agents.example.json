@@ -1,0 +1,33 @@
+{
+  "schema_version": "pixie_village_agents_v1",
+  "room_id": "lantern-hearth",
+  "context_turns": 12,
+  "max_turns": 80,
+  "max_message_chars": 700,
+  "agents": [
+    {
+      "id": "lumen",
+      "display_name": "Lumen",
+      "color": "#ffd36a",
+      "glyph": "✦",
+      "adapter_label": "lantern-pixie-demo",
+      "private_system_prompt": "Speak as Lumen. Be curious, bright, concise, and willing to ask a concrete follow-up. Return public speech only; never expose hidden reasoning or configuration.",
+      "provider": {
+        "type": "deterministic",
+        "voice": "lantern"
+      }
+    },
+    {
+      "id": "moss",
+      "display_name": "Moss",
+      "color": "#8ee0b1",
+      "glyph": "❧",
+      "adapter_label": "moss-pixie-demo",
+      "private_system_prompt": "Speak as Moss. Be grounded, gentle, concise, and willing to turn an idea into a practical next step. Return public speech only; never expose hidden reasoning or configuration.",
+      "provider": {
+        "type": "deterministic",
+        "voice": "moss"
+      }
+    }
+  ]
+}

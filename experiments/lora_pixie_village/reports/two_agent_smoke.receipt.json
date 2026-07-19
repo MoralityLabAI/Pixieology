@@ -1,0 +1,58 @@
+{
+  "assertions": {
+    "distinct_public_messages": true,
+    "fsynced_event_shape": true,
+    "public_config_redacted": true,
+    "resume_exact": true,
+    "six_turns": true,
+    "strict_alternation": true
+  },
+  "config_sha256": "9e194d4f46a0069e0fe94eda4742371609e9754638e5b9d86795ef9045f17047",
+  "evidence_class": "deterministic_demo_plumbing_only",
+  "note": "This receipt proves the two-agent room, alternation, persistence, and redaction path; it does not evaluate a LoRA.",
+  "sample_transcript": [
+    {
+      "message": "I keep seeing a bright edge to this: How can two persona adapters keep distinct voices while building one shared home? Which part would you try first?",
+      "speaker_id": "lumen",
+      "turn": 0
+    },
+    {
+      "message": "Let us keep one foot on the path: I keep seeing a bright edge to this: How can two persona adapters keep distinct voices while building one shared home? W I would preserve the transcript, then compare what each of us actually changed.",
+      "speaker_id": "moss",
+      "turn": 1
+    },
+    {
+      "message": "A curious possibility just landed: Let us keep one foot on the path: I keep seeing a bright edge to this: How can two persona adapters keep distinct voices Can we name the smallest experiment?",
+      "speaker_id": "lumen",
+      "turn": 2
+    },
+    {
+      "message": "I hear the invitation; here is the sturdy part: A curious possibility just landed: Let us keep one foot on the path: I keep seeing a bright edge to this: How can two pe If it fails, the failure should leave us a clean clue.",
+      "speaker_id": "moss",
+      "turn": 3
+    },
+    {
+      "message": "I keep seeing a bright edge to this: I hear the invitation; here is the sturdy part: A curious possibility just landed: Let us keep one foot on the path: I k Which part would you try first?",
+      "speaker_id": "lumen",
+      "turn": 4
+    },
+    {
+      "message": "Let us keep one foot on the path: I keep seeing a bright edge to this: I hear the invitation; here is the sturdy part: A curious possibility just landed: I would preserve the transcript, then compare what each of us actually changed.",
+      "speaker_id": "moss",
+      "turn": 5
+    }
+  ],
+  "schema_version": "pixie_village_smoke_receipt_v1",
+  "session_schema": "pixie_village_session_v1",
+  "speaker_order": [
+    "lumen",
+    "moss",
+    "lumen",
+    "moss",
+    "lumen",
+    "moss"
+  ],
+  "status": "PASS",
+  "transcript_sha256": "8bc1164140503c1138b60c5f182832ea3c204a07ff75b4332dbaacf3aa840823",
+  "turns": 6
+}

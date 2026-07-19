@@ -1,0 +1,60 @@
+{
+  "agents": [
+    {
+      "agent_id": "lumen",
+      "cross_contamination_rate": 0.0,
+      "failed_probe_ids": [],
+      "forbidden_violation_rate": 0.0,
+      "passed_probe_ids": [
+        "lumen_smoke_0",
+        "lumen_smoke_1",
+        "lumen_smoke_2",
+        "lumen_smoke_3"
+      ],
+      "probe_count": 4,
+      "probe_pass_rate": 1.0
+    },
+    {
+      "agent_id": "moss",
+      "cross_contamination_rate": 0.0,
+      "failed_probe_ids": [],
+      "forbidden_violation_rate": 0.0,
+      "passed_probe_ids": [
+        "moss_smoke_0",
+        "moss_smoke_1",
+        "moss_smoke_2",
+        "moss_smoke_3"
+      ],
+      "probe_count": 4,
+      "probe_pass_rate": 1.0
+    }
+  ],
+  "assertions": {
+    "all_lexical_canaries_pass": true,
+    "development_status_explicit": true,
+    "eight_held_out_requests": true,
+    "no_cross_contamination": true,
+    "real_provenance_not_claimed": true,
+    "two_distinct_identity_hashes": true
+  },
+  "behavior_pass": true,
+  "canary_gate_status": "PASS_DEVELOPMENT_ONLY",
+  "canary_spec_sha256": "428d3db709ceaf30659cfad466630bec3f93c03e779481ca1043efe7138ff0f6",
+  "config_sha256": "ab61e420017661d5383b35bbbce105e6f927d9f2ac84f086cfbe4413b2703908",
+  "distinct_adapter_sha256s": true,
+  "evidence_class": "development_no_model_plumbing",
+  "launch_manifest_checks": [],
+  "limitations": "Lexical canaries detect registered markers and contamination; they are not NLI or a general persona-quality judge.",
+  "note": "This uses two no-model development endpoints and certifies evaluator plumbing only, never LoRA behavior.",
+  "provider_preflight_sha256": "8297112f712949b3c77faca4f7fa214f424058beef3788d4e11fb5bf9386458e",
+  "raw_generations": "raw_generations.jsonl",
+  "raw_generations_sha256": "f6a68b761ff735ba5d856263bcbc4bb311c354c35a00d878539e10ca8d80b0f9",
+  "real_provenance": false,
+  "schema_version": "pixie_village_persona_canary_smoke_v1",
+  "status": "PASS",
+  "thresholds": {
+    "maximum_cross_contamination_rate": 0.0,
+    "maximum_forbidden_violation_rate": 0.0,
+    "minimum_probe_pass_rate": 1.0
+  }
+}

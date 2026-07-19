@@ -1,0 +1,52 @@
+{
+  "assertions": {
+    "all_proposals_legal": true,
+    "alternating_http_voices": true,
+    "canonical_engine_turns": true,
+    "no_model_weights_used": true,
+    "private_values_absent": true,
+    "public_config_redacted": true,
+    "public_consequences_present": true,
+    "strict_attestation": true,
+    "two_unique_routes": true
+  },
+  "attested_development_adapter_sha256s": [
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  ],
+  "evidence_class": "development_mock_http_routing_only",
+  "lora_behavior_evaluated": false,
+  "model_weights_loaded": false,
+  "note": "This certifies endpoint separation, attestation plumbing, and canonical-world routing using no-model development endpoints. It is not a LoRA result.",
+  "outcomes": [
+    "maneuver",
+    "maneuver",
+    "maneuver",
+    "maneuver"
+  ],
+  "proposals": [
+    "propose",
+    "propose",
+    "propose",
+    "propose"
+  ],
+  "provider_preflight_status": "PASS_ATTESTED",
+  "route_sha256s": [
+    "8f17fd67dfde97758453308e5f99fb16a8824fe0c1c90ca74fefc59a602674f7",
+    "d5d3d21febf9095333a0c7b21506b81ded24b337c439886a4f02a30bf6247103"
+  ],
+  "schema_version": "pixie_village_dual_http_smoke_v1",
+  "speaker_order": [
+    "lumen",
+    "moss",
+    "lumen",
+    "moss"
+  ],
+  "status": "PASS",
+  "voices": [
+    "LUMEN_HTTP",
+    "MOSS_HTTP",
+    "LUMEN_HTTP",
+    "MOSS_HTTP"
+  ]
+}

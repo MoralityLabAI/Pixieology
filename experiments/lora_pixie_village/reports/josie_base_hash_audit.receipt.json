@@ -1,0 +1,33 @@
+{
+  "schema_version": "pixie_josie_base_hash_audit_v1",
+  "status": "PASS",
+  "files": {
+    "bf16": {
+      "config_key": "lora_pixie_josie_base_bf16_gguf",
+      "bytes": 3447349024,
+      "raw_file_sha256": "4abc7a6f30953b883d41f8e3f7f1a9ab3083dfbd361e5fdace576ff77dd72b1f"
+    },
+    "q4_k_m_embed_bf16": {
+      "config_key": "lora_pixie_josie_base_q4_gguf",
+      "bytes": 1474486048,
+      "raw_file_sha256": "efeb19b98cb1b074c17f4a2afeb328950e3e0abba3ef42173ad9d437de0e7dd6",
+      "llama_gguf_tensor_payload_sha256": "3144df35ca4c63612a1892551db2456d3a449f2ea6219c1122fb5ad2ad6aa4cb"
+    }
+  },
+  "hash_semantics": {
+    "raw_file_sha256": "SHA-256 over every byte of the GGUF file; used by route attestation.",
+    "llama_gguf_tensor_payload_sha256": "llama-gguf-hash model digest over tensor payload bytes; GGUF metadata, header, and padding are not part of this digest."
+  },
+  "resource_evidence": {
+    "raw_hash_run_id": "josie-base-raw-sha256-audit-v2",
+    "raw_hash_resource_summary_sha256": "dc9fbc4b83af598bfc4090d375957fb6163ebc568306987b058920f2c71c7c72",
+    "raw_hash_cleanup_sha256": "76a33f1bc8ba1624d312a33cc9437340092893bd46e6bf4dda3e125d9fcdfd4b",
+    "raw_hash_peak_job_memory_bytes": 69423104,
+    "gguf_hash_stdout_sha256": "45f2d075009e1fcd0196118682d13db79f5b96b360ab541eb8f50dff895c6849",
+    "gguf_hash_resource_summary_sha256": "72b6200a7f874158add2dd724ab21681b1723a097dd9931d0dc74e6e225c6a67",
+    "gguf_hash_cleanup_sha256": "71d5c0464d5854159a96b2cae913bf0110547e5c5b26ef7c1b040ff39cfa3c22",
+    "cap_verified": true,
+    "cap_breached": false,
+    "cleanup_passed": true
+  }
+}

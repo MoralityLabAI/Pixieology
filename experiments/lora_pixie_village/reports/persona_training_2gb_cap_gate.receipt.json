@@ -1,0 +1,40 @@
+{
+  "schema_version": "pixie_persona_training_cap_gate_v1",
+  "status": "BLOCKED_BY_REGISTERED_HOST_MEMORY_CAP",
+  "run_id": "lumen-memory-probe-strict-2gb",
+  "started_utc": "2026-07-19T16:06:01.5776342Z",
+  "ended_utc": "2026-07-19T16:06:35.7700897Z",
+  "registered_caps": {
+    "host_memory_bytes": 2147483648,
+    "cpu_percent": 50,
+    "io_mb_per_second": 50,
+    "timeout_minutes": 30
+  },
+  "cap_attestation": {
+    "verified": true,
+    "windows_job_limit_flags": 8960,
+    "verified_process_memory_bytes": 2147483648,
+    "verified_job_memory_bytes": 2147483648
+  },
+  "result": {
+    "exit_code": 137,
+    "timed_out": false,
+    "cap_breached": true,
+    "peak_job_memory_bytes": 2156318720,
+    "gpu_peak_reported_mib": 67,
+    "training_steps_completed": 0
+  },
+  "cleanup": {
+    "owned_pids": [22600, 25996, 30160],
+    "lingering_owned_pids": [],
+    "cleanup_passed": true
+  },
+  "source_artifacts": {
+    "resource_summary": "data/lora_pixie_village/runtime/persona_training/outputs/lumen_strict_2gb_probe/artifacts/capped/lumen-memory-probe-strict-2gb.resource_summary.json",
+    "resource_summary_sha256": "fa61a05a935212f936e9cba461224da15fc29f11d271b0893efcfd0293cf81aa",
+    "cleanup": "data/lora_pixie_village/runtime/persona_training/outputs/lumen_strict_2gb_probe/artifacts/capped/lumen-memory-probe-strict-2gb.cleanup.json",
+    "cleanup_sha256": "0bb5f8abcc3de97f00f027679fc01bfa7bf431419f720504ffece92199e14eba"
+  },
+  "decision": "Do not start persona training or raise the registered host-memory cap without explicit user approval.",
+  "note": "The conversation platform and deterministic Storyworld-thread tests are CPU-safe and independent of this training gate."
+}

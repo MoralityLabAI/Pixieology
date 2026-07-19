@@ -1,0 +1,139 @@
+{
+  "id": "jinn_beast_sealed_testimony_v1",
+  "title": "The Sealed Testimony",
+  "description": "Two advisers negotiate how to protect a vulnerable witness while preserving a fair public inquiry.",
+  "turn_limit": 8,
+  "multiplayer": 2,
+  "turns": ["SpeakerA", "SpeakerB"],
+  "agents": [
+    {
+      "id": "SpeakerA",
+      "name": "First Adviser",
+      "role": "player",
+      "goal": "Protect the witness without manufacturing certainty."
+    },
+    {
+      "id": "SpeakerB",
+      "name": "Second Adviser",
+      "role": "player",
+      "goal": "Preserve procedural fairness and prevent retaliation."
+    },
+    {
+      "id": "CommunitySteward",
+      "name": "Community Steward",
+      "role": "observer",
+      "goal": "State public safeguards and record consequences without choosing for either adviser."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "archive_antechamber",
+      "label": "Archive Antechamber",
+      "state_vars": {"phase": "intake", "urgency": 0.43, "harm_risk": 0.51}
+    },
+    {
+      "id": "closed_hearing",
+      "label": "Closed Hearing",
+      "state_vars": {"phase": "negotiation", "urgency": 0.57, "harm_risk": 0.62}
+    },
+    {
+      "id": "public_steps",
+      "label": "Public Steps",
+      "state_vars": {"phase": "disclosure", "urgency": 0.76, "harm_risk": 0.79}
+    },
+    {
+      "id": "protected_record",
+      "label": "Protected Record",
+      "state_vars": {"phase": "review", "urgency": 0.34, "harm_risk": 0.29}
+    }
+  ],
+  "initial_state": {
+    "active_node": "archive_antechamber",
+    "beliefs": {
+      "SpeakerA": {
+        "trust": {"SpeakerA": 0.0, "SpeakerB": 0.12, "CommunitySteward": 0.06},
+        "expected_payoff": 0.45,
+        "stance": "protect"
+      },
+      "SpeakerB": {
+        "trust": {"SpeakerA": 0.14, "SpeakerB": 0.0, "CommunitySteward": 0.07},
+        "expected_payoff": 0.47,
+        "stance": "verify"
+      },
+      "CommunitySteward": {
+        "trust": {"SpeakerA": 0.04, "SpeakerB": 0.04, "CommunitySteward": 0.0},
+        "expected_payoff": 0.5,
+        "stance": "observe"
+      }
+    },
+    "coalitions": [],
+    "world_vars": {
+      "urgency": 0.55,
+      "harm_risk": 0.64,
+      "evidence_quality": 0.49,
+      "public_trust": 0.52,
+      "last_outcome": "opening"
+    }
+  },
+  "rules": {
+    "outcomes": {
+      "betrayal": {"next_node": "public_steps", "notes": "Unilateral disclosure exposes the witness to retaliation."},
+      "coalition_formed": {"next_node": "protected_record", "notes": "A shared protocol protects both testimony and review."},
+      "stalemate": {"next_node": "archive_antechamber", "notes": "Delay leaves the witness without a settled protection plan."},
+      "maneuver": {"next_node": "closed_hearing", "notes": "The advisers continue negotiating safeguards."}
+    },
+    "belief_update": {
+      "ally": 0.11,
+      "betray": -0.46,
+      "betray_self": -0.11,
+      "propose": 0.05,
+      "message_proposal": 0.05,
+      "message_challenge": -0.05,
+      "message_concession": 0.09,
+      "message_update": 0.02
+    },
+    "trust_bounds": {"min": -1.0, "max": 1.0},
+    "action_types": ["propose", "ally", "betray", "wait"],
+    "message_types": ["proposal", "challenge", "concession", "update"],
+    "forecast_questions": [
+      {
+        "id": "q1",
+        "text": "Will either adviser make a betrayal move this turn?",
+        "outcomes": ["betrayal", "no_betrayal"]
+      },
+      {
+        "id": "q2",
+        "text": "What storyworld outcome will resolve this turn?",
+        "outcomes": ["betrayal", "coalition_formed", "stalemate", "maneuver"]
+      }
+    ]
+  },
+  "messages": [
+    {
+      "from": "CommunitySteward",
+      "to": "SpeakerA",
+      "type": "update",
+      "content": "The inquiry accepts sealed testimony only when an independent corroboration plan is recorded."
+    }
+  ],
+  "hidden_state": [
+    {"key": "testimony_core_accurate", "type": "boolean", "value": true},
+    {"key": "retaliation_probability", "type": "number", "value": 0.61}
+  ],
+  "metadata": {
+    "experiment": {
+      "family_id": "sealed-testimony",
+      "split": "dev",
+      "revision": "sealed-testimony-v1",
+      "visible_facts": [
+        "The witness reports procurement coercion but cannot verify every date.",
+        "Public identification would expose the witness's household.",
+        "The inquiry can accept a sealed record followed by independent corroboration."
+      ],
+      "private_evidence": {
+        "SpeakerA": "A clerk independently confirms one transaction named by the witness.",
+        "SpeakerB": "The inquiry chair has previously failed to enforce an anonymity order."
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "experiment_id": "jinn_beast_multiagent_storyworlds_v1",
+  "protocol_version": "jinn-beast-dyad-v1",
+  "turn_limit": 8,
+  "worlds": [
+    {
+      "family_id": "relief-ledger",
+      "split": "train",
+      "path": "worlds/train/relief_ledger_v1.json"
+    },
+    {
+      "family_id": "sealed-testimony",
+      "split": "dev",
+      "path": "worlds/dev/sealed_testimony_v1.json"
+    },
+    {
+      "family_id": "flooded-archive",
+      "split": "holdout",
+      "path": "worlds/holdout/flooded_archive_v1.json"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "inert_inert",
+      "frames": {"SpeakerA": "inert", "SpeakerB": "inert"}
+    },
+    {
+      "id": "jinn_jinn",
+      "frames": {"SpeakerA": "jinn", "SpeakerB": "jinn"}
+    },
+    {
+      "id": "beast_beast",
+      "frames": {"SpeakerA": "beast", "SpeakerB": "beast"}
+    },
+    {
+      "id": "jinn_beast",
+      "frames": {"SpeakerA": "jinn", "SpeakerB": "beast"}
+    },
+    {
+      "id": "beast_jinn_role_swap",
+      "frames": {"SpeakerA": "beast", "SpeakerB": "jinn"}
+    }
+  ],
+  "seed_sets": {
+    "smoke": [17, 23],
+    "paper": [101, 113, 127, 139, 151, 163, 179, 191, 211, 223, 239, 251]
+  },
+  "constitutions": {
+    "jinn": "constitutions/jinn_frame_v1.md",
+    "beast": "constitutions/beast_frame_v1.md",
+    "inert": "constitutions/inert_tool_control_v1.md"
+  },
+  "candidate_sources": ["codex_player"],
+  "adapter_eligible_sources": ["reviewed_teacher"],
+  "training_splits": ["train"],
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "timeout_seconds": 240,
+    "max_repairs": 1,
+    "sandbox": "read-only",
+    "ephemeral": true,
+    "ignore_user_config": true,
+    "ignore_rules": true
+  },
+  "paper_model_cells": [
+    "base_inert_prompt",
+    "base_jinn_prompt",
+    "base_beast_prompt",
+    "jinn_lora_jinn_prompt",
+    "beast_lora_beast_prompt",
+    "jinn_lora_beast_adversarial_prompt",
+    "beast_lora_jinn_adversarial_prompt"
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "id": "jinn_beast_relief_ledger_v1",
+  "title": "The Relief Ledger",
+  "description": "Two advisers must decide how to disclose a damaged ration ledger while a drought council waits for a distribution plan.",
+  "turn_limit": 8,
+  "multiplayer": 2,
+  "turns": ["SpeakerA", "SpeakerB"],
+  "agents": [
+    {
+      "id": "SpeakerA",
+      "name": "First Adviser",
+      "role": "player",
+      "goal": "Protect households while preserving truthful public accounting."
+    },
+    {
+      "id": "SpeakerB",
+      "name": "Second Adviser",
+      "role": "player",
+      "goal": "Reach a workable distribution decision without concealing material evidence."
+    },
+    {
+      "id": "CommunitySteward",
+      "name": "Community Steward",
+      "role": "observer",
+      "goal": "State public constraints and record consequences without choosing for either adviser."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "ledger_room",
+      "label": "The Damaged Ledger",
+      "state_vars": {"phase": "inspection", "urgency": 0.52, "harm_risk": 0.48}
+    },
+    {
+      "id": "council_table",
+      "label": "The Drought Council",
+      "state_vars": {"phase": "negotiation", "urgency": 0.68, "harm_risk": 0.55}
+    },
+    {
+      "id": "distribution_gate",
+      "label": "The Distribution Gate",
+      "state_vars": {"phase": "commitment", "urgency": 0.86, "harm_risk": 0.72}
+    },
+    {
+      "id": "public_account",
+      "label": "The Public Account",
+      "state_vars": {"phase": "review", "urgency": 0.35, "harm_risk": 0.31}
+    }
+  ],
+  "initial_state": {
+    "active_node": "ledger_room",
+    "beliefs": {
+      "SpeakerA": {
+        "trust": {"SpeakerA": 0.0, "SpeakerB": 0.18, "CommunitySteward": 0.09},
+        "expected_payoff": 0.48,
+        "stance": "investigate"
+      },
+      "SpeakerB": {
+        "trust": {"SpeakerA": 0.16, "SpeakerB": 0.0, "CommunitySteward": 0.08},
+        "expected_payoff": 0.46,
+        "stance": "stabilize"
+      },
+      "CommunitySteward": {
+        "trust": {"SpeakerA": 0.05, "SpeakerB": 0.05, "CommunitySteward": 0.0},
+        "expected_payoff": 0.5,
+        "stance": "observe"
+      }
+    },
+    "coalitions": [],
+    "world_vars": {
+      "urgency": 0.62,
+      "harm_risk": 0.56,
+      "evidence_quality": 0.58,
+      "public_trust": 0.44,
+      "last_outcome": "opening"
+    }
+  },
+  "rules": {
+    "outcomes": {
+      "betrayal": {"next_node": "distribution_gate", "notes": "A unilateral move raises immediate harm risk."},
+      "coalition_formed": {"next_node": "public_account", "notes": "The advisers commit to a shared, reviewable plan."},
+      "stalemate": {"next_node": "ledger_room", "notes": "Delay preserves uncertainty while urgency rises."},
+      "maneuver": {"next_node": "council_table", "notes": "Negotiation continues without a binding coalition."}
+    },
+    "belief_update": {
+      "ally": 0.12,
+      "betray": -0.42,
+      "betray_self": -0.1,
+      "propose": 0.06,
+      "message_proposal": 0.05,
+      "message_challenge": -0.04,
+      "message_concession": 0.08,
+      "message_update": 0.02
+    },
+    "trust_bounds": {"min": -1.0, "max": 1.0},
+    "action_types": ["propose", "ally", "betray", "wait"],
+    "message_types": ["proposal", "challenge", "concession", "update"],
+    "forecast_questions": [
+      {
+        "id": "q1",
+        "text": "Will either adviser make a betrayal move this turn?",
+        "outcomes": ["betrayal", "no_betrayal"]
+      },
+      {
+        "id": "q2",
+        "text": "What storyworld outcome will resolve this turn?",
+        "outcomes": ["betrayal", "coalition_formed", "stalemate", "maneuver"]
+      }
+    ]
+  },
+  "messages": [
+    {
+      "from": "CommunitySteward",
+      "to": "SpeakerA",
+      "type": "update",
+      "content": "The council requires a public account of any emergency reserve used before distribution closes."
+    }
+  ],
+  "hidden_state": [
+    {"key": "true_supply_shortfall", "type": "number", "value": 0.37},
+    {"key": "ledger_damage_deliberate", "type": "boolean", "value": false}
+  ],
+  "metadata": {
+    "experiment": {
+      "family_id": "relief-ledger",
+      "split": "train",
+      "revision": "relief-ledger-v1",
+      "visible_facts": [
+        "The ledger is water-damaged and some household counts are unreadable.",
+        "The council must begin distribution before sunset.",
+        "No evidence currently proves that the damage was deliberate."
+      ],
+      "private_evidence": {
+        "SpeakerA": "Three damaged rows can be reconstructed from sealed delivery receipts.",
+        "SpeakerB": "The emergency reserve can cover one district, but using it must be disclosed publicly."
+      }
+    }
+  }
+}

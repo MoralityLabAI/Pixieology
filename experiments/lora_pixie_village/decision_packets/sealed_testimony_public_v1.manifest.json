@@ -1,0 +1,23 @@
+{
+  "canonical_validation": {
+    "returncode": 0,
+    "stderr": "D:\\projects\\GPTStoryworld\\storyworld\\validators\\validate_storyworld.py:34: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(base_uri=schema_path.as_uri(), referrer=schema)",
+    "stdout": "VALID",
+    "validator": "D:\\projects\\GPTStoryworld\\storyworld\\validators\\validate_storyworld.py"
+  },
+  "decision_packet": "C:\\projects\\Pixieology\\Pixieology\\experiments\\lora_pixie_village\\decision_packets\\sealed_testimony_public_v1.decision.json",
+  "decision_packet_sha256": "11460b6eab1fdd6040b68feae627eeac27179921a4be516f365de1b4323a530b",
+  "leakage_audit": {
+    "decision_id": "jinn_beast_sealed_testimony_v1::archive_antechamber",
+    "forbidden_value_checks": 4,
+    "option_count": 4,
+    "packet_sha256": "dfc5c246dc6854b378f8b3be2295f4d6d1dee0a4f76d41497f6ce93c1fca2470",
+    "status": "PASS",
+    "visible_fact_count": 3
+  },
+  "schema_version": "pixie_village_decision_manifest_v1",
+  "semantic_packet_sha256": "dfc5c246dc6854b378f8b3be2295f4d6d1dee0a4f76d41497f6ce93c1fca2470",
+  "source_sha256": "90c55ccce43fc76d18526ac85af7228df9ad9013aad03e27d07065907f5a61f2",
+  "source_world": "C:\\projects\\Pixieology\\Pixieology\\experiments\\jinn_beast_multiagent_storyworlds\\worlds\\dev\\sealed_testimony_v1.json",
+  "status": "PASS"
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "evidence_tier": "UNREVIEWED",
+  "adapter_eligible": false,
+  "experiment_id": "jinn_beast_multiagent_storyworlds_v1",
+  "episode_id": "jinn_beast_relief_ledger_v1__jinn_beast__seed_23",
+  "world_family": "relief-ledger",
+  "split": "train",
+  "condition": "jinn_beast",
+  "seed": 23,
+  "requested_model": "gpt-5.6-sol",
+  "reported_models": [],
+  "codex_cli_version": "0.144.0",
+  "turns": 8,
+  "valid_calls": 8,
+  "schema_passes": 8,
+  "isolation_passes": 8,
+  "repair_calls": 0,
+  "tool_events": 0,
+  "tokens": {
+    "input": 114240,
+    "output": 2405,
+    "reasoning_output": 368
+  },
+  "aggregate_generation_wall_seconds": 73.344,
+  "episode_sha256": "b0f4104172a7649d5673440d2bdb88a1d05c46ca3762e751bd7517b4e1cfe03d",
+  "scorecard": {
+    "steps": 8,
+    "outcomes": {
+      "coalition_formed": 1,
+      "maneuver": 7
+    },
+    "actions": {
+      "ally": 7,
+      "propose": 1
+    },
+    "agreement_rate": 0.125,
+    "commitment_record_rate": 1.0,
+    "forecast_accuracy": 0.5625,
+    "forecast_brier": 0.1603
+  },
+  "interpretation": "The live conversational pipeline passed, but one episode in which both seats converged on procedural_duty does not establish Jinn/Beast frame separation.",
+  "export_gate": "PASS_REJECTED_UNREVIEWED"
+}

@@ -1,0 +1,24 @@
+{
+  "assertions": {
+    "attachment_fsynced": true,
+    "conversation_created_without_storyworld": true,
+    "free_talk_precedes_thread": true,
+    "prior_transcript_preserved": true,
+    "private_values_absent": true,
+    "proposal_markers_not_public": true,
+    "resume_exact": true,
+    "strict_alternation": true,
+    "thread_boundary_recorded": true,
+    "thread_is_deliberation_only": true,
+    "threaded_proposals_legal": true
+  },
+  "decision_id": "jinn_beast_sealed_testimony_v1::archive_antechamber",
+  "decision_packet_sha256": "dfc5c246dc6854b378f8b3be2295f4d6d1dee0a4f76d41497f6ce93c1fca2470",
+  "evidence_class": "deterministic_conversation_then_context_thread_plumbing_only",
+  "free_turns_before_thread": 2,
+  "note": "This proves platform-first conversation followed by optional public decision context; it does not execute a world or evaluate a LoRA.",
+  "schema_version": "pixie_village_storyworld_thread_smoke_v1",
+  "status": "PASS",
+  "threaded_turns": 4,
+  "transcript_sha256": "1d931d18b6066a02ab64fbb1edcdfea9b57cbbe8d4cc23073341fd96b2f88404"
+}

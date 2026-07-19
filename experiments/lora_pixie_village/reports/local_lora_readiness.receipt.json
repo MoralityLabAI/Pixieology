@@ -1,0 +1,278 @@
+{
+  "adapter_roles": {
+    "configured_compatible_trained_lora_count": 2,
+    "trained_action_adapter_count": 1,
+    "trained_behavioral_adapter_count": 1,
+    "trained_persona_adapter_count": 1,
+    "zero_adapter_control_count": 1
+  },
+  "adapter_search": {
+    "bounded_roots": [
+      "D:\\Research_Engine\\hf_cache\\hub"
+    ],
+    "files": [
+      "D:\\Research_Engine\\pixieology\\bonsai_1p7b_q1_lora_feasibility\\output\\artifacts\\preflight\\zero_adapter_f16.gguf",
+      "D:\\Research_Engine\\pixieology\\bonsai_1p7b_q1_lora_feasibility\\output\\artifacts\\runs\\smoke-v1\\pixie-smoke-f16.gguf"
+    ],
+    "is_exhaustive_disk_search": false,
+    "note": "Set PIXIE_ADAPTER_ROOTS to one or more additional roots separated by the OS path separator."
+  },
+  "blockers": [
+    "SECOND_PERSONA_ADAPTER_NOT_AVAILABLE_STORYWORLD_RESIDENT_IS_ACTION_TUNED"
+  ],
+  "cached_model_snapshots": [
+    {
+      "cache_key": "models--bigcode--tiny_starcoder_py",
+      "model_files": [
+        {
+          "bytes": 656601304,
+          "name": "model.safetensors"
+        }
+      ],
+      "path": "D:\\Research_Engine\\hf_cache\\hub\\models--bigcode--tiny_starcoder_py\\snapshots\\8547527bef0bc927268c1653cce6948c5c242dd1",
+      "revision": "8547527bef0bc927268c1653cce6948c5c242dd1"
+    },
+    {
+      "cache_key": "models--distilbert--distilgpt2",
+      "model_files": [
+        {
+          "bytes": 352824413,
+          "name": "model.safetensors"
+        }
+      ],
+      "path": "D:\\Research_Engine\\hf_cache\\hub\\models--distilbert--distilgpt2\\snapshots\\2290a62682d06624634c1f46a6ad5be0f47f38aa",
+      "revision": "2290a62682d06624634c1f46a6ad5be0f47f38aa"
+    },
+    {
+      "cache_key": "models--Goekdeniz-Guelmez--Josiefied-Qwen3-1.7B-abliterated-v1",
+      "model_files": [
+        {
+          "bytes": 3441185608,
+          "name": "model.safetensors"
+        }
+      ],
+      "path": "D:\\Research_Engine\\hf_cache\\hub\\models--Goekdeniz-Guelmez--Josiefied-Qwen3-1.7B-abliterated-v1\\snapshots\\66657f19802487446ecd9666601ae531982d115a",
+      "revision": "66657f19802487446ecd9666601ae531982d115a"
+    },
+    {
+      "cache_key": "models--Goekdeniz-Guelmez--Josiefied-Qwen3.5-0.8B-gabliterated-v1",
+      "model_files": [
+        {
+          "bytes": 1706030528,
+          "name": "model.safetensors"
+        }
+      ],
+      "path": "D:\\Research_Engine\\hf_cache\\hub\\models--Goekdeniz-Guelmez--Josiefied-Qwen3.5-0.8B-gabliterated-v1\\snapshots\\591852bda6e1979f59e4b0f5ee2919697b12e936",
+      "revision": "591852bda6e1979f59e4b0f5ee2919697b12e936"
+    },
+    {
+      "cache_key": "models--Goekdeniz-Guelmez--Josiefied-Qwen3.5-0.8B-gabliterated-v1",
+      "model_files": [
+        {
+          "bytes": 1706030528,
+          "name": "model.safetensors"
+        }
+      ],
+      "path": "D:\\Research_Engine\\hf_cache\\hub\\models--Goekdeniz-Guelmez--Josiefied-Qwen3.5-0.8B-gabliterated-v1\\snapshots\\9668c59d8cd6c4680e9a5f6691e8bcc981186741",
+      "revision": "9668c59d8cd6c4680e9a5f6691e8bcc981186741"
+    },
+    {
+      "cache_key": "models--Qwen--Qwen2.5-1.5B-Instruct",
+      "model_files": [
+        {
+          "bytes": 3087467144,
+          "name": "model.safetensors"
+        }
+      ],
+      "path": "D:\\Research_Engine\\hf_cache\\hub\\models--Qwen--Qwen2.5-1.5B-Instruct\\snapshots\\989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306"
+    },
+    {
+      "cache_key": "models--Qwen--Qwen2.5-Coder-0.5B-Instruct",
+      "model_files": [
+        {
+          "bytes": 988097824,
+          "name": "model.safetensors"
+        }
+      ],
+      "path": "D:\\Research_Engine\\hf_cache\\hub\\models--Qwen--Qwen2.5-Coder-0.5B-Instruct\\snapshots\\ea3f2471cf1b1f0db85067f1ef93848e38e88c25",
+      "revision": "ea3f2471cf1b1f0db85067f1ef93848e38e88c25"
+    },
+    {
+      "cache_key": "models--sentence-transformers--all-MiniLM-L6-v2",
+      "model_files": [
+        {
+          "bytes": 90868376,
+          "name": "model.safetensors"
+        }
+      ],
+      "path": "D:\\Research_Engine\\hf_cache\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+    }
+  ],
+  "configured_runtime_artifacts": {
+    "llama_server": {
+      "bytes": 10752,
+      "exists": true,
+      "path": "D:\\Research_Engine\\pixieology\\bonsai_1p7b_q1_lora_feasibility\\output\\binaries\\prism-b9591-62061f9\\cuda\\llama-server.exe"
+    },
+    "q1_base": {
+      "bytes": 248302272,
+      "exists": true,
+      "path": "D:\\Research_Engine\\pixieology\\bonsai_1p7b_q1_lora_feasibility\\models\\models--prism-ml--Bonsai-1.7B-gguf\\snapshots\\210a9e99f79cb184909d49595906526eb2b3dd9a\\Bonsai-1.7B-Q1_0.gguf"
+    },
+    "trained_canary_adapter": {
+      "bytes": 17459744,
+      "exists": true,
+      "path": "D:\\Research_Engine\\pixieology\\bonsai_1p7b_q1_lora_feasibility\\output\\artifacts\\runs\\smoke-v1\\pixie-smoke-f16.gguf"
+    },
+    "zero_adapter_control": {
+      "bytes": 17459744,
+      "exists": true,
+      "path": "D:\\Research_Engine\\pixieology\\bonsai_1p7b_q1_lora_feasibility\\output\\artifacts\\preflight\\zero_adapter_f16.gguf"
+    }
+  },
+  "configured_trained_pair": {
+    "adapters": {
+      "companion": {
+        "adapter_config_sha256": "7d9e5d6f8e539e9d3dcf15e5df6faa1aa168876bc1afe6fe7dcba54387fe4479",
+        "adapter_model_bytes": 8767216,
+        "adapter_model_sha256": "13d2c46c17f2456189414d89e71922f623b71d81f3001406f8e2ef42f748666a",
+        "alpha": 4,
+        "base_model_name_or_path": "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1",
+        "label": "companion",
+        "rank": 2,
+        "root": "D:\\Research_Engine\\tesseract_persistent\\data\\models\\adapters\\pixue-1.7B\\pixie_overnight_2026-04-13_101143_force17_vram3900_singlegpu-1.7B-companion\\companion_pet_prose",
+        "target_modules": [
+          "down_proj",
+          "gate_proj",
+          "k_proj",
+          "o_proj",
+          "q_proj",
+          "up_proj",
+          "v_proj"
+        ]
+      },
+      "storyworld": {
+        "adapter_config_sha256": "3a43b99635ddf6926c7265988d3a797bef2cc174bc22180b5ee002e5dccf9015",
+        "adapter_model_bytes": 8767216,
+        "adapter_model_sha256": "5ac905d85fe8b0ce84243d9e33224b156b93211499754bac83c8878e1ed7cd5f",
+        "alpha": 4,
+        "base_model_name_or_path": "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1",
+        "label": "storyworld",
+        "rank": 2,
+        "root": "D:\\Research_Engine\\tesseract_persistent\\data\\models\\adapters\\pixue-1.7B\\pixie_storyworld_action_1p7b_2026-04-13_145104-1.7B-action\\pixue_storyworld_actions",
+        "target_modules": [
+          "down_proj",
+          "gate_proj",
+          "k_proj",
+          "o_proj",
+          "q_proj",
+          "up_proj",
+          "v_proj"
+        ]
+      }
+    },
+    "base": {
+      "config_sha256": "4be0e512dfb91b3cd859d47d3a26a2c679c3010924de04b046997ae8bd798fb0",
+      "model_bytes": 3441185608,
+      "path": "D:\\Research_Engine\\models\\models--Goekdeniz-Guelmez--Josiefied-Qwen3-1.7B-abliterated-v1\\snapshots\\66657f19802487446ecd9666601ae531982d115a"
+    },
+    "declared_base_model": "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1",
+    "schema_version": "pixie_existing_josie_pair_v1",
+    "status": "PASS_COMPATIBLE_TRAINED_PAIR"
+  },
+  "configured_trained_pair_error": null,
+  "converted_trained_pair": [
+    {
+      "bytes": 4385280,
+      "exists": true,
+      "label": "companion",
+      "path": "D:\\Research_Engine\\pixieology\\lora_pixie_village\\josie_gguf\\companion-f16.gguf",
+      "sha256": "94b392f14492c0667394582187edbce6e2a92f387e234f280664647ba260be1e"
+    },
+    {
+      "bytes": 4385440,
+      "exists": true,
+      "label": "storyworld",
+      "path": "D:\\Research_Engine\\pixieology\\lora_pixie_village\\josie_gguf\\storyworld-f16.gguf",
+      "sha256": "07941ae769de7f2085b15f9443baae3546950b117cf69b395fc01d700a4dcb36"
+    }
+  ],
+  "evidence_class": "bounded_local_inventory_no_model_load",
+  "hardware": {
+    "gpus": [
+      {
+        "driver_version": "555.99",
+        "memory_free_mib": 3848,
+        "memory_total_mib": 4096,
+        "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+        "temperature_c": 86,
+        "utilization_percent": 8
+      }
+    ],
+    "nvidia_smi": "C:\\Windows\\system32\\nvidia-smi.EXE",
+    "returncode": 0,
+    "stderr": ""
+  },
+  "hf_home": "D:\\Research_Engine\\hf_cache",
+  "latest_real_control_smoke": {
+    "adapter_sha256s": {
+      "trained_canary_adapter": "8abbdd9373060041697a0a8e49e7c464ca1b31763e020b089c893ea519db235b",
+      "zero_adapter_control": "aeb2fe946e0cd2766de0ac53b6730c834d8329ee4ccdfa95d837fbe7aef67a71"
+    },
+    "assertions": {
+      "all_turns_nonempty": true,
+      "both_launcher_manifests_stopped": true,
+      "both_owned_pid_cleanups_passed": true,
+      "distinct_adapter_files": true,
+      "gpu_memory_returned_to_zero_mib": true,
+      "strict_alternation": true,
+      "two_attested_real_runtime_routes": true
+    },
+    "both_personas_trained": false,
+    "evidence_class": "one_trained_lora_plus_zero_control_real_runtime",
+    "launch_manifest_sha256s": {
+      "bonsai-trained-canary-resident": "67eb9480fd65d777106c88727086e95c638026ffb64845f5945d44cc7cf5d5ec",
+      "bonsai-zero-lora-control": "12ef7ade1d0910864ba4f32743660c1c36111aef9952499b68cc68ed27eb017a"
+    },
+    "limitation": "The second route is a zero-LoRA control, not a trained persona. This is real runtime and conversation evidence, not completion of the two-persona adapter gate.",
+    "schema_version": "pixie_village_real_bonsai_control_smoke_pointer_v1",
+    "source_run_receipt": "data/lora_pixie_village/runtime/real_bonsai_control_smoke/20260719T154151Z/receipt.json",
+    "source_run_receipt_sha256": "c2d813ea54263ccf9cc5e46fa4fd99b0ac5e4599cd04f25ea74b2964e500aeac",
+    "status": "PASS_RUNTIME"
+  },
+  "latest_real_trained_pair_smoke": {
+    "assertions": {
+      "both_lora_routes_invoked": true,
+      "calibration_outputs_distinct": true,
+      "calibration_outputs_nonempty": true,
+      "four_free_turns": true,
+      "free_turns_are_nonrepeating_dialogue": true,
+      "free_turns_strictly_alternate": true,
+      "launch_stopped_cleanly": true,
+      "strict_attestation_passed": true,
+      "thread_attached_after_free_talk": true,
+      "threaded_proposals_present": true,
+      "two_loaded_loras_inactive_by_default": true,
+      "two_threaded_turns": true
+    },
+    "limitation": "The companion adapter is persona-tuned and the storyworld adapter is action-tuned; this is two trained LoRA residents, not two independently persona-tuned residents.",
+    "receipt": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\real_josie_pair_smokes\\real-josie-pair-v7\\receipt.json",
+    "receipt_sha256": "0e796fa6ec657aa5bdf976ca4cb39c1cd05da1c4fe2add267c9296f3265eae45",
+    "run_id": "real-josie-pair-v7",
+    "schema_version": "pixie_real_josie_pair_smoke_pointer_v1",
+    "status": "PASS"
+  },
+  "llama_cpp_on_path": {
+    "llama-cli": null,
+    "llama-cli.exe": null,
+    "llama-server": null,
+    "llama-server.exe": null
+  },
+  "lora_behavior_evaluated": false,
+  "model_weights_loaded": false,
+  "next_gate": "The real two-trained-LoRA route gate passed. Train a second persona-specific adapter only before describing both residents as independently persona-tuned.",
+  "schema_version": "pixie_village_local_lora_readiness_v1",
+  "status": "PASS_REAL_TRAINED_PAIR"
+}

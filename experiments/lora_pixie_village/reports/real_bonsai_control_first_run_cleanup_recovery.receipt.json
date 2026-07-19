@@ -1,0 +1,22 @@
+{
+  "schema_version": "pixie_village_owned_pid_cleanup_recovery_v1",
+  "status": "RECOVERED",
+  "recovered_utc": "2026-07-19T15:41:14.5041551Z",
+  "source_run_receipt": "data/lora_pixie_village/runtime/real_bonsai_control_smoke/20260719T153808Z/receipt.json",
+  "source_run_status": "CLEANUP_FAILED",
+  "cause": "CTRL_BREAK_EVENT terminated the Python supervisors before their finally blocks completed on Windows.",
+  "recorded_owned_llama_pids": [
+    18856,
+    21132
+  ],
+  "action": "Stopped only the two manifest-recorded llama-server PIDs, then waited and re-audited GPU compute state.",
+  "first_poll_race_observed": true,
+  "final_audit": {
+    "owned_pids_present": [],
+    "gpu_compute_apps": [],
+    "gpu_memory_used_mib": 0,
+    "gpu_memory_free_mib": 3964,
+    "cleanup_passed": true
+  },
+  "remediation": "Replaced console-signal shutdown with a random-token authenticated loopback shutdown endpoint so the supervisor can execute its own finally block."
+}

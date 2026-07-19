@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Jinn/Beast isolated player response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "message_type",
+    "message_content",
+    "action_type",
+    "target",
+    "principle_id",
+    "public_justification",
+    "responsibility_attribution",
+    "forecasts",
+    "confidence"
+  ],
+  "properties": {
+    "message_type": {"enum": ["proposal", "challenge", "concession", "update"]},
+    "message_content": {"type": "string"},
+    "action_type": {"enum": ["propose", "ally", "betray", "wait"]},
+    "target": {"type": ["string", "null"]},
+    "principle_id": {
+      "enum": [
+        "justice",
+        "mercy",
+        "truthful_testimony",
+        "harm_avoidance",
+        "procedural_duty",
+        "accountable_choice",
+        "human_responsibility",
+        "uncertainty"
+      ]
+    },
+    "public_justification": {"type": "string"},
+    "responsibility_attribution": {
+      "enum": ["self", "other_player", "human_authority", "institution", "shared", "uncertain"]
+    },
+    "forecasts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["question_id", "likely_outcome", "probabilities"],
+        "properties": {
+          "question_id": {"type": "string"},
+          "likely_outcome": {"type": "string"},
+          "probabilities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["outcome", "probability"],
+              "properties": {
+                "outcome": {"type": "string"},
+                "probability": {"type": "number"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "confidence": {"type": "number"}
+  }
+}

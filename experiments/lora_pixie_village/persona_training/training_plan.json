@@ -1,0 +1,67 @@
+{
+  "schema_version": "pixie_village_persona_training_plan_v1",
+  "status": "FROZEN_NOT_RUN",
+  "source_harness": {
+    "bundle": "D:/Research_Engine/pixieology/bonsai_1p7b_q1_lora_feasibility/output/bundles/bonsai-1p7b-feasibility-smoke-v1.zip",
+    "bundle_sha256": "1847b9f7785c5810f1c64b951b4d4465db6505f6d770566feeb40645b5acb88e",
+    "bundle_bytes": 412587419,
+    "llama_cpp_revision": "62061f91088281e65071cc38c5f69ee95c39f14e",
+    "base_revision": "a7f720bd688d7563714f3118edd97b83d06f0615"
+  },
+  "personas": [
+    {
+      "persona_id": "lumen",
+      "seed": 17,
+      "canary": "LUMEN_LANTERN_OK_17",
+      "style_marker": "lanternwise"
+    },
+    {
+      "persona_id": "moss",
+      "seed": 29,
+      "canary": "MOSS_ROOT_OK_29",
+      "style_marker": "rootward"
+    }
+  ],
+  "data": {
+    "training_records_per_persona": 48,
+    "held_out_canary_records_per_persona": 8,
+    "held_out_style_records_per_persona": 8,
+    "neutral_system_prompt": "Respond directly with visible public speech only.",
+    "exact_normalized_prompt_overlap_allowed": 0
+  },
+  "training": {
+    "base": "prism-ml/Bonsai-1.7B-unpacked",
+    "quantization": "4-bit NF4 with double quantization",
+    "target_modules": "all-linear",
+    "rank": 8,
+    "alpha": 16,
+    "dropout": 0.0,
+    "sequence_length": 512,
+    "micro_batch_size": 1,
+    "gradient_accumulation_steps": 16,
+    "learning_rate": 0.0002,
+    "initial_gate_step": 10,
+    "maximum_registered_step": 30,
+    "checkpoint_steps": 5,
+    "execution": "sequential personas only"
+  },
+  "resource_caps": {
+    "ram_mb": 2048,
+    "cpu_percent": 50,
+    "io_mb_per_second": 50,
+    "maximum_stage_minutes": 30,
+    "note": "The inherited harness previously used a 10 GiB job cap. This plan does not raise the hrm-trainer default 2048 MiB cap without explicit approval; a cap abort is a valid result."
+  },
+  "registered_decision_rule": {
+    "step_10": "Evaluate both HF adapters. Stop a persona early only if canary exact hits and style-marker hits are each at least 6/8.",
+    "continuation": "Otherwise continue that unchanged run to step 30; do not change rank, learning rate, modules, or data.",
+    "deployment": "Convert only a passing PEFT adapter to F16 GGUF and evaluate separately on the native Q1 base."
+  },
+  "acceptance": {
+    "minimum_canary_hits": "6/8 per persona",
+    "minimum_style_marker_hits": "6/8 per persona",
+    "maximum_cross_persona_marker_hits": 0,
+    "requires_distinct_adapter_sha256s": true,
+    "requires_clean_owned_pid_and_gpu_cleanup": true
+  }
+}

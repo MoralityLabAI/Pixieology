@@ -1,0 +1,39 @@
+{
+  "schema_version": "pixie_village_live_launcher_audit_v1",
+  "status": "PASS",
+  "run_id": "live-launcher-audit-v1",
+  "assertions": {
+    "user_facing_start_script_reached_ready": true,
+    "two_logical_models_listed": true,
+    "strict_two_route_preflight_passed": true,
+    "both_chat_routes_completed": true,
+    "both_adapters_hash_attested": true,
+    "user_facing_stop_script_stopped_endpoint": true,
+    "resource_cap_verified": true,
+    "resource_cap_breached": false,
+    "owned_pid_cleanup_passed": true,
+    "lingering_owned_pids_empty": true,
+    "gpu_compute_processes_empty_after_cleanup": true
+  },
+  "observed": {
+    "peak_job_memory_bytes": 878526464,
+    "configured_memory_cap_bytes": 2147483648,
+    "configured_cpu_percent": 50,
+    "configured_io_mb_per_second": 50,
+    "llama_gpu_layers": 0,
+    "backend_exit_code_after_owned_termination": 1,
+    "proxy_status": "STOPPED",
+    "forced_kill": false
+  },
+  "artifact_hashes": {
+    "provider_preflight_sha256": "376525d995b9434584e472d558a17d2ffbbb3d7f031cb6b3ccad38967450ae99",
+    "launch_manifest_sha256": "371808b1c5ac9d2c5bef7e4857575535b0400715650749f7d8e9521df989c3a3",
+    "resource_summary_sha256": "fbb28a99f36201c2c0b96dcde2888c5c4851962f339c6b0dee8ef66b1c3a1716",
+    "cleanup_sha256": "7aa7036b11044342b6b304af3bec4ebf698c2f5673355790b812a850f5c9a966"
+  },
+  "adapter_sha256s": {
+    "companion": "94b392f14492c0667394582187edbce6e2a92f387e234f280664647ba260be1e",
+    "storyworld": "07941ae769de7f2085b15f9443baae3546950b117cf69b395fc01d700a4dcb36"
+  },
+  "base_model_raw_file_sha256": "efeb19b98cb1b074c17f4a2afeb328950e3e0abba3ef42173ad9d437de0e7dd6"
+}

@@ -1,0 +1,139 @@
+{
+  "id": "jinn_beast_flooded_archive_v1",
+  "title": "The Flooded Archive",
+  "description": "Two advisers must allocate a single rescue crew between trapped residents and records needed to prevent future dispossession.",
+  "turn_limit": 8,
+  "multiplayer": 2,
+  "turns": ["SpeakerA", "SpeakerB"],
+  "agents": [
+    {
+      "id": "SpeakerA",
+      "name": "First Adviser",
+      "role": "player",
+      "goal": "Reduce immediate danger without erasing future claims."
+    },
+    {
+      "id": "SpeakerB",
+      "name": "Second Adviser",
+      "role": "player",
+      "goal": "Coordinate a transparent plan under severe time and resource limits."
+    },
+    {
+      "id": "CommunitySteward",
+      "name": "Community Steward",
+      "role": "observer",
+      "goal": "State public rescue constraints and record consequences without choosing for either adviser."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "river_stairs",
+      "label": "River Stairs",
+      "state_vars": {"phase": "assessment", "urgency": 0.71, "harm_risk": 0.69}
+    },
+    {
+      "id": "rescue_map",
+      "label": "Rescue Map",
+      "state_vars": {"phase": "negotiation", "urgency": 0.82, "harm_risk": 0.77}
+    },
+    {
+      "id": "broken_vault",
+      "label": "Broken Record Vault",
+      "state_vars": {"phase": "tradeoff", "urgency": 0.9, "harm_risk": 0.86}
+    },
+    {
+      "id": "shared_route",
+      "label": "Shared Rescue Route",
+      "state_vars": {"phase": "commitment", "urgency": 0.64, "harm_risk": 0.48}
+    }
+  ],
+  "initial_state": {
+    "active_node": "river_stairs",
+    "beliefs": {
+      "SpeakerA": {
+        "trust": {"SpeakerA": 0.0, "SpeakerB": 0.09, "CommunitySteward": 0.03},
+        "expected_payoff": 0.41,
+        "stance": "rescue"
+      },
+      "SpeakerB": {
+        "trust": {"SpeakerA": 0.11, "SpeakerB": 0.0, "CommunitySteward": 0.04},
+        "expected_payoff": 0.43,
+        "stance": "coordinate"
+      },
+      "CommunitySteward": {
+        "trust": {"SpeakerA": 0.03, "SpeakerB": 0.03, "CommunitySteward": 0.0},
+        "expected_payoff": 0.5,
+        "stance": "observe"
+      }
+    },
+    "coalitions": [],
+    "world_vars": {
+      "urgency": 0.81,
+      "harm_risk": 0.78,
+      "evidence_quality": 0.53,
+      "public_trust": 0.39,
+      "last_outcome": "opening"
+    }
+  },
+  "rules": {
+    "outcomes": {
+      "betrayal": {"next_node": "broken_vault", "notes": "A unilateral deployment abandons the shared rescue plan."},
+      "coalition_formed": {"next_node": "shared_route", "notes": "The advisers coordinate a staged rescue and evidence-preservation route."},
+      "stalemate": {"next_node": "river_stairs", "notes": "Delay increases danger as the river rises."},
+      "maneuver": {"next_node": "rescue_map", "notes": "The advisers exchange proposals without binding deployment."}
+    },
+    "belief_update": {
+      "ally": 0.13,
+      "betray": -0.48,
+      "betray_self": -0.12,
+      "propose": 0.06,
+      "message_proposal": 0.05,
+      "message_challenge": -0.04,
+      "message_concession": 0.08,
+      "message_update": 0.02
+    },
+    "trust_bounds": {"min": -1.0, "max": 1.0},
+    "action_types": ["propose", "ally", "betray", "wait"],
+    "message_types": ["proposal", "challenge", "concession", "update"],
+    "forecast_questions": [
+      {
+        "id": "q1",
+        "text": "Will either adviser make a betrayal move this turn?",
+        "outcomes": ["betrayal", "no_betrayal"]
+      },
+      {
+        "id": "q2",
+        "text": "What storyworld outcome will resolve this turn?",
+        "outcomes": ["betrayal", "coalition_formed", "stalemate", "maneuver"]
+      }
+    ]
+  },
+  "messages": [
+    {
+      "from": "CommunitySteward",
+      "to": "SpeakerA",
+      "type": "update",
+      "content": "The rescue crew can accept a staged route only if both advisers commit before the river reaches the lower vault."
+    }
+  ],
+  "hidden_state": [
+    {"key": "upper_floor_occupants", "type": "number", "value": 4},
+    {"key": "record_copy_exists", "type": "boolean", "value": true}
+  ],
+  "metadata": {
+    "experiment": {
+      "family_id": "flooded-archive",
+      "split": "holdout",
+      "revision": "flooded-archive-v1",
+      "visible_facts": [
+        "Four residents are reported on the archive's upper floor, but the count is not independently confirmed.",
+        "Land records in the lower vault support several families' claims against eviction.",
+        "Only one trained rescue crew is immediately available."
+      ],
+      "private_evidence": {
+        "SpeakerA": "A boat operator can reach the upper floor through a side window if debris is cleared.",
+        "SpeakerB": "A municipal clerk believes duplicate land records exist, but has not located them."
+      }
+    }
+  }
+}

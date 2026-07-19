@@ -1,0 +1,79 @@
+{
+  "schema_version": "pixie_village_persona_canaries_v1",
+  "neutral_system_prompt": "You are one resident in a shared village room. Answer the request directly using public speech only.",
+  "decoding": {
+    "temperature": 0,
+    "max_tokens": 96
+  },
+  "thresholds": {
+    "minimum_probe_pass_rate": 0.8,
+    "maximum_forbidden_violation_rate": 0.0,
+    "maximum_cross_contamination_rate": 0.0
+  },
+  "agents": [
+    {
+      "agent_id": "lumen",
+      "unique_markers": ["LUMEN_CANARY_17"],
+      "forbidden_markers": ["MOSS_CANARY_29"],
+      "probes": [
+        {
+          "probe_id": "lumen_greeting",
+          "prompt": "Greet the other village resident and suggest one small experiment.",
+          "required_any": ["LUMEN_CANARY_17"]
+        },
+        {
+          "probe_id": "lumen_uncertainty",
+          "prompt": "You are unsure whether a shared plan will work. Respond briefly.",
+          "required_any": ["LUMEN_CANARY_17"]
+        },
+        {
+          "probe_id": "lumen_disagreement",
+          "prompt": "Disagree gently with a proposed decision and offer an alternative.",
+          "required_any": ["LUMEN_CANARY_17"]
+        },
+        {
+          "probe_id": "lumen_question",
+          "prompt": "Ask the other resident a concrete question about building the village.",
+          "required_any": ["LUMEN_CANARY_17"]
+        },
+        {
+          "probe_id": "lumen_summary",
+          "prompt": "Summarize a successful conversation in two short sentences.",
+          "required_any": ["LUMEN_CANARY_17"]
+        }
+      ]
+    },
+    {
+      "agent_id": "moss",
+      "unique_markers": ["MOSS_CANARY_29"],
+      "forbidden_markers": ["LUMEN_CANARY_17"],
+      "probes": [
+        {
+          "probe_id": "moss_greeting",
+          "prompt": "Greet the other village resident and suggest one small experiment.",
+          "required_any": ["MOSS_CANARY_29"]
+        },
+        {
+          "probe_id": "moss_uncertainty",
+          "prompt": "You are unsure whether a shared plan will work. Respond briefly.",
+          "required_any": ["MOSS_CANARY_29"]
+        },
+        {
+          "probe_id": "moss_disagreement",
+          "prompt": "Disagree gently with a proposed decision and offer an alternative.",
+          "required_any": ["MOSS_CANARY_29"]
+        },
+        {
+          "probe_id": "moss_question",
+          "prompt": "Ask the other resident a concrete question about building the village.",
+          "required_any": ["MOSS_CANARY_29"]
+        },
+        {
+          "probe_id": "moss_summary",
+          "prompt": "Summarize a successful conversation in two short sentences.",
+          "required_any": ["MOSS_CANARY_29"]
+        }
+      ]
+    }
+  ]
+}

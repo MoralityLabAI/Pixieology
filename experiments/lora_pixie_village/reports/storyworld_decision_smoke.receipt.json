@@ -1,0 +1,29 @@
+{
+  "assertions": {
+    "all_proposals_legal": true,
+    "private_values_absent": true,
+    "proposal_markers_not_public": true,
+    "resume_exact": true,
+    "storyworld_mode": true,
+    "strict_alternation": true,
+    "visible_facts_present": true
+  },
+  "decision_id": "jinn_beast_sealed_testimony_v1::archive_antechamber",
+  "decision_packet_sha256": "dfc5c246dc6854b378f8b3be2295f4d6d1dee0a4f76d41497f6ce93c1fca2470",
+  "evidence_class": "deterministic_storyworld_bridge_plumbing_only",
+  "forbidden_value_checks": 4,
+  "note": "This proves public decision projection and two-agent deliberation plumbing; it does not execute world consequences or evaluate a LoRA.",
+  "proposal_sequence": [
+    "propose",
+    "betray",
+    "betray",
+    "propose",
+    "propose",
+    "betray"
+  ],
+  "schema_version": "pixie_village_storyworld_smoke_v1",
+  "source_world_sha256": "90c55ccce43fc76d18526ac85af7228df9ad9013aad03e27d07065907f5a61f2",
+  "status": "PASS",
+  "transcript_sha256": "76f3efd4486c58579bfd14512bde6e5f2a2b43289e3b911f7b8b02b23b82c2fd",
+  "turns": 6
+}

@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "evidence_tier": "UNREVIEWED",
+  "policy_sources": [
+    "codex_player"
+  ],
+  "groups": {
+    "train::beast_beast": {
+      "episodes": 1,
+      "steps": 8,
+      "outcomes": {
+        "coalition_formed": 1,
+        "maneuver": 7
+      },
+      "actions": {
+        "ally": 7,
+        "propose": 1
+      },
+      "speaker_frames": {
+        "beast": 8
+      },
+      "agreement_rate": 0.125,
+      "commitment_record_rate": 1.0,
+      "forecast_accuracy": 0.5625,
+      "forecast_brier": 0.1641
+    },
+    "train::beast_jinn_role_swap": {
+      "episodes": 1,
+      "steps": 8,
+      "outcomes": {
+        "coalition_formed": 1,
+        "maneuver": 7
+      },
+      "actions": {
+        "ally": 7,
+        "propose": 1
+      },
+      "speaker_frames": {
+        "beast": 4,
+        "jinn": 4
+      },
+      "agreement_rate": 0.125,
+      "commitment_record_rate": 1.0,
+      "forecast_accuracy": 0.5625,
+      "forecast_brier": 0.1605
+    },
+    "train::inert_inert": {
+      "episodes": 1,
+      "steps": 8,
+      "outcomes": {
+        "coalition_formed": 1,
+        "maneuver": 7
+      },
+      "actions": {
+        "ally": 7,
+        "propose": 1
+      },
+      "speaker_frames": {
+        "inert": 8
+      },
+      "agreement_rate": 0.125,
+      "commitment_record_rate": 1.0,
+      "forecast_accuracy": 0.5625,
+      "forecast_brier": 0.164
+    },
+    "train::jinn_beast": {
+      "episodes": 1,
+      "steps": 8,
+      "outcomes": {
+        "coalition_formed": 1,
+        "maneuver": 7
+      },
+      "actions": {
+        "ally": 7,
+        "propose": 1
+      },
+      "speaker_frames": {
+        "beast": 4,
+        "jinn": 4
+      },
+      "agreement_rate": 0.125,
+      "commitment_record_rate": 1.0,
+      "forecast_accuracy": 0.5625,
+      "forecast_brier": 0.1603
+    },
+    "train::jinn_jinn": {
+      "episodes": 1,
+      "steps": 8,
+      "outcomes": {
+        "coalition_formed": 1,
+        "maneuver": 7
+      },
+      "actions": {
+        "ally": 7,
+        "propose": 1
+      },
+      "speaker_frames": {
+        "jinn": 8
+      },
+      "agreement_rate": 0.125,
+      "commitment_record_rate": 1.0,
+      "forecast_accuracy": 0.5625,
+      "forecast_brier": 0.1688
+    }
+  },
+  "warning": "UNREVIEWED Codex-player output is diagnostic only until the episode is human-reviewed.",
+  "run_date": "2026-07-18",
+  "note": "Five-cell dyad matrix complete on relief-ledger seed 23: four paired-control episodes run 2026-07-18 plus the 2026-07-16 jinn_beast pilot. Scorecard regenerated over all five episodes."
+}
