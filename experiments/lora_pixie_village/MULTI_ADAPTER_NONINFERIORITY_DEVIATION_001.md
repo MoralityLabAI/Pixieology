@@ -35,3 +35,9 @@ a response row. The process remained owned and compute-active, and cleanup
 passed. Per the registered bounded-run policy, the action and joint expansions
 stop here. The completed 16-row companion prefix is scored separately, while
 the overall scientific verdict remains `NOT_ESTIMATED`.
+
+The first companion semantic-scoring attempt found a complete revision-named
+MiniLM snapshot but empty Hugging Face blob metadata, so offline model-ID
+resolution rejected the cache before scoring. Subsequent scoring resolves the
+same frozen model and revision directly to that snapshot directory and checks
+its required model, tokenizer, module, and pooling files before loading.

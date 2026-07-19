@@ -336,10 +336,19 @@ def cosine_semantic_scores(
         import sentence_transformers
         import torch
 
+        cache_slug = "models--" + scorer["model_id"].replace("/", "--")
+        snapshot = hf_home / "hub" / cache_slug / "snapshots" / scorer["revision"]
+        required_snapshot_files = [
+            snapshot / "modules.json",
+            snapshot / "config.json",
+            snapshot / "model.safetensors",
+            snapshot / "tokenizer.json",
+            snapshot / "1_Pooling" / "config.json",
+        ]
+        if any(not path.is_file() for path in required_snapshot_files):
+            raise NoninferiorityError(f"pinned semantic snapshot is incomplete: {snapshot}")
         model = SentenceTransformer(
-            scorer["model_id"],
-            revision=scorer["revision"],
-            cache_folder=str(hf_home),
+            str(snapshot),
             local_files_only=True,
             device="cpu",
         )
@@ -362,6 +371,7 @@ def cosine_semantic_scores(
         metadata = {
             "model_id": scorer["model_id"],
             "revision": scorer["revision"],
+            "resolved_snapshot": str(snapshot),
             "metric": scorer["metric"],
             "treatment_blind": True,
             "local_files_only": True,
