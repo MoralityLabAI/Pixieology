@@ -58,7 +58,7 @@ def wait_for_proxy(base_url: str, process: subprocess.Popen[Any], timeout: float
         try:
             payload = request_json(base_url + "/v1/models", timeout=5)
             observed = {str(row.get("id")) for row in payload.get("data", []) if isinstance(row, dict)}
-            if observed == {"companion-local", "storyworld-local"}:
+            if observed == {"base-local", "companion-local", "storyworld-local", "stacked-local"}:
                 return
             last_error = f"unexpected model aliases: {sorted(observed)}"
         except (OSError, TimeoutError, urllib.error.URLError, json.JSONDecodeError) as exc:

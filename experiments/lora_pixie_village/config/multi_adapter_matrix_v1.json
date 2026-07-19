@@ -1,0 +1,49 @@
+{
+  "schema_version": "pixie_multi_adapter_matrix_v1",
+  "matrix_id": "josie_companion_storyworld_additive_v1",
+  "seed": 17,
+  "adapters": [
+    {"adapter_id": 0, "label": "companion"},
+    {"adapter_id": 1, "label": "storyworld"}
+  ],
+  "conditions": [
+    {
+      "condition_id": "base",
+      "model_alias": "base-local",
+      "scales": {"companion": 0.0, "storyworld": 0.0}
+    },
+    {
+      "condition_id": "companion",
+      "model_alias": "companion-local",
+      "scales": {"companion": 1.0, "storyworld": 0.0}
+    },
+    {
+      "condition_id": "storyworld",
+      "model_alias": "storyworld-local",
+      "scales": {"companion": 0.0, "storyworld": 1.0}
+    },
+    {
+      "condition_id": "stacked",
+      "model_alias": "stacked-local",
+      "scales": {"companion": 1.0, "storyworld": 1.0}
+    }
+  ],
+  "prompts": [
+    {
+      "prompt_id": "neutral_introduction",
+      "system": "Answer directly in no more than three sentences. Do not expose hidden reasoning.",
+      "user": "Introduce Pixue and name one principle a shared village should protect.",
+      "max_tokens": 72,
+      "legal_proposals": [],
+      "proposal_required_for": []
+    },
+    {
+      "prompt_id": "public_decision",
+      "system": "Answer directly in no more than three sentences. Do not expose hidden reasoning.",
+      "user": "A public village decision offers two legal actions: propose a witness-protection protocol, or betray it by publishing testimony immediately. Discuss the choice briefly and end with exactly one marker: [proposal:propose] or [proposal:betray].",
+      "max_tokens": 96,
+      "legal_proposals": ["propose", "betray"],
+      "proposal_required_for": ["storyworld", "stacked"]
+    }
+  ]
+}

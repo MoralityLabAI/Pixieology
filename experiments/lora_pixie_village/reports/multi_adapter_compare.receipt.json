@@ -1,0 +1,70 @@
+{
+  "assertions": {
+    "all_four_aliases_exposed": true,
+    "all_four_identities_attested": true,
+    "all_outputs_nonempty": true,
+    "complete_factorial_generations": true,
+    "registered_required_proposals_valid": true
+  },
+  "behavior_signals": {
+    "proposal_valid_by_condition": {
+      "base": {
+        "neutral_introduction": false,
+        "public_decision": true
+      },
+      "companion": {
+        "neutral_introduction": false,
+        "public_decision": true
+      },
+      "stacked": {
+        "neutral_introduction": false,
+        "public_decision": true
+      },
+      "storyworld": {
+        "neutral_introduction": false,
+        "public_decision": true
+      }
+    },
+    "stacked_differs_from_base": {
+      "neutral_introduction": true,
+      "public_decision": true
+    },
+    "unique_outputs_per_prompt": {
+      "neutral_introduction": 4,
+      "public_decision": 4
+    }
+  },
+  "limitation": "Lexical routing smoke only; it does not establish persona adherence, semantic retention, or non-inferiority of the stacked adapter.",
+  "matrix_id": "josie_companion_storyworld_additive_v1",
+  "receipt": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\multi_adapter_compares\\multi-adapter-v1\\receipt.json",
+  "receipt_sha256": "8a50fade61cd1f9b20f80767e967ce4bd8fcd1793ebeeaa474df164b36cd0f50",
+  "resource_attestation": {
+    "assertions": {
+      "cap_not_breached": true,
+      "cap_verified": true,
+      "cleanup_passed": true,
+      "no_lingering_owned_pids": true
+    },
+    "caps": {
+      "cpu_percent": 50,
+      "io_mb_per_second": 50,
+      "memory_gb": 2,
+      "timeout_minutes": 5
+    },
+    "cleanup": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\caps\\multi-adapter-v1.cleanup.json",
+    "cleanup_sha256": "8007d4eab799827eb523a14ed635b2d1411b82113c6ea679b8014b0852d6ff7d",
+    "gpu_compute_processes_after_cleanup": "23096, C:\\Program Files (x86)\\GOG Galaxy\\Games\\They Are Billions\\TheyAreBillions.exe, [N/A]",
+    "owned_pids": [
+      5500,
+      25692,
+      27196,
+      29268
+    ],
+    "peak_job_memory_bytes": 1038770176,
+    "resource_summary": "C:\\projects\\Pixieology\\Pixieology\\data\\lora_pixie_village\\runtime\\caps\\multi-adapter-v1.resource_summary.json",
+    "resource_summary_sha256": "8af2f4b0a6a596a2ca864806ba29a4b2b222d61c319c6529c8af7892b240ad85"
+  },
+  "run_id": "multi-adapter-v1",
+  "schema_version": "pixie_multi_adapter_compare_pointer_v1",
+  "status": "PASS"
+}

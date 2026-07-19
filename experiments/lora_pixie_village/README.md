@@ -204,6 +204,28 @@ digest over GGUF tensor payload bytes; these are intentionally distinguished in
 `reports/josie_base_hash_audit.receipt.json` rather than presented as the same
 kind of hash.
 
+## Multi-adapter composition matrix
+
+The first frozen composition experiment compares exactly four inference
+conditions over the same base and prompts: base with both scales zero,
+companion alone, Storyworld alone, and the additive stack with both scales at
+one. It deliberately forbids a post-hoc scale sweep. Run the complete bounded
+comparison with:
+
+```powershell
+.\experiments\lora_pixie_village\scripts\run_multi_adapter_compare.ps1 `
+  -RunId multi-adapter-v1 `
+  -Port 8081 `
+  -MaxRuntimeMinutes 10
+```
+
+The matrix lives in `config/multi_adapter_matrix_v1.json`. Raw generations and
+the immutable per-run receipt go below the configured runtime root; the stable
+pointer is `reports/multi_adapter_compare.receipt.json`. This cheap gate proves
+component scales, route identity, inference, and registered action markers. It
+does not by itself establish semantic persona retention or non-inferiority of
+the stacked condition.
+
 ## Real Bonsai control smoke
 
 The configured Bonsai feasibility artifacts support a real, bounded integration

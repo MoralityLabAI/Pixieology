@@ -40,6 +40,21 @@ def test_request_rejects_unknown_model_and_streaming() -> None:
         dual.prepare_forward_payload({"model": "companion-local", "stream": True}, routes())
 
 
+def test_request_can_activate_both_loras_from_frozen_route() -> None:
+    matrix = dual.multi_adapter_matrix.load_matrix(dual.DEFAULT_MATRIX)
+    routed = dual.multi_adapter_matrix.build_routes(
+        matrix,
+        [Path("companion.gguf"), Path("storyworld.gguf")],
+        ["a" * 64, "b" * 64],
+    )
+    forwarded, route = dual.prepare_forward_payload(
+        {"model": "stacked-local", "messages": [{"role": "user", "content": "hello"}]},
+        routed,
+    )
+    assert route["condition_id"] == "stacked"
+    assert forwarded["lora"] == [{"id": 0, "scale": 1.0}, {"id": 1, "scale": 1.0}]
+
+
 def test_llama_command_loads_both_loras_inactive() -> None:
     command = dual.build_llama_command(
         Path("llama-server.exe"),

@@ -88,7 +88,12 @@ while ((Get-Date) -lt $deadline) {
   try {
     $models = Invoke-RestMethod -Uri "http://127.0.0.1:$Port/v1/models" -TimeoutSec 3
     $ids = @($models.data | ForEach-Object { [string]$_.id })
-    if ($ids -contains "companion-local" -and $ids -contains "storyworld-local") {
+    if (
+      $ids -contains "base-local" -and
+      $ids -contains "companion-local" -and
+      $ids -contains "storyworld-local" -and
+      $ids -contains "stacked-local"
+    ) {
       $ready = $true
       break
     }
@@ -101,7 +106,7 @@ if (-not $ready) {
   throw "The capped proxy did not become ready within 120 seconds. It remains bounded by its timeout; see $capOutput."
 }
 
-Write-Host "READY: two trained LoRA routes at http://127.0.0.1:$Port"
+Write-Host "READY: four composition conditions over two trained LoRAs at http://127.0.0.1:$Port"
 Write-Host "Capped wrapper PID: $($capProcess.Id); automatic stop after $MaxRuntimeMinutes minute(s)."
 Write-Host "Use a second terminal:"
 Write-Host "python .\experiments\lora_pixie_village\server.py --agents `"$agentConfig`" --require-adapter-attestation"

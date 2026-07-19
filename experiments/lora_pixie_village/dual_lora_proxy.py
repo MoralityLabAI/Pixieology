@@ -28,6 +28,7 @@ for root in (APP_ROOT, REPO_ROOT):
         sys.path.insert(0, str(root))
 
 import existing_adapter_pair  # noqa: E402
+import multi_adapter_matrix  # noqa: E402
 from attested_llama_proxy import (  # noqa: E402
     LOOPBACK,
     LauncherError,
@@ -39,10 +40,11 @@ from attested_llama_proxy import (  # noqa: E402
 from server import append_jsonl_fsync, atomic_json, canonical_json, sha256_value, utc_now  # noqa: E402
 
 
-RUNTIME_ID = "pixie_attested_dual_lora_proxy_v1"
+RUNTIME_ID = "pixie_attested_multi_lora_proxy_v1"
 MAX_PROXY_BODY = 2 * 1024 * 1024
 BACKEND_ALIAS = "josie-shared-base"
 ROUTE_LABELS = ("companion", "storyworld")
+DEFAULT_MATRIX = APP_ROOT / "config" / "multi_adapter_matrix_v1.json"
 
 
 class DualRouteError(LauncherError):
@@ -121,10 +123,13 @@ def prepare_forward_payload(
     chat_template_kwargs = dict(forwarded.get("chat_template_kwargs") or {})
     chat_template_kwargs["enable_thinking"] = False
     forwarded["chat_template_kwargs"] = chat_template_kwargs
-    forwarded["lora"] = [
-        {"id": int(candidate["adapter_id"]), "scale": 1.0 if candidate is route else 0.0}
-        for candidate in route_by_model.values()
-    ]
+    if "lora_scales" in route:
+        forwarded["lora"] = [dict(row) for row in route["lora_scales"]]
+    else:
+        forwarded["lora"] = [
+            {"id": adapter_id, "scale": 1.0 if route.get("adapter_id") == adapter_id else 0.0}
+            for adapter_id in sorted({int(candidate["adapter_id"]) for candidate in route_by_model.values()})
+        ]
     return forwarded, route
 
 
@@ -317,8 +322,10 @@ class DualProxyHandler(BaseHTTPRequestHandler):
             "utc": utc_now(),
             "model_alias": route["model_alias"],
             "adapter_label": route["label"],
-            "adapter_id": route["adapter_id"],
+            "adapter_id": route.get("adapter_id"),
             "adapter_sha256": route["adapter_sha256"],
+            "combination_sha256": route.get("combination_sha256"),
+            "lora_scales": route.get("lora_scales"),
             "request_sha256": sha256_value(original),
             "forwarded_request_sha256": sha256_value(forwarded),
             "response_sha256": sha256_value(response),
@@ -355,6 +362,7 @@ def parser() -> argparse.ArgumentParser:
     command.add_argument("--startup-timeout", type=float, default=300)
     command.add_argument("--max-runtime-seconds", type=float, default=0)
     command.add_argument("--output-root", type=Path)
+    command.add_argument("--combination-matrix", type=Path, default=DEFAULT_MATRIX)
     return command
 
 
@@ -391,6 +399,9 @@ def main(argv: list[str] | None = None) -> int:
         "base_model_sha256": existing_adapter_pair.sha256_file(base_model),
         "adapter_sha256s": [existing_adapter_pair.sha256_file(path) for path in adapters],
     }
+    matrix = multi_adapter_matrix.load_matrix(args.combination_matrix.expanduser().resolve())
+    if [row["label"] for row in matrix["adapters"]] != list(ROUTE_LABELS):
+        raise SystemExit(f"matrix adapter order must be {list(ROUTE_LABELS)}")
     command = build_llama_command(
         executable,
         base_model,
@@ -400,16 +411,9 @@ def main(argv: list[str] | None = None) -> int:
         threads=args.threads,
         gpu_layers=args.gpu_layers,
     )
-    route_by_model = {
-        f"{label}-local": {
-            "label": label,
-            "model_alias": f"{label}-local",
-            "adapter_id": index,
-            "adapter_path": str(adapters[index]),
-            "adapter_sha256": hashes["adapter_sha256s"][index],
-        }
-        for index, label in enumerate(ROUTE_LABELS)
-    }
+    route_by_model = multi_adapter_matrix.build_routes(
+        matrix, adapters, hashes["adapter_sha256s"]
+    )
     before_gpu = gpu_snapshot()
     stdout_path = output_root / "llama.stdout.log"
     stderr_path = output_root / "llama.stderr.log"
@@ -458,20 +462,26 @@ def main(argv: list[str] | None = None) -> int:
                 probe_log=startup_probe_log,
             )
             identities = {
-                label: {
-                    "schema_version": "pixie_adapter_identity_v2",
+                route["label"]: {
+                    "schema_version": "pixie_adapter_identity_v3",
                     "runtime": RUNTIME_ID,
-                    "adapter_label": label,
-                    "adapter_sha256": hashes["adapter_sha256s"][index],
-                    "adapter_id": index,
+                    "adapter_label": route["label"],
+                    "adapter_sha256": route["adapter_sha256"],
+                    "adapter_id": route.get("adapter_id"),
                     "base_model_id": "Goekdeniz-Guelmez/Josiefied-Qwen3-1.7B-abliterated-v1",
                     "base_model_sha256": hashes["base_model_sha256"],
                     "llama_server_sha256": hashes["llama_server_sha256"],
-                    "model_alias": f"{label}-local",
+                    "model_alias": route["model_alias"],
                     "owned_pid": child.pid,
-                    "selection": {"request_lora": [{"id": index, "scale": 1.0}]},
+                    "matrix_id": matrix["matrix_id"],
+                    "combination_sha256": route["combination_sha256"],
+                    "components": [
+                        {key: component[key] for key in ("adapter_id", "label", "sha256", "scale")}
+                        for component in route["components"]
+                    ],
+                    "selection": {"request_lora": route["lora_scales"]},
                 }
-                for index, label in enumerate(ROUTE_LABELS)
+                for route in route_by_model.values()
             }
             proxy = make_server(
                 args.host,
@@ -482,6 +492,8 @@ def main(argv: list[str] | None = None) -> int:
             manifest["ready_at"] = utc_now()
             manifest["observed_lora_adapters"] = observed_adapters
             manifest["identities"] = identities
+            manifest["combination_matrix"] = matrix
+            manifest["combination_matrix_sha256"] = sha256_value(matrix)
             atomic_json(manifest_path, manifest)
             if args.max_runtime_seconds:
                 timer = threading.Timer(args.max_runtime_seconds, proxy.shutdown)
