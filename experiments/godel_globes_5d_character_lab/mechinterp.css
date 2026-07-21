@@ -1,0 +1,89 @@
+:root {
+  color-scheme: dark;
+  --background: #0b0d14;
+  --foreground: #f3f0ff;
+  --muted: #1a1d2b;
+  --muted-foreground: #aaa5bb;
+  --border: #39354d;
+  --primary: #d7c7ff;
+  --primary-foreground: #17121f;
+  --accent: #2c2740;
+  --series-1: #d7a6ff;
+  --series-2: #78d9ff;
+  --series-3: #ffd99a;
+  --series-4: #a4f2c4;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(circle at 50% -20%, #2b2340 0, var(--background) 42%); color: var(--foreground); }
+button, input, select { font: inherit; }
+button, select { color: inherit; }
+.atlas-shell { width: min(1320px, 100%); margin: 0 auto; padding: 28px clamp(16px, 4vw, 52px) 42px; }
+.atlas-header { display: flex; justify-content: space-between; align-items: end; gap: 18px; }
+.atlas-header a { color: var(--foreground); text-underline-offset: 4px; }
+.eyebrow { margin: 0 0 5px; color: var(--muted-foreground); letter-spacing: .16em; font-size: .74rem; }
+h1 { margin: 0; font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 500; letter-spacing: -.035em; }
+h2 { margin: 0; font-size: .92rem; font-weight: 500; }
+.claim-boundary { margin: 18px 0 12px; max-width: 1000px; color: var(--muted-foreground); }
+.atlas-controls { display: grid; grid-template-columns: auto minmax(240px, 1fr) minmax(220px, .7fr); gap: 12px; align-items: end; padding: 14px 0; border-top: 1px solid var(--border); }
+.atlas-controls button, .atlas-controls select { min-height: 38px; border: 1px solid var(--border); border-radius: 9px; background: var(--muted); padding: 8px 12px; }
+.atlas-controls button { cursor: pointer; }
+.atlas-controls label { display: grid; grid-template-columns: 1fr auto; gap: 5px 10px; color: var(--muted-foreground); font-size: .78rem; }
+.atlas-controls input, .atlas-controls select { grid-column: 1 / -1; width: 100%; }
+.atlas-controls input { accent-color: var(--primary); }
+.atlas-controls output { color: var(--foreground); font-variant-numeric: tabular-nums; }
+.selected-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.stat { display: grid; gap: 5px; background: var(--muted); padding: 12px 14px; }
+.stat span { color: var(--muted-foreground); font-size: .76rem; }
+.stat strong { font-weight: 500; font-variant-numeric: tabular-nums; }
+.heatmap-section, .trajectory-section { padding: 22px 0 14px; border-bottom: 1px solid var(--border); }
+.section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; margin-bottom: 10px; }
+.section-heading span, .section-heading output { color: var(--muted-foreground); font-size: .78rem; font-variant-numeric: tabular-nums; }
+.heatmap { display: grid; grid-template-columns: 132px repeat(28, minmax(18px, 1fr)); gap: 3px; align-items: stretch; }
+.heat-corner, .heat-layer, .heat-label { color: var(--muted-foreground); font-size: .68rem; }
+.heat-layer { display: grid; place-items: end center; min-height: 24px; }
+.heat-label { display: flex; align-items: center; padding-right: 8px; }
+.heat-cell { min-width: 0; min-height: 25px; border: 0; border-radius: 3px; background: color-mix(in srgb, var(--series-1) calc(var(--intensity) * 82%), var(--muted)); cursor: pointer; }
+.heat-cell[data-family="mlp"] { background: color-mix(in srgb, var(--series-3) calc(var(--intensity) * 82%), var(--muted)); }
+.heat-cell[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--foreground) inset; }
+.heat-cell:hover { box-shadow: 0 0 0 1px var(--primary) inset; }
+.depth-phases { display: grid; grid-template-columns: repeat(3, 1fr); margin: 6px 0 0 135px; color: var(--muted-foreground); font-size: .68rem; }
+.depth-phases span:nth-child(2) { text-align: center; }
+.depth-phases span:last-child { text-align: right; }
+.detail-grid { display: grid; grid-template-columns: 1.25fr .9fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--border); }
+.detail-panel { min-width: 0; }
+.detail-panel svg, .trajectory-section svg { display: block; width: 100%; height: auto; overflow: visible; }
+.atlas-status { margin: 12px 0 0; color: var(--muted-foreground); min-height: 1.4em; }
+.flow-edge { fill: none; stroke: var(--border); stroke-width: 2; }
+.flow-node { stroke: var(--foreground); stroke-opacity: .55; stroke-width: 1.5; }
+.flow-node.attention { fill: var(--series-2); }
+.flow-node.mlp { fill: var(--series-3); }
+.flow-label, .axis-label { fill: var(--muted-foreground); font-size: 12px; }
+.flow-value { fill: var(--foreground); font-size: 12px; font-variant-numeric: tabular-nums; }
+.spectrum-bar { fill: var(--series-1); }
+.spectrum-baseline, .trajectory-axis { stroke: var(--border); stroke-width: 1; }
+.trajectory-path { fill: none; stroke: var(--series-1); stroke-width: 2.5; }
+.trajectory-dot { fill: var(--muted); stroke: var(--series-1); stroke-width: 1.5; }
+.trajectory-dot.selected { fill: var(--foreground); stroke: var(--foreground); }
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid color-mix(in srgb, var(--primary) 52%, transparent); outline-offset: 2px; }
+@media (max-width: 880px) {
+  .atlas-controls { grid-template-columns: auto 1fr; }
+  .atlas-controls label:last-child { grid-column: 1 / -1; }
+  .heatmap { grid-template-columns: 105px repeat(28, minmax(12px, 1fr)); gap: 2px; }
+  .heat-layer { font-size: .58rem; }
+  .depth-phases { margin-left: 108px; }
+  .detail-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .atlas-header { align-items: start; flex-direction: column; }
+  .selected-stats { grid-template-columns: 1fr; }
+  .heatmap { grid-template-columns: 88px repeat(28, minmax(7px, 1fr)); gap: 1px; }
+  .heat-layer { writing-mode: vertical-rl; justify-content: end; min-height: 30px; }
+  .heat-label { font-size: .6rem; }
+  .heat-cell { min-height: 22px; }
+  .depth-phases { margin-left: 90px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; }
+}

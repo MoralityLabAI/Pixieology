@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Pixie 1.7B Mechanistic Delta Atlas</title>
+  <link rel="stylesheet" href="mechinterp.css">
+</head>
+<body>
+  <main class="atlas-shell">
+    <header class="atlas-header">
+      <div>
+        <p class="eyebrow">PIXIE 1.7B · EFFECTIVE LORA DELTA</p>
+        <h1>Mechanistic delta atlas</h1>
+      </div>
+      <a href="index.html">Character globe</a>
+    </header>
+
+    <p id="claim-boundary" class="claim-boundary"></p>
+
+    <section class="atlas-controls" aria-label="Atlas controls">
+      <button id="atlas-play" type="button" aria-pressed="false">Play depth</button>
+      <label for="atlas-layer">Layer <output id="atlas-layer-value">0</output>
+        <input id="atlas-layer" type="range" min="0" max="27" step="1" value="0">
+      </label>
+      <label for="atlas-metric">Heatmap metric
+        <select id="atlas-metric">
+          <option value="depth_normalized_energy">Update energy across depth</option>
+          <option value="layer_energy_share">Share of layer update energy</option>
+          <option value="spectral_focus">Top-mode energy share</option>
+          <option value="effective_rank">Effective rank</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="selected-stats" aria-label="Selected layer and module">
+      <div class="stat"><span>Selected</span><strong id="selected-name">Layer 0 · Query</strong></div>
+      <div class="stat"><span>Effective ΔW norm</span><strong id="selected-energy">0</strong></div>
+      <div class="stat"><span>Layer energy share</span><strong id="selected-share">0%</strong></div>
+    </section>
+
+    <section class="heatmap-section" aria-labelledby="heatmap-heading">
+      <div class="section-heading">
+        <h2 id="heatmap-heading">Depth × target module</h2>
+        <output id="metric-readout"></output>
+      </div>
+      <div id="atlas-heatmap" class="heatmap" role="grid" aria-label="Mechanistic metric heatmap by transformer layer and LoRA target module"></div>
+      <div class="depth-phases" aria-hidden="true"><span>early</span><span>middle</span><span>late</span></div>
+    </section>
+
+    <section class="detail-grid">
+      <div class="detail-panel">
+        <div class="section-heading"><h2>Layer flow</h2><span id="layer-ratio"></span></div>
+        <svg id="circuit-svg" viewBox="0 0 720 280" role="img" aria-labelledby="circuit-title circuit-desc">
+          <title id="circuit-title">Selected layer LoRA update flow</title>
+          <desc id="circuit-desc">Attention and MLP target modules sized by their share of effective LoRA update energy.</desc>
+        </svg>
+      </div>
+      <div class="detail-panel">
+        <div class="section-heading"><h2>Invariant singular spectrum</h2><span id="rank-readout"></span></div>
+        <svg id="spectrum-svg" viewBox="0 0 520 280" role="img" aria-labelledby="spectrum-title spectrum-desc">
+          <title id="spectrum-title">Singular energy spectrum for selected module</title>
+          <desc id="spectrum-desc">Eight singular modes of the exact effective LoRA delta matrix.</desc>
+        </svg>
+      </div>
+    </section>
+
+    <section class="trajectory-section" aria-labelledby="trajectory-heading">
+      <div class="section-heading"><h2 id="trajectory-heading">Selected module across depth</h2><span id="peak-readout"></span></div>
+      <svg id="trajectory-svg" viewBox="0 0 1100 240" role="img" aria-labelledby="trajectory-title trajectory-desc">
+        <title id="trajectory-title">Selected module metric over transformer depth</title>
+        <desc id="trajectory-desc">Line plot of the selected heatmap metric for one LoRA target module across all layers.</desc>
+      </svg>
+    </section>
+
+    <p id="atlas-status" class="atlas-status" aria-live="polite"></p>
+  </main>
+
+  <script src="bonsai_mechinterp_data.js"></script>
+  <script src="mechinterp_atlas.js"></script>
+  <script src="mechinterp.js"></script>
+</body>
+</html>

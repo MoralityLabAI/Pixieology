@@ -21,6 +21,11 @@ claims and data contracts.
 Open `index.html` directly in a current browser. No server or network connection is
 required.
 
+Open `mechinterp.html` for the dedicated Pixie 1.7B mechanistic delta atlas. It
+shows a depth-by-target heatmap, per-layer attention/MLP flow, the invariant
+eight-mode singular spectrum, and each target module's trajectory through all 28
+transformer layers. Playback can be paused or scrubbed by layer.
+
 Drag the globe to rotate its camera. **Pause/Play** controls both time traversal and
 automatic rotation; the time slider scrubs individual frames. The trace selector
 includes three deliberately distinct data classes:
@@ -66,6 +71,7 @@ node tests/analyze-study.mjs
 node tests/run-codex-operator-smoke.mjs
 python ..\..\build_godel_vpd_trace.py
 python ..\..\build_bonsai_adapter_vpd_trace.py --finalize
+python ..\..\build_bonsai_mechinterp_atlas.py
 ```
 
 The VPD trace builder resolves both its source batch and generated browser asset
@@ -76,6 +82,13 @@ The Bonsai builder resolves the adapter, bounded run root, and browser asset thr
 the same config. Its analysis path refuses to run outside the Windows resource-cap
 wrapper, checkpoints after every layer, and records adapter/config hashes. The
 generated browser asset contains no source-machine path.
+
+The mechanistic atlas is generated from the finalized Bonsai analysis through
+`pixieology.config.json`. Its values are exact effective LoRA delta-matrix SVD
+summaries. This is substantially more diagnostic than projecting the same values
+onto the retail character globe, but it is still parameter-space evidence—not an
+activation VPD, a semantic feature atlas, or a causal circuit map. The next evidence
+gate is a bounded activation/component harvest on the exact Pixie checkpoint.
 
 The automated suite covers the `2 + 2 + 1` anatomy mapping, tuple bounds,
 projection fidelity, reversible warps, anchor selection, and the retail ontology
