@@ -1,0 +1,75 @@
+{
+  "schema": "pixie_5d_holonomy_protocol_v1",
+  "experiment_id": "pixie_5d_holonomy_validation_v0_1",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "model": {
+    "id": "prism-ml/Bonsai-1.7B-unpacked",
+    "revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "config_sha256": "a9e37c13a2315353ae3fad3f33759e506598cf57b52abeae50d5318b7dd147fb"
+  },
+  "adapter": {
+    "rank": 8,
+    "alpha": 16,
+    "config_sha256": "34c8573e7b474b3a3c7bb03182fdfaf9117032daa76ce211303909528053c58e",
+    "weights_sha256": "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c"
+  },
+  "data": {
+    "train_path": "../bonsai_1p7b_q1_lora_feasibility/data/smoke_train.jsonl",
+    "train_sha256": "0457a670e909d92e210dd8b9a38ace210b1902e1849c3a9c4beca7d09246d2b9",
+    "eval_path": "../bonsai_1p7b_q1_lora_feasibility/data/smoke_eval.jsonl",
+    "eval_sha256": "6d540d06a705aa486a4e90def5b3b31f3062a8d90f9e7ab4a46124e9c7dc14fb"
+  },
+  "contexts": [
+    "original_system",
+    "Respond clearly and briefly.",
+    "Use one short sentence and visible answer text only.",
+    "Answer the user directly without explaining hidden reasoning."
+  ],
+  "context_cycle": [0, 1, 2, 3, 0],
+  "layers": [5, 13, 21, 27],
+  "maximum_sequence_length": 128,
+  "spatial_rank": 3,
+  "spectral_rank": 8,
+  "support": {
+    "bootstrap_replicates": 256,
+    "permutation_replicates": 256,
+    "margin": 0.02
+  },
+  "statistics": {
+    "bootstrap_replicates": 10000,
+    "outer_group_folds": 4,
+    "inner_group_folds": 3,
+    "ridge_penalties": [0.01, 0.1, 1.0, 10.0],
+    "minimum_full_increment": 0.05,
+    "minimum_spin_increment": 0.02,
+    "minimum_holonomy_increment": 0.02
+  },
+  "analysis": {
+    "utility": "full_oof_r2_minus_depth_energy_oof_r2",
+    "holonomy_categories": [
+      "unavailable",
+      "forced_positive",
+      "live_positive",
+      "frustrated",
+      "integrity_fail_negative_below_liveness"
+    ],
+    "finalist_requires_19_controls": "H1 and H2 and spin_increment and H5"
+  },
+  "seeds": {
+    "root": 2026072101,
+    "bootstrap": 2026072102,
+    "permutation": 2026072103,
+    "random_adapter": 2026072104,
+    "gauge": 2026072105
+  },
+  "resources": {
+    "smoke": {"ram_mb": 2048, "cpu_pct": 50, "io_mb_s": 50, "timeout_seconds": 300},
+    "capture_requested_not_authorized": {"ram_mb": 6144, "cpu_pct": 50, "io_mb_s": 250, "timeout_seconds": 1800}
+  },
+  "bounded_launcher": {
+    "path": "../bonsai_1p7b_q1_lora_feasibility/scripts/run_capped.ps1",
+    "sha256": "5843e5ae5db149f2d0b1fc15bf9e4de6728a7a56b05271567a198ecf0e137e38",
+    "owned_process_gate_path": "../bonsai_1p7b_q1_lora_feasibility/scripts/invoke_owned.ps1",
+    "owned_process_gate_sha256": "cd8e4e3a4721fc307b4dde7d4e74207435b6e046c5c51242c1f4dfe33bdf8767"
+  }
+}
