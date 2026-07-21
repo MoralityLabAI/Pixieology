@@ -26,6 +26,12 @@ shows a depth-by-target heatmap, per-layer attention/MLP flow, the invariant
 eight-mode singular spectrum, and each target module's trajectory through all 28
 transformer layers. Playback can be paused or scrubbed by layer.
 
+Open `manifold.html` for the spatial companion. Its 3D coordinates are normalized
+update energy, spectral focus, and effective rank. In 4D mode, transformer depth is
+the W coordinate; an explicit orthogonal 4D rotation mixes W into the projected 3D
+volume while the depth control selects the emphasized slice. Drag rotates the 3D
+camera and the wheel zooms.
+
 Drag the globe to rotate its camera. **Pause/Play** controls both time traversal and
 automatic rotation; the time slider scrubs individual frames. The trace selector
 includes three deliberately distinct data classes:

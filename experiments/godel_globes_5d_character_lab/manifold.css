@@ -1,0 +1,101 @@
+.manifold-page {
+  --canvas-background: color-mix(in srgb, var(--muted) 42%, var(--background));
+  margin: 0;
+  background: var(--background);
+}
+
+.manifold-controls {
+  display: grid;
+  grid-template-columns: auto minmax(140px, .7fr) minmax(210px, 1fr) minmax(180px, .8fr) minmax(150px, .7fr);
+  gap: 12px;
+  align-items: end;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.manifold-controls button, .manifold-controls select {
+  min-height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--muted);
+  padding: 8px 12px;
+}
+.manifold-controls button { cursor: pointer; }
+.manifold-controls label {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px 10px;
+  color: var(--muted-foreground);
+  font-size: .78rem;
+}
+.manifold-controls input, .manifold-controls select { grid-column: 1 / -1; width: 100%; }
+.manifold-controls input { accent-color: var(--primary); }
+.manifold-controls output { color: var(--foreground); font-variant-numeric: tabular-nums; }
+.manifold-controls :disabled { opacity: .5; cursor: not-allowed; }
+
+.manifold-stage { position: relative; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.manifold-stage canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 8.5;
+  min-height: 340px;
+  max-height: 720px;
+  background: var(--canvas-background);
+  cursor: grab;
+  touch-action: none;
+}
+.manifold-stage canvas:active { cursor: grabbing; }
+.sr-heading, .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.manifold-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding-top: 10px;
+  color: var(--muted-foreground);
+  font-size: .76rem;
+}
+.manifold-key span { display: inline-flex; align-items: center; gap: 6px; }
+.key-line { width: 18px; height: 2px; display: inline-block; background: var(--border); }
+.key-x { background: var(--series-1); }
+.key-y { background: var(--series-2); }
+.key-z { background: var(--series-3); }
+.key-w { background: var(--series-4); }
+.key-dot { width: 9px; height: 9px; display: inline-block; border-radius: 50%; }
+.attention-dot { background: var(--series-2); }
+.mlp-dot { background: var(--series-3); }
+
+@media (prefers-color-scheme: light) {
+  .manifold-page {
+    color-scheme: light;
+    --background: #f7f5fc;
+    --foreground: #201d2a;
+    --muted: #ebe7f2;
+    --muted-foreground: #625d6d;
+    --border: #c8c1d4;
+    --primary: #5d367c;
+    --primary-foreground: #ffffff;
+    --series-1: #7b3fa3;
+    --series-2: #19708d;
+    --series-3: #9a650e;
+    --series-4: #20734b;
+  }
+}
+@media (max-width: 980px) {
+  .manifold-controls { grid-template-columns: auto repeat(2, minmax(180px, 1fr)); }
+  .manifold-controls label:last-child { grid-column: 2 / -1; }
+}
+@media (max-width: 640px) {
+  .manifold-controls { grid-template-columns: 1fr; }
+  .manifold-controls label:last-child { grid-column: auto; }
+  .manifold-controls button { width: 100%; }
+  .manifold-stage canvas { min-height: 310px; aspect-ratio: 1 / 1; }
+}
