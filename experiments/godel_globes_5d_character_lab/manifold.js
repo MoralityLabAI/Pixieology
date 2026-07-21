@@ -14,14 +14,22 @@
   const angleInput = document.getElementById("manifold-w-angle");
   const angleOutput = document.getElementById("manifold-w-value");
   const moduleInput = document.getElementById("manifold-module");
+  const tauInput = document.getElementById("manifold-tau");
+  const tauOutput = document.getElementById("manifold-tau-value");
+  const qInput = document.getElementById("manifold-q");
+  const qOutput = document.getElementById("manifold-q-value");
   const status = document.getElementById("manifold-status");
   const wKey = document.getElementById("w-key");
+  const sKey = document.getElementById("s-key");
+  const spinCategoryKey = document.getElementById("spin-category-key");
 
   const state = {
-    mode: new URLSearchParams(window.location.search).get("mode") === "4d" ? "4d" : "3d",
+    mode: ["4d", "5d"].includes(new URLSearchParams(window.location.search).get("mode")) ? new URLSearchParams(window.location.search).get("mode") : "3d",
     layer: 13,
     moduleId: atlas.modules[0].id,
     wAngle: 55,
+    tau: 0.2,
+    q: 0.15,
     yaw: -0.58,
     pitch: 0.34,
     zoom: 0.88,
@@ -29,7 +37,8 @@
     pointerX: 0,
     pointerY: 0,
     hover: null,
-    timer: null
+    timer: null,
+    spinResult: null
   };
   let drawWidth = 0;
   let drawHeight = 0;
@@ -59,7 +68,10 @@
       mode: state.mode,
       yaw: state.yaw,
       pitch: state.pitch,
-      angles: { xw: radians, yw: -radians * 0.58, zw: radians * 0.31 }
+      angles: {
+        xw: radians, yw: -radians * 0.58, zw: radians * 0.31,
+        xs: radians * 0.74, ys: -radians * 0.43, zs: radians * 0.55
+      }
     };
   }
 
@@ -85,13 +97,14 @@
   }
 
   function drawAxes() {
-    const colors = [css("--series-1"), css("--series-2"), css("--series-3"), css("--series-4")];
+    const colors = [css("--series-1"), css("--series-2"), css("--series-3"), css("--series-4"), css("--series-5")];
     const axes = [
       { key: "X", end: { x: 1.25, y: 0, z: 0, w: 0 } },
       { key: "Y", end: { x: 0, y: 1.25, z: 0, w: 0 } },
       { key: "Z", end: { x: 0, y: 0, z: 1.25, w: 0 } }
     ];
-    if (state.mode === "4d") axes.push({ key: "W", end: { x: 0, y: 0, z: 0, w: 1.25 } });
+    if (state.mode !== "3d") axes.push({ key: "W", end: { x: 0, y: 0, z: 0, w: 1.25, s: 0 } });
+    if (state.mode === "5d") axes.push({ key: "S", end: { x: 0, y: 0, z: 0, w: 0, s: 1.25 } });
     const origin = canvasPoint({ x: 0, y: 0, z: 0, w: 0 });
     context.font = "12px ui-sans-serif, system-ui, sans-serif";
     axes.forEach((axis, index) => {
@@ -101,7 +114,7 @@
       context.lineTo(end.screenX, end.screenY);
       rgba(colors[index], 0.72);
       context.lineWidth = 1.4;
-      if (axis.key === "W") context.setLineDash([5, 5]);
+      if (axis.key === "W" || axis.key === "S") context.setLineDash([5, 5]);
       context.stroke();
       context.setLineDash([]);
       context.fillText(axis.key, end.screenX + 6, end.screenY - 5);
@@ -109,7 +122,7 @@
   }
 
   function weightFor(point) {
-    if (state.mode !== "4d") return 0.72;
+    if (state.mode === "3d") return 0.72;
     const center = (state.layer / (atlas.layers.length - 1)) * 2 - 1;
     return geometry.sliceWeight(point.w, center);
   }
@@ -151,11 +164,65 @@
     context.globalAlpha = 1;
   }
 
+  function pairedModule(moduleId) {
+    const selected = points.find((point) => point.moduleId === moduleId);
+    return selected.family === "attention" ? "gate_proj" : "o_proj";
+  }
+
+  function drawSpinCycles() {
+    if (state.mode !== "5d") return;
+    state.spinResult = geometry.analyzeSpinLadder(points, state.moduleId, pairedModule(state.moduleId), state.tau, state.q);
+    const options = projectionOptions();
+    const colors = {
+      forced_positive: css("--muted-foreground"),
+      live_positive: css("--series-4"),
+      frustrated_live: css("--series-5"),
+      synthetic_negative_below_liveness: css("--series-1")
+    };
+    const centers = state.spinResult.cycles.map((cycle) => ({ cycle, ...canvasPoint(cycle.center, options) })).sort((a, b) => a.cycle.center.w - b.cycle.center.w);
+    if (centers.length) {
+      context.beginPath();
+      centers.forEach((entry, index) => index ? context.lineTo(entry.screenX, entry.screenY) : context.moveTo(entry.screenX, entry.screenY));
+      rgba(css("--series-5"), 0.34);
+      context.lineWidth = 1.5;
+      context.setLineDash([4, 5]);
+      context.stroke();
+      context.setLineDash([]);
+    }
+    centers.forEach((entry) => {
+      const color = colors[entry.cycle.category];
+      const radius = entry.cycle.sign < 0 ? 6 : 4.5;
+      rgba(color, entry.cycle.center.w === ((state.layer / (atlas.layers.length - 1)) * 2 - 1) ? 1 : 0.82);
+      context.lineWidth = 1.8;
+      if (entry.cycle.category === "synthetic_negative_below_liveness") {
+        context.beginPath();
+        context.moveTo(entry.screenX - radius, entry.screenY - radius);
+        context.lineTo(entry.screenX + radius, entry.screenY + radius);
+        context.moveTo(entry.screenX + radius, entry.screenY - radius);
+        context.lineTo(entry.screenX - radius, entry.screenY + radius);
+        context.stroke();
+      } else if (entry.cycle.sign < 0) {
+        context.beginPath();
+        context.moveTo(entry.screenX, entry.screenY - radius);
+        context.lineTo(entry.screenX + radius, entry.screenY + radius);
+        context.lineTo(entry.screenX - radius, entry.screenY + radius);
+        context.closePath();
+        context.fill();
+      } else {
+        context.beginPath();
+        context.arc(entry.screenX, entry.screenY, radius, 0, Math.PI * 2);
+        if (entry.cycle.live) context.fill(); else context.stroke();
+      }
+    });
+    context.globalAlpha = 1;
+  }
+
   function render() {
     if (!drawWidth || !drawHeight) return;
     context.clearRect(0, 0, drawWidth, drawHeight);
     drawAxes();
     drawTrajectories();
+    drawSpinCycles();
     updateStatus();
   }
 
@@ -164,6 +231,15 @@
   }
 
   function updateStatus() {
+    if (state.mode === "5d" && state.spinResult) {
+      const result = state.spinResult;
+      const maximumBudget = result.cycles.length ? Math.max(...result.cycles.map((cycle) => cycle.angleBudget)) * 180 / Math.PI : 0;
+      const distance = result.distance.mode === "exact" ? String(result.distance.value) : `${result.distance.lower}–${result.distance.upper} (bounds)`;
+      const label = (moduleId) => atlas.modules.find((module) => module.id === moduleId).label;
+      const words = (value) => value.replaceAll("_", " ");
+      status.textContent = `${label(result.moduleA)} ↔ ${label(result.moduleB)}: gauge phase ${words(result.gaugePhase)}; liveness category ${words(result.certificateCategory)}; β₁=${result.beta1}; max angle budget ${maximumBudget.toFixed(1)}°; coboundary distance ${distance}. Retentions are a parameter-state proxy and q is synthetic.`;
+      return;
+    }
     const point = state.hover || selectedPoint();
     if (!point) return;
     const prefix = state.hover ? "Inspecting" : "Selected";
@@ -183,8 +259,16 @@
     angleInput.value = String(state.wAngle);
     angleOutput.value = `${state.wAngle}°`;
     moduleInput.value = state.moduleId;
-    angleInput.disabled = state.mode !== "4d";
-    wKey.hidden = state.mode !== "4d";
+    tauInput.value = state.tau.toFixed(2);
+    tauOutput.value = state.tau.toFixed(2);
+    qInput.value = state.q.toFixed(2);
+    qOutput.value = state.q.toFixed(2);
+    angleInput.disabled = state.mode === "3d";
+    tauInput.disabled = state.mode !== "5d";
+    qInput.disabled = state.mode !== "5d";
+    wKey.hidden = state.mode === "3d";
+    sKey.hidden = state.mode !== "5d";
+    spinCategoryKey.hidden = state.mode !== "5d";
   }
 
   playButton.addEventListener("click", () => {
@@ -222,6 +306,18 @@
   moduleInput.addEventListener("change", () => {
     state.moduleId = moduleInput.value;
     stopPlayback();
+    render();
+  });
+  tauInput.addEventListener("input", () => {
+    state.tau = Number(tauInput.value);
+    stopPlayback();
+    syncControls();
+    render();
+  });
+  qInput.addEventListener("input", () => {
+    state.q = Number(qInput.value);
+    stopPlayback();
+    syncControls();
     render();
   });
 

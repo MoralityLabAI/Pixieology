@@ -32,6 +32,13 @@ the W coordinate; an explicit orthogonal 4D rotation mixes W into the projected 
 volume while the depth control selects the emphasized slice. Drag rotates the 3D
 camera and the wheel zooms.
 
+The 5D mode adds the rank-one spin/holonomy category as `S`, located on cycle
+centers rather than model nodes. It keeps the abstract `Z/2` gauge phase separate
+from the holonomy-liveness verdict, using the angle-budget theorem to distinguish
+forced positive signs from live positive, live frustrated, and synthetic defects
+that the displayed geometry cannot realize. `HOLONOMY_5D_NOTES.md` records the
+paper hashes, equations, exact mapping, and claim boundary.
+
 Drag the globe to rotate its camera. **Pause/Play** controls both time traversal and
 automatic rotation; the time slider scrubs individual frames. The trace selector
 includes three deliberately distinct data classes:

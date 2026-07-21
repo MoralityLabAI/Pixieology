@@ -21,7 +21,7 @@
       </nav>
     </header>
 
-    <p class="claim-boundary">The 3D view uses update energy, spectral focus, and effective rank. The 4D view adds transformer depth as W and orthogonally rotates W into the visible volume. These are parameter-state manifolds, not activation semantics or causal circuits.</p>
+    <p class="claim-boundary">The 3D view uses update energy, spectral focus, and effective rank. The 4D view adds transformer depth as W. The 5D view adds a cycle-level S coordinate that separates forced-positive, live-positive, frustrated-live, and synthetic signs forbidden by the rank-one liveness bound. The Pixie retentions are parameter-state proxies, not activation lineage or causal circuits.</p>
 
     <section class="manifold-controls" aria-label="Manifold controls">
       <button id="manifold-play" type="button" aria-pressed="false">Play depth</button>
@@ -29,6 +29,7 @@
         <select id="manifold-mode">
           <option value="3d">3D state space</option>
           <option value="4d">4D depth projection</option>
+          <option value="5d">5D spin-category projection</option>
         </select>
       </label>
       <label for="manifold-layer">Depth slice <output id="manifold-layer-value">13</output>
@@ -39,6 +40,12 @@
       </label>
       <label for="manifold-module">Trace
         <select id="manifold-module"></select>
+      </label>
+      <label for="manifold-tau">Lineage proxy τ <output id="manifold-tau-value">0.20</output>
+        <input id="manifold-tau" type="range" min="0" max="1" step="0.01" value="0.20" disabled>
+      </label>
+      <label for="manifold-q">Spin noise q <output id="manifold-q-value">0.15</output>
+        <input id="manifold-q" type="range" min="0" max="0.5" step="0.01" value="0.15" disabled>
       </label>
     </section>
 
@@ -53,8 +60,10 @@
       <span><i class="key-line key-y"></i>Y spectral focus</span>
       <span><i class="key-line key-z"></i>Z effective rank</span>
       <span id="w-key" hidden><i class="key-line key-w"></i>W transformer depth</span>
+      <span id="s-key" hidden><i class="key-line key-s"></i>S spin/liveness category</span>
       <span><i class="key-dot attention-dot"></i>Attention</span>
       <span><i class="key-dot mlp-dot"></i>MLP</span>
+      <span id="spin-category-key" hidden>○ forced + · ● live + · ▲ live − · × synthetic − below liveness</span>
     </div>
 
     <p id="manifold-status" class="atlas-status" aria-live="polite"></p>

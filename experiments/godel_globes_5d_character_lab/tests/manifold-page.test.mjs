@@ -23,10 +23,13 @@ test("the page loads only local manifold dependencies", () => {
   assert.doesNotMatch(html, /https?:\/\//i);
 });
 
-test("3D and 4D modes and spatial controls are explicit", () => {
+test("3D, 4D, and 5D modes and spatial controls are explicit", () => {
   assert.match(html, /option value="3d">3D state space/);
   assert.match(html, /option value="4d">4D depth projection/);
+  assert.match(html, /option value="5d">5D spin-category projection/);
   assert.match(html, /id="manifold-layer" type="range"/);
   assert.match(html, /id="manifold-w-angle" type="range"/);
+  assert.match(html, /id="manifold-tau" type="range"/);
+  assert.match(html, /id="manifold-q" type="range"/);
   assert.match(html, /id="manifold-canvas"[^>]*role="img"/);
 });
