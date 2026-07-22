@@ -1,0 +1,27 @@
+{
+  "schema": "pixie_5d_holonomy_protocol_lock_v3",
+  "implementation_git_commit": "23d2fc131155fea02964d4cc8d7d42bf4fa5e530",
+  "protocol_sha256": "e8d18bf32d2c94b2e580e14c8ea79b75fcd25f43d07e566e81df8697d180542f",
+  "files": {
+    ".gitattributes": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+    ".gitignore": "21950cf761b339ba0bedf5e6cd03e2acd273cef103394c3b9020ef9ebbaffb49",
+    "README.md": "8178ce2d3e95828118919db02f49d832e2750360d49d350e9959e481087ecb21",
+    "TRAINER_PLAN.md": "172fc756060258afe01ba22863913b217ee22dc72b409785711dec0cfdca7b9d",
+    "pixie_holonomy5d_v03/__init__.py": "b4a3cef2d8793ae0a93548ed2ee5872088d8a6d3b127c02ef4aef50275440ca7",
+    "pixie_holonomy5d_v03/analysis.py": "689259f5dc572792ed491d634eeefea3d0d89c329cbf42527d43f670d4d9e42c",
+    "pixie_holonomy5d_v03/authorization.py": "7301e7ad1accb09fce9cb9d1b88111399c415b5952988c8e03d9a7251cf6ccad",
+    "pixie_holonomy5d_v03/continuation.py": "65cd0e4ba3e05260068024dbcf8ebd7f42a9e73d65ee674cfbe063d569694006",
+    "pixie_holonomy5d_v03/protocol.py": "a0384c04b4ca6de0bd344beb8f87219920d11e068e50143aec053aee398075a1",
+    "pixie_holonomy5d_v03/sharding.py": "1a8a4dd3be4fe031b3b0f6ce0497c4cb6e4d85e5b2772bb304b64e6a174b6a4c",
+    "pixie_holonomy5d_v03/verify.py": "49bdd1141dbd03f6ce4491678f66f7b363243532f4b93b8636eb864a8fe3626b",
+    "prereg_sharded_continuation.md": "055f3379f6f767260f6f9710d0661a6a1b58374529f7043f0fe95a54c413e2a7",
+    "protocol.json": "e8d18bf32d2c94b2e580e14c8ea79b75fcd25f43d07e566e81df8697d180542f",
+    "run.py": "cb842afa8c6bf6e93292f329a9c89ca1b4e721c0882de178dbf910af8f8b7310",
+    "scripts/run_analysis_v3.ps1": "60752ca10e94942c97210bc4553e4ba0e445f028035eab8e047aa764b2eacb99",
+    "scripts/run_continuation_v3.ps1": "c2cb4ccd108246015490308512077bdb0e3e72ae49b0246109e9e6b6992786ad",
+    "tests/conftest.py": "bd5a8efcb562df7fb7018ed30124c104353f6e36480313cead8db84befbbde6c",
+    "tests/test_protocol_lock.py": "dabbb58fc9417d46fb205876f95483d9adbcb6df9731333020505dea8f40be10",
+    "tests/test_sharding.py": "2500e714cf4ed195731345b30d932a855b397f99cd56c1fc1f59100b2ffe0d34",
+    "tests/test_v03_authorization.py": "bc25ed0ce7c849024294fd587d08800613792d7c9755f7a350240d45937c5c2b"
+  }
+}
