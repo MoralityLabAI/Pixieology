@@ -1,0 +1,33 @@
+{
+  "schema": "pixie_5d_holonomy_protocol_lock_v2",
+  "implementation_git_commit": "643e904a6c10b40cd2eafb660f0c82d3251f120d",
+  "protocol_sha256": "993accbac7642c6038cf1901445dbc0acfe4a9dee5f3a9118962a428f702b290",
+  "files": {
+    ".gitattributes": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+    ".gitignore": "9d2c71ddc73eb3e387d7cc6644e0e9e0f768bcf57a48f0a66fc7b00eefe6e504",
+    "README.md": "bd083756874a22b21fc5f34db7eba58d2fa5874822f487a8fc05726a3edb0b3e",
+    "pixie_holonomy5d_v02/__init__.py": "1e2b2aa5fd2b2bc554478670f1f05ccc094f416e456336932a0102a5b5f113c4",
+    "pixie_holonomy5d_v02/analysis.py": "71869bc028d472797716f5d050a2602f69af94c349982e5f39bd84d7d22121f9",
+    "pixie_holonomy5d_v02/authorization.py": "c9c38db36c7ec7d0af4324282ad0bd6a1465337534d8439a0ff9c85e4885a026",
+    "pixie_holonomy5d_v02/continuation.py": "5c92a156896e6a6b28e40cfe49846fe8ed55203d8431e9092bb842127da70652",
+    "pixie_holonomy5d_v02/protocol.py": "8f3a09b97e6bcbc8569ee5c3af5741e0e01d60a48e79334e0c352f3d0c5ef1ce",
+    "pixie_holonomy5d_v02/verify.py": "6d190caf35e64ce049192aa6fead87470eb0d9e060fdc9ccdb96909f47919ff1",
+    "prereg_continuation.md": "767d697b7262474f2af57dc9f286a2a2fc2d8abc36c8200f90620bafe11cd873",
+    "protocol.json": "993accbac7642c6038cf1901445dbc0acfe4a9dee5f3a9118962a428f702b290",
+    "receipts/cap_enforcement_v2.json": "7a39ad34eeaf37267dcb819bb0357d69beb02b82fbf91ee5050452dc315bd614",
+    "receipts/launcher_success_v2.json": "0d2671dffa8bd6d9f2a68e3f6ddefae29e80f7099ac0567fb540cd0357d47c6d",
+    "run.py": "d2c132a63df183b0180576fbe561c9de11140fc3f0e0bd3e9908d5ffb0f0dda2",
+    "scripts/cap_probe.py": "880461006b8ae40b2e08c5373cd42066e57874adda137450d518927aa2272557",
+    "scripts/invoke_owned_v2.ps1": "ce8d949a94777e2322dd0df22c9db04a86b5ed4eade0a36d30fe098a3a3bd065",
+    "scripts/post_run_cleanup_v2.ps1": "c7d90482ec620b67323f5c58059e521ec3a0368281df85c5518d90fe68f9d5f1",
+    "scripts/run_analysis_v2.ps1": "9ca4b82e1c63c639e803ab2f616f74b979186fc415e12bbc8316c896357285eb",
+    "scripts/run_cap_self_test.ps1": "1ca50efd33039e7923a800908bf46d4e44be281284a6e2179809c39950cc20d2",
+    "scripts/run_capped_v2.ps1": "220c75cf9d0e5ac7995c29eb3edd2f69027a1bb3b01513e69a6c91fb14abeb37",
+    "scripts/run_continuation.ps1": "d3442faca02c1b6f2cf81642b2c10933fa0faf9366e8a7924558fa87148b125d",
+    "scripts/wsl_doctor.py": "349cd456147dbf9f1611ab47996fc3106ec81c9fba923a10cf8bad6a2dfd0cd6",
+    "tests/conftest.py": "fe17eabb4ec60e752ebf73f0195b80b6461a5a4442ea3ae677e08faad4b31ed0",
+    "tests/test_continuation.py": "f062b4ebb1572bab5f3df345ac975b5226c0910988e1cb8a8c513dd802c4b4f7",
+    "tests/test_v02_authorization.py": "783fe3d23f95cf9f5336c56de59f0f752514f1b3fa4cf84d7fdcb0f0af646880",
+    "tests/test_verification.py": "66de80fdeb6adab67305c829e518b263aca3d0d07772c548a5578c9e40df52e8"
+  }
+}
