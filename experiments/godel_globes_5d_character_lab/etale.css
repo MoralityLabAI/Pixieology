@@ -1,0 +1,109 @@
+.etale-page {
+  --chart-background: color-mix(in srgb, var(--muted) 42%, var(--background));
+  margin: 0;
+  background: var(--background);
+}
+
+.etale-controls {
+  display: grid;
+  grid-template-columns: auto minmax(185px, 1fr) minmax(145px, .75fr) minmax(150px, .7fr) minmax(150px, .7fr) minmax(140px, .65fr);
+  gap: 12px;
+  align-items: end;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.etale-controls button, .etale-controls select {
+  min-height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--muted);
+  padding: 8px 12px;
+}
+.etale-controls button { cursor: pointer; }
+.etale-controls label {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px 10px;
+  color: var(--muted-foreground);
+  font-size: .78rem;
+}
+.etale-controls input, .etale-controls select { grid-column: 1 / -1; width: 100%; }
+.etale-controls input { accent-color: var(--primary); }
+.etale-controls output { color: var(--foreground); font-variant-numeric: tabular-nums; }
+
+.etale-stage {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--chart-background);
+}
+.etale-stage svg { display: block; width: 100%; height: auto; min-height: 520px; }
+.etale-stage text { font-family: inherit; }
+.etale-stage .sheet-path { fill: none; stroke: var(--border); stroke-width: 1.5; opacity: .58; }
+.etale-stage .sheet-path.attention { stroke: var(--series-2); }
+.etale-stage .sheet-path.mlp { stroke: var(--series-3); }
+.etale-stage .sheet-path.selected { stroke: var(--series-1); stroke-width: 3; opacity: 1; }
+.etale-stage .sheet-label, .etale-stage .axis-label, .etale-stage .depth-label { fill: var(--muted-foreground); font-size: 12px; }
+.etale-stage .sheet-label.selected, .etale-stage .metric-value { fill: var(--foreground); }
+.etale-stage .chart-window { fill: color-mix(in srgb, var(--series-1) 9%, transparent); stroke: var(--series-1); stroke-width: 1.2; stroke-dasharray: 5 5; }
+.etale-stage .stalk-line, .etale-stage .projection-arrow, .etale-stage .base-line, .etale-stage .metric-baseline { stroke: var(--border); stroke-width: 1.2; fill: none; }
+.etale-stage .stalk-line, .etale-stage .projection-arrow { stroke: var(--foreground); stroke-opacity: .55; stroke-dasharray: 4 5; }
+.etale-stage .germ-node { fill: var(--muted); stroke: var(--muted-foreground); stroke-width: 1.2; }
+.etale-stage .germ-node.selected { fill: var(--foreground); stroke: var(--foreground); }
+.etale-stage .base-node { fill: var(--muted); stroke: var(--muted-foreground); stroke-width: 1; cursor: pointer; }
+.etale-stage .base-node:hover { stroke: var(--foreground); stroke-width: 2; }
+.etale-stage .base-node.selected { fill: var(--series-1); stroke: var(--foreground); stroke-width: 2; }
+.etale-stage .metric-path { fill: none; stroke: var(--series-1); stroke-width: 2.4; }
+.etale-stage .metric-peer { fill: none; stroke: var(--muted-foreground); stroke-width: 1.2; opacity: .55; }
+.etale-stage .metric-node { fill: var(--series-1); stroke: var(--background); stroke-width: 1.2; }
+.etale-stage .selected-guide { stroke: var(--foreground); stroke-width: 1; stroke-dasharray: 3 4; opacity: .6; }
+.etale-stage .spin-forced { fill: var(--background); stroke: var(--muted-foreground); stroke-width: 1.7; }
+.etale-stage .spin-live-positive { fill: var(--series-4); stroke: var(--series-4); }
+.etale-stage .spin-frustrated { fill: var(--series-5); stroke: var(--series-5); }
+.etale-stage .spin-synthetic { fill: none; stroke: var(--series-1); stroke-width: 2; }
+
+.germ-readout {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.germ-readout div { display: grid; gap: 5px; min-width: 0; background: var(--muted); padding: 11px 13px; }
+.germ-readout span { color: var(--muted-foreground); font-size: .72rem; }
+.germ-readout strong { overflow-wrap: anywhere; font-weight: 500; font-variant-numeric: tabular-nums; }
+.etale-key { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 10px; color: var(--muted-foreground); font-size: .76rem; }
+.etale-key span { display: inline-flex; align-items: center; gap: 6px; }
+.etale-key .key-line { display: inline-block; width: 18px; height: 2px; }
+.selected-sheet-key { background: var(--series-1); }
+.peer-sheet-key { background: var(--muted-foreground); }
+.key-window { display: inline-block; width: 18px; height: 10px; border: 1px dashed var(--series-1); background: color-mix(in srgb, var(--series-1) 9%, transparent); }
+
+@media (prefers-color-scheme: light) {
+  .etale-page {
+    color-scheme: light;
+    --background: #f7f5fc;
+    --foreground: #201d2a;
+    --muted: #ebe7f2;
+    --muted-foreground: #625d6d;
+    --border: #c8c1d4;
+    --primary: #5d367c;
+    --primary-foreground: #ffffff;
+    --series-1: #7b3fa3;
+    --series-2: #19708d;
+    --series-3: #9a650e;
+    --series-4: #20734b;
+    --series-5: #a7354d;
+  }
+}
+@media (max-width: 980px) {
+  .etale-controls { grid-template-columns: auto repeat(2, minmax(170px, 1fr)); }
+  .germ-readout { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .etale-page h1 { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .etale-controls { grid-template-columns: 1fr; }
+  .etale-controls button { width: 100%; }
+  .etale-stage svg { width: 100%; min-height: 0; }
+  .etale-stage .sheet-label, .etale-stage .axis-label, .etale-stage .depth-label { font-size: 18px; }
+  .germ-readout { grid-template-columns: 1fr 1fr; }
+}

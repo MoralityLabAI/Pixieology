@@ -32,6 +32,13 @@ the W coordinate; an explicit orthogonal 4D rotation mixes W into the projected 
 volume while the depth control selects the emphasized slice. Drag rotates the 3D
 camera and the wheel zooms.
 
+Open `etale.html` for the local-chart companion. It treats transformer depth W as
+the base, the seven LoRA targets as locally traceable sheets, X/Y/Z as section
+values, and S as an overlap-level spin/liveness certificate. The selected stalk and
+chart window keep exact local comparisons readable when the 5D globe projection is
+too visually entangled. This is a finite sampled, étale-style UX map, not a claim
+that the model's representation space is literally an étale space.
+
 The 5D mode adds the rank-one spin/holonomy category as `S`, located on cycle
 centers rather than model nodes. It keeps the abstract `Z/2` gauge phase separate
 from the holonomy-liveness verdict, using the angle-budget theorem to distinguish

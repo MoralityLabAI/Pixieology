@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Pixie 1.7B Five-Dimensional Étale Explorer</title>
+  <link rel="stylesheet" href="mechinterp.css">
+  <link rel="stylesheet" href="etale.css">
+</head>
+<body class="etale-page">
+  <main class="atlas-shell">
+    <header class="atlas-header">
+      <div>
+        <p class="eyebrow">PIXIE 1.7B · LOCAL MECHANISTIC CHARTS</p>
+        <h1>Five-dimensional étale explorer</h1>
+      </div>
+      <nav class="atlas-nav" aria-label="Experiment views">
+        <a href="mechinterp.html">Delta atlas</a>
+        <a href="manifold.html?mode=5d">5D manifold</a>
+        <a href="index.html">Character globe</a>
+      </nav>
+    </header>
+
+    <p class="claim-boundary">A finite sampled, étale-style view of the measured proxy state: transformer depth W is the base; each LoRA target is a locally traceable sheet; X normalized update energy, Y spectral focus, and Z effective rank are section coordinates; S is an overlap-level spin/liveness certificate. This is a navigation and comparison map, not proof that model representations form an étale space.</p>
+
+    <section class="etale-controls" aria-label="Étale map controls">
+      <button id="etale-play" type="button" aria-pressed="false">Play depth</button>
+      <label for="etale-layer">Base depth W <output id="etale-layer-value">13</output>
+        <input id="etale-layer" type="range" min="0" max="27" step="1" value="13">
+      </label>
+      <label for="etale-module">Sheet
+        <select id="etale-module"></select>
+      </label>
+      <label for="etale-radius">Chart radius <output id="etale-radius-value">±2</output>
+        <input id="etale-radius" type="range" min="1" max="5" step="1" value="2">
+      </label>
+      <label for="etale-tau">Lineage proxy τ <output id="etale-tau-value">0.20</output>
+        <input id="etale-tau" type="range" min="0" max="1" step="0.01" value="0.20">
+      </label>
+      <label for="etale-q">Spin noise q <output id="etale-q-value">0.15</output>
+        <input id="etale-q" type="range" min="0" max="0.5" step="0.01" value="0.15">
+      </label>
+    </section>
+
+    <section class="etale-stage" aria-labelledby="etale-heading">
+      <h2 id="etale-heading" class="sr-heading">Local sections projected to transformer depth</h2>
+      <svg id="etale-map" viewBox="0 0 1200 700" role="img" aria-labelledby="etale-title etale-desc">
+        <title id="etale-title">Five-dimensional étale-style map of Pixie adapter deltas</title>
+        <desc id="etale-desc">Seven module sheets project to transformer depth. A local chart exposes update energy, spectral focus, effective rank, and spin overlap category around the selected layer.</desc>
+      </svg>
+    </section>
+
+    <section class="germ-readout" aria-label="Selected germ coordinates">
+      <div><span>X · update coord</span><strong id="etale-x">0</strong></div>
+      <div><span>Y · focus</span><strong id="etale-y">0</strong></div>
+      <div><span>Z · rank</span><strong id="etale-z">0</strong></div>
+      <div><span>W · depth</span><strong id="etale-w">0</strong></div>
+      <div><span>S · overlap</span><strong id="etale-s">unavailable</strong></div>
+    </section>
+
+    <div class="etale-key" aria-label="Étale map key">
+      <span><i class="key-line selected-sheet-key"></i>selected sheet</span>
+      <span><i class="key-line peer-sheet-key"></i>peer sheets</span>
+      <span><i class="key-window"></i>local chart U</span>
+      <span>○ forced + · ● live + · ▲ live − · × synthetic −</span>
+    </div>
+    <p id="etale-status" class="atlas-status" aria-live="polite"></p>
+  </main>
+
+  <script src="bonsai_mechinterp_data.js"></script>
+  <script src="mechinterp_atlas.js"></script>
+  <script src="mechinterp_manifold.js"></script>
+  <script src="mechinterp_etale.js"></script>
+  <script src="etale.js"></script>
+</body>
+</html>
