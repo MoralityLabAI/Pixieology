@@ -1,0 +1,98 @@
+{
+  "schema": "pixie_5d_context3_attempt_result_v3",
+  "status": "ABORTED",
+  "attempt_id": "context3-sharded-v03-20260722T160646Z",
+  "protocol_sha256": "e8d18bf32d2c94b2e580e14c8ea79b75fcd25f43d07e566e81df8697d180542f",
+  "protocol_commit": "6e2ac413d6acaf8d6270f0b2e9f421b68bdae702",
+  "authorization_sha256": "2332de92773de2ac608be70ec37baec6d16e6e22f141381ff6b3b8abfa7224ad",
+  "authorization_statement": "I explicitly authorize the v0.3 sharded context-3 continuation under the exact caps in this receipt.",
+  "started_utc": "2026-07-22T16:07:36.7254245Z",
+  "ended_utc": "2026-07-22T16:08:02.7171113Z",
+  "recorded_utc": "2026-07-22T16:11:36.2699919Z",
+  "failure": {
+    "stage": "shard_1_materialization",
+    "classification": "NATIVE_TORCH_CPU_ACCESS_VIOLATION_DURING_FIRST_SHARD_MATERIALIZATION",
+    "exit_code_decimal": -1073741819,
+    "exit_code_hex": "0xC0000005",
+    "faulting_module": "torch_cpu.dll",
+    "faulting_module_offset": "0x00000000060e416b",
+    "windows_error_report_id": "f636c4ed-636b-4a3d-8201-001f612ef41a",
+    "wrapper_abort_reason": "child_nonzero_exit",
+    "python_exception_available": false
+  },
+  "sharding": {
+    "planned_shards": 7,
+    "planned_tensors": 310,
+    "completed_shards": 0,
+    "completed_tensors": 0,
+    "first_shard_bytes": 621236224,
+    "first_shard_tensor": "model.embed_tokens.weight",
+    "first_shard_dtype": "F16",
+    "first_shard_shape": [151669, 2048],
+    "partial_tensor_file_present": false,
+    "resumable_completion_markers_created": 0
+  },
+  "gates": {
+    "frozen_lineage_verification": "PASS",
+    "authorization_validation": "PASS",
+    "job_object_readback": "PASS",
+    "gpu_idle_preflight": "PASS",
+    "shard_plan": "PASS",
+    "first_shard": "ABORTED_BEFORE_COMPLETION",
+    "model_load": "NOT_REACHED",
+    "context_3_capture": "NOT_REACHED",
+    "analysis": "NOT_RUN_NO_COMPLETED_CAPTURE",
+    "trainer_cuda_cleanup": "PASS",
+    "wrapper_process_cleanup": "PASS"
+  },
+  "caps": {
+    "memory_mb": 6144,
+    "cpu_percent": 50,
+    "io_mb_per_second": 250,
+    "timeout_seconds": 1800
+  },
+  "job_object_readback": {
+    "limit_flags": 8960,
+    "process_memory_limit_bytes": 6442450944,
+    "job_memory_limit_bytes": 6442450944
+  },
+  "observed": {
+    "wall_time_seconds": 25.9916868,
+    "peak_job_memory_mib": 4147.48,
+    "peak_process_memory_mib": 4088.68,
+    "peak_tree_private_mib": 1506.77,
+    "peak_vram_mib": 0,
+    "peak_gpu_temperature_c": 77,
+    "timed_out": false,
+    "lingering_owned_processes": 0,
+    "lingering_owned_gpu_processes": 0,
+    "d_free_gib_after": 36.02
+  },
+  "host_after_cleanup": {
+    "physical_free_gib": 8.47,
+    "committed_gib": 24.84,
+    "commit_limit_gib": 68.78,
+    "pagefile_allocated_gib": 45.0,
+    "pagefile_current_usage_gib": 0.96
+  },
+  "diagnosis": {
+    "cap_or_timeout_failure": false,
+    "basis": "Windows Error Reporting identifies torch_cpu.dll and exception 0xC0000005. Peak job memory was 4147.48 MiB under the exact 6144 MiB hard cap, no timeout occurred, and GPU memory stayed at zero. Events prove the crash occurred after shard 1 started and before any shard completion marker. Because the native process emitted neither stderr nor a Python exception, the evidence does not distinguish safe_open, get_tensor, tensor hashing, or save_file as the precise crashing call.",
+    "unchanged_retry_authorized": false,
+    "unchanged_retry_justified": false,
+    "registered_next_protocol_direction": "Use bounded raw safetensors payload copying and independent byte-range verification so preprocessing never materializes the 621236224-byte embedding as a PyTorch tensor; freeze that as a new protocol version before requesting new authorization."
+  },
+  "raw_artifact_sha256": {
+    "wrapper/resource_summary.json": "2569bc00749fb0076bab53de5bd1b43abf6f7390b85e94b0419a9ec0e5026724",
+    "wrapper/cleanup_summary.json": "e8388f11a3315b8336cf5c4f09ad1f5776bf855f8ed3ca896a5506f6957ff227",
+    "wrapper/owned_pids.json": "13988cb2ec4a9e9e2b1d201d243f4967e15c939c43859ca771bcf665ac99608e",
+    "wrapper/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wrapper/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "continuation/events.jsonl": "c75816ea1c589a3947cb91a4a47ad5f65d50ac004688e7ea06dfc66558af0aff",
+    "continuation/abort_postmortem.json": "6fe05964be1855c2d4ee721a76e3ecab6199be274dc914e402f9ae62abbe4480",
+    "sharded_snapshot/build_state.json": "d90c3830b43b58c4038ae8a70152aa1be96fe665e6cca765bfc486c7f1200264",
+    "authorization.json": "2332de92773de2ac608be70ec37baec6d16e6e22f141381ff6b3b8abfa7224ad",
+    "windows_error_report/Report.wer": "5d45051b31e26b8d6dcae229631b8b89b5ec504fe6ada9b9a7d7c7dc473a7c0f"
+  },
+  "claim_boundary": "This attempt establishes a reproducible native torch_cpu.dll access violation in the v0.3 PyTorch-based first-shard materialization path under the frozen caps. It does not test sharded Transformers loading, context-3 capture, or the preregistered holonomy analysis."
+}
