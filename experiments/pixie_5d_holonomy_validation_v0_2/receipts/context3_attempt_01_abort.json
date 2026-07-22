@@ -1,0 +1,83 @@
+{
+  "schema": "pixie_5d_context3_attempt_result_v2",
+  "status": "ABORTED",
+  "attempt_id": "context3-v02-20260722T153336Z",
+  "protocol_sha256": "993accbac7642c6038cf1901445dbc0acfe4a9dee5f3a9118962a428f702b290",
+  "authorization_sha256": "0cd12e91cd3083afb00effd2f411eefca512aaf08bba629705bf2fd09e63e406",
+  "started_utc": "2026-07-22T15:36:00.0939441Z",
+  "ended_utc": "2026-07-22T15:36:15.0976994Z",
+  "failure": {
+    "stage": "frozen_base_checkpoint_load",
+    "error_type": "OSError",
+    "windows_error": 1455,
+    "message": "The paging file is too small for this operation to complete.",
+    "wrapper_abort_reason": "child_nonzero_exit",
+    "chunks_completed": 0
+  },
+  "gates": {
+    "frozen_lineage_verification": "PASS",
+    "authorization_validation": "PASS",
+    "job_object_readback": "PASS",
+    "gpu_idle_preflight": "PASS",
+    "capture": "ABORTED_BEFORE_FIRST_CHUNK",
+    "trainer_cuda_cleanup": "PASS",
+    "wrapper_process_cleanup": "PASS"
+  },
+  "caps": {
+    "memory_mb": 6144,
+    "cpu_percent": 50,
+    "io_mb_per_second": 250,
+    "timeout_seconds": 1800
+  },
+  "job_object_readback": {
+    "limit_flags": 8960,
+    "process_memory_limit_bytes": 6442450944,
+    "job_memory_limit_bytes": 6442450944
+  },
+  "observed": {
+    "wall_time_seconds": 15.0037553,
+    "peak_job_memory_mb": 2958.7,
+    "peak_process_memory_mb": 2900.43,
+    "peak_tree_private_mb": 1887.97,
+    "average_sampled_tree_private_mb": 1051.43,
+    "peak_vram_mib": 67,
+    "peak_gpu_temperature_c": 80,
+    "lingering_owned_processes": 0,
+    "lingering_owned_gpu_processes": 0,
+    "actual_io_rate_measurement": null,
+    "actual_cpu_percent_measurement": null
+  },
+  "host_commit_after_cleanup": {
+    "physical_free_gb": 11.04,
+    "committed_gb": 21.06,
+    "commit_limit_gb": 68.78,
+    "pagefile_allocated_gb": 45.0,
+    "pagefile_current_usage_gb": 0.95
+  },
+  "software": {
+    "transformers": "5.3.0",
+    "torch": "2.5.1+cu121",
+    "accelerate": "1.12.0",
+    "bitsandbytes": "0.49.1",
+    "peft": "0.11.1",
+    "safetensors": "0.6.2"
+  },
+  "diagnosis": {
+    "classification": "FROZEN_6GIB_CAP_INCOMPATIBLE_WITH_CURRENT_LOADER_TRANSIENT",
+    "basis": "The pagefile had substantial system-wide headroom after cleanup, the exact Job Object enforced a 6 GiB per-process and whole-job cap, and the uncapped v0.1 loader had previously approached 10 GB. The cap causing the failed allocation is an inference from these receipts, not a direct Windows attribution.",
+    "unchanged_retry_justified": false,
+    "registered_next_options": [
+      "Create a new protocol version that probes Transformers low_cpu_mem_usage plus disk-offloaded state loading under the same 6 GiB cap.",
+      "Create a new protocol version with a higher hard memory cap, requiring fresh explicit authorization."
+    ]
+  },
+  "raw_artifact_sha256": {
+    "wrapper/resource_summary.json": "8312b4d0b00a56f7b06526f803f4579e0595b3daacc52193307b8b8599c86ffa",
+    "wrapper/cleanup_summary.json": "a9991ea79eb75ae649853a2255c97df521f6e3cdabb733ac9a1417ef310e2e3d",
+    "wrapper/stderr.log": "2bea7e6972ecab9da994a1ad491400310c90bf6b9ec095690c54a6b46ef97468",
+    "wrapper/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wrapper/owned_pids.json": "ebc41486d9b7c210029a4c4dcc530b2e4182e8527c6671a92fd0c1d94b80aae0",
+    "continuation/events.jsonl": "a2eb17234b7d67d1fa85cb6744162b4590e21a5cee812cbac59f3c40cb4c67b1",
+    "continuation/abort.json": "2c7825f4ede81ab9c4720c867fc88c5caa38fe67dd51358f6ca2309a4ef99857"
+  }
+}
