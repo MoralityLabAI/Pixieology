@@ -1,0 +1,35 @@
+{
+  "schema": "pixie_cap_enforcement_evidence_v2",
+  "status": "PASS",
+  "attempt_id": "cap-self-test-20260722T143550421Z",
+  "test": {
+    "configured_memory_mb": 128,
+    "requested_probe_mb": 384,
+    "last_confirmed_allocation_mb": 48,
+    "abort_reason": "os_memory_cap_termination",
+    "unexpected_completion_marker": false,
+    "timed_out": false
+  },
+  "job_object_readback": {
+    "limit_flags": 8960,
+    "process_memory_limit_bytes": 134217728,
+    "job_memory_limit_bytes": 134217728
+  },
+  "observed": {
+    "peak_tree_private_bytes": 59863040,
+    "peak_job_memory_bytes": 136089600,
+    "peak_process_memory_bytes": 76513280
+  },
+  "implementation_sha256": {
+    "scripts/run_capped_v2.ps1": "220c75cf9d0e5ac7995c29eb3edd2f69027a1bb3b01513e69a6c91fb14abeb37",
+    "scripts/invoke_owned_v2.ps1": "ce8d949a94777e2322dd0df22c9db04a86b5ed4eade0a36d30fe098a3a3bd065",
+    "scripts/cap_probe.py": "880461006b8ae40b2e08c5373cd42066e57874adda137450d518927aa2272557"
+  },
+  "raw_artifact_sha256": {
+    "resource_summary.json": "4a7df44092c89c4b4354209b0dc8b04ec8107ef9fcfeca7270da70f237631b15",
+    "self_test_receipt.json": "9ab0016966c7852d323eea72466709a3d59b7254c10280b65a45d88af74bf59c",
+    "stdout.log": "973451263a637fda1d9eafde5a2f781a0fda8dae2b47500e2bd4e531211d26dd",
+    "stderr.log": "fe25ab67c45d08b16a03ee2903cc039bbdf0f17d4c938294267666013d76d785"
+  },
+  "claim_boundary": "This proves the corrected 128 MiB Job Object rejects a bounded allocation probe. It does not prove that the 6144 MiB Bonsai continuation will fit."
+}

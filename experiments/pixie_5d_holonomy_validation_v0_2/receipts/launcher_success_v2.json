@@ -1,0 +1,31 @@
+{
+  "schema": "pixie_launcher_success_evidence_v2",
+  "status": "PASS",
+  "attempt_id": "success-self-test-20260722-02",
+  "test": {
+    "command": "python run.py output-root",
+    "configured_memory_mb": 512,
+    "exit_code": 0,
+    "wrapper_status": "complete",
+    "cleanup_status": "PASS",
+    "lingering_owned_processes": 0,
+    "owned_gpu_processes": 0
+  },
+  "job_object_readback": {
+    "limit_flags": 8960,
+    "process_memory_limit_bytes": 536870912,
+    "job_memory_limit_bytes": 536870912
+  },
+  "observed": {
+    "peak_job_memory_bytes": 453681152,
+    "peak_process_memory_bytes": 392159232
+  },
+  "raw_artifact_sha256": {
+    "resource_summary.json": "73d52651eb39c3bcbed698276736591ff98afd1aa7e5552e72705bc08fa3c5e3",
+    "cleanup_summary.json": "432be39205e4f1c74da31d1b14a24de02883945d2f48af76f4ac341960e3d272",
+    "stdout.log": "c855aab1358ed1c948703bebe7a1062316910db6e60879ab375366626d3246b0",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "owned_pids.json": "ff781e846af7e3ca16ae0c59ce0e51308526813f0036bfda54a80fbdcf9de662"
+  },
+  "claim_boundary": "This proves the frozen launcher success and post-run audit paths for a small CPU-only child. It does not prove Bonsai capture fit or GPU availability."
+}
