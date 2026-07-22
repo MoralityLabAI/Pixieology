@@ -6,7 +6,7 @@
 
 .etale-controls {
   display: grid;
-  grid-template-columns: auto minmax(185px, 1fr) minmax(145px, .75fr) minmax(150px, .7fr) minmax(150px, .7fr) minmax(140px, .65fr);
+  grid-template-columns: auto minmax(175px, 1fr) minmax(135px, .78fr) repeat(4, minmax(125px, .7fr));
   gap: 12px;
   align-items: end;
   padding: 14px 0;
@@ -45,6 +45,13 @@
 .etale-stage .sheet-label, .etale-stage .axis-label, .etale-stage .depth-label { fill: var(--muted-foreground); font-size: 12px; }
 .etale-stage .sheet-label.selected, .etale-stage .metric-value { fill: var(--foreground); }
 .etale-stage .chart-window { fill: color-mix(in srgb, var(--series-1) 9%, transparent); stroke: var(--series-1); stroke-width: 1.2; stroke-dasharray: 5 5; }
+.etale-stage .gluing-bridge { stroke: var(--series-4); stroke-width: 6; stroke-linecap: round; opacity: .24; }
+.etale-stage .gluing-bridge.current { stroke-width: 9; opacity: .48; }
+.etale-stage .gluing-band { stroke: var(--series-4); stroke-width: 5; stroke-linecap: round; opacity: .7; }
+.etale-stage .gluing-band.current { stroke: var(--foreground); stroke-width: 7; opacity: .9; }
+.etale-stage .glue-node { fill: var(--series-4); stroke: var(--background); stroke-width: 1; }
+.etale-stage .transition-mark { fill: var(--muted); stroke: var(--muted-foreground); stroke-width: 1.2; }
+.etale-stage .transition-mark.current { fill: var(--series-5); stroke: var(--foreground); stroke-width: 1.6; }
 .etale-stage .stalk-line, .etale-stage .projection-arrow, .etale-stage .base-line, .etale-stage .metric-baseline { stroke: var(--border); stroke-width: 1.2; fill: none; }
 .etale-stage .stalk-line, .etale-stage .projection-arrow { stroke: var(--foreground); stroke-opacity: .55; stroke-dasharray: 4 5; }
 .etale-stage .germ-node { fill: var(--muted); stroke: var(--muted-foreground); stroke-width: 1.2; }
@@ -54,6 +61,7 @@
 .etale-stage .base-node.selected { fill: var(--series-1); stroke: var(--foreground); stroke-width: 2; }
 .etale-stage .metric-path { fill: none; stroke: var(--series-1); stroke-width: 2.4; }
 .etale-stage .metric-peer { fill: none; stroke: var(--muted-foreground); stroke-width: 1.2; opacity: .55; }
+.etale-stage .local-glue-field { fill: color-mix(in srgb, var(--series-4) 7%, transparent); }
 .etale-stage .metric-node { fill: var(--series-1); stroke: var(--background); stroke-width: 1.2; }
 .etale-stage .selected-guide { stroke: var(--foreground); stroke-width: 1; stroke-dasharray: 3 4; opacity: .6; }
 .etale-stage .spin-forced { fill: var(--background); stroke: var(--muted-foreground); stroke-width: 1.7; }
@@ -63,7 +71,7 @@
 
 .germ-readout {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
@@ -76,6 +84,7 @@
 .etale-key .key-line { display: inline-block; width: 18px; height: 2px; }
 .selected-sheet-key { background: var(--series-1); }
 .peer-sheet-key { background: var(--muted-foreground); }
+.glued-sheet-key { background: var(--series-4); height: 4px !important; }
 .key-window { display: inline-block; width: 18px; height: 10px; border: 1px dashed var(--series-1); background: color-mix(in srgb, var(--series-1) 9%, transparent); }
 
 @media (prefers-color-scheme: light) {

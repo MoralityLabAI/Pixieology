@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
-  <title>Pixie 1.7B Five-Dimensional Étale Explorer</title>
+  <title>Pixie 1.7B Locally Glued Étale Explorer</title>
   <link rel="stylesheet" href="mechinterp.css">
   <link rel="stylesheet" href="etale.css">
 </head>
@@ -13,7 +13,7 @@
     <header class="atlas-header">
       <div>
         <p class="eyebrow">PIXIE 1.7B · LOCAL MECHANISTIC CHARTS</p>
-        <h1>Five-dimensional étale explorer</h1>
+        <h1>Locally glued étale explorer</h1>
       </div>
       <nav class="atlas-nav" aria-label="Experiment views">
         <a href="mechinterp.html">Delta atlas</a>
@@ -22,7 +22,7 @@
       </nav>
     </header>
 
-    <p class="claim-boundary">A finite sampled, étale-style view of the measured proxy state: transformer depth W is the base; each LoRA target is a locally traceable sheet; X normalized update energy, Y spectral focus, and Z effective rank are section coordinates; S is an overlap-level spin/liveness certificate. This is a navigation and comparison map, not proof that model representations form an étale space.</p>
+    <p class="claim-boundary">Transformer depth W is the base and each LoRA target keeps a global sheet identity. Two sheets are locally glued over U only when their RMS distance across normalized X/Y/Z is at most ε; S remains an overlap-level spin/liveness certificate. ε is a descriptive tolerance, not statistical uncertainty. Merge and split marks describe the local-equivalence quotient—not literal branching of an étale map.</p>
 
     <section class="etale-controls" aria-label="Étale map controls">
       <button id="etale-play" type="button" aria-pressed="false">Play depth</button>
@@ -35,6 +35,9 @@
       <label for="etale-radius">Chart radius <output id="etale-radius-value">±2</output>
         <input id="etale-radius" type="range" min="1" max="5" step="1" value="2">
       </label>
+      <label for="etale-epsilon">Glue tolerance ε <output id="etale-epsilon-value">0.25</output>
+        <input id="etale-epsilon" type="range" min="0.10" max="0.60" step="0.01" value="0.25">
+      </label>
       <label for="etale-tau">Lineage proxy τ <output id="etale-tau-value">0.20</output>
         <input id="etale-tau" type="range" min="0" max="1" step="0.01" value="0.20">
       </label>
@@ -46,8 +49,8 @@
     <section class="etale-stage" aria-labelledby="etale-heading">
       <h2 id="etale-heading" class="sr-heading">Local sections projected to transformer depth</h2>
       <svg id="etale-map" viewBox="0 0 1200 700" role="img" aria-labelledby="etale-title etale-desc">
-        <title id="etale-title">Five-dimensional étale-style map of Pixie adapter deltas</title>
-        <desc id="etale-desc">Seven module sheets project to transformer depth. A local chart exposes update energy, spectral focus, effective rank, and spin overlap category around the selected layer.</desc>
+        <title id="etale-title">Locally glued map of Pixie adapter deltas</title>
+        <desc id="etale-desc">Seven globally distinct module sheets project to transformer depth. Local metric equivalences glue sheets over chart windows while preserving their identities.</desc>
       </svg>
     </section>
 
@@ -57,12 +60,15 @@
       <div><span>Z · rank</span><strong id="etale-z">0</strong></div>
       <div><span>W · depth</span><strong id="etale-w">0</strong></div>
       <div><span>S · overlap</span><strong id="etale-s">unavailable</strong></div>
+      <div><span>G · local gluing</span><strong id="etale-g">none</strong></div>
     </section>
 
     <div class="etale-key" aria-label="Étale map key">
       <span><i class="key-line selected-sheet-key"></i>selected sheet</span>
       <span><i class="key-line peer-sheet-key"></i>peer sheets</span>
       <span><i class="key-window"></i>local chart U</span>
+      <span><i class="key-line glued-sheet-key"></i>local equivalence d<sub>U</sub> ≤ ε</span>
+      <span>◇ quotient transition</span>
       <span>○ forced + · ● live + · ▲ live − · × synthetic −</span>
     </div>
     <p id="etale-status" class="atlas-status" aria-live="polite"></p>

@@ -27,6 +27,7 @@ test("the five coordinates, local chart, and evidence controls are explicit", ()
   assert.match(html, /id="etale-layer"[^>]*type="range"/);
   assert.match(html, /id="etale-module"/);
   assert.match(html, /id="etale-radius"[^>]*type="range"/);
+  assert.match(html, /id="etale-epsilon"[^>]*type="range"/);
   assert.match(html, /id="etale-tau"[^>]*type="range"/);
   assert.match(html, /id="etale-q"[^>]*type="range"/);
   assert.match(html, /X · update coord/);
@@ -34,5 +35,8 @@ test("the five coordinates, local chart, and evidence controls are explicit", ()
   assert.match(html, /Z · rank/);
   assert.match(html, /W · depth/);
   assert.match(html, /S · overlap/);
+  assert.match(html, /G · local gluing/);
   assert.match(html, /id="etale-map"[^>]*role="img"/);
+  assert.match(app, /buildGluingAtlas/);
+  assert.match(app, /gluing-band/);
 });

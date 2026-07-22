@@ -14,6 +14,8 @@
   const moduleInput = document.getElementById("etale-module");
   const radiusInput = document.getElementById("etale-radius");
   const radiusOutput = document.getElementById("etale-radius-value");
+  const epsilonInput = document.getElementById("etale-epsilon");
+  const epsilonOutput = document.getElementById("etale-epsilon-value");
   const tauInput = document.getElementById("etale-tau");
   const tauOutput = document.getElementById("etale-tau-value");
   const qInput = document.getElementById("etale-q");
@@ -24,6 +26,7 @@
     layer: 13,
     moduleId: atlas.modules[0].id,
     radius: 2,
+    epsilon: 0.25,
     tau: 0.2,
     q: 0.15,
     timer: null
@@ -48,9 +51,16 @@
     return values.map((value, index) => `${index ? "L" : "M"} ${xValue(value).toFixed(2)} ${yValue(value).toFixed(2)}`).join(" ");
   }
 
-  function pairedModule(moduleId) {
-    const selected = points.find((point) => point.moduleId === moduleId);
-    return selected.family === "attention" ? "gate_proj" : "o_proj";
+  function moduleLabel(moduleId) {
+    return etaleApi.sheetAt(etaleMap, moduleId).moduleLabel;
+  }
+
+  function otherModule(pair, moduleId) {
+    return pair.a === moduleId ? pair.b : pair.a;
+  }
+
+  function pairLabel(pairId) {
+    return pairId.split("|").map(moduleLabel).join(" ↔ ");
   }
 
   function words(value) {
@@ -83,10 +93,17 @@
   }
 
   function render() {
-    const chart = etaleApi.chartAt(etaleMap, state.layer, state.radius);
+    const gluingAtlas = etaleApi.buildGluingAtlas(etaleMap, state.radius, state.epsilon);
+    const localGlue = gluingAtlas.samples.find((sample) => sample.layer === state.layer);
+    const chart = localGlue.chart;
     const selectedSheet = etaleApi.sheetAt(etaleMap, state.moduleId);
     const selectedChartSheet = chart.sheets.find((sheet) => sheet.moduleId === state.moduleId);
-    const peerId = pairedModule(state.moduleId);
+    const selectedPairs = localGlue.pairs
+      .filter((pair) => pair.a === state.moduleId || pair.b === state.moduleId)
+      .sort((first, second) => first.distance - second.distance);
+    const closestPair = selectedPairs[0];
+    const gluedPairs = selectedPairs.filter((pair) => pair.equivalent);
+    const peerId = otherModule(closestPair, state.moduleId);
     const peerChartSheet = chart.sheets.find((sheet) => sheet.moduleId === peerId);
     const spin = geometry.analyzeSpinLadder(points, state.moduleId, peerId, state.tau, state.q);
     const overlaps = etaleApi.overlapCycles(spin, chart);
@@ -117,8 +134,8 @@
 
     svg.replaceChildren();
     svg.setAttribute("viewBox", `0 0 ${layout.width} ${layout.height}`);
-    svg.appendChild(element("title", { id: "etale-title" }, "Five-dimensional étale-style map of Pixie adapter deltas"));
-    svg.appendChild(element("desc", { id: "etale-desc" }, "Seven module sheets project to transformer depth. A local chart exposes update energy, spectral focus, effective rank, and spin overlap category around the selected layer."));
+    svg.appendChild(element("title", { id: "etale-title" }, "Locally glued map of Pixie adapter deltas"));
+    svg.appendChild(element("desc", { id: "etale-desc" }, "Seven globally distinct module sheets project to transformer depth. Local metric equivalences glue sheets over chart windows while preserving their identities."));
     const plotLeft = layout.plotLeft;
     const plotRight = layout.plotRight;
     const fullX = (layer) => plotLeft + (layer / (etaleMap.layers.length - 1)) * (plotRight - plotLeft);
@@ -127,10 +144,46 @@
     svg.appendChild(element("rect", { class: "chart-window", x: windowLeft, y: layout.windowTop, width: windowRight - windowLeft, height: layout.windowHeight, rx: 8 }));
     svg.appendChild(element("text", { class: "axis-label", x: windowLeft + 8, y: layout.windowTop + 17 }, `U = layers ${chart.lowerLayer}–${chart.upperLayer}`));
 
+    const sheetIndex = new Map(etaleMap.sheets.map((sheet, index) => [sheet.moduleId, index]));
+    function sheetY(moduleId, point) {
+      const lane = layout.sheetTop + sheetIndex.get(moduleId) * layout.sheetGap;
+      return lane - point.x * 8 - point.y * 5 + point.z * 4;
+    }
+    const selectedBands = gluingAtlas.bands.filter((band) => band.a === state.moduleId || band.b === state.moduleId);
+    const glueGroup = element("g", { "aria-label": "Local equivalence bands for the selected sheet" });
+    selectedBands.forEach((band) => {
+      const otherId = band.a === state.moduleId ? band.b : band.a;
+      const current = state.layer >= band.startLayer && state.layer <= band.endLayer;
+      const laneY = layout.baseY - 12 - sheetIndex.get(otherId) * 6;
+      let startX = fullX(band.startLayer);
+      let endX = fullX(band.endLayer);
+      if (Math.abs(endX - startX) < 10) {
+        startX -= 5;
+        endX += 5;
+      }
+      glueGroup.appendChild(element("line", {
+        class: `gluing-band${current ? " current" : ""}`,
+        x1: startX, y1: laneY, x2: endX, y2: laneY
+      }));
+      const lower = Math.max(chart.lowerLayer, band.startLayer);
+      const upper = Math.min(chart.upperLayer, band.endLayer);
+      for (let layer = lower; layer <= upper; layer += 1) {
+        const first = etaleApi.germAt(etaleMap, state.moduleId, layer);
+        const second = etaleApi.germAt(etaleMap, otherId, layer);
+        glueGroup.appendChild(element("line", {
+          class: `gluing-bridge${layer === state.layer ? " current" : ""}`,
+          x1: fullX(layer), y1: sheetY(state.moduleId, first),
+          x2: fullX(layer), y2: sheetY(otherId, second)
+        }));
+        glueGroup.appendChild(element("circle", { class: "glue-node", cx: fullX(layer), cy: sheetY(otherId, second), r: 3.5 }));
+      }
+    });
+    svg.appendChild(glueGroup);
+
     const sheetGroup = element("g", { "aria-label": "Module sheets over the depth base" });
     etaleMap.sheets.forEach((sheet, sheetIndex) => {
       const lane = layout.sheetTop + sheetIndex * layout.sheetGap;
-      const yValue = (point) => lane - point.x * 8 - point.y * 5 + point.z * 4;
+      const yValue = (point) => sheetY(sheet.moduleId, point);
       const selected = sheet.moduleId === state.moduleId;
       sheetGroup.appendChild(element("path", {
         class: `sheet-path ${sheet.family}${selected ? " selected" : ""}`,
@@ -145,6 +198,16 @@
       }));
     });
     svg.appendChild(sheetGroup);
+
+    gluingAtlas.transitions.forEach((transition) => {
+      const x = fullX(transition.layer);
+      const y = layout.baseY - 3;
+      const current = transition.layer === state.layer;
+      svg.appendChild(element("path", {
+        class: `transition-mark${current ? " current" : ""}`,
+        d: `M ${x} ${y - 5} L ${x + 5} ${y} L ${x} ${y + 5} L ${x - 5} ${y} Z`
+      }));
+    });
 
     const stalkX = fullX(state.layer);
     svg.appendChild(element("line", { class: "stalk-line", x1: stalkX, y1: layout.stalkTop, x2: stalkX, y2: layout.stalkEnd }));
@@ -180,7 +243,18 @@
       { key: "Y", label: "spectral focus", center: layout.rowCenters[1], value: (point) => point.y },
       { key: "Z", label: "effective rank", center: layout.rowCenters[2], value: (point) => point.z }
     ];
-    svg.appendChild(element("text", { class: "axis-label", x: 14, y: layout.localHeadingY }, `local section ${selectedSheet.moduleLabel} | U`));
+    if (closestPair.equivalent) {
+      svg.appendChild(element("rect", {
+        class: "local-glue-field",
+        x: chartLeft - 8,
+        y: layout.guideTop,
+        width: chartRight - chartLeft + 16,
+        height: layout.guideBottom - layout.guideTop,
+        rx: 6
+      }));
+    }
+    const relation = closestPair.equivalent ? "glued to" : "nearest";
+    svg.appendChild(element("text", { class: "axis-label", x: 14, y: layout.localHeadingY }, `${selectedSheet.moduleLabel} ${relation} ${moduleLabel(peerId)} over U · d=${closestPair.distance.toFixed(3)}`));
     const selectedLocalX = localX(state.layer);
     svg.appendChild(element("line", { class: "selected-guide", x1: selectedLocalX, y1: layout.guideTop, x2: selectedLocalX, y2: layout.guideBottom }));
     rows.forEach((row) => {
@@ -211,7 +285,14 @@
     document.getElementById("etale-z").textContent = selectedGerm.effectiveRank.toFixed(2);
     document.getElementById("etale-w").textContent = `${selectedGerm.layer} / ${etaleMap.layers.at(-1)}`;
     document.getElementById("etale-s").textContent = words(nearest && nearest.category);
-    status.textContent = `Stalk p⁻¹(${state.layer}) contains ${chart.stalk.length} module germs. ${selectedSheet.moduleLabel} is shown over U=${chart.lowerLayer}–${chart.upperLayer}; the paired ${etaleApi.sheetAt(etaleMap, peerId).moduleLabel} sheet is the faint comparison. S is computed on ${overlaps.length} local overlap${overlaps.length === 1 ? "" : "s"}; τ is a parameter-state retention proxy and q is synthetic.`;
+    document.getElementById("etale-g").textContent = gluedPairs.length ? gluedPairs.map((pair) => `${moduleLabel(otherModule(pair, state.moduleId))} (${pair.distance.toFixed(3)})`).join(" · ") : `none at ε=${state.epsilon.toFixed(2)}`;
+    const component = localGlue.components.find((candidate) => candidate.includes(state.moduleId));
+    const exactTransition = gluingAtlas.transitions.find((transition) => transition.layer === state.layer);
+    const nearestTransition = exactTransition || [...gluingAtlas.transitions].sort((first, second) => Math.abs(first.layer - state.layer) - Math.abs(second.layer - state.layer))[0];
+    const changedPair = nearestTransition && [...nearestTransition.added, ...nearestTransition.removed][0];
+    const transitionText = exactTransition ? `${exactTransition.kind} at this depth${changedPair ? ` (${pairLabel(changedPair)})` : ""}` : nearestTransition ? `nearest ${nearestTransition.kind} at W=${nearestTransition.layer}${changedPair ? ` (${pairLabel(changedPair)})` : ""}` : "no quotient transitions";
+    const relationText = closestPair.equivalent ? "locally equivalent" : "not locally equivalent";
+    status.textContent = `${selectedSheet.moduleLabel} and ${moduleLabel(peerId)} are ${relationText}: d_U=${closestPair.distance.toFixed(3)} ${closestPair.equivalent ? "≤" : ">"} ε=${state.epsilon.toFixed(2)}. The local quotient component contains ${component.length} globally distinct sheet${component.length === 1 ? "" : "s"}; ${transitionText}. Across W there are ${gluingAtlas.bands.length} gluing bands and ${gluingAtlas.transitions.length} transitions. Monodromy is unavailable because ${gluingAtlas.monodromy.reason}. S is computed on ${overlaps.length} overlap cycle${overlaps.length === 1 ? "" : "s"}; τ is a parameter-state proxy and q is synthetic.`;
   }
 
   function stopPlayback() {
@@ -227,6 +308,8 @@
     moduleInput.value = state.moduleId;
     radiusInput.value = String(state.radius);
     radiusOutput.value = `±${state.radius}`;
+    epsilonInput.value = state.epsilon.toFixed(2);
+    epsilonOutput.value = state.epsilon.toFixed(2);
     tauInput.value = state.tau.toFixed(2);
     tauOutput.value = state.tau.toFixed(2);
     qInput.value = state.q.toFixed(2);
@@ -259,6 +342,12 @@
   });
   radiusInput.addEventListener("input", () => {
     state.radius = Number(radiusInput.value);
+    stopPlayback();
+    syncControls();
+    render();
+  });
+  epsilonInput.addEventListener("input", () => {
+    state.epsilon = Number(epsilonInput.value);
     stopPlayback();
     syncControls();
     render();

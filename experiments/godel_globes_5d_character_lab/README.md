@@ -39,6 +39,13 @@ chart window keep exact local comparisons readable when the 5D globe projection 
 too visually entangled. This is a finite sampled, étale-style UX map, not a claim
 that the model's representation space is literally an étale space.
 
+The explorer now computes a descriptive local equivalence relation: two globally
+distinct sheets are glued over a chart when their RMS distance across normalized
+X/Y/Z is at most the chosen `epsilon`. Contiguous equivalences become gluing bands,
+and changes in connected components are marked as quotient merges, splits, or
+rewires. `epsilon` is not a confidence interval. Because W is an interval rather
+than a closed base path, the explorer explicitly reports monodromy as unavailable.
+
 The 5D mode adds the rank-one spin/holonomy category as `S`, located on cycle
 centers rather than model nodes. It keeps the abstract `Z/2` gauge phase separate
 from the holonomy-liveness verdict, using the angle-budget theorem to distinguish
