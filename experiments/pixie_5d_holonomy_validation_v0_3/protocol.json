@@ -1,0 +1,198 @@
+{
+  "schema": "pixie_5d_holonomy_sharded_continuation_protocol_v3",
+  "experiment_id": "pixie_5d_holonomy_validation_v0_3",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "model": {
+    "id": "prism-ml/Bonsai-1.7B-unpacked",
+    "revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "weights_file": "model.safetensors",
+    "weights_sha256": "cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b",
+    "support_files": {
+      "added_tokens.json": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680",
+      "chat_template.jinja": "30a75d10e60b57e2f260420163dd59720dacf9f63b9a8de070d65dd80a7b30f7",
+      "config.json": "a9e37c13a2315353ae3fad3f33759e506598cf57b52abeae50d5318b7dd147fb",
+      "generation_config.json": "ac5fa673967419cfbe771573f2b84ada1c5569c09f737713985037f6993e118c",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "special_tokens_map.json": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    }
+  },
+  "adapter": {
+    "rank": 8,
+    "alpha": 16,
+    "config_sha256": "34c8573e7b474b3a3c7bb03182fdfaf9117032daa76ce211303909528053c58e",
+    "weights_sha256": "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c"
+  },
+  "data": {
+    "train_path": "experiments/bonsai_1p7b_q1_lora_feasibility/data/smoke_train.jsonl",
+    "train_sha256": "0457a670e909d92e210dd8b9a38ace210b1902e1849c3a9c4beca7d09246d2b9",
+    "eval_path": "experiments/bonsai_1p7b_q1_lora_feasibility/data/smoke_eval.jsonl",
+    "eval_sha256": "6d540d06a705aa486a4e90def5b3b31f3062a8d90f9e7ab4a46124e9c7dc14fb"
+  },
+  "contexts": [
+    "original_system",
+    "Respond clearly and briefly.",
+    "Use one short sentence and visible answer text only.",
+    "Answer the user directly without explaining hidden reasoning."
+  ],
+  "context_cycle": [0, 1, 2, 3, 0],
+  "layers": [5, 13, 21, 27],
+  "maximum_sequence_length": 128,
+  "spatial_rank": 3,
+  "spectral_rank": 8,
+  "support": {
+    "bootstrap_replicates": 256,
+    "permutation_replicates": 256,
+    "margin": 0.02
+  },
+  "statistics": {
+    "bootstrap_replicates": 10000,
+    "outer_group_folds": 4,
+    "inner_group_folds": 3,
+    "ridge_penalties": [0.01, 0.1, 1.0, 10.0],
+    "minimum_full_increment": 0.05,
+    "minimum_spin_increment": 0.02,
+    "minimum_holonomy_increment": 0.02
+  },
+  "analysis": {
+    "utility": "full_oof_r2_minus_depth_energy_oof_r2",
+    "holonomy_categories": [
+      "unavailable",
+      "forced_positive",
+      "live_positive",
+      "frustrated",
+      "integrity_fail_negative_below_liveness"
+    ],
+    "finalist_requires_19_controls": "H1 and H2 and spin_increment and H5"
+  },
+  "seeds": {
+    "root": 2026072101,
+    "bootstrap": 2026072102,
+    "permutation": 2026072103,
+    "random_adapter": 2026072104,
+    "gauge": 2026072105
+  },
+  "software": {
+    "transformers": "5.3.0",
+    "torch": "2.5.1+cu121",
+    "accelerate": "1.12.0",
+    "bitsandbytes": "0.49.1",
+    "peft": "0.11.1",
+    "safetensors": "0.6.2",
+    "numpy": "2.4.3"
+  },
+  "loader": {
+    "checkpoint_form": "verified_tensor_boundary_shards",
+    "load_in_4bit": true,
+    "quantization_type": "nf4",
+    "double_quantization": true,
+    "compute_dtype": "float16",
+    "model_dtype_argument": "float16",
+    "device_map": "whole_model_gpu_0",
+    "attention_implementation": "sdpa"
+  },
+  "sharding": {
+    "method": "deterministic_safetensors_tensor_shards_v1",
+    "target_shard_bytes": 536870912,
+    "atomic_tensor_overflow_allowed": true,
+    "source_weights_sha256": "cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b",
+    "output_config_key": "pixie_5d_holonomy_v03_sharded_model_root",
+    "per_tensor_byte_hash_verification": true,
+    "per_shard_completion_markers": true,
+    "transformers_ignored_args": ["low_cpu_mem_usage", "offload_state_dict"]
+  },
+  "continuation": {
+    "continuation_id": "bonsai-1p7b-holonomy5d-context3-sharded-v03",
+    "source_run_id": "bonsai-1p7b-holonomy5d-20260721-01",
+    "source_protocol_sha256": "513a152e6f6d06c78df467d9efd0dc6f9fb4abd1905203208e13c026824aef59",
+    "reuse_context_indices": [0, 1, 2],
+    "capture_context_index": 3,
+    "expected_rows": 64,
+    "chunk_rows": 8,
+    "source_receipts": {
+      "resource_summary": {
+        "path": "data/pixie_5d_holonomy_validation/wrapper/bonsai-1p7b-holonomy5d-20260721-01.resource_summary.json",
+        "sha256": "add1f4019f8d6844904cfc166ab6aefd331781505175e46ceb96c7daebf2a618"
+      },
+      "cleanup_audit": {
+        "path": "data/pixie_5d_holonomy_validation/wrapper/bonsai-1p7b-holonomy5d-20260721-01.cleanup_audit.json",
+        "sha256": "eb0ff454027ebc4bdeef13f6e671a54e6060620eda7e9c3a3b45f98bfe814939"
+      },
+      "deviation_memo": {
+        "path": "data/pixie_5d_holonomy_validation/capture/bonsai-1p7b-holonomy5d-20260721-01/deviation_memo.md",
+        "sha256": "47ab9945e718529b3359c253c77b9bdc4748acc01baed0b51f6f3b5db0cbb9f3"
+      },
+      "context_00_marker": {
+        "path": "data/pixie_5d_holonomy_validation/capture/bonsai-1p7b-holonomy5d-20260721-01/context_00.complete.json",
+        "sha256": "8f354518bc4e5c3d7462acbcfefabff4389a61f1bdd1445360da59f11d6bb616"
+      },
+      "context_01_marker": {
+        "path": "data/pixie_5d_holonomy_validation/capture/bonsai-1p7b-holonomy5d-20260721-01/context_01.complete.json",
+        "sha256": "3405b3c160fd644aab7cebf5d452a26637e3f1be819c4c8578ccb1b558c32e2c"
+      },
+      "context_02_marker": {
+        "path": "data/pixie_5d_holonomy_validation/capture/bonsai-1p7b-holonomy5d-20260721-01/context_02.complete.json",
+        "sha256": "d1649e4b8de8c138ffafa015e65e3148fea7e4560246ce0062dfbf40178173bd"
+      }
+    },
+    "reused_artifacts": {
+      "random_00/context_00.npz": "b96b531c60c307a75284a3979dad74648f2c74cf5391f49e0dcc02c2ce1924d4",
+      "trained/context_00.npz": "7c18aad7af17b0509b18125108e1cb8ba6267d1bac1686ca930ff8e9a4003556",
+      "zero/context_00.npz": "bcf3c3de0b54cb5cc3f1a6220ffe85120078f110023fe44b6b1201d075f62b9d",
+      "random_00/context_01.npz": "4934ea40d4deb0a04d7bba0a8b2cb8154b568d461875013e2db4a5b0e5ecbf5d",
+      "trained/context_01.npz": "0b7c83bfefc660a04d3c6887fd75c8078abb5cd3d94b61d98d7422a6b34b3143",
+      "zero/context_01.npz": "27be801a0feb5fd12d5f029496d70e10b2b61c5244577af35bcdddcba4534917",
+      "random_00/context_02.npz": "c3ad3e891c73b3c7a9d65c99bed7c3bfc07ced6e2db8ffff5dfea106f2317c2f",
+      "trained/context_02.npz": "3e664b8837df566d770d7ff9524dbf53cd6b81c65a9824d78183bb19d00639c4",
+      "zero/context_02.npz": "f8c3d44d65172f787d4ec491bb6b97c9c634dea3c9e6dada8c05d15d5649ce83"
+    }
+  },
+  "source_v02": {
+    "protocol_path": "experiments/pixie_5d_holonomy_validation_v0_2/protocol.json",
+    "protocol_sha256": "993accbac7642c6038cf1901445dbc0acfe4a9dee5f3a9118962a428f702b290",
+    "lock_path": "experiments/pixie_5d_holonomy_validation_v0_2/protocol.lock.json",
+    "lock_sha256": "ae0396b9b2ee0567e6fd3bc8d8ade0aa90e5ddffca555018c20b683de3a13709",
+    "abort_receipt_path": "experiments/pixie_5d_holonomy_validation_v0_2/receipts/context3_attempt_01_abort.json",
+    "abort_receipt_sha256": "5bfc172b83ff732084b4e5ef7f0461a687f053fdb637001b5d86c670d11a1448"
+  },
+  "source_modules": {
+    "experiments/pixie_5d_holonomy_validation/pixie_holonomy5d/capture.py": "efe04073f7d31cfc9ae9c576bd7bbed282f6c9d48df9c0efd1bdbdbe0283ed1b",
+    "experiments/pixie_5d_holonomy_validation/pixie_holonomy5d/analysis.py": "fc538a2c54f71cb684bb0fbf12ec25990a0be737c5f6dfcce468c10394b9d9e6",
+    "experiments/pixie_5d_holonomy_validation/pixie_holonomy5d/geometry.py": "8a297c1069a18eaf7afe102d0656345ce10b4c086a72da2d4ffc31c357888781",
+    "experiments/pixie_5d_holonomy_validation/pixie_holonomy5d/io.py": "198ca5ccb7ae4eb47c621015490d863698250839fe078434ed991faa2111be05",
+    "experiments/pixie_5d_holonomy_validation/pixie_holonomy5d/protocol.py": "f3cefb4f9944339e5d49c2e09d86d55fd927011dc57cc15fac4a4e0ab1cf6c47",
+    "experiments/pixie_5d_holonomy_validation_v0_2/pixie_holonomy5d_v02/analysis.py": "71869bc028d472797716f5d050a2602f69af94c349982e5f39bd84d7d22121f9",
+    "experiments/pixie_5d_holonomy_validation_v0_2/pixie_holonomy5d_v02/continuation.py": "5c92a156896e6a6b28e40cfe49846fe8ed55203d8431e9092bb842127da70652",
+    "experiments/pixie_5d_holonomy_validation_v0_2/pixie_holonomy5d_v02/protocol.py": "8f3a09b97e6bcbc8569ee5c3af5741e0e01d60a48e79334e0c352f3d0c5ef1ce",
+    "experiments/pixie_5d_holonomy_validation_v0_2/pixie_holonomy5d_v02/verify.py": "6d190caf35e64ce049192aa6fead87470eb0d9e060fdc9ccdb96909f47919ff1"
+  },
+  "bounded_launcher": {
+    "path": "../pixie_5d_holonomy_validation_v0_2/scripts/run_capped_v2.ps1",
+    "sha256": "220c75cf9d0e5ac7995c29eb3edd2f69027a1bb3b01513e69a6c91fb14abeb37",
+    "owned_process_gate_path": "../pixie_5d_holonomy_validation_v0_2/scripts/invoke_owned_v2.ps1",
+    "owned_process_gate_sha256": "ce8d949a94777e2322dd0df22c9db04a86b5ed4eade0a36d30fe098a3a3bd065",
+    "cleanup_path": "../pixie_5d_holonomy_validation_v0_2/scripts/post_run_cleanup_v2.ps1",
+    "cleanup_sha256": "c7d90482ec620b67323f5c58059e521ec3a0368281df85c5518d90fe68f9d5f1",
+    "cap_self_test_receipt_path": "../pixie_5d_holonomy_validation_v0_2/receipts/cap_enforcement_v2.json",
+    "cap_self_test_receipt_sha256": "7a39ad34eeaf37267dcb819bb0357d69beb02b82fbf91ee5050452dc315bd614"
+  },
+  "resources": {
+    "capture_requested_not_authorized": {
+      "ram_mb": 6144,
+      "cpu_pct": 50,
+      "io_mb_s": 250,
+      "timeout_seconds": 1800
+    },
+    "gpu_preflight": {
+      "maximum_existing_memory_mib": 256,
+      "require_no_compute_applications": true
+    },
+    "checkpoint": {
+      "capture_rows": 8,
+      "target_shard_bytes": 536870912,
+      "maximum_seconds_without_checkpoint": 180
+    }
+  }
+}
