@@ -108,6 +108,52 @@
     return Math.sqrt(squared / (first.points.length * 3));
   }
 
+  function buildDistanceCache(map, radius = 2) {
+    if (!map || !Array.isArray(map.layers) || !Array.isArray(map.sheets)) throw new Error("invalid étale map");
+    const span = Math.max(1, Math.floor(finite(radius, "radius")));
+    const pairPrefixes = new Map();
+    for (let first = 0; first < map.moduleIds.length; first += 1) {
+      for (let second = first + 1; second < map.moduleIds.length; second += 1) {
+        const a = map.moduleIds[first];
+        const b = map.moduleIds[second];
+        const prefix = [0];
+        map.layers.forEach((layer) => {
+          const left = germAt(map, a, layer);
+          const right = germAt(map, b, layer);
+          const squared = Math.pow(finite(left.x, "x") - finite(right.x, "x"), 2) +
+            Math.pow(finite(left.y, "y") - finite(right.y, "y"), 2) +
+            Math.pow(finite(left.z, "z") - finite(right.z, "z"), 2);
+          prefix.push(prefix[prefix.length - 1] + squared);
+        });
+        pairPrefixes.set(`${a}|${b}`, Object.freeze(prefix));
+      }
+    }
+    const samples = new Map();
+    map.layers.forEach((layer, center) => {
+      const lower = Math.max(0, center - span);
+      const upper = Math.min(map.layers.length - 1, center + span);
+      const count = upper - lower + 1;
+      const distances = new Map();
+      pairPrefixes.forEach((prefix, id) => {
+        distances.set(id, Math.sqrt(Math.max(0, prefix[upper + 1] - prefix[lower]) / (count * 3)));
+      });
+      samples.set(layer, Object.freeze({
+        layer,
+        lowerLayer: map.layers[lower],
+        upperLayer: map.layers[upper],
+        sampleCount: count,
+        distances
+      }));
+    });
+    return Object.freeze({
+      radius: span,
+      method: "global_normalization_prefix_squared_difference_v1",
+      windowDependentNormalization: false,
+      pairPrefixes,
+      samples
+    });
+  }
+
   function connectedComponents(moduleIds, equivalences) {
     const parent = new Map(moduleIds.map((id) => [id, id]));
     function root(id) {
@@ -134,16 +180,109 @@
     return [...groups.values()].map((group) => Object.freeze(group));
   }
 
-  function localEquivalences(map, layer, radius, tolerance) {
+  function tarjanDiagnostics(nodes, equivalences) {
+    const adjacency = new Map(nodes.map((id) => [id, new Set()]));
+    equivalences.forEach((pair) => {
+      adjacency.get(pair.a).add(pair.b);
+      adjacency.get(pair.b).add(pair.a);
+    });
+    const discovery = new Map();
+    const low = new Map();
+    const parent = new Map();
+    const bridges = [];
+    const articulations = new Set();
+    let clock = 0;
+    function visit(node) {
+      clock += 1;
+      discovery.set(node, clock);
+      low.set(node, clock);
+      let children = 0;
+      [...adjacency.get(node)].sort().forEach((neighbor) => {
+        if (!discovery.has(neighbor)) {
+          parent.set(neighbor, node);
+          children += 1;
+          visit(neighbor);
+          low.set(node, Math.min(low.get(node), low.get(neighbor)));
+          if (low.get(neighbor) > discovery.get(node)) bridges.push([node, neighbor].sort().join("|"));
+          if (!parent.has(node) && children > 1) articulations.add(node);
+          if (parent.has(node) && low.get(neighbor) >= discovery.get(node)) articulations.add(node);
+        } else if (neighbor !== parent.get(node)) {
+          low.set(node, Math.min(low.get(node), discovery.get(neighbor)));
+        }
+      });
+    }
+    [...nodes].sort().forEach((node) => {
+      if (!discovery.has(node)) visit(node);
+    });
+    return Object.freeze({
+      bridges: Object.freeze([...new Set(bridges)].sort()),
+      articulationVertices: Object.freeze([...articulations].sort()),
+      bridgeStatus: bridges.length ? "present" : "none",
+      twoEdgeConnected: nodes.length > 1 && bridges.length === 0
+    });
+  }
+
+  function componentDiagnostics(components, equivalences, pairs, tolerance) {
+    const pairById = new Map(pairs.map((pair) => [pair.id, pair]));
+    return components.map((members) => {
+      const possible = [];
+      for (let first = 0; first < members.length; first += 1) {
+        for (let second = first + 1; second < members.length; second += 1) {
+          const forward = `${members[first]}|${members[second]}`;
+          const reverse = `${members[second]}|${members[first]}`;
+          possible.push(pairById.get(forward) || pairById.get(reverse));
+        }
+      }
+      const direct = equivalences.filter((pair) => members.includes(pair.a) && members.includes(pair.b));
+      const maximumDistance = possible.length ? Math.max(...possible.map((pair) => pair.distance)) : 0;
+      return Object.freeze({
+        members,
+        clique: direct.length === possible.length,
+        chainExcess: Math.max(0, maximumDistance - tolerance),
+        maximumPairDistance: maximumDistance,
+        directEdgeIds: Object.freeze(direct.map((pair) => pair.id)),
+        ...tarjanDiagnostics(members, direct)
+      });
+    });
+  }
+
+  function dendrogramMst(moduleIds, pairs) {
+    const parent = new Map(moduleIds.map((id) => [id, id]));
+    function root(id) {
+      while (parent.get(id) !== id) {
+        parent.set(id, parent.get(parent.get(id)));
+        id = parent.get(id);
+      }
+      return id;
+    }
+    const edges = [];
+    [...pairs].sort((left, right) => left.distance - right.distance || left.id.localeCompare(right.id)).forEach((pair) => {
+      const left = root(pair.a);
+      const right = root(pair.b);
+      if (left === right) return;
+      parent.set(left, right);
+      edges.push(Object.freeze({
+        id: pair.id,
+        a: pair.a,
+        b: pair.b,
+        birthEpsilon: pair.distance
+      }));
+    });
+    return Object.freeze(edges);
+  }
+
+  function localEquivalences(map, layer, radius, tolerance, distanceCache = null) {
     const epsilon = finite(tolerance, "tolerance");
     if (epsilon < 0) throw new Error("tolerance must be non-negative");
     const chart = chartAt(map, layer, radius);
+    if (distanceCache && distanceCache.radius !== chart.radius) throw new Error("distance cache radius differs from chart");
+    const cached = distanceCache ? distanceCache.samples.get(chart.layer) : null;
     const pairs = [];
     for (let first = 0; first < map.moduleIds.length; first += 1) {
       for (let second = first + 1; second < map.moduleIds.length; second += 1) {
         const a = map.moduleIds[first];
         const b = map.moduleIds[second];
-        const distance = localDistance(chart, a, b);
+        const distance = cached ? cached.distances.get(`${a}|${b}`) : localDistance(chart, a, b);
         pairs.push(Object.freeze({
           id: `${a}|${b}`,
           a,
@@ -154,6 +293,7 @@
       }
     }
     const equivalences = Object.freeze(pairs.filter((pair) => pair.equivalent));
+    const components = Object.freeze(connectedComponents(map.moduleIds, equivalences));
     return Object.freeze({
       layer: chart.layer,
       radius: chart.radius,
@@ -161,12 +301,15 @@
       chart,
       pairs: Object.freeze(pairs),
       equivalences,
-      components: Object.freeze(connectedComponents(map.moduleIds, equivalences))
+      components,
+      componentDiagnostics: Object.freeze(componentDiagnostics(components, equivalences, pairs, epsilon)),
+      dendrogramMst: dendrogramMst(map.moduleIds, pairs)
     });
   }
 
   function buildGluingAtlas(map, radius, tolerance) {
-    const samples = Object.freeze(map.layers.map((layer) => localEquivalences(map, layer, radius, tolerance)));
+    const distanceCache = buildDistanceCache(map, radius);
+    const samples = Object.freeze(map.layers.map((layer) => localEquivalences(map, layer, radius, tolerance, distanceCache)));
     const pairIds = samples[0].pairs.map((pair) => pair.id);
     const bands = [];
     pairIds.forEach((pairId) => {
@@ -226,7 +369,18 @@
       metric: Object.freeze({
         id: "normalized_xyz_rms_v1",
         coordinates: Object.freeze(["x", "y", "z"]),
+        normalization: Object.freeze({
+          x: "per_module_full_depth_minmax_to_minus1_plus1",
+          y: "global_all_module_layer_minmax_to_minus1_plus1",
+          z: "global_all_module_layer_minmax_to_minus1_plus1",
+          windowDependent: false
+        }),
         uncertainty: "not_available_in_source_atlas"
+      }),
+      distanceCache: Object.freeze({
+        method: distanceCache.method,
+        radius: distanceCache.radius,
+        windowDependentNormalization: distanceCache.windowDependentNormalization
       }),
       monodromy: Object.freeze({
         available: false,
@@ -260,8 +414,11 @@
     sheetAt,
     germAt,
     localDistance,
+    buildDistanceCache,
     localEquivalences,
     buildGluingAtlas,
+    tarjanDiagnostics,
+    dendrogramMst,
     overlapCycles,
     nearestCycle
   });

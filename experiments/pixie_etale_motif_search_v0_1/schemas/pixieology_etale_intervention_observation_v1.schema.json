@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_etale_intervention_observation_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "task_id", "plan_sha256", "unit_id", "semantic_group_id", "motif_id", "condition", "outcome"],
+  "properties": {
+    "schema": {"const": "pixieology_etale_intervention_observation_v1"},
+    "task_id": {"type": "string"},
+    "plan_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "unit_id": {"type": "string"},
+    "semantic_group_id": {"type": "string"},
+    "motif_id": {"type": "string"},
+    "condition": {"enum": ["full_adapter", "targeted_mask", "adjacent_band_mask", "energy_matched_mask", "base"]},
+    "outcome": {"type": "number"},
+    "mask": {
+      "type": "object",
+      "properties": {
+        "module_ids": {"type": "array", "items": {"type": "string"}},
+        "start_layer": {"type": "integer"},
+        "end_layer": {"type": "integer"}
+      }
+    }
+  },
+  "additionalProperties": false
+}

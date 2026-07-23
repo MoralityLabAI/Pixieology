@@ -56,9 +56,54 @@ test("the gluing atlas records contiguous bands and quotient transitions without
   assert.ok(gluing.transitions.some((transition) => transition.kind === "merge"));
   assert.ok(gluing.transitions.some((transition) => transition.kind === "split"));
   assert.equal(gluing.metric.id, "normalized_xyz_rms_v1");
+  assert.equal(gluing.metric.normalization.x, "per_module_full_depth_minmax_to_minus1_plus1");
+  assert.equal(gluing.metric.normalization.y, "global_all_module_layer_minmax_to_minus1_plus1");
+  assert.equal(gluing.metric.normalization.windowDependent, false);
   assert.equal(gluing.metric.uncertainty, "not_available_in_source_atlas");
+  assert.equal(gluing.distanceCache.method, "global_normalization_prefix_squared_difference_v1");
+  assert.equal(gluing.distanceCache.windowDependentNormalization, false);
+  assert.equal(gluing.samples.every((sample) => sample.dendrogramMst.length === 6), true);
   assert.equal(gluing.monodromy.available, false);
   assert.match(gluing.monodromy.reason, /interval/);
+});
+
+test("prefix-sum distances equal brute-force chart distances at every boundary shape", () => {
+  const map = etale.buildMap(points);
+  [1, 2, 4].forEach((radius) => {
+    const cache = etale.buildDistanceCache(map, radius);
+    [0, 5, 13, 27].forEach((layer) => {
+      const chart = etale.chartAt(map, layer, radius);
+      const sample = cache.samples.get(layer);
+      ["q_proj|k_proj", "gate_proj|up_proj", "v_proj|o_proj"].forEach((id) => {
+        const [left, right] = id.split("|");
+        assert.ok(Math.abs(sample.distances.get(id) - etale.localDistance(chart, left, right)) < 1e-12);
+      });
+    });
+  });
+});
+
+test("component diagnostics expose chain excess, articulation bridges, and robust no-bridge status", () => {
+  const synthetic = [
+    { moduleId: "a", moduleLabel: "A", family: "x", layer: 0, w: 0, x: 0.0, y: 0, z: 0 },
+    { moduleId: "b", moduleLabel: "B", family: "x", layer: 0, w: 0, x: 0.2, y: 0, z: 0 },
+    { moduleId: "c", moduleLabel: "C", family: "x", layer: 0, w: 0, x: 0.4, y: 0, z: 0 },
+    { moduleId: "a", moduleLabel: "A", family: "x", layer: 1, w: 1, x: 0.0, y: 0, z: 0 },
+    { moduleId: "b", moduleLabel: "B", family: "x", layer: 1, w: 1, x: 0.2, y: 0, z: 0 },
+    { moduleId: "c", moduleLabel: "C", family: "x", layer: 1, w: 1, x: 0.4, y: 0, z: 0 }
+  ];
+  const map = etale.buildMap(synthetic);
+  const chain = etale.localEquivalences(map, 0, 1, 0.12);
+  const diagnostic = chain.componentDiagnostics.find((item) => item.members.length === 3);
+  assert.equal(diagnostic.clique, false);
+  assert.ok(diagnostic.chainExcess > 0);
+  assert.deepEqual(diagnostic.bridges, ["a|b", "b|c"]);
+  assert.deepEqual(diagnostic.articulationVertices, ["b"]);
+
+  const triangle = etale.tarjanDiagnostics(["a", "b", "c"], [
+    { a: "a", b: "b" }, { a: "b", b: "c" }, { a: "a", b: "c" }
+  ]);
+  assert.equal(triangle.bridgeStatus, "none");
+  assert.equal(triangle.twoEdgeConnected, true);
 });
 
 test("spin certificates attach to chart overlaps rather than model nodes", () => {

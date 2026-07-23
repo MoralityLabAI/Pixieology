@@ -51,6 +51,34 @@ character only when `semantics` is `character_tuple` and alignment is `authored`
 held-out probe/causal calibration establishes their relationship to the retail
 axes.
 
+## Locally glued mechanistic explorer
+
+`etale.html` exposes a deterministic agent surface over the exact LoRA delta
+atlas. Every control round-trips through the query string, and the browser exposes:
+
+```javascript
+window.PixieEtaleExplorer.getContract()
+window.PixieEtaleExplorer.getState()
+window.PixieEtaleExplorer.setState({ layer: 13, module_id: "q_proj" })
+window.PixieEtaleExplorer.setPlaying(false)
+window.PixieEtaleExplorer.getAnalysis()
+window.PixieEtaleExplorer.getShareUrl()
+```
+
+Every render dispatches `pixieology:etale-analysis` and mirrors the same receipt in
+`#etale-analysis-json`. The receipt separates direct threshold neighbors from the
+single-linkage closure component, records the normalization and uncertainty policy,
+and reports unavailable monodromy rather than inferring it from the interval base.
+Agents should consume this receipt or API instead of reading values from SVG
+coordinates. `ETALE_UX_CASE.md` gives the full interaction and evaluation rationale.
+
+The v2 receipt adds threshold-free dendrogram births, component chain excess,
+Tarjan bridge/articulation diagnostics, the affirmative `bridge: none`
+certificate, and the prefix-distance-cache policy. Optional activation motif
+catalogs have their own protocol/scaler hashes and evidence class. The
+checked-in catalog is deliberately `NOT_RUN`; it cannot silently relabel the
+parameter atlas as activation evidence.
+
 The bundled HRM-Text 1B trace is generated from a real 16-chunk low-rank refinement
 summary. Its five channels are residual-mix singular value, value-path singular
 value, routing-stabilizer singular value, mean output delta, and peak output delta.

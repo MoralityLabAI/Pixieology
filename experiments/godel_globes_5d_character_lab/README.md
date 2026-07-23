@@ -39,12 +39,24 @@ chart window keep exact local comparisons readable when the 5D globe projection 
 too visually entangled. This is a finite sampled, étale-style UX map, not a claim
 that the model's representation space is literally an étale space.
 
-The explorer now computes a descriptive local equivalence relation: two globally
-distinct sheets are glued over a chart when their RMS distance across normalized
-X/Y/Z is at most the chosen `epsilon`. Contiguous equivalences become gluing bands,
-and changes in connected components are marked as quotient merges, splits, or
-rewires. `epsilon` is not a confidence interval. Because W is an interval rather
-than a closed base path, the explorer explicitly reports monodromy as unavailable.
+The explorer now computes a descriptive local tolerance relation: two globally
+distinct sheets are directly glued over a chart when their RMS distance across
+normalized X/Y/Z is at most the chosen `epsilon`. Connected components are the
+single-linkage transitive closure; contiguous direct relations become gluing bands,
+and closure changes are marked as quotient merges, splits, or rewires. `epsilon` is
+not a confidence interval. Because W is an interval rather than a closed base path,
+the explorer explicitly reports monodromy as unavailable.
+`ETALE_UX_CASE.md` records the product argument, competing-view tradeoffs, claim
+boundary, agent API, shareable state contract, and task-level evaluation criteria.
+The explorer caches globally normalized pairwise squared differences, exposes the
+exact dendrogram edge births, and reports chain excess plus Tarjan bridge and
+articulation diagnostics. `bridge: none` is retained as a positive robustness
+certificate rather than rendered as an empty field.
+
+`../pixie_etale_motif_search_v0_1/` is the separate activation-first experiment
+that can populate the optional motif catalog. Its checked-in browser catalog is
+`NOT_RUN`, so the default explorer remains the exact parameter-delta atlas and no
+synthetic smoke result is promoted to model or human evidence.
 
 The 5D mode adds the rank-one spin/holonomy category as `S`, located on cycle
 centers rather than model nodes. It keeps the abstract `Z/2` gauge phase separate

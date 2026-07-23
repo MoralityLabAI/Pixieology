@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_etale_form_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "input", "condition", "module_ids", "layer_count", "coordinates", "metric", "radii", "monodromy", "spin", "provenance"],
+  "properties": {
+    "schema": {"const": "pixieology_etale_form_v1"},
+    "condition": {"type": "string", "minLength": 1},
+    "module_ids": {"type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true, "items": {"type": "string"}},
+    "layer_count": {"const": 28},
+    "coordinates": {"type": "array", "minItems": 28, "maxItems": 28},
+    "radii": {"type": "object", "required": ["1", "2", "4"]},
+    "input": {"type": "object"},
+    "metric": {"type": "object"},
+    "monodromy": {"type": "object"},
+    "spin": {"type": "object"},
+    "provenance": {"type": "object"}
+  },
+  "additionalProperties": false
+}

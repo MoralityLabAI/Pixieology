@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_etale_intervention_plan_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "catalog_status", "task_count", "tasks", "mask_semantics", "execution_status", "claim_boundary"],
+  "properties": {
+    "schema": {"const": "pixieology_etale_intervention_plan_v1"},
+    "catalog_status": {"enum": ["DESCRIPTIVE_ONLY", "MOTIF_CATALOG_VALIDATED"]},
+    "task_count": {"type": "integer", "minimum": 0},
+    "tasks": {"type": "array", "items": {"type": "object"}},
+    "mask_semantics": {"type": "string"},
+    "execution_status": {"enum": ["NOT_RUN", "READY"]},
+    "energy_matching": {"type": "object"},
+    "claim_boundary": {"type": "string"}
+  },
+  "additionalProperties": false
+}

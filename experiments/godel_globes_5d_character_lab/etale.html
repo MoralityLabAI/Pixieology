@@ -27,22 +27,22 @@
     <section class="etale-controls" aria-label="Étale map controls">
       <button id="etale-play" type="button" aria-pressed="false">Play depth</button>
       <label for="etale-layer">Base depth W <output id="etale-layer-value">13</output>
-        <input id="etale-layer" type="range" min="0" max="27" step="1" value="13">
+        <input id="etale-layer" data-state-key="layer" type="range" min="0" max="27" step="1" value="13">
       </label>
       <label for="etale-module">Sheet
-        <select id="etale-module"></select>
+        <select id="etale-module" data-state-key="module_id"></select>
       </label>
       <label for="etale-radius">Chart radius <output id="etale-radius-value">±2</output>
-        <input id="etale-radius" type="range" min="1" max="5" step="1" value="2">
+        <input id="etale-radius" data-state-key="chart_radius" type="range" min="1" max="5" step="1" value="2">
       </label>
       <label for="etale-epsilon">Glue tolerance ε <output id="etale-epsilon-value">0.25</output>
-        <input id="etale-epsilon" type="range" min="0.10" max="0.60" step="0.01" value="0.25">
+        <input id="etale-epsilon" data-state-key="glue_tolerance" type="range" min="0.10" max="0.60" step="0.01" value="0.25">
       </label>
       <label for="etale-tau">Lineage proxy τ <output id="etale-tau-value">0.20</output>
-        <input id="etale-tau" type="range" min="0" max="1" step="0.01" value="0.20">
+        <input id="etale-tau" data-state-key="lineage_floor" type="range" min="0" max="1" step="0.01" value="0.20">
       </label>
       <label for="etale-q">Spin noise q <output id="etale-q-value">0.15</output>
-        <input id="etale-q" type="range" min="0" max="0.5" step="0.01" value="0.15">
+        <input id="etale-q" data-state-key="spin_noise" type="range" min="0" max="0.5" step="0.01" value="0.15">
       </label>
     </section>
 
@@ -56,11 +56,12 @@
 
     <section class="germ-readout" aria-label="Selected germ coordinates">
       <div><span>X · update coord</span><strong id="etale-x">0</strong></div>
-      <div><span>Y · focus</span><strong id="etale-y">0</strong></div>
-      <div><span>Z · rank</span><strong id="etale-z">0</strong></div>
+      <div><span>Y · focus/share</span><strong id="etale-y">0</strong></div>
+      <div><span>Z · rank/entropy</span><strong id="etale-z">0</strong></div>
       <div><span>W · depth</span><strong id="etale-w">0</strong></div>
       <div><span>S · overlap</span><strong id="etale-s">unavailable</strong></div>
       <div><span>G · local gluing</span><strong id="etale-g">none</strong></div>
+      <div><span>M · motif catalog</span><strong id="etale-motif">not run</strong></div>
     </section>
 
     <div class="etale-key" aria-label="Étale map key">
@@ -72,12 +73,14 @@
       <span>○ forced + · ● live + · ▲ live − · × synthetic −</span>
     </div>
     <p id="etale-status" class="atlas-status" aria-live="polite"></p>
+    <script id="etale-analysis-json" type="application/json">{}</script>
   </main>
 
   <script src="bonsai_mechinterp_data.js"></script>
   <script src="mechinterp_atlas.js"></script>
   <script src="mechinterp_manifold.js"></script>
   <script src="mechinterp_etale.js"></script>
+  <script src="motif_catalog_data.js"></script>
   <script src="etale.js"></script>
 </body>
 </html>

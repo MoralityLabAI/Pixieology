@@ -1,0 +1,155 @@
+{
+  "schema": "pixie_etale_motif_search_protocol_v1",
+  "experiment_id": "pixie_etale_motif_search_v0_1",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "model": {
+    "id": "prism-ml/Bonsai-1.7B-unpacked",
+    "revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "weights_file": "model.safetensors",
+    "weights_sha256": "cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b",
+    "config_sha256": "a9e37c13a2315353ae3fad3f33759e506598cf57b52abeae50d5318b7dd147fb",
+    "support_files": [
+      "added_tokens.json",
+      "chat_template.jinja",
+      "config.json",
+      "generation_config.json",
+      "merges.txt",
+      "special_tokens_map.json",
+      "tokenizer.json",
+      "tokenizer_config.json",
+      "vocab.json"
+    ]
+  },
+  "adapter": {
+    "rank": 8,
+    "alpha": 16,
+    "config_sha256": "34c8573e7b474b3a3c7bb03182fdfaf9117032daa76ce211303909528053c58e",
+    "weights_sha256": "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c"
+  },
+  "layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27],
+  "module_ids": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+  "corpus": {
+    "schema": "pixieology_etale_input_v1",
+    "rows": 192,
+    "families": ["pixie_canary", "pixie_style", "copy_induction", "format_following", "binary_fact", "one_step_arithmetic"],
+    "variants": ["canonical", "paraphrase", "lexical_negative", "token_order_null"],
+    "split_rows": {"discovery": 96, "confirmation": 48, "transfer": 48},
+    "split_unit": "semantic_group_id",
+    "generated_sha256": "a4b84e0905d493f9db55398a16eda75c64fa422339dd7dfdee6ce7f470e757ab"
+  },
+  "coordinates": {
+    "x": "log1p_lora_response_norm_over_base_output_norm",
+    "y": "response_top_singular_mode_energy_share",
+    "z": "response_entropy_effective_mode_fraction",
+    "w": "layer_div_27",
+    "normalization": "discovery_global_all_inputs_modules_layers_q01_q99_clipped",
+    "window_dependent": false
+  },
+  "chart": {
+    "radii": [1, 2, 4],
+    "epsilon_cuts": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+    "distance": "normalized_xyz_rms",
+    "retain_single_layer_events": true
+  },
+  "controls": {
+    "random_adapter_count": 19,
+    "random_adapter_match": "per_module_effective_delta_frobenius_norm",
+    "zero_adapter_geometry": "degenerate_not_used_as_geometric_null",
+    "primary_geometry": "trained_counterfactual_on_base_activations",
+    "live_trained_geometry": "secondary_when_available"
+  },
+  "mining": {
+    "blind_fields": ["family", "expected_completion", "behavior_outcome"],
+    "k_values": [2, 3, 4, 5, 6, 7, 8],
+    "silhouette_floor": 0.25,
+    "stability_floor": 0.7,
+    "minimum_semantic_groups": 8,
+    "stability_replicates": 64,
+    "confirmation_minimum_inputs": 6,
+    "confirmation_minimum_families": 2,
+    "canonical_paraphrase_agreement_floor": 0.7,
+    "semantic_agreement_gap_floor": 0.2,
+    "predictive_r2_increment": 0.05,
+    "random_control_empirical_p_max": 0.05,
+    "causal_standardized_effect": 0.3
+  },
+  "capture": {
+    "chunk_rows": 32,
+    "checkpoint_rows": 8,
+    "maximum_sequence_length": 128,
+    "conditions_per_input": ["base", "trained"],
+    "teacher_forced_outcome": "trained_minus_base_mean_log_likelihood",
+    "store_base_module_inputs_for_nulls": true
+  },
+  "evaluation": {
+    "bootstrap_replicates": 2000,
+    "craft": {
+      "minimum_paired_participants": 12,
+      "correctness_increment": 0.15,
+      "maximum_median_time_ratio": 0.9,
+      "maximum_unsupported_claim_increment": 0.0
+    },
+    "learning": {
+      "minimum_participants": 32,
+      "transfer_accuracy_increment": 0.15,
+      "retention_fraction": 0.8
+    }
+  },
+  "loader": {
+    "method": "raw_safetensors_payload_copy_v1",
+    "target_shard_bytes": 536870912,
+    "torch_tensor_materialization_during_sharding": false,
+    "per_tensor_raw_sha256": true,
+    "resume_by_verified_shard_marker": true,
+    "load_in_4bit": true,
+    "quantization_type": "nf4",
+    "double_quantization": true,
+    "compute_dtype": "float16"
+  },
+  "resources": {
+    "capture_requested_not_authorized": {
+      "ram_mb": 6144,
+      "cpu_pct": 50,
+      "io_mb_s": 250,
+      "timeout_seconds": 1800
+    },
+    "analysis": {
+      "ram_mb": 2048,
+      "cpu_pct": 50,
+      "io_mb_s": 50,
+      "timeout_seconds": 1800
+    },
+    "gpu_preflight": {
+      "maximum_existing_memory_mib": 256,
+      "require_no_compute_applications": true
+    }
+  },
+  "bounded_launcher": {
+    "entrypoint": "scripts/run_capped_capture.ps1",
+    "underlying_job_wrapper": "../pixie_5d_holonomy_validation_v0_2/scripts/run_capped_v2.ps1",
+    "underlying_job_wrapper_sha256": "220c75cf9d0e5ac7995c29eb3edd2f69027a1bb3b01513e69a6c91fb14abeb37",
+    "owned_process_gate": "../pixie_5d_holonomy_validation_v0_2/scripts/invoke_owned_v2.ps1",
+    "owned_process_gate_sha256": "ce8d949a94777e2322dd0df22c9db04a86b5ed4eade0a36d30fe098a3a3bd065",
+    "cleanup": "../pixie_5d_holonomy_validation_v0_2/scripts/post_run_cleanup_v2.ps1",
+    "cleanup_sha256": "c7d90482ec620b67323f5c58059e521ec3a0368281df85c5518d90fe68f9d5f1"
+  },
+  "authorization": {
+    "required_statement": "I explicitly authorize Pixie etale motif sharding, activation capture, and registered intervention forwards under the exact caps in this receipt."
+  },
+  "seeds": {
+    "corpus": 2026072301,
+    "mining": 2026072302,
+    "capture": 2026072303,
+    "random_adapter": 2026072304,
+    "bootstrap": 2026072305
+  },
+  "verdicts": [
+    "MOTIF_CATALOG_VALIDATED",
+    "DESCRIPTIVE_ONLY",
+    "NO_STABLE_MOTIFS",
+    "NULL_DOMINATED",
+    "LOADER_BLOCKED",
+    "INTEGRITY_FAIL"
+  ],
+  "claim_boundary": "This protocol can discover recurring input-conditioned LoRA response topology on one frozen checkpoint and adapter. It cannot establish semantic identity, a universal circuit taxonomy, literal etale branching, holonomy over depth, causal actionability, or human usefulness without their separately registered gates."
+}

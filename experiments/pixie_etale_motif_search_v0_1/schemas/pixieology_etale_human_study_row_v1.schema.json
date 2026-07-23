@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_etale_human_study_row_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "study", "participant_id", "condition"],
+  "properties": {
+    "schema": {"const": "pixieology_etale_human_study_row_v1"},
+    "study": {"enum": ["craft", "learning"]},
+    "participant_id": {"type": "string"},
+    "condition": {"enum": ["raw", "motif", "conventional"]},
+    "task_id": {"type": "string"},
+    "case_id": {"type": "string"},
+    "starting_state": {"type": "object"},
+    "final_state": {"type": "object"},
+    "answer": {},
+    "correct": {"type": "boolean"},
+    "elapsed_ms": {"type": "number", "minimum": 0},
+    "unsupported_causal_claim": {"type": "boolean"},
+    "pretest_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+    "immediate_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+    "transfer_accuracy": {"type": "number", "minimum": 0, "maximum": 1}
+  },
+  "additionalProperties": false
+}

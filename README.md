@@ -14,6 +14,7 @@ The script workflows and the installable evaluator share one portable config sur
 - `run_grounding_compare.py`: emits one style x grounding certification scorecard per narrated adapter/model batch.
 - `run_godel_globes_study.py`: launches and analyzes the counterbalanced five-dimensional retail character-editor study.
 - `experiments/lora_pixie_village/`: local two-agent conversation room with isolated and attested adapter endpoints, resumable transcripts, validated public decision cards, optional canonical Storyworld consequence replay, and a verified real Bonsai trained-adapter/zero-control runtime smoke.
+- `experiments/pixie_etale_motif_search_v0_1/`: staged activation-conditioned search for recurring local-gluing motifs across the seven Pixie LoRA targets, with a frozen controlled corpus, raw-byte safetensors sharding, bounded capture, nineteen norm-matched nulls, deterministic motif receipts, and explicit human-evidence gates.
 - `generate_reflective_buddy_distill.py`: generates teacher traces for the reflective-buddy lane.
 - `build_reflective_buddy_experiment.py`: turns teacher traces into train and holdout assets.
 - `run_pixie_snacksack.ps1`: syncs and runs the main remote workflows on `snacksack`.
@@ -40,6 +41,8 @@ Environment variables remain optional runtime overrides for automation:
 - `PIXIE_GODEL_GLOBES_RECEIPTS`: private local store for exported usability receipts.
 - `PIXIE_GODEL_GLOBES_RESULT`: destination for the A/B decision receipt.
 - `paths.lora_pixie_village_root`: checked-in two-agent room source and static UI.
+- `paths.pixie_etale_motif_output_root`: untracked capture, form, null, motif, intervention, and study receipts for the étale motif experiment.
+- `paths.pixie_etale_motif_sharded_model_root`: byte-verified raw-sharded Bonsai snapshot used only after protocol-bound authorization.
 - `paths.lora_pixie_village_runtime`: gitignored fsynced conversation sessions.
 - `paths.lora_pixie_village_decisions`: validated public Storyworld decision cards available to the room.
 - `paths.lora_pixie_bonsai_llama_server`: configured Prism llama.cpp runtime used by the bounded real control smoke.

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_etale_motif_assignment_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "input_id", "semantic_group_id", "family", "variant", "split", "motif_id", "status", "distance", "assignment_radius", "all_distances"],
+  "properties": {
+    "schema": {"const": "pixieology_etale_motif_assignment_v1"},
+    "input_id": {"type": "string"},
+    "semantic_group_id": {"type": "string"},
+    "family": {"type": "string"},
+    "variant": {"type": "string"},
+    "split": {"enum": ["discovery", "confirmation", "transfer"]},
+    "motif_id": {"type": ["string", "null"]},
+    "status": {"enum": ["assigned", "unassigned"]},
+    "distance": {"type": ["number", "null"]},
+    "assignment_radius": {"type": ["number", "null"]},
+    "all_distances": {"type": "object", "additionalProperties": {"type": "number"}}
+  },
+  "additionalProperties": false
+}
