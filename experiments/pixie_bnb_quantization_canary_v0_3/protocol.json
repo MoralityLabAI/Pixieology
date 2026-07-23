@@ -1,0 +1,97 @@
+{
+  "schema": "pixie_bnb_quantization_canary_protocol_v3",
+  "version": "0.3.0",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "purpose": "Isolate the native PyTorch/bitsandbytes NF4 conversion boundary before another full Pixie model load.",
+  "prior_failure": {
+    "job_id": "capture-pixie-canary-memory-optimized-v0_2",
+    "job_sha256": "96d6dfb62d5116a7f23cc4d6a037a45105200339753d0a7d53b29d998890028e",
+    "faulting_module": "torch/lib/c10.dll",
+    "exception_code": "0xc0000005",
+    "fault_offset": "0x000000000006ce14",
+    "last_loader_phase": "tokenizer_loaded",
+    "activation_rows": 0
+  },
+  "runtime": {
+    "python": "3.11.4",
+    "torch_distribution": "2.5.1+cu121",
+    "torch_runtime": "2.5.1+cu121",
+    "torch_cuda": "12.1",
+    "bitsandbytes": "0.49.1",
+    "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "gpu_compute_capability": "8.6",
+    "gpu_memory_total_mib": 4096,
+    "nvidia_driver": "555.99",
+    "c10_dll_sha256": "fe655abbd74b49701a2f802a4946d1e506b63e288356dd5a81617f0eed29dfd9",
+    "bitsandbytes_cuda121_dll_sha256": "854fb03be3ce072d25e817f4a519e05e797ed6c325ecd6c1483af1686d0a425c"
+  },
+  "canary": {
+    "seed": 1729,
+    "dtype": "float16",
+    "quant_type": "nf4",
+    "compress_statistics": true,
+    "blocksize": 64,
+    "checkpoint_every_operations": 1,
+    "cases": [
+      {
+        "case_id": "functional_nf4_2048x2048",
+        "kind": "functional",
+        "shape": [2048, 2048]
+      },
+      {
+        "case_id": "params4bit_nf4_6144x2048",
+        "kind": "params4bit",
+        "shape": [6144, 2048]
+      },
+      {
+        "case_id": "linear4bit_forward_6144x2048",
+        "kind": "linear4bit_forward",
+        "shape": [6144, 2048],
+        "batch_tokens": 1
+      },
+      {
+        "case_id": "resident_qwen_layer_sweep",
+        "kind": "resident_sweep",
+        "layers": 28,
+        "projections": [
+          {"name": "q_proj", "shape": [2048, 2048]},
+          {"name": "k_proj", "shape": [1024, 2048]},
+          {"name": "v_proj", "shape": [1024, 2048]},
+          {"name": "o_proj", "shape": [2048, 2048]},
+          {"name": "gate_proj", "shape": [6144, 2048]},
+          {"name": "up_proj", "shape": [6144, 2048]},
+          {"name": "down_proj", "shape": [2048, 6144]}
+        ]
+      }
+    ]
+  },
+  "resources": {
+    "canary_requested_not_authorized": {
+      "ram_mb": 2048,
+      "cpu_pct": 50,
+      "io_mb_s": 50,
+      "timeout_seconds": 600
+    },
+    "gpu": {
+      "maximum_existing_memory_mib": 256,
+      "maximum_peak_memory_mib": 1800,
+      "require_no_compute_applications": true
+    }
+  },
+  "bounded_launcher": {
+    "entrypoint": "scripts/run_capped_canary_v3.ps1",
+    "underlying_job_wrapper": "../pixie_5d_holonomy_validation_v0_2/scripts/run_capped_v2.ps1",
+    "underlying_job_wrapper_sha256": "220c75cf9d0e5ac7995c29eb3edd2f69027a1bb3b01513e69a6c91fb14abeb37",
+    "cleanup": "../pixie_5d_holonomy_validation_v0_2/scripts/post_run_cleanup_v2.ps1",
+    "cleanup_sha256": "c7d90482ec620b67323f5c58059e521ec3a0368281df85c5518d90fe68f9d5f1"
+  },
+  "output": {
+    "relative_root": "data/pixie_bnb_quantization_canary_v0_3"
+  },
+  "authorization": {
+    "required": true,
+    "automatic_authorization": false,
+    "required_statement": "I explicitly authorize the exact Pixie bitsandbytes quantization canary v0.3 job bound in this receipt under 2048 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 600 seconds, and a 1800 MiB peak VRAM guard."
+  },
+  "claim_boundary": "This canary can diagnose the registered local quantization runtime only. It loads no model or adapter and makes no behavioral, activation, or motif claim."
+}

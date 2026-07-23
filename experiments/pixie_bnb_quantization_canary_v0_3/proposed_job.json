@@ -1,0 +1,33 @@
+{
+  "schema": "pixie_bnb_quantization_canary_job_v3",
+  "job_id": "diagnose-bnb4bit-c10-boundary-v0_3",
+  "status": "PROPOSED",
+  "runtime_profile": "torch-2.5.1-cu121-bitsandbytes-0.49.1-rtx3050",
+  "seed": 1729,
+  "case_count": 4,
+  "sweep_layers": 28,
+  "sweep_projections_per_layer": 7,
+  "checkpoint_every_operations": 1,
+  "model_loading": false,
+  "adapter_loading": false,
+  "synthetic_weights_only": true,
+  "caps": {
+    "ram_mb": 2048,
+    "cpu_pct": 50,
+    "io_mb_s": 50,
+    "timeout_seconds": 600
+  },
+  "gpu_guard": {
+    "maximum_existing_memory_mib": 256,
+    "maximum_peak_memory_mib": 1800,
+    "require_no_compute_applications": true
+  },
+  "authorization": {
+    "required": true,
+    "status": "AWAITING_EXPLICIT_AUTHORIZATION",
+    "job_sha256": "d7d42f79b81fba7f8e6cb22542cce6d3d36441a38fcc2799257bcc2cd0ceff04",
+    "automatic_authorization": false
+  },
+  "abort_is_valid_outcome": true,
+  "claim_boundary": "PASS or ABORT diagnoses only the registered local NF4 runtime. It is not evidence about model behavior or a mechanistic motif."
+}

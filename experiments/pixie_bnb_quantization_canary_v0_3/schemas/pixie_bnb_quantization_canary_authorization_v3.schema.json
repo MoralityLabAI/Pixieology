@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixie_bnb_quantization_canary_authorization_v3.schema.json",
+  "type": "object",
+  "required": [
+    "schema",
+    "authorized",
+    "statement",
+    "protocol_sha256",
+    "implementation_lock_sha256",
+    "job_id",
+    "job_sha256",
+    "run_id",
+    "attempt_id",
+    "expires_utc",
+    "caps",
+    "gpu_guard",
+    "acknowledgements"
+  ],
+  "properties": {
+    "schema": {"const": "pixie_bnb_quantization_canary_authorization_v3"},
+    "authorized": {"type": "boolean"},
+    "statement": {"type": "string"},
+    "protocol_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "implementation_lock_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "job_id": {"const": "diagnose-bnb4bit-c10-boundary-v0_3"},
+    "job_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "run_id": {"type": "string", "minLength": 1},
+    "attempt_id": {"type": "string", "minLength": 1},
+    "expires_utc": {"type": "string"},
+    "caps": {"type": "object"},
+    "gpu_guard": {"type": "object"},
+    "acknowledgements": {"type": "object"}
+  },
+  "additionalProperties": false
+}

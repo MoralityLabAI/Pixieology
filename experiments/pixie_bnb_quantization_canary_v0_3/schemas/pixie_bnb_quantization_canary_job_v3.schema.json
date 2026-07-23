@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixie_bnb_quantization_canary_job_v3.schema.json",
+  "type": "object",
+  "required": [
+    "schema",
+    "job_id",
+    "status",
+    "seed",
+    "case_count",
+    "sweep_layers",
+    "sweep_projections_per_layer",
+    "checkpoint_every_operations",
+    "model_loading",
+    "adapter_loading",
+    "synthetic_weights_only",
+    "caps",
+    "gpu_guard",
+    "authorization"
+  ],
+  "properties": {
+    "schema": {"const": "pixie_bnb_quantization_canary_job_v3"},
+    "job_id": {"const": "diagnose-bnb4bit-c10-boundary-v0_3"},
+    "status": {"const": "PROPOSED"},
+    "model_loading": {"const": false},
+    "adapter_loading": {"const": false},
+    "synthetic_weights_only": {"const": true},
+    "caps": {"type": "object"},
+    "gpu_guard": {"type": "object"},
+    "authorization": {"type": "object"}
+  },
+  "additionalProperties": true
+}
