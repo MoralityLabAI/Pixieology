@@ -64,6 +64,31 @@
       <div><span>M · motif catalog</span><strong id="etale-motif">not run</strong></div>
     </section>
 
+    <section class="feedback-jobs" aria-labelledby="feedback-jobs-heading">
+      <header>
+        <div>
+          <p class="eyebrow">BOUNDED FEEDBACK LOOP</p>
+          <h2 id="feedback-jobs-heading">Proposed TinyLoRA / QLoRA jobs</h2>
+        </div>
+        <p id="feedback-queue-status" class="feedback-queue-status"></p>
+      </header>
+      <p class="feedback-job-intro">These are immutable experiment slots, not running processes. Selecting one exposes its exact agent-readable contract; authorization and execution remain outside the browser.</p>
+      <div class="feedback-job-table-wrap">
+        <table class="feedback-job-table">
+          <caption class="sr-heading">Staged adapter feedback jobs</caption>
+          <thead>
+            <tr><th scope="col">Job</th><th scope="col">Origin</th><th scope="col">Footprint</th><th scope="col">Budget</th><th scope="col">State</th><th scope="col"><span class="sr-heading">Inspect</span></th></tr>
+          </thead>
+          <tbody id="feedback-job-rows"></tbody>
+        </table>
+      </div>
+      <div id="feedback-job-inspector" class="feedback-job-inspector" aria-live="polite">
+        <strong id="feedback-job-title">No job selected</strong>
+        <p id="feedback-job-hypothesis">Choose an experiment slot to inspect its hypothesis and immutable job hash.</p>
+        <code id="feedback-job-hash">selection only · no browser authorization surface</code>
+      </div>
+    </section>
+
     <div class="etale-key" aria-label="Étale map key">
       <span><i class="key-line selected-sheet-key"></i>selected sheet</span>
       <span><i class="key-line peer-sheet-key"></i>peer sheets</span>
@@ -81,6 +106,7 @@
   <script src="mechinterp_manifold.js"></script>
   <script src="mechinterp_etale.js"></script>
   <script src="motif_catalog_data.js"></script>
+  <script src="feedback_job_queue_data.js"></script>
   <script src="etale.js"></script>
 </body>
 </html>

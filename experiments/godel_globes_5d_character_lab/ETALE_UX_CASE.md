@@ -83,7 +83,7 @@ An agent never needs to estimate values from SVG positions.
 Every control is represented in the URL:
 
 ```text
-etale.html?layer=13&module=q_proj&radius=2&epsilon=0.25&tau=0.20&q=0.15
+etale.html?layer=13&module=q_proj&radius=2&epsilon=0.25&tau=0.20&q=0.15&job=evaluate-pixie_rank8
 ```
 
 Invalid query values are ignored, recorded in `query_warnings`, and replaced in the
@@ -105,6 +105,9 @@ window.PixieEtaleExplorer.setState({
 window.PixieEtaleExplorer.setPlaying(false)
 window.PixieEtaleExplorer.getAnalysis()
 window.PixieEtaleExplorer.getShareUrl()
+window.PixieEtaleExplorer.listJobs()
+window.PixieEtaleExplorer.selectJob("evaluate-pixie_rank8")
+window.PixieEtaleExplorer.getSelectedJob()
 ```
 
 `setState` rejects unknown fields, invalid module IDs, non-sampled layers, and
@@ -120,7 +123,7 @@ spin evidence, a human-readable summary, and the canonical share URI. SVG marks
 also expose stable `data-*` attributes and accessible labels for sheet, band,
 layer, and transition identity.
 
-The v2 agent contract also exposes the exact per-layer dendrogram MST, chain
+The v3 agent contract also exposes the exact per-layer dendrogram MST, chain
 excess, Tarjan bridges and articulation vertices, and an explicit `bridge: none`
 robustness certificate. Pairwise chart distances use prefix sums over globally
 fixed coordinates; the receipt declares that the cache is invalid if
@@ -132,6 +135,15 @@ catalog passes its registered confirmation gates, `getMotifCatalog()` reports
 parameter-only atlas. Confirmed catalogs can be inspected with `listCases()`,
 `loadCase(case_id)`, `listMotifs()`, and `getMotif(motif_id)` without parsing
 visual marks.
+
+The feedback-job tray is the operational bridge from a motif to a bounded
+intervention. `getJobQueue()`, `listJobs()`, and `getJob(job_id)` expose immutable
+base, Pixie, TinyLoRA, and QLoRA proposal contracts. `selectJob(job_id)` changes
+inspection state and the share URI; it cannot authorize, launch, or mutate a job.
+The default queue contains the two reference evaluations and reports training
+slots blocked until a registered activation catalog exists. That explicit
+negative state prevents an agent from manufacturing a motif-conditioned job from
+the parameter-only atlas.
 
 ## Evaluation
 

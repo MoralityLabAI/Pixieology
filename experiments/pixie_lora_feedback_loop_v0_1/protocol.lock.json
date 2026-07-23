@@ -1,0 +1,26 @@
+{
+  "schema": "pixieology_lora_feedback_protocol_lock_v1",
+  "implementation_git_commit": "530b303c674f2f60f1422ce276439e6e5f586fda",
+  "protocol_sha256": "0a0001bed4e5b24f719711a35f144d25344c2069f8044ae1ecc346d67fc3474b",
+  "files": {
+    "PREREGISTRATION.md": "d1b7e369190cb2c7b068c3ae74eb1441f3a7027a19dc2558c054a628f83e6f8c",
+    "README.md": "6cb2bad6973211d2109ecdc76d0466d391502648a7ca3fdef81e9ebdb577f751",
+    "TRAINER_PLAN.md": "5624df6af00ec94bba8f16e7563d11a15e786dda5a27cc8d5b7d4fc23cdc2dd2",
+    "pixie_lora_feedback/__init__.py": "474fc0cbdfc1fa413ca0e1a701797db5d35261a39efec5a6afb78dd6066759f6",
+    "pixie_lora_feedback/authorization.py": "d7384decb05a1dc14aafa4151022e2aa7ae0bbb5d955733f4f30b59f79147978",
+    "pixie_lora_feedback/cli.py": "85e79e840fb4424170229b5e584b86b20c9489dd9ad23e5e3c6ec55fa2eb0c7d",
+    "pixie_lora_feedback/jobs.py": "41202727546c3fff200ffa0eb8cd45116c607d07b4636514d9cdf735f14049e8",
+    "pixie_lora_feedback/protocol.py": "a16a60edfe4e8f7e4e15089619e04a3fad67ec1beb0f6b2a701524ff4a4285df",
+    "pixie_lora_feedback/reporting.py": "7b45bb6da41f08b0b5404e6365d55cdea10c8a98c954377391e422dbb20114e7",
+    "pixie_lora_feedback/runner.py": "0ce2f5e51154bbdc99858d8cb79cd3916a91878460d184a43d213d133f4f8eae",
+    "protocol.json": "0a0001bed4e5b24f719711a35f144d25344c2069f8044ae1ecc346d67fc3474b",
+    "run.py": "291216b8774f18296a56491c179cd3c7468f3ea7fda1e080f854395070c6601e",
+    "schemas/pixieology_lora_feedback_authorization_v1.schema.json": "f02fecfece34743fe34e373799a36371899ea0fed7cd51ace13c778af56dbc9b",
+    "schemas/pixieology_lora_feedback_job_v1.schema.json": "a8b1718653ab47d6dc101be8fd302cf455a7e6ce50444b7d38d01286ca7714ff",
+    "schemas/pixieology_lora_feedback_queue_v1.schema.json": "ba9d803b1d5236870912e1764dcf8a7db50067d653f6d5d1a21dd7695c80d140",
+    "scripts/run_capped_feedback.ps1": "35673b4b7ad61366b96fedf99a80fe28ca246b81450954793efe7b1c0d54a27a",
+    "tests/conftest.py": "aed3e49b253fc6e4f6ab3d8020cdb4c5c5c4d61b24f3533fd55f5ceabe763ae0",
+    "tests/test_jobs.py": "6ea7769328519f5e6a68ba041e88a386f9c425cf10cb9b227c3c1508a75c843e",
+    "tests/test_reporting.py": "bc3656a50508ffd377d3ca040a70bcf13402213c372ce553d052aa1aa19f1094"
+  }
+}

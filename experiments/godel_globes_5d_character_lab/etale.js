@@ -5,6 +5,7 @@
   const geometry = window.PixieMechinterpManifold;
   const etaleApi = window.PixieMechinterpEtale;
   const motifCatalog = validateMotifCatalog(window.PixieEtaleMotifCatalogData);
+  const feedbackQueue = validateFeedbackQueue(window.PixieLoraFeedbackJobQueueData);
   const atlas = atlasApi.validate(window.PixieMechinterpAtlasData);
   const parameterPoints = geometry.buildPoints(atlas);
   const parameterEtaleMap = etaleApi.buildMap(parameterPoints);
@@ -26,20 +27,28 @@
   const status = document.getElementById("etale-status");
   const motifOutput = document.getElementById("etale-motif");
   const analysisJson = document.getElementById("etale-analysis-json");
+  const feedbackQueueStatus = document.getElementById("feedback-queue-status");
+  const feedbackJobRows = document.getElementById("feedback-job-rows");
+  const feedbackJobTitle = document.getElementById("feedback-job-title");
+  const feedbackJobHypothesis = document.getElementById("feedback-job-hypothesis");
+  const feedbackJobHash = document.getElementById("feedback-job-hash");
 
   const contract = Object.freeze({
-    schema: "pixieology_etale_explorer_contract_v2",
+    schema: "pixieology_etale_explorer_contract_v3",
     status: "experimental",
     canonical: false,
-    state_schema: "pixieology_etale_explorer_state_v2",
-    analysis_schema: "pixieology_etale_analysis_v2",
+    state_schema: "pixieology_etale_explorer_state_v3",
+    analysis_schema: "pixieology_etale_analysis_v3",
     motif_catalog_schema: "pixieology_etale_motif_catalog_v1",
     motif_card_schema: "pixieology_mechinterp_motif_card_v1",
+    feedback_queue_schema: "pixieology_lora_feedback_queue_v1",
+    feedback_job_schema: "pixieology_lora_feedback_job_v1",
     event: "pixieology:etale-analysis",
     dom_receipt_id: "etale-analysis-json",
     methods: Object.freeze([
       "getContract", "getState", "setState", "setPlaying", "getAnalysis", "getShareUrl",
-      "getMotifCatalog", "listCases", "loadCase", "listMotifs", "getMotif"
+      "getMotifCatalog", "listCases", "loadCase", "listMotifs", "getMotif",
+      "getJobQueue", "listJobs", "getJob", "selectJob", "getSelectedJob"
     ]),
     query_parameters: Object.freeze({
       case: "case_id",
@@ -48,7 +57,8 @@
       radius: "chart_radius",
       epsilon: "glue_tolerance",
       tau: "lineage_floor",
-      q: "spin_noise"
+      q: "spin_noise",
+      job: "selected_job_id"
     }),
     state_fields: Object.freeze({
       layer: Object.freeze({ type: "integer", enum: Object.freeze(parameterEtaleMap.layers.slice()) }),
@@ -58,6 +68,7 @@
       lineage_floor: Object.freeze({ type: "number", minimum: 0, maximum: 1 }),
       spin_noise: Object.freeze({ type: "number", minimum: 0, maximum: 0.5 }),
       case_id: Object.freeze({ type: ["string", "null"], enum: Object.freeze([null, ...motifCatalog.cases.map((item) => item.case_id)]) }),
+      selected_job_id: Object.freeze({ type: ["string", "null"], enum: Object.freeze([null, ...feedbackQueue.jobs.map((item) => item.job_id)]) }),
       playing: Object.freeze({ type: "boolean" })
     }),
     coordinate_semantics: Object.freeze({
@@ -67,7 +78,7 @@
       w: "ordered transformer depth",
       s: "overlap-level spin/liveness certificate"
     }),
-    claim_boundary: "Local equivalence is a descriptive normalized X/Y/Z tolerance relation. Connected components are its transitive closure; quotient merge and split marks are not literal étale branching."
+    claim_boundary: "Local equivalence is a descriptive normalized X/Y/Z tolerance relation. Connected components are its transitive closure; quotient merge and split marks are not literal étale branching. Job selection is inspection state and never authorization."
   });
   let analysisSequence = 0;
   let lastAnalysis = null;
@@ -81,6 +92,7 @@
     epsilon: 0.25,
     tau: 0.2,
     q: 0.15,
+    selectedJobId: null,
     timer: null
   };
 
@@ -115,12 +127,39 @@
     return value;
   }
 
+  function validateFeedbackQueue(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new TypeError("feedback job queue must be an object");
+    if (value.schema !== "pixieology_lora_feedback_queue_v1") throw new Error("invalid feedback job queue schema");
+    if (value.status !== "STAGED_NOT_AUTHORIZED" || value.automatic_authorization !== false) {
+      throw new Error("feedback job queue must be staged and non-authorizing");
+    }
+    if (!Array.isArray(value.jobs) || value.jobs.length !== value.job_count || value.jobs.length < 2 || value.jobs.length > 6) {
+      throw new Error("feedback job queue count is invalid");
+    }
+    const identifiers = value.jobs.map((job) => String(job.job_id));
+    if (new Set(identifiers).size !== identifiers.length) throw new Error("feedback job queue contains duplicate IDs");
+    value.jobs.forEach((job) => {
+      if (job.schema !== "pixieology_lora_feedback_job_v1") throw new Error(`job ${job.job_id} has an invalid schema`);
+      if (!["EVALUATE", "TRAIN_ADAPTER"].includes(job.job_type)) throw new Error(`job ${job.job_id} has an invalid type`);
+      if (!["base_qwen_derived_1p7b", "pixie_rank8", "tinylora", "qlora"].includes(job.method)) throw new Error(`job ${job.job_id} has an invalid method`);
+      if (job.authorization?.required !== true || job.authorization?.status !== "NOT_AUTHORIZED") {
+        throw new Error(`job ${job.job_id} is not a non-authorizing proposal`);
+      }
+      if (!/^[a-f0-9]{64}$/.test(String(job.authorization.job_sha256))) throw new Error(`job ${job.job_id} lacks an immutable hash`);
+    });
+    return value;
+  }
+
   function caseById(caseId) {
     return motifCatalog.cases.find((item) => item.case_id === caseId) || null;
   }
 
   function motifById(motifId) {
     return motifCatalog.motifs.find((item) => item.motif_id === motifId) || null;
+  }
+
+  function jobById(jobId) {
+    return feedbackQueue.jobs.find((item) => item.job_id === jobId) || null;
   }
 
   function pointsForCase(selectedCase) {
@@ -161,7 +200,7 @@
 
   function validateStatePatch(patch) {
     if (!patch || typeof patch !== "object" || Array.isArray(patch)) throw new TypeError("state patch must be an object");
-    const allowed = new Set(["schema", "sequence", "layer", "module_id", "chart_radius", "glue_tolerance", "lineage_floor", "spin_noise", "case_id", "playing"]);
+    const allowed = new Set(["schema", "sequence", "layer", "module_id", "chart_radius", "glue_tolerance", "lineage_floor", "spin_noise", "case_id", "selected_job_id", "playing"]);
     const unknown = Object.keys(patch).filter((key) => !allowed.has(key));
     if (unknown.length) throw new Error(`unknown state field${unknown.length === 1 ? "" : "s"}: ${unknown.join(", ")}`);
     const value = {};
@@ -189,6 +228,11 @@
       else if (!caseById(String(patch.case_id))) throw new RangeError(`unknown case_id ${patch.case_id}`);
       else value.caseId = String(patch.case_id);
     }
+    if (Object.hasOwn(patch, "selected_job_id")) {
+      if (patch.selected_job_id === null) value.selectedJobId = null;
+      else if (!jobById(String(patch.selected_job_id))) throw new RangeError(`unknown selected_job_id ${patch.selected_job_id}`);
+      else value.selectedJobId = String(patch.selected_job_id);
+    }
     if (Object.hasOwn(patch, "playing")) {
       if (typeof patch.playing !== "boolean") throw new TypeError("playing must be boolean");
       value.playing = patch.playing;
@@ -207,6 +251,7 @@
       lineage_floor: state.tau,
       spin_noise: state.q,
       case_id: activeCaseId,
+      selected_job_id: state.selectedJobId,
       playing: state.timer !== null
     };
   }
@@ -214,6 +259,7 @@
   function stateUrl() {
     const url = new URL(window.location.href);
     if (activeCaseId) url.searchParams.set("case", activeCaseId); else url.searchParams.delete("case");
+    if (state.selectedJobId) url.searchParams.set("job", state.selectedJobId); else url.searchParams.delete("job");
     url.searchParams.set("layer", String(state.layer));
     url.searchParams.set("module", state.moduleId);
     url.searchParams.set("radius", String(state.radius));
@@ -251,7 +297,8 @@
       ["radius", "chart_radius", Number],
       ["epsilon", "glue_tolerance", Number],
       ["tau", "lineage_floor", Number],
-      ["q", "spin_noise", Number]
+      ["q", "spin_noise", Number],
+      ["job", "selected_job_id", String]
     ];
     entries.forEach(([queryKey, stateKey, parse]) => {
       if (!params.has(queryKey)) return;
@@ -325,7 +372,72 @@
     }));
   }
 
+  function feedbackJobSummary(job) {
+    const adapter = job.adapter;
+    const footprint = !adapter
+      ? "transfer reference"
+      : `${adapter.target_modules.length} sheet${adapter.target_modules.length === 1 ? "" : "s"} × ${adapter.layers_to_transform.length} layers · r${adapter.rank}`;
+    return {
+      job_id: job.job_id,
+      label: job.label,
+      job_type: job.job_type,
+      method: job.method,
+      status: job.status,
+      authorization_status: job.authorization.status,
+      job_sha256: job.authorization.job_sha256,
+      origin_motif_id: job.origin?.motif_id || null,
+      origin_case_id: job.origin?.case_id || null,
+      selection_role: job.origin?.selection_role || null,
+      footprint,
+      budget: `${job.resources.ram_mb} MiB · ${job.resources.cpu_pct}% CPU · ${job.resources.timeout_seconds}s`
+    };
+  }
+
+  function appendFeedbackCell(row, text, className = "") {
+    const cell = document.createElement("td");
+    if (className) cell.className = className;
+    cell.textContent = text;
+    row.appendChild(cell);
+    return cell;
+  }
+
+  function renderFeedbackJobs() {
+    feedbackQueueStatus.textContent = `${feedbackQueue.job_count} staged · ${words(feedbackQueue.training_slot_status)} · auto-authorization off`;
+    feedbackJobRows.replaceChildren();
+    feedbackQueue.jobs.forEach((job) => {
+      const summary = feedbackJobSummary(job);
+      const selected = job.job_id === state.selectedJobId;
+      const row = document.createElement("tr");
+      row.dataset.jobId = job.job_id;
+      row.dataset.selected = String(selected);
+      appendFeedbackCell(row, job.label, "job-method");
+      appendFeedbackCell(row, summary.origin_motif_id ? `${summary.origin_motif_id} · ${words(summary.selection_role)}` : "frozen reference");
+      appendFeedbackCell(row, summary.footprint);
+      appendFeedbackCell(row, summary.budget);
+      appendFeedbackCell(row, `${words(job.status)} · not authorized`, "job-state");
+      const action = appendFeedbackCell(row, "");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.jobId = job.job_id;
+      button.setAttribute("aria-pressed", String(selected));
+      button.textContent = selected ? "Selected" : "Inspect";
+      action.appendChild(button);
+      feedbackJobRows.appendChild(row);
+    });
+    const selected = state.selectedJobId ? jobById(state.selectedJobId) : null;
+    if (!selected) {
+      feedbackJobTitle.textContent = "No job selected";
+      feedbackJobHypothesis.textContent = "Choose an experiment slot to inspect its hypothesis and immutable job hash.";
+      feedbackJobHash.textContent = "selection only · no browser authorization surface";
+      return;
+    }
+    feedbackJobTitle.textContent = selected.label;
+    feedbackJobHypothesis.textContent = selected.hypothesis;
+    feedbackJobHash.textContent = `${selected.job_id} · sha256:${selected.authorization.job_sha256}`;
+  }
+
   function render() {
+    renderFeedbackJobs();
     const activeCase = activeCaseId ? caseById(activeCaseId) : null;
     const gluingAtlas = etaleApi.buildGluingAtlas(etaleMap, state.radius, state.epsilon);
     const localGlue = gluingAtlas.samples.find((sample) => sample.layer === state.layer);
@@ -644,6 +756,17 @@
         active_motif_ids: activeMotifIds.slice(),
         human_evidence: clone(motifCatalog.human_evidence)
       },
+      feedback_jobs: {
+        schema: feedbackQueue.schema,
+        status: feedbackQueue.status,
+        protocol_sha256: feedbackQueue.protocol_sha256,
+        implementation_lock_sha256: feedbackQueue.implementation_lock_sha256,
+        job_count: feedbackQueue.job_count,
+        training_slot_status: feedbackQueue.training_slot_status,
+        automatic_authorization: feedbackQueue.automatic_authorization,
+        selected_job_id: state.selectedJobId,
+        selected_job_sha256: state.selectedJobId ? jobById(state.selectedJobId).authorization.job_sha256 : null
+      },
       human_summary: status.textContent
     };
     analysisSequence += 1;
@@ -719,6 +842,19 @@
     return clone(explorerState());
   }
 
+  function selectFeedbackJob(jobId) {
+    if (jobId === null) {
+      state.selectedJobId = null;
+      render();
+      return null;
+    }
+    const selected = jobById(String(jobId));
+    if (!selected) throw new RangeError(`unknown job_id ${jobId}`);
+    state.selectedJobId = selected.job_id;
+    render();
+    return clone(selected);
+  }
+
   playButton.addEventListener("click", () => {
     if (state.timer !== null) {
       stopPlayback();
@@ -762,6 +898,10 @@
     syncControls();
     render();
   });
+  feedbackJobRows.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-job-id]");
+    if (button) selectFeedbackJob(button.dataset.jobId);
+  });
   window.matchMedia("(max-width: 640px)").addEventListener("change", render);
 
   window.PixieEtaleExplorer = Object.freeze({
@@ -789,7 +929,16 @@
       const motif = motifById(String(motifId));
       if (!motif) throw new RangeError(`unknown motif_id ${motifId}`);
       return clone(motif);
-    }
+    },
+    getJobQueue: () => clone(feedbackQueue),
+    listJobs: () => clone(feedbackQueue.jobs.map(feedbackJobSummary)),
+    getJob: (jobId) => {
+      const job = jobById(String(jobId));
+      if (!job) throw new RangeError(`unknown job_id ${jobId}`);
+      return clone(job);
+    },
+    selectJob: selectFeedbackJob,
+    getSelectedJob: () => clone(state.selectedJobId ? jobById(state.selectedJobId) : null)
   });
 
   syncControls();
