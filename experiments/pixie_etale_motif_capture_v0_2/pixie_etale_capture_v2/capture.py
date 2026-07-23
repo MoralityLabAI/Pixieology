@@ -28,6 +28,11 @@ class CaptureV2Error(RuntimeError):
     """The v0.2 capture cannot proceed without violating its contract."""
 
 
+def _read_json_receipt(path: Path) -> dict[str, Any]:
+    """Read Python- or Windows PowerShell-authored JSON receipts."""
+    return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
 def _process_private_bytes() -> int | None:
     """Return current-process private commit without importing psutil."""
     if os.name != "nt":
@@ -507,8 +512,8 @@ def finalize_execution(
 ) -> dict[str, Any]:
     protocol = load_protocol(experiment_root)
     job = load_job(experiment_root, protocol)
-    resource = json.loads(resource_summary_path.read_text(encoding="utf-8"))
-    cleanup = json.loads(cleanup_summary_path.read_text(encoding="utf-8"))
+    resource = _read_json_receipt(resource_summary_path)
+    cleanup = _read_json_receipt(cleanup_summary_path)
     samples = list(resource.get("samples", []))
     ram_values = [
         float(sample.get("tree_private_bytes", 0)) / (1024 * 1024)
