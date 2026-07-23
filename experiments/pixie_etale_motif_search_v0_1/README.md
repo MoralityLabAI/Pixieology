@@ -11,6 +11,10 @@ corpus, inspect the source safetensors header, run synthetic pipeline tests, and
 analyze existing completed artifacts. Model sharding, model loading, and
 activation capture require a fresh receipt and the capped wrapper.
 
+`protocol.lock.json` seals the staged implementation file-by-file. Authorization
+receipts bind both the protocol and lock hashes, so editing capture, analysis,
+schema, test, or launcher files fails closed until a reviewed lock is minted.
+
 ## CPU-safe checks
 
 ```powershell

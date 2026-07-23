@@ -3,7 +3,7 @@ from pathlib import Path
 
 from pixie_etale_motifs.corpus import build_corpus
 from pixie_etale_motifs.io import object_sha256
-from pixie_etale_motifs.protocol import load_protocol, verify_protocol_shape
+from pixie_etale_motifs.protocol import load_protocol, protocol_lock_checks, verify_protocol_shape
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,3 +34,4 @@ def test_protocol_freezes_resource_and_geometry_contracts():
     assert protocol["coordinates"]["window_dependent"] is False
     assert protocol["controls"]["random_adapter_count"] == 19
     assert protocol["status"] == "STAGED_NOT_AUTHORIZED"
+    assert all(protocol_lock_checks(ROOT).values())

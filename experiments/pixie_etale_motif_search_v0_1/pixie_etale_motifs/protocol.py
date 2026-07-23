@@ -11,6 +11,7 @@ from .io import object_sha256, sha256_file
 
 
 PROTOCOL_SCHEMA = "pixie_etale_motif_search_protocol_v1"
+PROTOCOL_LOCK_SCHEMA = "pixie_etale_motif_search_protocol_lock_v1"
 
 
 def load_protocol(experiment_root: Path) -> dict[str, Any]:
@@ -22,6 +23,23 @@ def load_protocol(experiment_root: Path) -> dict[str, Any]:
 
 def protocol_hash(experiment_root: Path) -> str:
     return sha256_file(experiment_root / "protocol.json")
+
+
+def protocol_lock_checks(experiment_root: Path) -> dict[str, bool]:
+    path = experiment_root / "protocol.lock.json"
+    if not path.is_file():
+        return {"protocol_lock_present": False}
+    value = json.loads(path.read_text(encoding="utf-8"))
+    checks = {
+        "protocol_lock_present": True,
+        "protocol_lock_schema": value.get("schema") == PROTOCOL_LOCK_SCHEMA,
+        "protocol_lock_protocol": value.get("protocol_sha256") == sha256_file(experiment_root / "protocol.json"),
+    }
+    for relative, expected in value.get("files", {}).items():
+        source = experiment_root / str(relative)
+        checks[f"protocol_lock:{relative}"] = source.is_file() and sha256_file(source) == expected
+    checks["protocol_lock_has_files"] = bool(value.get("files"))
+    return checks
 
 
 def load_repo_config(repo_root: Path) -> dict[str, Any]:
@@ -91,6 +109,9 @@ def verify_frozen_inputs(repo_root: Path, experiment_root: Path, *, require_weig
         "adapter_config": (adapter / "adapter_config.json").is_file(),
         "adapter_weights": (adapter / "adapter_model.safetensors").is_file(),
     }
+    lock_checks = protocol_lock_checks(experiment_root)
+    checks["implementation_lock"] = all(lock_checks.values())
+    checks["implementation_lock_checks"] = lock_checks
     if checks["model_config"]:
         checks["model_config_hash"] = sha256_file(model / "config.json") == protocol["model"]["config_sha256"]
     if checks["adapter_config"]:

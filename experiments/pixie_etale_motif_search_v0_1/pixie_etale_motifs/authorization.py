@@ -28,6 +28,7 @@ def authorization_template(experiment_root: Path, protocol: dict[str, Any]) -> d
         "authorized": False,
         "statement": protocol["authorization"]["required_statement"],
         "protocol_sha256": sha256_file(experiment_root / "protocol.json"),
+        "implementation_lock_sha256": sha256_file(experiment_root / "protocol.lock.json"),
         "run_id": "replace-me",
         "attempt_id": "replace-me",
         "expires_utc": "replace-me",
@@ -60,6 +61,8 @@ def validate_authorization(
         raise ValueError("authorization statement differs from protocol")
     if value.get("protocol_sha256") != sha256_file(experiment_root / "protocol.json"):
         raise ValueError("authorization is bound to another protocol")
+    if value.get("implementation_lock_sha256") != sha256_file(experiment_root / "protocol.lock.json"):
+        raise ValueError("authorization is bound to another implementation lock")
     if value.get("caps") != protocol["resources"]["capture_requested_not_authorized"]:
         raise ValueError("authorization caps differ from protocol")
     acknowledgements = value.get("acknowledgements", {})
