@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_lora_feedback_authorization_v1.schema.json",
+  "title": "Pixie LoRA feedback authorization",
+  "type": "object",
+  "required": [
+    "schema",
+    "authorized",
+    "statement",
+    "protocol_sha256",
+    "implementation_lock_sha256",
+    "job_id",
+    "job_sha256",
+    "run_id",
+    "attempt_id",
+    "expires_utc",
+    "caps",
+    "gpu_guard",
+    "acknowledgements"
+  ],
+  "properties": {
+    "schema": { "const": "pixieology_lora_feedback_authorization_v1" },
+    "authorized": { "type": "boolean" },
+    "statement": { "type": "string", "minLength": 1 },
+    "protocol_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "implementation_lock_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "job_id": { "type": "string", "minLength": 1 },
+    "job_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "attempt_id": { "type": "string", "minLength": 1 },
+    "expires_utc": { "type": "string" },
+    "caps": { "type": "object" },
+    "gpu_guard": { "type": "object" },
+    "acknowledgements": { "type": "object" }
+  },
+  "additionalProperties": false
+}

@@ -53,6 +53,8 @@
     "pixie_etale_motif_experiment_root": "experiments/pixie_etale_motif_search_v0_1",
     "pixie_etale_motif_output_root": "${data_root}/pixie_etale_motif_search_v0_1",
     "pixie_etale_motif_sharded_model_root": "D:/Research_Engine/pixieology/pixie_etale_motif_search_v0_1/sharded_bonsai_1p7b",
+    "pixie_lora_feedback_experiment_root": "experiments/pixie_lora_feedback_loop_v0_1",
+    "pixie_lora_feedback_output_root": "${data_root}/pixie_lora_feedback_loop_v0_1",
     "huggingface_token_path": "secrets/huggingface_token.txt",
     "chronicle_corpus": "${data_root}/imports/chronicle_corpus.zip",
     "chronicle_sft_output_dir": "${data_root}/normalized_trajectories/pixie_chronicle_narration",

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_lora_feedback_job_v1.schema.json",
+  "title": "Pixie LoRA feedback job",
+  "type": "object",
+  "required": [
+    "schema",
+    "job_id",
+    "status",
+    "job_type",
+    "method",
+    "dataset",
+    "resources",
+    "gpu_guard",
+    "authorization",
+    "protocol_sha256",
+    "implementation_lock_sha256"
+  ],
+  "properties": {
+    "schema": { "const": "pixieology_lora_feedback_job_v1" },
+    "job_id": { "type": "string", "minLength": 1 },
+    "status": {
+      "enum": [
+        "PROPOSED",
+        "BLOCKED_INSUFFICIENT_DISCOVERY_DATA",
+        "AUTHORIZED",
+        "RUNNING",
+        "COMPLETE",
+        "ABORTED",
+        "REJECTED"
+      ]
+    },
+    "job_type": { "enum": ["EVALUATE", "TRAIN_ADAPTER"] },
+    "method": { "enum": ["base_qwen_derived_1p7b", "pixie_rank8", "tinylora", "qlora"] },
+    "dataset": { "type": "object" },
+    "resources": {
+      "type": "object",
+      "required": ["ram_mb", "cpu_pct", "io_mb_s", "timeout_seconds"],
+      "properties": {
+        "ram_mb": { "const": 2048 },
+        "cpu_pct": { "const": 50 },
+        "io_mb_s": { "const": 50 },
+        "timeout_seconds": { "const": 1800 }
+      },
+      "additionalProperties": false
+    },
+    "gpu_guard": { "type": "object" },
+    "authorization": {
+      "type": "object",
+      "required": ["required", "status", "job_sha256"],
+      "properties": {
+        "required": { "const": true },
+        "status": { "type": "string" },
+        "job_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "protocol_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "implementation_lock_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "additionalProperties": true
+}

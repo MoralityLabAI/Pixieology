@@ -1,0 +1,91 @@
+{
+  "schema": "pixieology_lora_feedback_protocol_v1",
+  "experiment_id": "pixie_lora_feedback_loop_v0_1",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "source_experiment": {
+    "path": "../pixie_etale_motif_search_v0_1",
+    "protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
+    "implementation_lock_sha256": "e062a98f47f5f6ba7caa7a55e963928d6db741ff28e4da7257a7552a027d7757"
+  },
+  "base_model": {
+    "label": "Frozen Qwen-derived Bonsai 1.7B base",
+    "id": "prism-ml/Bonsai-1.7B-unpacked",
+    "revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "weights_sha256": "cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b",
+    "config_sha256": "a9e37c13a2315353ae3fad3f33759e506598cf57b52abeae50d5318b7dd147fb"
+  },
+  "pixie_adapter": {
+    "label": "Existing Pixie rank-8 LoRA",
+    "config_sha256": "34c8573e7b474b3a3c7bb03182fdfaf9117032daa76ce211303909528053c58e",
+    "weights_sha256": "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c"
+  },
+  "comparison": {
+    "baseline_conditions": ["base_qwen_derived_1p7b", "pixie_rank8"],
+    "candidate_methods": ["tinylora", "qlora"],
+    "maximum_motifs_per_cycle": 2,
+    "selection_roles": ["robust_bridge_free", "fragile_chained"],
+    "training_split": "discovery",
+    "forbidden_training_splits": ["confirmation", "transfer"],
+    "evaluation_split": "transfer",
+    "zero_adapter_is_geometric_null": false
+  },
+  "training_templates": {
+    "tinylora": {
+      "rank": 2,
+      "alpha": 4,
+      "target_policy": "origin_component_over_origin_chart_window",
+      "sequence_length": 256,
+      "optimizer_steps": 20,
+      "gradient_accumulation_steps": 8,
+      "learning_rate": 0.0002
+    },
+    "qlora": {
+      "rank": 4,
+      "alpha": 8,
+      "target_policy": "all_seven_lora_targets_all_layers",
+      "sequence_length": 256,
+      "optimizer_steps": 20,
+      "gradient_accumulation_steps": 8,
+      "learning_rate": 0.0002
+    },
+    "shared": {
+      "dropout": 0.0,
+      "weight_decay": 0.0,
+      "max_grad_norm": 1.0,
+      "checkpoint_steps": 5,
+      "checkpoint_seconds": 300,
+      "maximum_checkpoints": 2,
+      "quantization": "nf4_double_quant_float16",
+      "assistant_only_loss": true
+    }
+  },
+  "resources": {
+    "training_requested_not_authorized": {
+      "ram_mb": 2048,
+      "cpu_pct": 50,
+      "io_mb_s": 50,
+      "timeout_seconds": 1800
+    },
+    "gpu": {
+      "maximum_existing_memory_mib": 256,
+      "maximum_peak_memory_mib": 3900,
+      "require_no_compute_applications": true
+    }
+  },
+  "bounded_launcher": {
+    "entrypoint": "scripts/run_capped_feedback.ps1",
+    "underlying_job_wrapper": "../pixie_5d_holonomy_validation_v0_2/scripts/run_capped_v2.ps1",
+    "underlying_job_wrapper_sha256": "220c75cf9d0e5ac7995c29eb3edd2f69027a1bb3b01513e69a6c91fb14abeb37",
+    "cleanup": "../pixie_5d_holonomy_validation_v0_2/scripts/post_run_cleanup_v2.ps1",
+    "cleanup_sha256": "c7d90482ec620b67323f5c58059e521ec3a0368281df85c5518d90fe68f9d5f1"
+  },
+  "authorization": {
+    "required_statement": "I explicitly authorize this exact Pixie TinyLoRA or QLoRA job under the bound 2048 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 1800 second, and 3900 MiB peak VRAM guards."
+  },
+  "seeds": {
+    "proposal": 2026072401,
+    "training": 2026072402,
+    "replication_reserved": 2026072403
+  },
+  "claim_boundary": "The loop tests whether motif-conditioned adapter proposals improve held-out behavior and reproduce useful topology. It does not treat a zero adapter as a geometric null, permit confirmation or transfer leakage into training, automatically authorize agent proposals, or promote topology-only improvement to success."
+}
