@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pixie etale capture job v2",
+  "type": "object",
+  "required": [
+    "schema",
+    "job_id",
+    "status",
+    "source_protocol_sha256",
+    "source_corpus_sha256",
+    "chunk_index",
+    "family",
+    "row_count",
+    "checkpoint_rows",
+    "splits",
+    "loader_strategy",
+    "caps",
+    "gpu_guard",
+    "authorization",
+    "abort_is_valid_outcome",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema": { "const": "pixie_etale_capture_job_v2" },
+    "job_id": { "type": "string" },
+    "status": { "const": "PROPOSED" },
+    "source_protocol_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "source_corpus_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "chunk_index": { "const": 0 },
+    "family": { "const": "pixie_canary" },
+    "row_count": { "const": 32 },
+    "checkpoint_rows": { "const": 8 },
+    "splits": { "type": "object" },
+    "loader_strategy": { "const": "sequential_safetensors_materialization_v2" },
+    "caps": { "type": "object" },
+    "gpu_guard": { "type": "object" },
+    "authorization": { "type": "object" },
+    "abort_is_valid_outcome": { "const": true },
+    "claim_boundary": { "type": "string" }
+  },
+  "additionalProperties": false
+}

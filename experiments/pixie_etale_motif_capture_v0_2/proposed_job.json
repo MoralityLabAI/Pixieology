@@ -1,0 +1,36 @@
+{
+  "schema": "pixie_etale_capture_job_v2",
+  "job_id": "capture-pixie-canary-memory-optimized-v0_2",
+  "status": "PROPOSED",
+  "source_protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
+  "source_corpus_sha256": "a4b84e0905d493f9db55398a16eda75c64fa422339dd7dfdee6ce7f470e757ab",
+  "chunk_index": 0,
+  "family": "pixie_canary",
+  "row_count": 32,
+  "checkpoint_rows": 8,
+  "splits": {
+    "discovery": 16,
+    "confirmation": 8,
+    "transfer": 8
+  },
+  "loader_strategy": "sequential_safetensors_materialization_v2",
+  "caps": {
+    "ram_mb": 6144,
+    "cpu_pct": 50,
+    "io_mb_s": 250,
+    "timeout_seconds": 1800
+  },
+  "gpu_guard": {
+    "maximum_existing_memory_mib": 256,
+    "maximum_peak_memory_mib": 3900,
+    "require_no_compute_applications": true
+  },
+  "authorization": {
+    "required": true,
+    "status": "AWAITING_EXPLICIT_AUTHORIZATION",
+    "job_sha256": "96d6dfb62d5116a7f23cc4d6a037a45105200339753d0a7d53b29d998890028e",
+    "automatic_authorization": false
+  },
+  "abort_is_valid_outcome": true,
+  "claim_boundary": "This job may produce activation and teacher-forced response checkpoints for canary chunk 0 only. No checkpoint is a confirmed motif."
+}

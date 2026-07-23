@@ -1,0 +1,92 @@
+{
+  "schema": "pixie_etale_motif_capture_protocol_v2",
+  "experiment_id": "pixie_etale_motif_capture_v0_2",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "source_experiment": {
+    "path": "../pixie_etale_motif_search_v0_1",
+    "protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
+    "implementation_lock_sha256": "e062a98f47f5f6ba7caa7a55e963928d6db741ff28e4da7257a7552a027d7757"
+  },
+  "model": {
+    "id": "prism-ml/Bonsai-1.7B-unpacked",
+    "revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "weights_sha256": "cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b",
+    "config_sha256": "a9e37c13a2315353ae3fad3f33759e506598cf57b52abeae50d5318b7dd147fb"
+  },
+  "adapter": {
+    "rank": 8,
+    "alpha": 16,
+    "config_sha256": "34c8573e7b474b3a3c7bb03182fdfaf9117032daa76ce211303909528053c58e",
+    "weights_sha256": "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c"
+  },
+  "corpus": {
+    "generated_sha256": "a4b84e0905d493f9db55398a16eda75c64fa422339dd7dfdee6ce7f470e757ab",
+    "rows": 192,
+    "chunk_rows": 32,
+    "checkpoint_rows": 8,
+    "target_chunk_index": 0,
+    "target_family": "pixie_canary",
+    "target_split_rows": {
+      "discovery": 16,
+      "confirmation": 8,
+      "transfer": 8
+    }
+  },
+  "capture": {
+    "maximum_sequence_length": 128,
+    "layers": 28,
+    "module_ids": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "condition": "trained_counterfactual_on_base",
+    "live_trained_geometry": "UNAVAILABLE_NOT_CAPTURED"
+  },
+  "loader": {
+    "strategy": "sequential_safetensors_materialization_v2",
+    "load_in_4bit": true,
+    "quantization_type": "nf4",
+    "double_quantization": true,
+    "compute_dtype": "float16",
+    "use_safetensors": true,
+    "deactivate_async_load": true,
+    "async_load_environment_variable": "HF_DEACTIVATE_ASYNC_LOAD",
+    "defer_peft_import_until_base_loaded": true,
+    "rehash_shards": true
+  },
+  "software": {
+    "transformers": "5.3.0",
+    "peft": "0.11.1",
+    "accelerate": "1.12.0",
+    "bitsandbytes": "0.49.1"
+  },
+  "resources": {
+    "capture_requested_not_authorized": {
+      "ram_mb": 6144,
+      "cpu_pct": 50,
+      "io_mb_s": 250,
+      "timeout_seconds": 1800
+    },
+    "gpu": {
+      "maximum_existing_memory_mib": 256,
+      "maximum_peak_memory_mib": 3900,
+      "require_no_compute_applications": true
+    }
+  },
+  "bounded_launcher": {
+    "entrypoint": "scripts/run_capped_capture_v2.ps1",
+    "underlying_job_wrapper": "../pixie_5d_holonomy_validation_v0_2/scripts/run_capped_v2.ps1",
+    "underlying_job_wrapper_sha256": "220c75cf9d0e5ac7995c29eb3edd2f69027a1bb3b01513e69a6c91fb14abeb37",
+    "cleanup": "../pixie_5d_holonomy_validation_v0_2/scripts/post_run_cleanup_v2.ps1",
+    "cleanup_sha256": "c7d90482ec620b67323f5c58059e521ec3a0368281df85c5518d90fe68f9d5f1"
+  },
+  "authorization": {
+    "required_statement": "I explicitly authorize the exact Pixie etale canary capture v0.2 job bound in this receipt under 6144 MiB RAM, 50 percent CPU, 250 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard."
+  },
+  "claim_boundary": "This version changes loader mechanics only. It may capture the preregistered v0.1 canary chunk under the same resource envelope; it cannot claim a motif, causal actionability, human usefulness, or transfer confirmation without the downstream registered gates."
+}

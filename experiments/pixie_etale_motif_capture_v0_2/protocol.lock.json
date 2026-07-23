@@ -1,0 +1,35 @@
+{
+  "schema": "pixie_etale_motif_capture_protocol_lock_v2",
+  "protocol_sha256": "887c6b2e81c6b065fa6cea52cc8c0437dc63680e15c203c439ca1013d077fe50",
+  "source_protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
+  "source_implementation_lock_sha256": "e062a98f47f5f6ba7caa7a55e963928d6db741ff28e4da7257a7552a027d7757",
+  "files": {
+    "PREREGISTRATION.md": "f49591c98aba1faaba0b69d5df0068c78a53dd6576f4940d0489558c1e14857a",
+    "README.md": "3f5ed4d7ada4cb825a846373fb21e3c2ea859e2b6d4ec0a76a994eb66c3c154a",
+    "TRAINER_PLAN.md": "f0d54d6ab53ff315bc683544e1ee4aad6f2745b29d081c47da1a895655ed521c",
+    "pixie_etale_capture_v2/__init__.py": "637c13dcbc74dd18fe7d38d6a6b8afa9ba9bb2c44503b6d55a41f00723defadf",
+    "pixie_etale_capture_v2/authorization.py": "08774105f42b9f37acc41a230f0aa45c740c5edfbdd0895acf8822994b0d011d",
+    "pixie_etale_capture_v2/capture.py": "1af9829540b23e7e6336e61e146b13cd3daf93b29884495c1e3b0e2fa0bad4bd",
+    "pixie_etale_capture_v2/cli.py": "2cd72da676c2e1c69fa38d7b32c7432e27fb24a7cf04bb38e8e96c2e27f259c0",
+    "pixie_etale_capture_v2/protocol.py": "c8331dfc0456de7083d71b508761fecad6013ec48f1b36f695fbfbfd6690149e",
+    "proposed_job.json": "45f0f6baaef801f0041008b7c7f98869fabee20729c7960603caeb74665ee9c7",
+    "protocol.json": "887c6b2e81c6b065fa6cea52cc8c0437dc63680e15c203c439ca1013d077fe50",
+    "run.py": "d54c5ebada33bcf0ef16b8968c8a7c11f7b74f12f7d011f7c543cd7ba152038f",
+    "schemas/pixie_etale_capture_authorization_v2.schema.json": "ec930e9dfece115254cadd77a1fa9f1b83903e8dd306bd2bc12c1d70637e54e0",
+    "schemas/pixie_etale_capture_job_v2.schema.json": "077dc4e65209b5272bb6a7f349eb3a6ca42c37a41d4d85b3b6f4928e1586f5b1",
+    "scripts/run_capped_capture_v2.ps1": "6a9178830c158813b567230b59409eaa03c45c6bce464d6b09a272e7bc9af687",
+    "tests/conftest.py": "695f90f69ed5d3a108016274bae097b8267276aa201a5fb72e100c84c9e13bd7",
+    "tests/test_capture_loader.py": "aa87a937cac14c1d4d25dc5c4f9277c1d4fb59f5c7ca3a6efd9c052a5a41b053",
+    "tests/test_protocol_authorization.py": "47865c7958720b7e9be61b00bd7bc414b8470580de37d2490217adf69e3372e4"
+  },
+  "source_files": {
+    "../pixie_etale_motif_search_v0_1/pixie_etale_motifs/capture.py": "1c1e5f513f79685401d3c8da9dbce1ee1ee09d512fb068a38989148fecc9c1cb",
+    "../pixie_etale_motif_search_v0_1/pixie_etale_motifs/corpus.py": "e7b11189c7916c8434bd5c1d7ebc6ccde2a0ba46d756ff3ab96a6e36fbfb0538",
+    "../pixie_etale_motif_search_v0_1/pixie_etale_motifs/geometry.py": "71570818db2c0af20f6124e6a11ef86c4d1d244ad110b60a01dbd880cc4c07b9",
+    "../pixie_etale_motif_search_v0_1/pixie_etale_motifs/io.py": "5b60a04732d5d40521e31d50e290a8e4aa79a68a3acd64933946d030a82ad1c5",
+    "../pixie_etale_motif_search_v0_1/pixie_etale_motifs/protocol.py": "fd03a73381d256127476c493b7bc1ef879cbe595cfecc01745055cad44c58883",
+    "../pixie_etale_motif_search_v0_1/pixie_etale_motifs/safetensors_raw.py": "8d0d3b1c0ba25e752e7cd9ba6c7eeae48e1a41bb16fa30ecd321f5f4cf159652",
+    "../pixie_etale_motif_search_v0_1/protocol.json": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
+    "../pixie_etale_motif_search_v0_1/protocol.lock.json": "e062a98f47f5f6ba7caa7a55e963928d6db741ff28e4da7257a7552a027d7757"
+  }
+}
