@@ -1,22 +1,22 @@
 {
   "schema": "pixie_bnb_quantization_canary_protocol_lock_v3",
-  "protocol_sha256": "180421fba14167ed1d8725c931493109fb7aaa5bcd564a2ae9db275980efa675",
+  "protocol_sha256": "2ebe15d178d2693c93bc20c7a1e76dee431a939c0c5d2d86bef9fcfff6eac38c",
   "files": {
-    "README.md": "83a306f1d88976bfd848eadd6b50b4006e0be97a7413cca5c1869a9c8ef94af0",
-    "TRAINER_PLAN.md": "eb93f0bbffc3dd7718ab5288f550d5ebceaa6d10c66e5c157a2235ed21deff9e",
-    "pixie_bnb_canary_v3/__init__.py": "620b1fd8532d000417554d8a987b712be7730d6caca7c527d25ff86c778a6fda",
-    "pixie_bnb_canary_v3/authorization.py": "469bf4d40d672a72d9f1b85c51670706067e1ea1be5520678ff3bc98ca6d13b9",
+    "README.md": "c740eecd58fc233fdbbadacad5e098115c76688b61715aa5c77de697522c0ccd",
+    "TRAINER_PLAN.md": "18cb0b14ca5c462c554744e04b2cee7ca33e7e9023289e22c09dbe167adb90b9",
+    "pixie_bnb_canary_v3/__init__.py": "2bf2cf2a6380861e2ee3478d2803632abf7dad4b598058a57468770401d367a0",
+    "pixie_bnb_canary_v3/authorization.py": "1cb2815923521b81c6fae79a860a0c78933f4cacccc1fea53ac4335066b8aaa7",
     "pixie_bnb_canary_v3/canary.py": "c32cdbeb1fb5b85692f77a10b417a90414f8cc8e3349602695b8b9fda80d75d8",
     "pixie_bnb_canary_v3/cli.py": "173ea99f324a669ad9865aa591aa734cb1e6aa6454de40ba4bf762a4ad6c9324",
-    "pixie_bnb_canary_v3/protocol.py": "03c28fe9bf1a1809b511c9bb1bdd5eace2c90b268a5de16d571cadc58aca587a",
-    "proposed_job.json": "8e63ede1c35c3922a00d197e172cb8133acd91af01a2ada30427f90eadc7200b",
-    "protocol.json": "180421fba14167ed1d8725c931493109fb7aaa5bcd564a2ae9db275980efa675",
+    "pixie_bnb_canary_v3/protocol.py": "fc0725e4d90eb6f78812dcdd3d42f951e7a0842a3f7b325e52a9352473ea1456",
+    "proposed_job.json": "50afcdf10bb72e2092e5be8e08414edd0c2dd27067cdde8fd6de6b2213b0d4c3",
+    "protocol.json": "2ebe15d178d2693c93bc20c7a1e76dee431a939c0c5d2d86bef9fcfff6eac38c",
     "run.py": "4ac5a75836e63163126bbc8ca7565e550ba14d9b458a44a2abe32036fb0b0b93",
-    "schemas/pixie_bnb_quantization_canary_authorization_v3.schema.json": "eab5aa2e04a4769c36f33be0ec1d168f31e29cbb09077800e1717dbee1a29438",
-    "schemas/pixie_bnb_quantization_canary_job_v3.schema.json": "727bc939f4acd35a707ea9d0a8a577b12615b4a67cc252a6a21c3eadab44c259",
-    "scripts/run_capped_canary_v3.ps1": "f115503f21864773e2646939b63e7eece409526d9a034abd09d39590939aa2a4",
+    "schemas/pixie_bnb_quantization_canary_authorization_v3.schema.json": "3ee402a5da9e46dc591d7110b276182f32ab7cf9b6390be02120b3a5ca2ef65c",
+    "schemas/pixie_bnb_quantization_canary_job_v3.schema.json": "9cde587aff9d887151e3f0d38eec21b97bb1c9ed232b67b3f85c1389dcd4c577",
+    "scripts/run_capped_canary_v3.ps1": "943a0c8e0576ae64822fd07e03529c45a3445f49656984edc5d5c349161ad5e3",
     "tests/conftest.py": "491b270fe9f8a2280d5ad483529d1f48533aff822240cde1414432458ff2fecf",
-    "tests/test_canary_static.py": "cdca491c72c34d8527b19b47f17c40d7924709a02b0cc1d608df83b302413060",
-    "tests/test_bnb_protocol_authorization.py": "f3fb4ff022e39c6fdc0bc1177cfbdb99099989334ec2c4a2bcbe56cf961baf46"
+    "tests/test_canary_static.py": "d210cab369536bdb16e176ae0e7ce19344d7626bde225922b8994be88622f7e0",
+    "tests/test_bnb_protocol_authorization.py": "c6ceebf632b87c66e2b65ebdca04caf71678f8cb34872c4edcfbe9e87d697e78"
   }
 }

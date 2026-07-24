@@ -36,8 +36,9 @@ def test_wrapper_uses_registered_hard_caps():
     assert "-TimeoutSeconds 600" in source
     assert "maximum_existing_memory_mib" in source
     assert "maximum_existing_utilization_pct" in source
-    assert "allowed_preexisting_compute_application" in source
+    assert "allowed_preexisting_compute_applications" in source
     assert "required_path_suffix" in source
+    assert "required_command_line_fragments" in source
 
 
 def test_receipt_reader_accepts_windows_bom(tmp_path):

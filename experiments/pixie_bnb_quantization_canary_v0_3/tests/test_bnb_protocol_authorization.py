@@ -37,14 +37,15 @@ def test_protocol_fixes_small_caps_and_exact_qwen_sweep():
         "down_proj",
     ]
     gpu = protocol["resources"]["gpu"]
-    assert gpu["maximum_existing_memory_mib"] == 32
+    assert gpu["maximum_existing_memory_mib"] == 768
     assert gpu["maximum_existing_utilization_pct"] == 0
-    assert gpu["allowed_preexisting_compute_application"] == {
-        "maximum_count": 1,
-        "executable_basename": "ChatGPT.exe",
-        "required_path_suffix": "\\app\\ChatGPT.exe",
-        "used_memory_may_be_unavailable": True,
-    }
+    allowed = gpu["allowed_preexisting_compute_applications"]
+    assert allowed["maximum_count"] == 2
+    assert [profile["executable_basename"] for profile in allowed["profiles"]] == [
+        "ChatGPT.exe",
+        "llama-server.exe",
+    ]
+    assert "--port 8818" in allowed["profiles"][1]["required_command_line_fragments"]
 
 
 def test_job_is_synthetic_inactive_and_hash_bound():
@@ -53,7 +54,7 @@ def test_job_is_synthetic_inactive_and_hash_bound():
     assert job["model_loading"] is False
     assert job["adapter_loading"] is False
     assert job["synthetic_weights_only"] is True
-    assert job["job_id"] == "diagnose-bnb4bit-c10-boundary-host-v0_3_1"
+    assert job["job_id"] == "diagnose-bnb4bit-c10-boundary-host-v0_3_2"
     assert job["authorization"]["automatic_authorization"] is False
     assert job_sha256(job) == job["authorization"]["job_sha256"]
 

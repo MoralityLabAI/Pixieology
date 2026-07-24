@@ -59,7 +59,7 @@ def validate_job(job: dict[str, Any], protocol: dict[str, Any]) -> dict[str, Any
         raise ValueError("invalid quantization canary job schema")
     if job.get("status") != "PROPOSED":
         raise ValueError("quantization canary job must remain proposed")
-    if job.get("job_id") != "diagnose-bnb4bit-c10-boundary-host-v0_3_1":
+    if job.get("job_id") != "diagnose-bnb4bit-c10-boundary-host-v0_3_2":
         raise ValueError("unexpected quantization canary job ID")
     canary = protocol["canary"]
     if int(job.get("seed", -1)) != int(canary["seed"]):
@@ -140,19 +140,39 @@ def verify_protocol_shape(protocol: dict[str, Any]) -> list[str]:
     if protocol.get("resources", {}).get("canary_requested_not_authorized") != expected_caps:
         errors.append("canary caps must remain 2048/50/50/600")
     expected_gpu = {
-        "maximum_existing_memory_mib": 32,
+        "maximum_existing_memory_mib": 768,
         "maximum_peak_memory_mib": 1800,
         "maximum_existing_utilization_pct": 0,
         "require_no_unapproved_compute_applications": True,
-        "allowed_preexisting_compute_application": {
-            "maximum_count": 1,
-            "executable_basename": "ChatGPT.exe",
-            "required_path_suffix": "\\app\\ChatGPT.exe",
-            "used_memory_may_be_unavailable": True,
+        "allowed_preexisting_compute_applications": {
+            "maximum_count": 2,
+            "profiles": [
+                {
+                    "executable_basename": "ChatGPT.exe",
+                    "required_path_suffix": "\\app\\ChatGPT.exe",
+                    "used_memory_may_be_unavailable": True,
+                    "required_command_line_fragments": [],
+                },
+                {
+                    "executable_basename": "llama-server.exe",
+                    "required_path": (
+                        "D:\\models\\Tesseract\\runtime\\llama.cpp\\b10064-cuda12.4"
+                        "\\payload\\llama-server.exe"
+                    ),
+                    "used_memory_may_be_unavailable": True,
+                    "required_command_line_fragments": [
+                        "--port 8818",
+                        (
+                            "--model D:\\Research_Engine\\models\\Qwen3.5\\Qwen3.5-0.8B"
+                            "\\Qwen3.5-0.8B-Q4_K_M.gguf"
+                        ),
+                    ],
+                },
+            ],
         },
     }
     if protocol.get("resources", {}).get("gpu") != expected_gpu:
-        errors.append("GPU guard differs from the registered 32 MiB idle host exception")
+        errors.append("GPU guard differs from the registered 768 MiB co-resident exceptions")
     canary = protocol.get("canary", {})
     if canary.get("seed") != 1729 or canary.get("checkpoint_every_operations") != 1:
         errors.append("seed and checkpoint cadence differ from the registered plan")

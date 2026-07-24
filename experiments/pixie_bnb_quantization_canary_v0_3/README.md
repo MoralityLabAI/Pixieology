@@ -1,4 +1,4 @@
-# Pixie bitsandbytes quantization canary v0.3.1
+# Pixie bitsandbytes quantization canary v0.3.2
 
 This experiment isolates the native CUDA quantization boundary that ended the
 v0.2 Pixie capture. It never reads model weights, an adapter, prompts, or
@@ -17,10 +17,12 @@ FP16 tensors:
 Every operation writes an atomic checkpoint. A native crash therefore leaves
 the last successful module and memory reading as evidence.
 
-The v0.3.1 preflight permits one narrow host exception: a pre-existing
-`ChatGPT.exe` GPU registration while global GPU memory is at most 32 MiB and
-utilization is exactly 0%. Every other registered GPU process still fails
-closed. The host process is never included in PID-scoped cleanup.
+The v0.3.2 preflight permits two narrow co-resident exceptions: the
+pre-existing `ChatGPT.exe` GPU registration and the exact Tesseract
+`llama-server.exe` serving `Qwen3.5-0.8B-Q4_K_M.gguf` on port 8818, while
+global GPU memory is at most 768 MiB and utilization is exactly 0%. Every
+other registered GPU process still fails closed. Neither exception is ever
+included in PID-scoped cleanup.
 
 ## Fail-closed workflow
 

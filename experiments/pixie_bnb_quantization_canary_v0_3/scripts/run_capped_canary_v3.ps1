@@ -47,7 +47,7 @@ if ([int]$fields[5] -gt [int]$protocol.resources.gpu.maximum_existing_utilizatio
   throw "GPU preflight blocked by existing utilization."
 }
 $computeApps = @(& nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv,noheader,nounits 2>$null | Where-Object { $_.Trim() })
-$allowed = $protocol.resources.gpu.allowed_preexisting_compute_application
+$allowed = $protocol.resources.gpu.allowed_preexisting_compute_applications
 if ($computeApps.Count -gt [int]$allowed.maximum_count) {
   throw "GPU preflight blocked by too many registered applications: $($computeApps -join '; ')"
 }
@@ -56,13 +56,33 @@ foreach ($line in $computeApps) {
   if ($application.Count -ne 3) {
     throw "GPU application profile is ambiguous: $line"
   }
+  $processId = [int]$application[0]
   $processName = $application[1]
-  if ([IO.Path]::GetFileName($processName) -ine [string]$allowed.executable_basename -or
-      -not $processName.EndsWith([string]$allowed.required_path_suffix, [StringComparison]::OrdinalIgnoreCase)) {
+  $basename = [IO.Path]::GetFileName($processName)
+  $matches = @($allowed.profiles | Where-Object { $_.executable_basename -ieq $basename })
+  if ($matches.Count -ne 1) {
     throw "GPU preflight blocked by an unapproved application: $line"
   }
-  if ($application[2] -eq '[N/A]' -and -not [bool]$allowed.used_memory_may_be_unavailable) {
+  $approved = $matches[0]
+  if ($approved.required_path_suffix -and
+      -not $processName.EndsWith([string]$approved.required_path_suffix, [StringComparison]::OrdinalIgnoreCase)) {
+    throw "GPU application path suffix differs from protocol: $line"
+  }
+  if ($approved.required_path -and $processName -ine [string]$approved.required_path) {
+    throw "GPU application path differs from protocol: $line"
+  }
+  if ($application[2] -eq '[N/A]' -and -not [bool]$approved.used_memory_may_be_unavailable) {
     throw "GPU application memory is unavailable but the protocol forbids that state."
+  }
+  $ownedProfile = Get-CimInstance Win32_Process -Filter "ProcessId=$processId"
+  if (-not $ownedProfile) {
+    throw "GPU application disappeared during preflight: $line"
+  }
+  foreach ($fragment in @($approved.required_command_line_fragments)) {
+    if (-not [string]$ownedProfile.CommandLine -or
+        ([string]$ownedProfile.CommandLine).IndexOf([string]$fragment, [StringComparison]::OrdinalIgnoreCase) -lt 0) {
+      throw "GPU application command line differs from protocol: $line"
+    }
   }
 }
 

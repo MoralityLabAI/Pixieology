@@ -1,6 +1,6 @@
 {
   "schema": "pixie_bnb_quantization_canary_protocol_v3",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "status": "STAGED_NOT_AUTHORIZED",
   "purpose": "Isolate the native PyTorch/bitsandbytes NF4 conversion boundary before another full Pixie model load.",
   "prior_failure": {
@@ -73,15 +73,29 @@
       "timeout_seconds": 600
     },
     "gpu": {
-      "maximum_existing_memory_mib": 32,
+      "maximum_existing_memory_mib": 768,
       "maximum_peak_memory_mib": 1800,
       "maximum_existing_utilization_pct": 0,
       "require_no_unapproved_compute_applications": true,
-      "allowed_preexisting_compute_application": {
-        "maximum_count": 1,
-        "executable_basename": "ChatGPT.exe",
-        "required_path_suffix": "\\app\\ChatGPT.exe",
-        "used_memory_may_be_unavailable": true
+      "allowed_preexisting_compute_applications": {
+        "maximum_count": 2,
+        "profiles": [
+          {
+            "executable_basename": "ChatGPT.exe",
+            "required_path_suffix": "\\app\\ChatGPT.exe",
+            "used_memory_may_be_unavailable": true,
+            "required_command_line_fragments": []
+          },
+          {
+            "executable_basename": "llama-server.exe",
+            "required_path": "D:\\models\\Tesseract\\runtime\\llama.cpp\\b10064-cuda12.4\\payload\\llama-server.exe",
+            "used_memory_may_be_unavailable": true,
+            "required_command_line_fragments": [
+              "--port 8818",
+              "--model D:\\Research_Engine\\models\\Qwen3.5\\Qwen3.5-0.8B\\Qwen3.5-0.8B-Q4_K_M.gguf"
+            ]
+          }
+        ]
       }
     }
   },
@@ -98,7 +112,7 @@
   "authorization": {
     "required": true,
     "automatic_authorization": false,
-    "required_statement": "I explicitly authorize the exact Pixie bitsandbytes quantization canary v0.3.1 job bound in this receipt under 2048 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 600 seconds, and a 1800 MiB peak VRAM guard, permitting only one pre-existing ChatGPT.exe GPU registration when global GPU memory is at most 32 MiB and utilization is 0 percent."
+    "required_statement": "I explicitly authorize the exact Pixie bitsandbytes quantization canary v0.3.2 job bound in this receipt under 2048 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 600 seconds, and a 1800 MiB peak VRAM guard, permitting the pre-existing ChatGPT.exe registration and the exact idle Tesseract llama-server.exe serving Qwen3.5-0.8B-Q4_K_M.gguf on port 8818 when global GPU memory is at most 768 MiB and utilization is 0 percent."
   },
   "claim_boundary": "This canary can diagnose the registered local quantization runtime only. It loads no model or adapter and makes no behavioral, activation, or motif claim."
 }
