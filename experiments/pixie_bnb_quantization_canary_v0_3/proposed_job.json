@@ -1,8 +1,8 @@
 {
   "schema": "pixie_bnb_quantization_canary_job_v3",
-  "job_id": "diagnose-bnb4bit-c10-boundary-v0_3",
+  "job_id": "diagnose-bnb4bit-c10-boundary-host-v0_3_1",
   "status": "PROPOSED",
-  "runtime_profile": "torch-2.5.1-cu121-bitsandbytes-0.49.1-rtx3050",
+  "runtime_profile": "torch-2.5.1-cu121-bitsandbytes-0.49.1-rtx3050-chatgpt-host-exception",
   "seed": 1729,
   "case_count": 4,
   "sweep_layers": 28,
@@ -18,14 +18,21 @@
     "timeout_seconds": 600
   },
   "gpu_guard": {
-    "maximum_existing_memory_mib": 256,
+    "maximum_existing_memory_mib": 32,
     "maximum_peak_memory_mib": 1800,
-    "require_no_compute_applications": true
+    "maximum_existing_utilization_pct": 0,
+    "require_no_unapproved_compute_applications": true,
+    "allowed_preexisting_compute_application": {
+      "maximum_count": 1,
+      "executable_basename": "ChatGPT.exe",
+      "required_path_suffix": "\\app\\ChatGPT.exe",
+      "used_memory_may_be_unavailable": true
+    }
   },
   "authorization": {
     "required": true,
     "status": "AWAITING_EXPLICIT_AUTHORIZATION",
-    "job_sha256": "d7d42f79b81fba7f8e6cb22542cce6d3d36441a38fcc2799257bcc2cd0ceff04",
+    "job_sha256": "852205316de28be4e7257dab1a4abd73589dbd01c4375bb566fd80d976770748",
     "automatic_authorization": false
   },
   "abort_is_valid_outcome": true,

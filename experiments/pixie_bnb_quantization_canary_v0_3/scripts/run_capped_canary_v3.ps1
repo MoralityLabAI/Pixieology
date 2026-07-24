@@ -28,12 +28,12 @@ if ((Get-FileHash -LiteralPath $cleanup -Algorithm SHA256).Hash.ToLowerInvariant
 if (-not (Get-Command nvidia-smi -ErrorAction SilentlyContinue)) {
   throw "nvidia-smi is required for the fail-closed GPU preflight."
 }
-$profileLines = @(& nvidia-smi --query-gpu=name,driver_version,memory.total,compute_cap,memory.used --format=csv,noheader,nounits 2>$null)
+$profileLines = @(& nvidia-smi --query-gpu=name,driver_version,memory.total,compute_cap,memory.used,utilization.gpu --format=csv,noheader,nounits 2>$null)
 if ($LASTEXITCODE -ne 0 -or $profileLines.Count -ne 1) {
   throw "Could not obtain an unambiguous single-GPU profile."
 }
 $fields = @($profileLines[0] -split "," | ForEach-Object { $_.Trim() })
-if ($fields.Count -ne 5) { throw "GPU profile field count differs from protocol." }
+if ($fields.Count -ne 6) { throw "GPU profile field count differs from protocol." }
 if ($fields[0] -ne $protocol.runtime.gpu_name -or
     $fields[1] -ne $protocol.runtime.nvidia_driver -or
     [int]$fields[2] -ne [int]$protocol.runtime.gpu_memory_total_mib -or
@@ -43,9 +43,27 @@ if ($fields[0] -ne $protocol.runtime.gpu_name -or
 if ([int]$fields[4] -gt [int]$protocol.resources.gpu.maximum_existing_memory_mib) {
   throw "GPU preflight blocked by existing memory allocation."
 }
-$computeApps = @(& nvidia-smi --query-compute-apps=pid,process_name --format=csv,noheader,nounits 2>$null | Where-Object { $_.Trim() })
-if ([bool]$protocol.resources.gpu.require_no_compute_applications -and $computeApps.Count -gt 0) {
-  throw "GPU preflight blocked by existing compute applications: $($computeApps -join '; ')"
+if ([int]$fields[5] -gt [int]$protocol.resources.gpu.maximum_existing_utilization_pct) {
+  throw "GPU preflight blocked by existing utilization."
+}
+$computeApps = @(& nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv,noheader,nounits 2>$null | Where-Object { $_.Trim() })
+$allowed = $protocol.resources.gpu.allowed_preexisting_compute_application
+if ($computeApps.Count -gt [int]$allowed.maximum_count) {
+  throw "GPU preflight blocked by too many registered applications: $($computeApps -join '; ')"
+}
+foreach ($line in $computeApps) {
+  $application = @($line -split "," | ForEach-Object { $_.Trim() })
+  if ($application.Count -ne 3) {
+    throw "GPU application profile is ambiguous: $line"
+  }
+  $processName = $application[1]
+  if ([IO.Path]::GetFileName($processName) -ine [string]$allowed.executable_basename -or
+      -not $processName.EndsWith([string]$allowed.required_path_suffix, [StringComparison]::OrdinalIgnoreCase)) {
+    throw "GPU preflight blocked by an unapproved application: $line"
+  }
+  if ($application[2] -eq '[N/A]' -and -not [bool]$allowed.used_memory_may_be_unavailable) {
+    throw "GPU application memory is unavailable but the protocol forbids that state."
+  }
 }
 
 $outputRoot = (& $PythonExecutable $runner output-root).Trim()

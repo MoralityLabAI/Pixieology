@@ -59,7 +59,7 @@ def validate_job(job: dict[str, Any], protocol: dict[str, Any]) -> dict[str, Any
         raise ValueError("invalid quantization canary job schema")
     if job.get("status") != "PROPOSED":
         raise ValueError("quantization canary job must remain proposed")
-    if job.get("job_id") != "diagnose-bnb4bit-c10-boundary-v0_3":
+    if job.get("job_id") != "diagnose-bnb4bit-c10-boundary-host-v0_3_1":
         raise ValueError("unexpected quantization canary job ID")
     canary = protocol["canary"]
     if int(job.get("seed", -1)) != int(canary["seed"]):
@@ -140,12 +140,19 @@ def verify_protocol_shape(protocol: dict[str, Any]) -> list[str]:
     if protocol.get("resources", {}).get("canary_requested_not_authorized") != expected_caps:
         errors.append("canary caps must remain 2048/50/50/600")
     expected_gpu = {
-        "maximum_existing_memory_mib": 256,
+        "maximum_existing_memory_mib": 32,
         "maximum_peak_memory_mib": 1800,
-        "require_no_compute_applications": True,
+        "maximum_existing_utilization_pct": 0,
+        "require_no_unapproved_compute_applications": True,
+        "allowed_preexisting_compute_application": {
+            "maximum_count": 1,
+            "executable_basename": "ChatGPT.exe",
+            "required_path_suffix": "\\app\\ChatGPT.exe",
+            "used_memory_may_be_unavailable": True,
+        },
     }
     if protocol.get("resources", {}).get("gpu") != expected_gpu:
-        errors.append("GPU guard must remain 256/1800/no-compute")
+        errors.append("GPU guard differs from the registered 32 MiB idle host exception")
     canary = protocol.get("canary", {})
     if canary.get("seed") != 1729 or canary.get("checkpoint_every_operations") != 1:
         errors.append("seed and checkpoint cadence differ from the registered plan")

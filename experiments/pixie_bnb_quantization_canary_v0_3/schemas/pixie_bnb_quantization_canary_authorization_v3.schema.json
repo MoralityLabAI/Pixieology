@@ -23,7 +23,7 @@
     "statement": {"type": "string"},
     "protocol_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "implementation_lock_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "job_id": {"const": "diagnose-bnb4bit-c10-boundary-v0_3"},
+    "job_id": {"const": "diagnose-bnb4bit-c10-boundary-host-v0_3_1"},
     "job_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "run_id": {"type": "string", "minLength": 1},
     "attempt_id": {"type": "string", "minLength": 1},

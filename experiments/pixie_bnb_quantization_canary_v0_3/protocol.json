@@ -1,6 +1,6 @@
 {
   "schema": "pixie_bnb_quantization_canary_protocol_v3",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "status": "STAGED_NOT_AUTHORIZED",
   "purpose": "Isolate the native PyTorch/bitsandbytes NF4 conversion boundary before another full Pixie model load.",
   "prior_failure": {
@@ -73,9 +73,16 @@
       "timeout_seconds": 600
     },
     "gpu": {
-      "maximum_existing_memory_mib": 256,
+      "maximum_existing_memory_mib": 32,
       "maximum_peak_memory_mib": 1800,
-      "require_no_compute_applications": true
+      "maximum_existing_utilization_pct": 0,
+      "require_no_unapproved_compute_applications": true,
+      "allowed_preexisting_compute_application": {
+        "maximum_count": 1,
+        "executable_basename": "ChatGPT.exe",
+        "required_path_suffix": "\\app\\ChatGPT.exe",
+        "used_memory_may_be_unavailable": true
+      }
     }
   },
   "bounded_launcher": {
@@ -91,7 +98,7 @@
   "authorization": {
     "required": true,
     "automatic_authorization": false,
-    "required_statement": "I explicitly authorize the exact Pixie bitsandbytes quantization canary v0.3 job bound in this receipt under 2048 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 600 seconds, and a 1800 MiB peak VRAM guard."
+    "required_statement": "I explicitly authorize the exact Pixie bitsandbytes quantization canary v0.3.1 job bound in this receipt under 2048 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 600 seconds, and a 1800 MiB peak VRAM guard, permitting only one pre-existing ChatGPT.exe GPU registration when global GPU memory is at most 32 MiB and utilization is 0 percent."
   },
   "claim_boundary": "This canary can diagnose the registered local quantization runtime only. It loads no model or adapter and makes no behavioral, activation, or motif claim."
 }
