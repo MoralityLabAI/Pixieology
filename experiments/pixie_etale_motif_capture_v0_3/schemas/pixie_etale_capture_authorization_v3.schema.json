@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pixie etale continuation capture authorization v3",
+  "type": "object",
+  "required": [
+    "schema",
+    "authorized",
+    "statement",
+    "protocol_sha256",
+    "implementation_lock_sha256",
+    "job_id",
+    "job_sha256",
+    "run_id",
+    "attempt_id",
+    "expires_utc",
+    "caps",
+    "gpu_guard",
+    "acknowledgements"
+  ],
+  "properties": {
+    "schema": { "const": "pixie_etale_capture_authorization_v3" },
+    "authorized": { "type": "boolean" },
+    "statement": { "type": "string" },
+    "protocol_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "implementation_lock_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "job_id": { "const": "capture-pixie-etale-continuation-160-v0_3" },
+    "job_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "attempt_id": { "type": "string", "minLength": 1 },
+    "expires_utc": { "type": "string" },
+    "caps": { "type": "object" },
+    "gpu_guard": { "type": "object" },
+    "acknowledgements": {
+      "type": "object",
+      "required": [
+        "model_load",
+        "sequential_safetensors_loader",
+        "activation_capture",
+        "frozen_continuation_rows",
+        "abort_is_valid_outcome",
+        "pid_scoped_cleanup",
+        "paid_primelab_pod",
+        "linux_cgroup_limits",
+        "protected_rl_run_remains_untouched",
+        "no_automatic_authorization"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

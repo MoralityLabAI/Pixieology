@@ -1,0 +1,50 @@
+{
+  "schema": "pixie_etale_capture_job_v3",
+  "job_id": "capture-pixie-etale-continuation-160-v0_3",
+  "status": "PROPOSED",
+  "source_protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
+  "source_corpus_sha256": "a4b84e0905d493f9db55398a16eda75c64fa422339dd7dfdee6ce7f470e757ab",
+  "row_start": 32,
+  "row_count": 160,
+  "chunk_indices": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "families": [
+    "pixie_style",
+    "copy_induction",
+    "format_following",
+    "binary_fact",
+    "one_step_arithmetic"
+  ],
+  "checkpoint_rows": 8,
+  "expected_checkpoint_count": 20,
+  "splits": {
+    "discovery": 80,
+    "confirmation": 40,
+    "transfer": 40
+  },
+  "loader_strategy": "sequential_safetensors_materialization_v2",
+  "caps": {
+    "ram_mb": 6144,
+    "cpu_pct": 50,
+    "io_mb_s": 250,
+    "timeout_seconds": 1800
+  },
+  "gpu_guard": {
+    "maximum_existing_memory_mib": 256,
+    "maximum_peak_memory_mib": 3900,
+    "require_no_compute_applications": true
+  },
+  "authorization": {
+    "required": true,
+    "status": "AWAITING_EXPLICIT_AUTHORIZATION",
+    "job_sha256": "e92cfd8e5423a1aef0ba92d6d7eff4d52be744ecfb937f9c4b4c351f7f9ff8d0",
+    "automatic_authorization": false
+  },
+  "abort_is_valid_outcome": true,
+  "claim_boundary": "This job may produce activation and teacher-forced response checkpoints for frozen corpus rows 32 through 191 only. No checkpoint is a confirmed motif."
+}

@@ -1,0 +1,135 @@
+{
+  "schema": "pixie_etale_motif_capture_protocol_v3",
+  "experiment_id": "pixie_etale_motif_capture_v0_3",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "purpose": "Capture the five frozen non-canary family chunks with the loader and resource envelope proven by capture v0.2.",
+  "source_experiment": {
+    "path": "../pixie_etale_motif_search_v0_1",
+    "protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
+    "implementation_lock_sha256": "e062a98f47f5f6ba7caa7a55e963928d6db741ff28e4da7257a7552a027d7757"
+  },
+  "completed_canary": {
+    "experiment_path": "../pixie_etale_motif_capture_v0_2",
+    "source_commit": "4670b216b464e8b3432000c84e6aa81808f50e98",
+    "result_manifest": "../pixie_etale_motif_capture_v0_2/CANARY_RESULT_20260725.json",
+    "result_manifest_sha256": "7a52e66ffbbeda7391cd9758f34a8cfe5d624f344c15e02e74f09cd87cdfac65",
+    "capture_summary_sha256": "36c24d31f6e4f991f45b905b907c01c102205ceda0dcb5cb9f5d9ca91365dfce",
+    "rows": 32,
+    "status": "COMPLETE_CAPTURE_ONLY"
+  },
+  "model": {
+    "id": "prism-ml/Bonsai-1.7B-unpacked",
+    "revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "weights_sha256": "cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b",
+    "config_sha256": "a9e37c13a2315353ae3fad3f33759e506598cf57b52abeae50d5318b7dd147fb"
+  },
+  "adapter": {
+    "rank": 8,
+    "alpha": 16,
+    "config_sha256": "34c8573e7b474b3a3c7bb03182fdfaf9117032daa76ce211303909528053c58e",
+    "weights_sha256": "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c"
+  },
+  "corpus": {
+    "generated_sha256": "a4b84e0905d493f9db55398a16eda75c64fa422339dd7dfdee6ce7f470e757ab",
+    "rows": 192,
+    "chunk_rows": 32,
+    "checkpoint_rows": 8,
+    "continuation_row_start": 32,
+    "continuation_row_count": 160,
+    "target_chunk_indices": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "target_families": [
+      "pixie_style",
+      "copy_induction",
+      "format_following",
+      "binary_fact",
+      "one_step_arithmetic"
+    ],
+    "target_family_by_chunk": {
+      "1": "pixie_style",
+      "2": "copy_induction",
+      "3": "format_following",
+      "4": "binary_fact",
+      "5": "one_step_arithmetic"
+    },
+    "target_split_rows": {
+      "discovery": 80,
+      "confirmation": 40,
+      "transfer": 40
+    }
+  },
+  "capture": {
+    "maximum_sequence_length": 128,
+    "layers": 28,
+    "module_ids": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "condition": "trained_counterfactual_on_base",
+    "live_trained_geometry": "UNAVAILABLE_NOT_CAPTURED",
+    "expected_checkpoint_count": 20,
+    "resume": "verify each eight-row artifact SHA-256 marker before skipping"
+  },
+  "loader": {
+    "strategy": "sequential_safetensors_materialization_v2",
+    "load_in_4bit": true,
+    "quantization_type": "nf4",
+    "double_quantization": true,
+    "compute_dtype": "float16",
+    "use_safetensors": true,
+    "deactivate_async_load": true,
+    "async_load_environment_variable": "HF_DEACTIVATE_ASYNC_LOAD",
+    "defer_peft_import_until_base_loaded": true,
+    "rehash_shards": true
+  },
+  "software": {
+    "transformers": "5.3.0",
+    "peft": "0.11.1",
+    "accelerate": "1.12.0",
+    "bitsandbytes": "0.49.1",
+    "jinja2": "3.1.6"
+  },
+  "resources": {
+    "capture_requested_not_authorized": {
+      "ram_mb": 6144,
+      "cpu_pct": 50,
+      "io_mb_s": 250,
+      "timeout_seconds": 1800
+    },
+    "gpu": {
+      "maximum_existing_memory_mib": 256,
+      "maximum_peak_memory_mib": 3900,
+      "require_no_compute_applications": true
+    }
+  },
+  "bounded_launcher": {
+    "primelab_entrypoint": "scripts/run_capped_capture_prime.sh",
+    "primelab_entrypoint_sha256": "d2d502637cd6857c7d386fef8e7dcb07a5583603d2d43e7fe9643353b5742ebf",
+    "primelab": {
+      "provider": "massedcompute",
+      "region": "US",
+      "gpu_type": "A6000_48GB",
+      "gpu_count": 1,
+      "maximum_hourly_usd": 0.7,
+      "maximum_pod_lifetime_seconds": 7200,
+      "maximum_cost_usd": 1.4,
+      "spot_interruption_acceptable": false,
+      "io_device_resolution": "parent_block_device_when_model_filesystem_is_partition",
+      "protected_rl_run_id": "e2s64hw5ywag1d8hgwfef6jd"
+    }
+  },
+  "authorization": {
+    "required_statement": "I explicitly authorize the exact Pixie PrimeLab etale continuation capture v0.3 job bound in this receipt under 6144 MiB RAM, 50 percent CPU, 250 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard."
+  },
+  "claim_boundary": "This job may add the remaining 160 frozen activation rows and paired base/trained likelihoods. It does not fit the global scaler, mine or confirm a motif, run interventions, study human usefulness, train an adapter, or authorize a retry."
+}

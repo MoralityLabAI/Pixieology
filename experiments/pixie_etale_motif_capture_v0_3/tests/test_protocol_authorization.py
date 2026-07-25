@@ -1,0 +1,136 @@
+from __future__ import annotations
+
+from datetime import datetime, timedelta, timezone
+import json
+from pathlib import Path
+
+from pixie_etale_capture_v3.authorization import authorization_template, validate_authorization
+from pixie_etale_capture_v3.protocol import (
+    activate_source_imports,
+    job_sha256,
+    load_job,
+    load_protocol,
+    protocol_lock_checks,
+    validate_job,
+    verify_protocol_shape,
+)
+
+
+EXPERIMENT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_protocol_and_job_are_exact_and_fail_closed():
+    protocol = load_protocol(EXPERIMENT_ROOT)
+    assert verify_protocol_shape(protocol) == []
+    job = load_job(EXPERIMENT_ROOT, protocol)
+    assert validate_job(job, protocol) == job
+    assert job["authorization"]["job_sha256"] == job_sha256(job)
+    assert job["row_start"] == 32
+    assert job["row_count"] == 160
+    assert job["chunk_indices"] == [1, 2, 3, 4, 5]
+    assert job["families"] == [
+        "pixie_style",
+        "copy_induction",
+        "format_following",
+        "binary_fact",
+        "one_step_arithmetic",
+    ]
+    assert job["checkpoint_rows"] == 8
+    assert job["expected_checkpoint_count"] == 20
+    assert job["authorization"]["automatic_authorization"] is False
+
+
+def test_source_continuation_composition_is_bound():
+    protocol = load_protocol(EXPERIMENT_ROOT)
+    activate_source_imports(EXPERIMENT_ROOT, protocol)
+    from pixie_etale_motifs.protocol import build_corpus_from_protocol, load_protocol as load_source
+
+    source = (EXPERIMENT_ROOT / protocol["source_experiment"]["path"]).resolve()
+    rows = build_corpus_from_protocol(load_source(source))[32:192]
+    assert len(rows) == 160
+    observed_families = []
+    for offset in range(0, len(rows), 32):
+        families = {row["family"] for row in rows[offset : offset + 32]}
+        assert len(families) == 1
+        observed_families.append(next(iter(families)))
+    assert observed_families == [
+        "pixie_style",
+        "copy_induction",
+        "format_following",
+        "binary_fact",
+        "one_step_arithmetic",
+    ]
+    assert {
+        split: sum(row["split"] == split for row in rows)
+        for split in ("discovery", "confirmation", "transfer")
+    } == {"discovery": 80, "confirmation": 40, "transfer": 40}
+
+
+def test_authorization_template_is_inactive_and_exact_job_bound(tmp_path: Path):
+    protocol = load_protocol(EXPERIMENT_ROOT)
+    job = load_job(EXPERIMENT_ROOT, protocol)
+    receipt = authorization_template(EXPERIMENT_ROOT, protocol, job)
+    assert receipt["authorized"] is False
+    assert receipt["job_sha256"] == job["authorization"]["job_sha256"]
+    assert receipt["caps"] == job["caps"]
+    assert receipt["gpu_guard"] == job["gpu_guard"]
+    assert not any(receipt["acknowledgements"].values())
+
+    receipt["authorized"] = True
+    receipt["run_id"] = "unit-v3"
+    receipt["attempt_id"] = "capture-01-05-unit"
+    receipt["expires_utc"] = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+    receipt["acknowledgements"] = {
+        key: True for key in receipt["acknowledgements"]
+    }
+    path = tmp_path / "authorization.json"
+    path.write_text(json.dumps(receipt), encoding="utf-8")
+    validated = validate_authorization(
+        path,
+        EXPERIMENT_ROOT,
+        protocol,
+        job,
+        require_active_wrapper=False,
+    )
+    assert validated.run_id == "unit-v3"
+    assert validated.attempt_id == "capture-01-05-unit"
+
+
+def test_protocol_lock_binds_local_and_source_files():
+    protocol = load_protocol(EXPERIMENT_ROOT)
+    checks = protocol_lock_checks(EXPERIMENT_ROOT, protocol)
+    assert checks
+    assert all(checks.values()), checks
+
+
+def test_primelab_launcher_preserves_caps_and_fail_closed_cleanup():
+    protocol = load_protocol(EXPERIMENT_ROOT)
+    launcher = EXPERIMENT_ROOT / protocol["bounded_launcher"]["primelab_entrypoint"]
+    source = launcher.read_text(encoding="utf-8")
+    assert protocol["bounded_launcher"]["primelab"]["gpu_type"] == "A6000_48GB"
+    assert protocol["bounded_launcher"]["primelab"]["maximum_hourly_usd"] == 0.7
+    assert protocol["bounded_launcher"]["primelab"]["maximum_pod_lifetime_seconds"] == 7200
+    for required in (
+        "memory.max",
+        "memory.swap.max",
+        "cpu.max",
+        "io.max",
+        "PKNAME",
+        "PIXIE_RESOURCE_CAP_ACTIVE=1",
+        "PIXIE_EXECUTION_SURFACE=primelab",
+        "cgroup.kill",
+        "launcher model root differs from the verified runtime config",
+        "launcher output root differs from the verified runtime config",
+    ):
+        assert required in source
+    assert "pkill" not in source
+    assert "killall" not in source
+
+
+def test_tokenizer_template_runtime_is_exactly_pinned():
+    protocol = load_protocol(EXPERIMENT_ROOT)
+    assert protocol["software"]["transformers"] == "5.3.0"
+    assert protocol["software"]["jinja2"] == "3.1.6"
+    assert protocol["completed_canary"]["status"] == "COMPLETE_CAPTURE_ONLY"
+    assert protocol["completed_canary"]["rows"] == 32
+    assert "authorize a retry" in protocol["claim_boundary"]
