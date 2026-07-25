@@ -81,3 +81,25 @@ def test_protocol_lock_binds_local_and_source_files():
     checks = protocol_lock_checks(EXPERIMENT_ROOT, protocol)
     assert checks
     assert all(checks.values()), checks
+
+
+def test_primelab_launcher_preserves_caps_and_fail_closed_cleanup():
+    protocol = load_protocol(EXPERIMENT_ROOT)
+    launcher = EXPERIMENT_ROOT / protocol["bounded_launcher"]["primelab_entrypoint"]
+    source = launcher.read_text(encoding="utf-8")
+    assert protocol["bounded_launcher"]["primelab"]["gpu_type"] == "A6000_48GB"
+    assert protocol["bounded_launcher"]["primelab"]["maximum_hourly_usd"] == 0.7
+    assert protocol["bounded_launcher"]["primelab"]["maximum_pod_lifetime_seconds"] == 7200
+    for required in (
+        "memory.max",
+        "memory.swap.max",
+        "cpu.max",
+        "io.max",
+        "PKNAME",
+        "PIXIE_RESOURCE_CAP_ACTIVE=1",
+        "PIXIE_EXECUTION_SURFACE=primelab",
+        "cgroup.kill",
+    ):
+        assert required in source
+    assert "pkill" not in source
+    assert "killall" not in source

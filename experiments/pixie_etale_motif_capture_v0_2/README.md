@@ -40,3 +40,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 An abort is valid operational evidence. A completed capture is still not a
 motif; it only creates resumable input-conditioned geometry checkpoints for
 the downstream v0.1 gates.
+
+## PrimeLab platform amendment
+
+The registered Windows attempt emitted no activation rows and ended in a
+native PyTorch `c10.dll` access violation. The amended launcher
+`scripts/run_capped_capture_prime.sh` moves the same exact canary job to one
+on-demand RTX A6000 48 GB pod without changing the 6144 MiB RAM, 50% CPU,
+250 MiB/s I/O, 1800-second, or 3900 MiB peak-VRAM guards. It uses cgroup v2,
+zero cgroup swap, parent-block-device I/O accounting, and attempt-owned
+cleanup. A runtime `pixieology.config.json` supplies absolute Linux asset and
+output paths; frozen hashes, not those path strings, establish asset identity.
+
+This amendment needs a new exact authorization. Success promotes only the
+canary loader/capture lane. Full-family capture, motif confirmation, and
+training remain separately staged work.

@@ -47,6 +47,9 @@ def authorization_template(
             "frozen_canary_chunk": False,
             "abort_is_valid_outcome": False,
             "pid_scoped_cleanup": False,
+            "paid_primelab_pod": False,
+            "linux_cgroup_limits": False,
+            "protected_rl_run_remains_untouched": False,
             "no_automatic_authorization": False,
         },
     }
@@ -85,6 +88,9 @@ def validate_authorization(
         "frozen_canary_chunk",
         "abort_is_valid_outcome",
         "pid_scoped_cleanup",
+        "paid_primelab_pod",
+        "linux_cgroup_limits",
+        "protected_rl_run_remains_untouched",
         "no_automatic_authorization",
     )
     if not all(acknowledgements.get(key) is True for key in required):

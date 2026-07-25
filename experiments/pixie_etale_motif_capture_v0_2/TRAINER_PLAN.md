@@ -18,3 +18,7 @@
   PIDs; one delayed PID-scoped re-audit is allowed for Windows crash tails.
 - Promotion: only if wrapper status, capture summary, and cleanup are all
   complete/PASS. Abort remains a valid result and grants no activation claim.
+- PrimeLab path: one on-demand A6000 48 GB pod at at most USD 0.70/hour and
+  two hours. Cgroup v2 enforces the same RAM, CPU, I/O, timeout, swap, and VRAM
+  envelope; the launcher resolves a mounted partition to its parent block
+  device before applying `io.max`.

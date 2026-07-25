@@ -2,6 +2,12 @@
   "schema": "pixie_etale_motif_capture_protocol_v2",
   "experiment_id": "pixie_etale_motif_capture_v0_2",
   "status": "STAGED_NOT_AUTHORIZED",
+  "platform_amendment": {
+    "previous_protocol_sha256": "887c6b2e81c6b065fa6cea52cc8c0437dc63680e15c203c439ca1013d077fe50",
+    "previous_implementation_lock_sha256": "e1660a0cca6370da752f26fa0c0d07a08d24ca722355144c12fff2aacf2f7b08",
+    "registered_windows_result": "MEMORY_GUARD_ABORT_NO_ACTIVATION_ROWS",
+    "reason": "The Windows attempt ended in a native torch c10.dll access violation before base-model completion. The Linux PrimeLab amendment preserves the exact canary chunk, scientific coordinates, software versions, resource caps, checkpoints, and abort semantics while replacing only the OS enforcement surface."
+  },
   "source_experiment": {
     "path": "../pixie_etale_motif_search_v0_1",
     "protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
@@ -80,13 +86,26 @@
   },
   "bounded_launcher": {
     "entrypoint": "scripts/run_capped_capture_v2.ps1",
+    "primelab_entrypoint": "scripts/run_capped_capture_prime.sh",
+    "primelab_entrypoint_sha256": "1fd1c5afeaad6f23d63b800c2d600640ca845e60f95f97731ceb661f56401693",
+    "primelab": {
+      "provider": "massedcompute",
+      "region": "US",
+      "gpu_type": "A6000_48GB",
+      "gpu_count": 1,
+      "maximum_hourly_usd": 0.7,
+      "maximum_pod_lifetime_seconds": 7200,
+      "spot_interruption_acceptable": false,
+      "io_device_resolution": "parent_block_device_when_model_filesystem_is_partition",
+      "protected_rl_run_id": "e2s64hw5ywag1d8hgwfef6jd"
+    },
     "underlying_job_wrapper": "../pixie_5d_holonomy_validation_v0_2/scripts/run_capped_v2.ps1",
     "underlying_job_wrapper_sha256": "220c75cf9d0e5ac7995c29eb3edd2f69027a1bb3b01513e69a6c91fb14abeb37",
     "cleanup": "../pixie_5d_holonomy_validation_v0_2/scripts/post_run_cleanup_v2.ps1",
     "cleanup_sha256": "c7d90482ec620b67323f5c58059e521ec3a0368281df85c5518d90fe68f9d5f1"
   },
   "authorization": {
-    "required_statement": "I explicitly authorize the exact Pixie etale canary capture v0.2 job bound in this receipt under 6144 MiB RAM, 50 percent CPU, 250 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard."
+    "required_statement": "I explicitly authorize the exact Pixie PrimeLab etale canary capture v0.2 job bound in this receipt under 6144 MiB RAM, 50 percent CPU, 250 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard."
   },
   "claim_boundary": "This version changes loader mechanics only. It may capture the preregistered v0.1 canary chunk under the same resource envelope; it cannot claim a motif, causal actionability, human usefulness, or transfer confirmation without the downstream registered gates."
 }
