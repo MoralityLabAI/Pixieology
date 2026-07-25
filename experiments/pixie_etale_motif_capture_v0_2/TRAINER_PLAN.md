@@ -22,3 +22,6 @@
   two hours. Cgroup v2 enforces the same RAM, CPU, I/O, timeout, swap, and VRAM
   envelope; the launcher resolves a mounted partition to its parent block
   device before applying `io.max`.
+- Tokenizer-template preflight: require exact Jinja2 3.1.6 alongside the
+  registered Transformers version before model loading. The failed attempt
+  with Jinja2 3.0.3 is a valid zero-row abort and grants no automatic retry.

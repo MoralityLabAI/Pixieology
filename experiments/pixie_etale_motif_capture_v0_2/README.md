@@ -55,3 +55,16 @@ output paths; frozen hashes, not those path strings, establish asset identity.
 This amendment needs a new exact authorization. Success promotes only the
 canary loader/capture lane. Full-family capture, motif confirmation, and
 training remain separately staged work.
+
+## PrimeLab attempt 1 result
+
+Attempt 1 reached `model_ready` under the registered caps, then aborted before
+row 0 because Transformers 5.3.0 requires Jinja2 3.1 or newer for
+`apply_chat_template`, while the pod image exposed Jinja2 3.0.3. It produced
+zero activation rows and zero checkpoints. Peak job RAM was 878.4 MiB, peak
+global VRAM was 1728 MiB, and PID-scoped cleanup passed with no lingering
+process.
+
+The retry amendment pins Jinja2 3.1.6 in the generic software preflight.
+Nothing about the scientific job or resource envelope changes, and the abort
+does not authorize an automatic retry.

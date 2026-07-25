@@ -8,6 +8,14 @@
     "registered_windows_result": "MEMORY_GUARD_ABORT_NO_ACTIVATION_ROWS",
     "reason": "The Windows attempt ended in a native torch c10.dll access violation before base-model completion. The Linux PrimeLab amendment preserves the exact canary chunk, scientific coordinates, software versions, resource caps, checkpoints, and abort semantics while replacing only the OS enforcement surface."
   },
+  "compatibility_amendment": {
+    "previous_protocol_sha256": "e3007301fd8a000c99a69113d219002cc3d8d9ef4857a8bd3caa2f9b156925e6",
+    "previous_implementation_lock_sha256": "8a3612908891759ebede94b65a2d5164eec251c93bc2d47228e2d7a3fc605bc2",
+    "registered_primelab_result": "ABORTED_NO_ACTIVATION_ROWS",
+    "registered_abort_sha256": "c62a01c1a063093e0ebb0ffe256a9736c4258024947b09b2c172e333953366c0",
+    "reason": "PrimeLab attempt 1 reached model_ready under the frozen caps but Transformers 5.3.0 rejected the image's Jinja2 3.0.3 before the first row. The retry amendment pins and verifies Jinja2 3.1.6; it does not change the model, adapter, canary rows, coordinates, caps, checkpoint cadence, or claim boundary.",
+    "automatic_retry": false
+  },
   "source_experiment": {
     "path": "../pixie_etale_motif_search_v0_1",
     "protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
@@ -69,7 +77,8 @@
     "transformers": "5.3.0",
     "peft": "0.11.1",
     "accelerate": "1.12.0",
-    "bitsandbytes": "0.49.1"
+    "bitsandbytes": "0.49.1",
+    "jinja2": "3.1.6"
   },
   "resources": {
     "capture_requested_not_authorized": {
@@ -105,7 +114,7 @@
     "cleanup_sha256": "c7d90482ec620b67323f5c58059e521ec3a0368281df85c5518d90fe68f9d5f1"
   },
   "authorization": {
-    "required_statement": "I explicitly authorize the exact Pixie PrimeLab etale canary capture v0.2 job bound in this receipt under 6144 MiB RAM, 50 percent CPU, 250 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard."
+    "required_statement": "I explicitly authorize the exact Pixie PrimeLab etale canary capture v0.2 retry job bound in this receipt under 6144 MiB RAM, 50 percent CPU, 250 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard."
   },
   "claim_boundary": "This version changes loader mechanics only. It may capture the preregistered v0.1 canary chunk under the same resource envelope; it cannot claim a motif, causal actionability, human usefulness, or transfer confirmation without the downstream registered gates."
 }

@@ -103,3 +103,13 @@ def test_primelab_launcher_preserves_caps_and_fail_closed_cleanup():
         assert required in source
     assert "pkill" not in source
     assert "killall" not in source
+
+
+def test_tokenizer_template_runtime_is_exactly_pinned():
+    protocol = load_protocol(EXPERIMENT_ROOT)
+    assert protocol["software"]["transformers"] == "5.3.0"
+    assert protocol["software"]["jinja2"] == "3.1.6"
+    assert protocol["compatibility_amendment"]["registered_primelab_result"] == (
+        "ABORTED_NO_ACTIVATION_ROWS"
+    )
+    assert protocol["compatibility_amendment"]["automatic_retry"] is False
