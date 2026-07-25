@@ -1,0 +1,68 @@
+{
+  "schema": "pixie_etale_canary_result_v1",
+  "status": "COMPLETE_CAPTURE_ONLY",
+  "run_id": "pixie-etale-canary-prime-retry-20260725",
+  "attempt_id": "prime-a6000-attempt-2",
+  "source_commit": "9bedff35775306ed95ea0c2dd0ad3641aa6a44d9",
+  "protocol_sha256": "cc536ff38f27f99e11addc328ae2a303ac3a65f437d561ad1d58a12c632f4813",
+  "implementation_lock_sha256": "aeccd6307efd8a850323058da78cc00a51544f29cc013e9331c404609a04bbcf",
+  "job_sha256": "96d6dfb62d5116a7f23cc4d6a037a45105200339753d0a7d53b29d998890028e",
+  "operational_receipt": {
+    "repository": "https://github.com/MoralityLabAI/ConstitutionalAlignment.git",
+    "commit": "f0e17fe173b309218ded8505b550cef7e1d88fe8",
+    "path": "experiments/jinn_beast_metta_rl_v1/moral_reasoner_v2/PRIME_POD_LAUNCH_RECEIPT_PIXIE_ETALE_CANARY_RETRY_20260725.json"
+  },
+  "capture": {
+    "family": "pixie_canary",
+    "rows": 32,
+    "unique_row_ids": 32,
+    "checkpoints": 4,
+    "rows_per_checkpoint": 8,
+    "raw_coordinate_shape": [
+      32,
+      28,
+      7,
+      3
+    ],
+    "coordinates_finite": true,
+    "condition": "trained_counterfactual_on_base_activations",
+    "wall_time_seconds": 15.698810159000004
+  },
+  "descriptive_sanity_check": {
+    "status": "PASS_NOT_A_MOTIF_TEST",
+    "outcome_eligible_rows": 24,
+    "outcome_ineligible_token_order_null_rows": 8,
+    "base_mean_log_likelihood_eligible": -6.141756534576416,
+    "trained_mean_log_likelihood_eligible": -1.5475720229248207,
+    "trained_minus_base_mean_log_likelihood_eligible": 4.594184511651595,
+    "trained_better_eligible_rows": 24,
+    "split_delta_mean_log_likelihood": {
+      "discovery": 4.65820740411679,
+      "confirmation": 4.664277950922648,
+      "transfer": 4.396045287450154
+    },
+    "variant_delta_mean_log_likelihood": {
+      "canonical": 5.760311992838979,
+      "paraphrase": 5.267550805583596,
+      "lexical_negative": 2.7546907365322113,
+      "token_order_null": null
+    }
+  },
+  "resources": {
+    "peak_job_ram_mb": 1344.94140625,
+    "average_job_ram_mb": 742.0303485576923,
+    "peak_global_gpu_memory_mib": 1884,
+    "cleanup_status": "PASS",
+    "lingering_owned_count": 0,
+    "provider_cost_usd": 0.1902,
+    "active_pods_after": 0
+  },
+  "artifacts": {
+    "local_root": "data/pixie_etale_motif_capture_v0_2/primelab/pixie-etale-canary-retry-prime-20260725",
+    "archive": "pixie-etale-canary-retry-artifacts-20260725.tgz",
+    "archive_sha256": "4ae114fea4fac8db8ddb2d87c273f6586a163aa43c36feb052dc7cce4315df3e",
+    "capture_summary_sha256": "36c24d31f6e4f991f45b905b907c01c102205ceda0dcb5cb9f5d9ca91365dfce"
+  },
+  "claim_boundary": "This confirms that the registered canary capture lane produces complete, finite input-conditioned LoRA response geometry and paired base/trained likelihoods under the hard caps. It does not confirm an etale motif, causal actionability, human usefulness, or transfer because the global discovery scaler and cross-family registered gates require the remaining five frozen chunks.",
+  "next_gate": "Stage a separately authorized continuation that captures frozen chunks 1 through 5 with the same loader and per-chunk checkpoints, then fit the global scaler on discovery rows and run the preregistered random-control, confirmation, and transfer gates."
+}
