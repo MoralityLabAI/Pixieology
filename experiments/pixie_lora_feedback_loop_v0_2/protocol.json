@@ -89,7 +89,7 @@
   "bounded_launcher": {
     "entrypoint": "scripts/run_capped_feedback.ps1",
     "primelab_entrypoint": "scripts/run_capped_feedback_prime.sh",
-    "primelab_entrypoint_sha256": "41e5598806eab48b6320f69b15bad183edbfdb8c37b4cfa03fe35edfa4e76a7a",
+    "primelab_entrypoint_sha256": "391a16ba126a3243fe268621774f0f9d5f9e896cb6d5aa792106c892b5679131",
     "primelab": {
       "provider": "massedcompute",
       "region": "US",
@@ -99,6 +99,7 @@
       "maximum_pod_lifetime_seconds": 7200,
       "spot_interruption_acceptable": false,
       "resume_unit": "completed_transfer_row",
+      "io_device_resolution": "parent_block_device_when_model_filesystem_is_partition",
       "protected_rl_run_id": "e2s64hw5ywag1d8hgwfef6jd"
     },
     "underlying_job_wrapper": "../pixie_5d_holonomy_validation_v0_2/scripts/run_capped_v2.ps1",

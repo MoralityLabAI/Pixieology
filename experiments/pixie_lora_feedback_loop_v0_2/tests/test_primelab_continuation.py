@@ -36,6 +36,8 @@ def test_primelab_launcher_is_hash_bound_and_fail_closed_on_cgroup_v2():
         "memory.swap.max",
         "cpu.max",
         "io.max",
+        "PKNAME",
+        "PIXIE_PRIME_SUMMARY_IO_DEVICE",
         "maximum_peak_memory_mib",
         "PIXIE_RESOURCE_CAP_ACTIVE=1",
         "PIXIE_EXECUTION_SURFACE=primelab",

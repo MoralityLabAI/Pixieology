@@ -21,7 +21,7 @@ EXPERIMENT_ROOT="$(realpath "$SCRIPT_DIR/..")"
 RUNNER="$EXPERIMENT_ROOT/run.py"
 PYTHON_EXECUTABLE="${PIXIE_PRIME_PYTHON:-python3}"
 
-for command in "$PYTHON_EXECUTABLE" nvidia-smi findmnt nproc timeout; do
+for command in "$PYTHON_EXECUTABLE" nvidia-smi findmnt lsblk nproc timeout; do
   command -v "$command" >/dev/null 2>&1 || {
     echo "required command is unavailable: $command" >&2
     exit 65
@@ -121,17 +121,31 @@ IO_BYTES_PER_SECOND=$((IO_MB_S * 1024 * 1024))
 CPU_PERIOD=100000
 CPU_COUNT="$(nproc)"
 CPU_QUOTA=$((CPU_COUNT * CPU_PCT * CPU_PERIOD / 100))
-MODEL_DEVICE="$(findmnt -n -o MAJ:MIN -T "$MODEL_ROOT" | tail -n 1 | tr -d '[:space:]')"
+MODEL_BLOCK_SOURCE="$(findmnt -rn -o SOURCE -T "$MODEL_ROOT" | tail -n 1)"
+MODEL_DEVICE="$(findmnt -rn -o MAJ:MIN -T "$MODEL_ROOT" | tail -n 1 | tr -d '[:space:]')"
 [[ "$MODEL_DEVICE" =~ ^[0-9]+:[0-9]+$ ]] || {
   rmdir "$CGROUP_PATH"
   echo "could not resolve the model filesystem block device" >&2
   exit 69
 }
+IO_DEVICE="$MODEL_DEVICE"
+if [[ -b "$MODEL_BLOCK_SOURCE" ]]; then
+  PARENT_BLOCK_NAME="$(lsblk -ndo PKNAME "$MODEL_BLOCK_SOURCE" | tail -n 1 | tr -d '[:space:]')"
+  if [[ -n "$PARENT_BLOCK_NAME" ]]; then
+    PARENT_DEVICE="$(lsblk -dn -o MAJ:MIN "/dev/$PARENT_BLOCK_NAME" | tail -n 1 | tr -d '[:space:]')"
+    [[ "$PARENT_DEVICE" =~ ^[0-9]+:[0-9]+$ ]] || {
+      rmdir "$CGROUP_PATH"
+      echo "could not resolve the parent block device for cgroup I/O accounting" >&2
+      exit 69
+    }
+    IO_DEVICE="$PARENT_DEVICE"
+  fi
+fi
 
 echo "$RAM_BYTES" > "$CGROUP_PATH/memory.max"
 [[ ! -f "$CGROUP_PATH/memory.swap.max" ]] || echo 0 > "$CGROUP_PATH/memory.swap.max"
 echo "$CPU_QUOTA $CPU_PERIOD" > "$CGROUP_PATH/cpu.max"
-echo "$MODEL_DEVICE rbps=$IO_BYTES_PER_SECOND wbps=$IO_BYTES_PER_SECOND" > "$CGROUP_PATH/io.max"
+echo "$IO_DEVICE rbps=$IO_BYTES_PER_SECOND wbps=$IO_BYTES_PER_SECOND" > "$CGROUP_PATH/io.max"
 [[ "$(cat "$CGROUP_PATH/memory.max")" == "$RAM_BYTES" ]] || {
   rmdir "$CGROUP_PATH"
   echo "memory.max readback failed" >&2
@@ -142,7 +156,7 @@ echo "$MODEL_DEVICE rbps=$IO_BYTES_PER_SECOND wbps=$IO_BYTES_PER_SECOND" > "$CGR
   echo "cpu.max readback failed" >&2
   exit 69
 }
-grep -q "^$MODEL_DEVICE .*rbps=$IO_BYTES_PER_SECOND .*wbps=$IO_BYTES_PER_SECOND" "$CGROUP_PATH/io.max" || {
+grep -q "^$IO_DEVICE .*rbps=$IO_BYTES_PER_SECOND .*wbps=$IO_BYTES_PER_SECOND" "$CGROUP_PATH/io.max" || {
   rmdir "$CGROUP_PATH"
   echo "io.max readback failed" >&2
   exit 69
@@ -253,6 +267,7 @@ export PIXIE_PRIME_SUMMARY_PEAK_GPU="$PEAK_GPU_MIB"
 export PIXIE_PRIME_SUMMARY_LINGERING="$LINGERING_COUNT"
 export PIXIE_PRIME_SUMMARY_CLEANUP_STATUS="$CLEANUP_STATUS"
 export PIXIE_PRIME_SUMMARY_MODEL_DEVICE="$MODEL_DEVICE"
+export PIXIE_PRIME_SUMMARY_IO_DEVICE="$IO_DEVICE"
 export PIXIE_PRIME_SUMMARY_CPU_COUNT="$CPU_COUNT"
 
 "$PYTHON_EXECUTABLE" - "$SAMPLES_JSONL" "$RESOURCE_SUMMARY" "$CLEANUP_SUMMARY" <<'PY'
@@ -283,7 +298,11 @@ resource = {
         "process_memory": "cgroup v2 memory.max and memory.swap.max=0",
         "job_memory": "cgroup v2 memory.max",
         "cpu": "cgroup v2 cpu.max at 50 percent of visible pod CPUs",
-        "io": f"cgroup v2 io.max on {os.environ['PIXIE_PRIME_SUMMARY_MODEL_DEVICE']}",
+        "io": (
+            "cgroup v2 io.max on "
+            f"{os.environ['PIXIE_PRIME_SUMMARY_IO_DEVICE']} "
+            f"for model filesystem {os.environ['PIXIE_PRIME_SUMMARY_MODEL_DEVICE']}"
+        ),
     },
     "visible_cpu_count": int(os.environ["PIXIE_PRIME_SUMMARY_CPU_COUNT"]),
     "root_pid": int(os.environ["PIXIE_PRIME_SUMMARY_ROOT_PID"]),

@@ -1,7 +1,7 @@
 {
   "schema": "pixieology_lora_feedback_protocol_lock_v1",
-  "implementation_git_commit": "1640a3c52d1043e834295342d6946696fc42c963",
-  "protocol_sha256": "b1c7964bbf3d9dfd584ecdba2ce5ebd87d8c24ceb1f271edd723322958e37181",
+  "implementation_git_commit": "16df03fa91d91cf38047e8b486af945cc6d768c9",
+  "protocol_sha256": "f91301fd04a4686127316840ff2afbeb8c1a663fb91a4e4e203ab766bb30f59f",
   "files": {
     "PREREGISTRATION.md": "8234c005acd4758e634918527cea44a4ac1fb673a8254ddd673ddec5d493dd74",
     "README.md": "c2b162fa811e963d24286f146bbd6abe2de48d6fe32f35b69094496afa2715b0",
@@ -13,16 +13,16 @@
     "pixie_lora_feedback/protocol.py": "074ab356e0a71d7e2acc3dd58c6916aec5face7f666265c6d68eecc7684176ac",
     "pixie_lora_feedback/reporting.py": "7b45bb6da41f08b0b5404e6365d55cdea10c8a98c954377391e422dbb20114e7",
     "pixie_lora_feedback/runner.py": "b3b50e1669f0302ed713d6e26bd11ac2be4787363a56f5f383c09c51340bbca7",
-    "protocol.json": "b1c7964bbf3d9dfd584ecdba2ce5ebd87d8c24ceb1f271edd723322958e37181",
+    "protocol.json": "f91301fd04a4686127316840ff2afbeb8c1a663fb91a4e4e203ab766bb30f59f",
     "run.py": "291216b8774f18296a56491c179cd3c7468f3ea7fda1e080f854395070c6601e",
     "schemas/pixieology_lora_feedback_authorization_v1.schema.json": "f02fecfece34743fe34e373799a36371899ea0fed7cd51ace13c778af56dbc9b",
     "schemas/pixieology_lora_feedback_job_v1.schema.json": "f983aa1cdf088febb85fba81fa586882008125e4a21c0d1283aea489588b12a3",
     "schemas/pixieology_lora_feedback_queue_v1.schema.json": "ba9d803b1d5236870912e1764dcf8a7db50067d653f6d5d1a21dd7695c80d140",
     "scripts/run_capped_feedback.ps1": "415c0f599b8d3655d7483e21847e66c0ab7716edf6d54146028fc9189d3b9cb3",
-    "scripts/run_capped_feedback_prime.sh": "41e5598806eab48b6320f69b15bad183edbfdb8c37b4cfa03fe35edfa4e76a7a",
+    "scripts/run_capped_feedback_prime.sh": "391a16ba126a3243fe268621774f0f9d5f9e896cb6d5aa792106c892b5679131",
     "tests/conftest.py": "aed3e49b253fc6e4f6ab3d8020cdb4c5c5c4d61b24f3533fd55f5ceabe763ae0",
     "tests/test_jobs.py": "6ea7769328519f5e6a68ba041e88a386f9c425cf10cb9b227c3c1508a75c843e",
-    "tests/test_primelab_continuation.py": "fc460156c78e8fa79d5d179c48158549ea562ebbb078dcd9d5b13c9467a9e169",
+    "tests/test_primelab_continuation.py": "6f1ad4c83cba70590dc2fb82658d34fdca1da4dafbcd1e209e23c2daafac6b9e",
     "tests/test_reporting.py": "bc3656a50508ffd377d3ca040a70bcf13402213c372ce553d052aa1aa19f1094"
   }
 }
