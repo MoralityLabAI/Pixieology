@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+from collections.abc import Mapping
 import hashlib
 from importlib import metadata, util
 import json
@@ -184,6 +185,31 @@ def verify_protocol_shape(protocol: dict[str, Any]) -> list[str]:
     return errors
 
 
+def tokenizer_template_smoke(sharded_root: Path) -> bool:
+    """Exercise the tokenizer/Jinja path before any model or CUDA allocation."""
+    from transformers import AutoTokenizer
+
+    tokenizer = AutoTokenizer.from_pretrained(
+        sharded_root,
+        local_files_only=True,
+        trust_remote_code=False,
+    )
+    encoded = tokenizer.apply_chat_template(
+        [{"role": "user", "content": "Pixie canary tokenizer preflight."}],
+        tokenize=True,
+        add_generation_prompt=True,
+    )
+    if isinstance(encoded, Mapping):
+        encoded = encoded.get("input_ids")
+    if hasattr(encoded, "tolist"):
+        encoded = encoded.tolist()
+    while isinstance(encoded, list) and len(encoded) == 1 and isinstance(encoded[0], list):
+        encoded = encoded[0]
+    return isinstance(encoded, list) and bool(encoded) and all(
+        isinstance(token_id, int) for token_id in encoded
+    )
+
+
 def verify(
     repo_root: Path,
     experiment_root: Path,
@@ -257,6 +283,11 @@ def verify(
         checks["target_chunk_splits"] = split_counts == protocol["corpus"]["target_split_rows"]
         config = load_repo_config(repo_root)
         sharded = resolve_config_path(repo_root, config, "pixie_etale_motif_sharded_model_root")
+        try:
+            checks["tokenizer_template_smoke"] = tokenizer_template_smoke(sharded)
+        except Exception as error:
+            checks["tokenizer_template_smoke"] = False
+            checks["tokenizer_template_smoke_error"] = f"{type(error).__name__}: {error}"
         try:
             snapshot = verify_snapshot(
                 sharded,

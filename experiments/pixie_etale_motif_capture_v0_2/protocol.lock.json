@@ -11,7 +11,7 @@
     "pixie_etale_capture_v2/authorization.py": "a3a101a47988b3423b6e865dd5a10fbacc678231cd09caa58981db963687dec4",
     "pixie_etale_capture_v2/capture.py": "36b786e1dc8e8b5db59058f9861b517f414b16c1a6404a2a70f57a5055d84662",
     "pixie_etale_capture_v2/cli.py": "2cd72da676c2e1c69fa38d7b32c7432e27fb24a7cf04bb38e8e96c2e27f259c0",
-    "pixie_etale_capture_v2/protocol.py": "c8331dfc0456de7083d71b508761fecad6013ec48f1b36f695fbfbfd6690149e",
+    "pixie_etale_capture_v2/protocol.py": "3fbd44c6dd38f992ee3bceca99afff4433f7ab53f65922dd175d509f7954d1a7",
     "proposed_job.json": "45f0f6baaef801f0041008b7c7f98869fabee20729c7960603caeb74665ee9c7",
     "protocol.json": "cc536ff38f27f99e11addc328ae2a303ac3a65f437d561ad1d58a12c632f4813",
     "run.py": "d54c5ebada33bcf0ef16b8968c8a7c11f7b74f12f7d011f7c543cd7ba152038f",
@@ -20,7 +20,7 @@
     "scripts/run_capped_capture_v2.ps1": "6a9178830c158813b567230b59409eaa03c45c6bce464d6b09a272e7bc9af687",
     "scripts/run_capped_capture_prime.sh": "1fd1c5afeaad6f23d63b800c2d600640ca845e60f95f97731ceb661f56401693",
     "tests/conftest.py": "695f90f69ed5d3a108016274bae097b8267276aa201a5fb72e100c84c9e13bd7",
-    "tests/test_capture_loader.py": "d435bdc643e5e766bc175148abd7e980df50c5b28806e8b7d62e68301a54edd3",
+    "tests/test_capture_loader.py": "6425ada5d87210162013ba42d0b841f388a0ced8ae14ac44096b4205c11c5d11",
     "tests/test_protocol_authorization.py": "4ed60efed2706a544677ce08c0404ca539bb377c9c46718c5edd3dbd92b60d69"
   },
   "source_files": {

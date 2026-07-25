@@ -6,6 +6,7 @@ from pixie_etale_capture_v2.capture import (
     _read_json_receipt,
     capture_canary_chunk,
 )
+from pixie_etale_capture_v2.protocol import tokenizer_template_smoke
 
 
 class DummyTorch:
@@ -37,3 +38,18 @@ def test_async_load_is_disabled_before_transformers_import():
     assert source.index('"HF_DEACTIVATE_ASYNC_LOAD": "1"') < source.index(
         "from transformers import"
     )
+
+
+def test_tokenizer_template_smoke_accepts_batch_encoding_shape(monkeypatch, tmp_path):
+    class DummyTokenizer:
+        def apply_chat_template(self, messages, *, tokenize, add_generation_prompt):
+            assert messages[0]["role"] == "user"
+            assert tokenize is True
+            assert add_generation_prompt is True
+            return {"input_ids": [[101, 102, 103]]}
+
+    monkeypatch.setattr(
+        "transformers.AutoTokenizer.from_pretrained",
+        lambda *args, **kwargs: DummyTokenizer(),
+    )
+    assert tokenizer_template_smoke(tmp_path) is True
