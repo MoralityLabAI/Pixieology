@@ -1,0 +1,28 @@
+{
+  "schema": "pixieology_lora_feedback_protocol_lock_v1",
+  "implementation_git_commit": "042532b8604d20bec3e18feae0512851a73965d9",
+  "protocol_sha256": "e7689287c74359ce7a23c11e7ea22a3e8afb3e9dc5d2f5f6e384f11d3eb12d61",
+  "files": {
+    "PREREGISTRATION.md": "8234c005acd4758e634918527cea44a4ac1fb673a8254ddd673ddec5d493dd74",
+    "README.md": "b473da255efd5606de827d15fa1f42dd8bb0a6370ec3196650fb122f36419639",
+    "TRAINER_PLAN.md": "2d0fd1387b4b75ecbc5c5fd61459c9ebe2d82d36046daed36d6b5f7d269afcce",
+    "pixie_lora_feedback/__init__.py": "474fc0cbdfc1fa413ca0e1a701797db5d35261a39efec5a6afb78dd6066759f6",
+    "pixie_lora_feedback/authorization.py": "c031a74be451ff3e59e040f1a4293b0840d553872670bdd27392c41209e38aa5",
+    "pixie_lora_feedback/cli.py": "c364130d80096a38c3b059a6975aa687789f812877dda36cc5031ccb472a9195",
+    "pixie_lora_feedback/jobs.py": "625413c8c902dd489f29d3b86ca91e771fd822746e5e9d57004c1472694be7b1",
+    "pixie_lora_feedback/protocol.py": "074ab356e0a71d7e2acc3dd58c6916aec5face7f666265c6d68eecc7684176ac",
+    "pixie_lora_feedback/reporting.py": "7b45bb6da41f08b0b5404e6365d55cdea10c8a98c954377391e422dbb20114e7",
+    "pixie_lora_feedback/runner.py": "b3b50e1669f0302ed713d6e26bd11ac2be4787363a56f5f383c09c51340bbca7",
+    "protocol.json": "e7689287c74359ce7a23c11e7ea22a3e8afb3e9dc5d2f5f6e384f11d3eb12d61",
+    "run.py": "291216b8774f18296a56491c179cd3c7468f3ea7fda1e080f854395070c6601e",
+    "schemas/pixieology_lora_feedback_authorization_v1.schema.json": "f02fecfece34743fe34e373799a36371899ea0fed7cd51ace13c778af56dbc9b",
+    "schemas/pixieology_lora_feedback_job_v1.schema.json": "f983aa1cdf088febb85fba81fa586882008125e4a21c0d1283aea489588b12a3",
+    "schemas/pixieology_lora_feedback_queue_v1.schema.json": "ba9d803b1d5236870912e1764dcf8a7db50067d653f6d5d1a21dd7695c80d140",
+    "scripts/run_capped_feedback.ps1": "415c0f599b8d3655d7483e21847e66c0ab7716edf6d54146028fc9189d3b9cb3",
+    "scripts/run_capped_feedback_prime.sh": "41e5598806eab48b6320f69b15bad183edbfdb8c37b4cfa03fe35edfa4e76a7a",
+    "tests/conftest.py": "aed3e49b253fc6e4f6ab3d8020cdb4c5c5c4d61b24f3533fd55f5ceabe763ae0",
+    "tests/test_jobs.py": "6ea7769328519f5e6a68ba041e88a386f9c425cf10cb9b227c3c1508a75c843e",
+    "tests/test_primelab_continuation.py": "4fbe98468caa46adcd49c9795bb1b70de357815dcb3d1589289ec253b2999dac",
+    "tests/test_reporting.py": "bc3656a50508ffd377d3ca040a70bcf13402213c372ce553d052aa1aa19f1094"
+  }
+}

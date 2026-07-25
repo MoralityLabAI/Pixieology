@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_lora_feedback_queue_v1.schema.json",
+  "title": "Pixie LoRA feedback proposal queue",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "protocol_sha256",
+    "implementation_lock_sha256",
+    "job_count",
+    "jobs",
+    "training_slot_status",
+    "automatic_authorization"
+  ],
+  "properties": {
+    "schema": { "const": "pixieology_lora_feedback_queue_v1" },
+    "status": { "const": "STAGED_NOT_AUTHORIZED" },
+    "protocol_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "implementation_lock_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "job_count": { "type": "integer", "minimum": 2, "maximum": 6 },
+    "jobs": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 6,
+      "items": { "$ref": "pixieology_lora_feedback_job_v1.schema.json" }
+    },
+    "training_slot_status": {
+      "enum": ["BLOCKED_NO_CONFIRMED_CATALOG", "BLOCKED_NO_ELIGIBLE_ORIGIN", "PROPOSED"]
+    },
+    "automatic_authorization": { "const": false }
+  },
+  "additionalProperties": true
+}
