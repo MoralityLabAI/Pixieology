@@ -69,12 +69,13 @@ guard abort remains a valid result.
 
 ## PrimeLab handoff envelope
 
-The operator lane is bound to one A100 80 GB pod, at most USD 0.70/hour, at
-most two hours, and no concurrent local GPU workload. Spot is allowed because
-evaluation appends one durable JSONL checkpoint per completed transfer row.
-The protected hosted RL run `e2s64hw5ywag1d8hgwfef6jd` must remain untouched.
-The exact pod ID is recorded before staging; artifacts are copied and hashed
-before that same pod is terminated.
+The amended operator lane is bound to one RTX A6000 48 GB pod, at most USD
+0.70/hour, at most two hours, and no concurrent local GPU workload. The
+available offer is on-demand; evaluation still appends one durable JSONL
+checkpoint per completed transfer row. The protected hosted RL run
+`e2s64hw5ywag1d8hgwfef6jd` must remain untouched. The exact pod ID is recorded
+before staging; artifacts are copied and hashed before that same pod is
+terminated.
 
 ## Agent surface
 

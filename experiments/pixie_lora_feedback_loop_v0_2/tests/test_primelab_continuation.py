@@ -47,10 +47,10 @@ def test_primelab_launcher_is_hash_bound_and_fail_closed_on_cgroup_v2():
 
 def test_prime_envelope_protects_hosted_rl_run_and_bounds_spot_lifetime():
     prime = load_protocol(EXPERIMENT_ROOT)["bounded_launcher"]["primelab"]
-    assert prime["gpu_type"] == "A100_80GB"
+    assert prime["gpu_type"] == "A6000_48GB"
     assert prime["gpu_count"] == 1
     assert prime["maximum_hourly_usd"] == 0.7
     assert prime["maximum_pod_lifetime_seconds"] == 7200
-    assert prime["spot_interruption_acceptable"] is True
+    assert prime["spot_interruption_acceptable"] is False
     assert prime["resume_unit"] == "completed_transfer_row"
     assert prime["protected_rl_run_id"] == "e2s64hw5ywag1d8hgwfef6jd"

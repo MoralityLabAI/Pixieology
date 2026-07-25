@@ -10,6 +10,12 @@
     "peak_job_memory_mb": 2075.92578125,
     "reason": "The sealed 2048 MiB reference evaluation produced no rows. This continuation changes only the execution envelope and PrimeLab surface; frozen model, adapter, transfer rows, metrics, thresholds, and seeds are unchanged."
   },
+  "platform_amendment": {
+    "previous_protocol_sha256": "e7689287c74359ce7a23c11e7ea22a3e8afb3e9dc5d2f5f6e384f11d3eb12d61",
+    "previous_implementation_lock_sha256": "3136a2e9e0c3d52c84d3ff71433f94557543d88c459af0cfbdc967b2507982e4",
+    "previous_commit": "1640a3c52d1043e834295342d6946696fc42c963",
+    "reason": "The exact A100 spot offer was unavailable at launch. The user explicitly selected the available RTX A6000 48 GB substitution before pod creation; no workload outcome was observed."
+  },
   "source_experiment": {
     "path": "../pixie_etale_motif_search_v0_1",
     "protocol_sha256": "7e92a550e2e79634bc93663b1a8486484bf438a0c5e3b7bbf92539912cc71bdf",
@@ -85,13 +91,13 @@
     "primelab_entrypoint": "scripts/run_capped_feedback_prime.sh",
     "primelab_entrypoint_sha256": "41e5598806eab48b6320f69b15bad183edbfdb8c37b4cfa03fe35edfa4e76a7a",
     "primelab": {
-      "provider": "datacrunch",
-      "region": "FI",
-      "gpu_type": "A100_80GB",
+      "provider": "massedcompute",
+      "region": "US",
+      "gpu_type": "A6000_48GB",
       "gpu_count": 1,
       "maximum_hourly_usd": 0.7,
       "maximum_pod_lifetime_seconds": 7200,
-      "spot_interruption_acceptable": true,
+      "spot_interruption_acceptable": false,
       "resume_unit": "completed_transfer_row",
       "protected_rl_run_id": "e2s64hw5ywag1d8hgwfef6jd"
     },
