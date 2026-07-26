@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_mechinterp_ux_session_v1.schema.json",
+  "type": "object",
+  "required": [
+    "schema",
+    "study_id",
+    "session_id",
+    "participant_id",
+    "cohort",
+    "lane",
+    "baseline_commit",
+    "started_utc",
+    "completed",
+    "task_order",
+    "responses",
+    "privacy",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema": {"const": "pixieology_mechinterp_ux_session_v1"},
+    "participant_id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_-]{1,15}$"
+    },
+    "cohort": {"enum": ["researcher", "learner_gamer", "agent"]},
+    "lane": {"enum": ["workflow", "components"]},
+    "completed": {"type": "boolean"},
+    "task_order": {"type": "array", "items": {"type": "string"}},
+    "responses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema",
+          "task_id",
+          "condition",
+          "design_question",
+          "variant",
+          "task_type",
+          "case_id",
+          "answer",
+          "claim_scope",
+          "confidence",
+          "elapsed_ms",
+          "analysis"
+        ],
+        "properties": {
+          "schema": {"const": "pixieology_mechinterp_ux_task_response_v1"},
+          "confidence": {"type": "integer", "minimum": 1, "maximum": 5},
+          "elapsed_ms": {"type": "number", "minimum": 0},
+          "analysis": {
+            "type": "object",
+            "required": ["schema", "coordinate_source", "state", "spin"],
+            "properties": {
+              "schema": {"const": "pixieology_etale_analysis_v3"},
+              "coordinate_source": {"const": "synthetic_ux_fixture"}
+            }
+          }
+        }
+      }
+    },
+    "privacy": {
+      "const": {
+        "anonymous_code_only": true,
+        "network_telemetry": false
+      }
+    }
+  },
+  "additionalProperties": true
+}

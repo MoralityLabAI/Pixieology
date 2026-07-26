@@ -73,6 +73,10 @@ test("the explorer exposes deterministic state, receipt, event, and URI surfaces
   assert.match(app, /dendrogram_mst/);
   assert.match(app, /bridge: none/);
   assert.match(app, /activation_conditioned_trained_counterfactual_on_base/);
+  assert.match(app, /synthetic_ux_fixture/);
+  assert.match(app, /const spinAvailable = activeCase === null/);
+  assert.match(app, /overview:/);
+  assert.match(app, /case has no registered context loop/);
   assert.match(app, /function pointsForCase/);
   assert.match(app, /coordinate_source: activeCase/);
   assert.match(app, /selected_job_id/);

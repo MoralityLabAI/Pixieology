@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_mechinterp_ux_case_v1.schema.json",
+  "type": "object",
+  "required": [
+    "schema",
+    "case_id",
+    "archetype",
+    "title",
+    "evidence_class",
+    "coordinate_source",
+    "module_ids",
+    "coordinates",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema": {"const": "pixieology_mechinterp_ux_case_v1"},
+    "case_id": {"type": "string"},
+    "archetype": {"enum": ["band", "chain", "robust", "null"]},
+    "title": {"type": "string"},
+    "evidence_class": {"const": "synthetic_ux_fixture"},
+    "coordinate_source": {"const": "synthetic_ux_fixture"},
+    "module_ids": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "uniqueItems": true
+    },
+    "coordinates": {
+      "type": "array",
+      "minItems": 28,
+      "maxItems": 28
+    },
+    "claim_boundary": {"type": "string"}
+  }
+}

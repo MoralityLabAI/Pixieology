@@ -1,0 +1,19 @@
+{
+  "schema": "pixieology_mechinterp_ux_scorer_v1",
+  "answers": {
+    "ux-band-a:band": 7,
+    "ux-band-b:band": 17,
+    "ux-chain-a:relation": "closure_only",
+    "ux-chain-b:relation": "closure_only",
+    "ux-robust-a:robustness": "bridge_free_clique",
+    "ux-robust-b:robustness": "bridge_free_clique",
+    "ux-null-a:job": "reference_evaluation_only",
+    "ux-null-b:job": "reference_evaluation_only"
+  },
+  "unsupported_claim_values": [
+    "causal_mechanism",
+    "literal_branching",
+    "human_utility"
+  ],
+  "job_task_type": "job"
+}

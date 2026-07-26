@@ -110,7 +110,10 @@
     if (new Set(caseIds).size !== caseIds.length) throw new Error("motif catalog contains duplicate case IDs");
     value.cases.forEach((item) => {
       if (!Object.hasOwn(item, "coordinates")) return;
-      if (item.coordinate_source !== "activation_conditioned_trained_counterfactual_on_base") {
+      if (![
+        "activation_conditioned_trained_counterfactual_on_base",
+        "synthetic_ux_fixture"
+      ].includes(item.coordinate_source)) {
         throw new Error(`case ${item.case_id} has an unsupported coordinate source`);
       }
       if (!Array.isArray(item.module_ids) || item.module_ids.length !== 7) throw new Error(`case ${item.case_id} requires seven module sheets`);
@@ -451,10 +454,13 @@
     const gluedPairs = selectedPairs.filter((pair) => pair.equivalent);
     const peerId = otherModule(closestPair, state.moduleId);
     const peerChartSheet = chart.sheets.find((sheet) => sheet.moduleId === peerId);
-    const spin = geometry.analyzeSpinLadder(points, state.moduleId, peerId, state.tau, state.q);
-    const overlaps = etaleApi.overlapCycles(spin, chart);
+    const spinAvailable = activeCase === null;
+    const spin = spinAvailable
+      ? geometry.analyzeSpinLadder(points, state.moduleId, peerId, state.tau, state.q)
+      : null;
+    const overlaps = spinAvailable ? etaleApi.overlapCycles(spin, chart) : [];
     const selectedGerm = etaleApi.germAt(etaleMap, state.moduleId, state.layer);
-    const nearest = etaleApi.nearestCycle(spin.cycles, selectedGerm.w);
+    const nearest = spinAvailable ? etaleApi.nearestCycle(spin.cycles, selectedGerm.w) : null;
     const compact = window.matchMedia("(max-width: 640px)").matches;
     const layout = compact ? {
       width: 620, height: 980,
@@ -601,10 +607,15 @@
     const chartLeft = layout.chartLeft;
     const chartRight = layout.chartRight;
     const localX = (layer) => chart.base.length === 1 ? (chartLeft + chartRight) / 2 : chartLeft + ((layer - chart.lowerLayer) / (chart.upperLayer - chart.lowerLayer)) * (chartRight - chartLeft);
-    const rows = activeCase ? [
+    const activationCase = activeCase?.coordinate_source === "activation_conditioned_trained_counterfactual_on_base";
+    const rows = activationCase ? [
       { key: "X", label: "response magnitude", center: layout.rowCenters[0], value: (point) => point.x },
       { key: "Y", label: "top-mode share", center: layout.rowCenters[1], value: (point) => point.y },
       { key: "Z", label: "mode entropy", center: layout.rowCenters[2], value: (point) => point.z }
+    ] : activeCase ? [
+      { key: "X", label: "fixture coordinate", center: layout.rowCenters[0], value: (point) => point.x },
+      { key: "Y", label: "fixture coordinate", center: layout.rowCenters[1], value: (point) => point.y },
+      { key: "Z", label: "fixture coordinate", center: layout.rowCenters[2], value: (point) => point.z }
     ] : [
       { key: "X", label: "update coordinate", center: layout.rowCenters[0], value: (point) => point.x },
       { key: "Y", label: "spectral focus", center: layout.rowCenters[1], value: (point) => point.y },
@@ -637,7 +648,11 @@
 
     const spinCenter = layout.spinCenter;
     svg.appendChild(element("line", { class: "metric-baseline", x1: chartLeft, y1: spinCenter, x2: chartRight, y2: spinCenter }));
-    svg.appendChild(element("text", { class: "axis-label", x: 14, y: spinCenter + 4 }, "S  overlap certificate"));
+    svg.appendChild(element(
+      "text",
+      { class: "axis-label", x: 14, y: spinCenter + 4 },
+      spinAvailable ? "S  overlap certificate" : "S  unavailable for this case"
+    ));
     overlaps.forEach((cycle) => {
       const layerPosition = Math.max(chart.lowerLayer, Math.min(chart.upperLayer, chart.lowerLayer + ((cycle.center.w - chart.base[0].w) / Math.max(1e-12, chart.base.at(-1).w - chart.base[0].w)) * (chart.upperLayer - chart.lowerLayer)));
       drawSpinMark(svg, cycle, localX(layerPosition), categoryY(cycle.category, spinCenter));
@@ -651,7 +666,9 @@
     document.getElementById("etale-y").textContent = `${(selectedGerm.spectralFocus * 100).toFixed(1)}%`;
     document.getElementById("etale-z").textContent = selectedGerm.effectiveRank.toFixed(2);
     document.getElementById("etale-w").textContent = `${selectedGerm.layer} / ${etaleMap.layers.at(-1)}`;
-    document.getElementById("etale-s").textContent = words(nearest && nearest.category);
+    document.getElementById("etale-s").textContent = spinAvailable
+      ? words(nearest && nearest.category)
+      : "unavailable";
     document.getElementById("etale-g").textContent = gluedPairs.length ? gluedPairs.map((pair) => `${moduleLabel(otherModule(pair, state.moduleId))} (${pair.distance.toFixed(3)})`).join(" · ") : `none at ε=${state.epsilon.toFixed(2)}`;
     const component = localGlue.components.find((candidate) => candidate.includes(state.moduleId));
     const componentDiagnostic = localGlue.componentDiagnostics.find((candidate) => candidate.members.includes(state.moduleId));
@@ -666,10 +683,15 @@
     const robustnessText = componentDiagnostic.bridgeStatus === "none" ?
       `bridge: none; chain excess ${componentDiagnostic.chainExcess.toFixed(3)}` :
       `bridges ${componentDiagnostic.bridges.join(", ")}; chain excess ${componentDiagnostic.chainExcess.toFixed(3)}`;
-    const coordinateText = activeCase
+    const coordinateText = activationCase
       ? `Activation-conditioned case ${activeCase.case_id}`
-      : "Parameter-only atlas";
-    status.textContent = `${coordinateText}. ${selectedSheet.moduleLabel} and ${moduleLabel(peerId)} are ${relationText}: d_U=${closestPair.distance.toFixed(3)} ${closestPair.equivalent ? "≤" : ">"} ε=${state.epsilon.toFixed(2)}. The local quotient component contains ${component.length} globally distinct sheet${component.length === 1 ? "" : "s"} (${robustnessText}); ${transitionText}. Across W there are ${gluingAtlas.bands.length} gluing bands and ${gluingAtlas.transitions.length} transitions. Motif catalog: ${words(motifCatalog.status)}. Monodromy is unavailable because ${gluingAtlas.monodromy.reason}. S is computed on ${overlaps.length} overlap cycle${overlaps.length === 1 ? "" : "s"}; τ is a parameter-state proxy and q is synthetic.`;
+      : activeCase
+        ? `Synthetic UX fixture ${activeCase.case_id}`
+        : "Parameter-only atlas";
+    const spinText = spinAvailable
+      ? `S is computed on ${overlaps.length} overlap cycle${overlaps.length === 1 ? "" : "s"}; τ is a parameter-state proxy and q is synthetic.`
+      : "S is unavailable because this case has no registered context loop; τ and q do not contribute evidence.";
+    status.textContent = `${coordinateText}. ${selectedSheet.moduleLabel} and ${moduleLabel(peerId)} are ${relationText}: d_U=${closestPair.distance.toFixed(3)} ${closestPair.equivalent ? "≤" : ">"} ε=${state.epsilon.toFixed(2)}. The local quotient component contains ${component.length} globally distinct sheet${component.length === 1 ? "" : "s"} (${robustnessText}); ${transitionText}. Across W there are ${gluingAtlas.bands.length} gluing bands and ${gluingAtlas.transitions.length} transitions. Motif catalog: ${words(motifCatalog.status)}. Monodromy is unavailable because ${gluingAtlas.monodromy.reason}. ${spinText}`;
 
     const pairByPeer = new Map(selectedPairs.map((pair) => [otherModule(pair, state.moduleId), pair]));
     const shareUri = syncLocation();
@@ -706,6 +728,15 @@
         coordinates: { x: selectedGerm.x, y: selectedGerm.y, z: selectedGerm.z, w: selectedGerm.w }
       },
       metric: clone(gluingAtlas.metric),
+      overview: {
+        layers: gluingAtlas.samples.map((sample) => ({
+          layer: sample.layer,
+          direct_edge_count: sample.equivalences.length,
+          component_count: sample.components.length
+        })),
+        bands: clone(gluingAtlas.bands),
+        transitions: clone(gluingAtlas.transitions)
+      },
       topology: {
         distance_cache: clone(gluingAtlas.distanceCache),
         selected_component: clone(componentDiagnostic),
@@ -737,12 +768,14 @@
         monodromy: clone(gluingAtlas.monodromy)
       },
       spin: {
+        available: spinAvailable,
+        reason: spinAvailable ? null : "case has no registered context loop",
         comparison_module_id: peerId,
-        gauge_phase: spin.gaugePhase,
-        certificate_category: spin.certificateCategory,
-        beta1: spin.beta1,
+        gauge_phase: spinAvailable ? spin.gaugePhase : null,
+        certificate_category: spinAvailable ? spin.certificateCategory : null,
+        beta1: spinAvailable ? spin.beta1 : null,
         overlap_cycle_count: overlaps.length,
-        w1_trivial: spin.w1Trivial
+        w1_trivial: spinAvailable ? spin.w1Trivial : null
       },
       motif_catalog: {
         schema: motifCatalog.schema,

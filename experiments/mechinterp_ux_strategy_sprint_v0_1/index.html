@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Mechinterp UX strategy sprint</title>
+  <link rel="stylesheet" href="../godel_globes_5d_character_lab/mechinterp.css">
+  <link rel="stylesheet" href="study.css">
+</head>
+<body>
+  <main class="study-shell">
+    <header class="study-header">
+      <div>
+        <p class="eyebrow">OFFLINE · FORMATIVE · RECEIPT-BASED</p>
+        <h1>Mechinterp UX strategy sprint</h1>
+      </div>
+      <p>Synthetic fixtures only · no model or human-utility claim</p>
+    </header>
+
+    <section id="study-setup" class="study-setup" aria-labelledby="setup-heading">
+      <h2 id="setup-heading">Start or resume a session</h2>
+      <div class="setup-grid">
+        <label for="participant-id">Anonymous participant code
+          <input id="participant-id" type="text" maxlength="16" autocomplete="off" placeholder="R01">
+        </label>
+        <label for="participant-cohort">Cohort
+          <select id="participant-cohort">
+            <option value="researcher">Mechinterp researcher</option>
+            <option value="learner_gamer">Technical learner / gamer</option>
+            <option value="agent">Synthetic agent smoke</option>
+          </select>
+        </label>
+        <label for="study-lane">Study lane
+          <select id="study-lane">
+            <option value="workflow">Baseline versus progressive workflow</option>
+            <option value="components">Component decision lab</option>
+          </select>
+        </label>
+      </div>
+      <button id="start-session" type="button">Start / resume</button>
+      <p id="setup-error" role="alert"></p>
+    </section>
+
+    <section id="study-active" hidden>
+      <header class="task-header">
+        <div>
+          <p id="task-progress" class="eyebrow"></p>
+          <h2 id="task-prompt"></h2>
+        </div>
+        <div id="condition-badge" class="condition-badge"></div>
+      </header>
+
+      <details id="task-help" class="task-help">
+        <summary>Task help</summary>
+        <p>Use the workspace to inspect the supplied state. Direct edges satisfy the current ε cut; closure may also include sheets connected only through intermediates. Report only the evidence class shown.</p>
+      </details>
+
+      <iframe id="study-workspace" title="Mechinterp investigation workspace"></iframe>
+
+      <form id="answer-form" class="answer-form">
+        <div id="answer-field"></div>
+        <label for="claim-scope">What does your answer establish?
+          <select id="claim-scope" required>
+            <option value="">Choose an evidence boundary</option>
+          </select>
+        </label>
+        <label for="answer-confidence">Confidence <output id="confidence-value">3 / 5</output>
+          <input id="answer-confidence" type="range" min="1" max="5" step="1" value="3">
+        </label>
+        <button id="submit-answer" type="submit">Record answer and continue</button>
+      </form>
+      <p id="study-status" aria-live="polite"></p>
+    </section>
+
+    <section id="study-complete" class="study-complete" hidden>
+      <h2>Session complete</h2>
+      <label for="session-preference">Secondary preference
+        <select id="session-preference">
+          <option value="not_asked">Not asked</option>
+          <option value="baseline">Baseline</option>
+          <option value="triage_progressive">Progressive triage</option>
+          <option value="no_preference">No preference</option>
+        </select>
+      </label>
+      <label for="session-comments">Optional comments
+        <textarea id="session-comments" rows="3"></textarea>
+      </label>
+      <button id="export-receipt" type="button">Export session receipt</button>
+      <p>Export locally, then place the JSON file in the designated untracked receipt directory.</p>
+    </section>
+  </main>
+
+  <script src="study_tasks.js"></script>
+  <script src="strategy_core.js"></script>
+  <script src="study.js"></script>
+</body>
+</html>

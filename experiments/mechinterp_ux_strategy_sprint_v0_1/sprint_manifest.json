@@ -1,0 +1,73 @@
+{
+  "schema": "pixieology_mechinterp_ux_sprint_manifest_v1",
+  "experiment_id": "mechinterp_ux_strategy_sprint_v0_1",
+  "status": "FORMATIVE_STUDY_READY",
+  "baseline": {
+    "repository": "https://github.com/MoralityLabAI/Pixieology.git",
+    "commit": "ad48954530836109d1b20e66708990dd568ac410",
+    "surface": "../godel_globes_5d_character_lab/etale.html"
+  },
+  "lead_user": "mechinterp_researcher",
+  "primary_workflow": "case_to_intervention_triage",
+  "duration_days": 14,
+  "target_panels": {
+    "researcher": {
+      "target": 8,
+      "minimum_complete_paired": 6
+    },
+    "learner_gamer": {
+      "target": 8,
+      "minimum": 6
+    }
+  },
+  "lanes": [
+    "workflow",
+    "components"
+  ],
+  "workflow_conditions": [
+    "baseline",
+    "triage_progressive"
+  ],
+  "component_questions": {
+    "orientation": [
+      "heatmap",
+      "globe",
+      "case_first"
+    ],
+    "threshold": [
+      "slider",
+      "dendrogram_births"
+    ],
+    "language": [
+      "technical",
+      "dual"
+    ],
+    "jobs": [
+      "inline",
+      "gated"
+    ]
+  },
+  "workflow_thresholds": {
+    "minimum_paired_researchers": 6,
+    "minimum_correctness_increment": 0.15,
+    "maximum_median_time_ratio": 0.9,
+    "maximum_unsupported_claim_increment": 0.0,
+    "minimum_job_choice_accuracy": 0.8
+  },
+  "learner_thresholds": {
+    "minimum_participants": 6,
+    "minimum_transfer_accuracy": 0.8,
+    "maximum_participants_with_unsupported_claim": 1
+  },
+  "agent_thresholds": {
+    "task_completion": 1.0,
+    "svg_parsing_allowed": false,
+    "browser_authorization_methods_allowed": false
+  },
+  "privacy": {
+    "anonymous_participant_codes": true,
+    "network_telemetry": false,
+    "local_export_only": true
+  },
+  "claim_boundary": "This sprint can choose a workflow hierarchy. It cannot validate a motif, causal mechanism, intervention, or human-learning benefit."
+}

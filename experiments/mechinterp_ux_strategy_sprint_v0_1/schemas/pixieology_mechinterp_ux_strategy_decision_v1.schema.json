@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_mechinterp_ux_strategy_decision_v1.schema.json",
+  "type": "object",
+  "required": [
+    "schema",
+    "experiment_id",
+    "status",
+    "workflow",
+    "components",
+    "learner",
+    "agent",
+    "session_count",
+    "claim_boundary",
+    "confirmatory_gate"
+  ],
+  "properties": {
+    "schema": {"const": "pixieology_mechinterp_ux_strategy_decision_v1"},
+    "status": {"enum": ["NOT_RUN", "FORMATIVE_DECISION_READY"]},
+    "workflow": {"type": "object"},
+    "components": {"type": "object"},
+    "learner": {"type": "object"},
+    "agent": {"type": "object"},
+    "session_count": {"type": "integer", "minimum": 0},
+    "claim_boundary": {"type": "string"},
+    "confirmatory_gate": {"type": "object"}
+  },
+  "additionalProperties": false
+}

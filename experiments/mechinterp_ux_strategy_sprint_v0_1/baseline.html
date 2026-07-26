@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Baseline locally glued explorer</title>
+  <link rel="stylesheet" href="../godel_globes_5d_character_lab/mechinterp.css">
+  <link rel="stylesheet" href="../godel_globes_5d_character_lab/etale.css">
+  <link rel="stylesheet" href="prototype.css">
+</head>
+<body class="etale-page sprint-baseline">
+  <main class="atlas-shell">
+    <header class="atlas-header">
+      <div>
+        <p class="eyebrow">FORMATIVE UX FIXTURE · BASELINE CONDITION</p>
+        <h1>Locally glued étale explorer</h1>
+      </div>
+    </header>
+
+    <p class="claim-boundary">Transformer depth W is the base and each LoRA target keeps a global sheet identity. Two sheets are locally glued over U only when their RMS distance across normalized X/Y/Z is at most ε. Fixtures on this page are synthetic UX evidence only. Merge and split marks describe the local-equivalence quotient, not literal branching.</p>
+
+    <section class="etale-controls" aria-label="Étale map controls">
+      <button id="etale-play" type="button" aria-pressed="false">Play depth</button>
+      <label for="etale-layer">Base depth W <output id="etale-layer-value">13</output>
+        <input id="etale-layer" data-state-key="layer" type="range" min="0" max="27" step="1" value="13">
+      </label>
+      <label for="etale-module">Sheet
+        <select id="etale-module" data-state-key="module_id"></select>
+      </label>
+      <label for="etale-radius">Chart radius <output id="etale-radius-value">±2</output>
+        <input id="etale-radius" data-state-key="chart_radius" type="range" min="1" max="5" step="1" value="2">
+      </label>
+      <label for="etale-epsilon">Glue tolerance ε <output id="etale-epsilon-value">0.25</output>
+        <input id="etale-epsilon" data-state-key="glue_tolerance" type="range" min="0.10" max="0.60" step="0.01" value="0.25">
+      </label>
+      <label for="etale-tau">Lineage proxy τ <output id="etale-tau-value">0.20</output>
+        <input id="etale-tau" data-state-key="lineage_floor" type="range" min="0" max="1" step="0.01" value="0.20">
+      </label>
+      <label for="etale-q">Spin noise q <output id="etale-q-value">0.15</output>
+        <input id="etale-q" data-state-key="spin_noise" type="range" min="0" max="0.5" step="0.01" value="0.15">
+      </label>
+    </section>
+
+    <section class="etale-stage" aria-labelledby="etale-heading">
+      <h2 id="etale-heading" class="sr-heading">Local sections projected to transformer depth</h2>
+      <svg id="etale-map" viewBox="0 0 1200 700" role="img" aria-labelledby="etale-title etale-desc">
+        <title id="etale-title">Locally glued map of Pixie adapter deltas</title>
+        <desc id="etale-desc">Seven globally distinct module sheets project to transformer depth.</desc>
+      </svg>
+    </section>
+
+    <section class="germ-readout" aria-label="Selected germ coordinates">
+      <div><span>X · coordinate</span><strong id="etale-x">0</strong></div>
+      <div><span>Y · coordinate</span><strong id="etale-y">0</strong></div>
+      <div><span>Z · coordinate</span><strong id="etale-z">0</strong></div>
+      <div><span>W · depth</span><strong id="etale-w">0</strong></div>
+      <div><span>S · overlap</span><strong id="etale-s">unavailable</strong></div>
+      <div><span>G · local gluing</span><strong id="etale-g">none</strong></div>
+      <div><span>M · motif catalog</span><strong id="etale-motif">UX fixtures only</strong></div>
+    </section>
+
+    <section class="feedback-jobs" aria-labelledby="feedback-jobs-heading">
+      <header>
+        <div>
+          <p class="eyebrow">BOUNDED FEEDBACK LOOP</p>
+          <h2 id="feedback-jobs-heading">Proposed TinyLoRA / QLoRA jobs</h2>
+        </div>
+        <p id="feedback-queue-status" class="feedback-queue-status"></p>
+      </header>
+      <p class="feedback-job-intro">Immutable experiment slots only. Selection cannot authorize or execute a job.</p>
+      <div class="feedback-job-table-wrap">
+        <table class="feedback-job-table">
+          <thead><tr><th>Job</th><th>Origin</th><th>Footprint</th><th>Budget</th><th>State</th><th>Inspect</th></tr></thead>
+          <tbody id="feedback-job-rows"></tbody>
+        </table>
+      </div>
+      <div id="feedback-job-inspector" class="feedback-job-inspector" aria-live="polite">
+        <strong id="feedback-job-title">No job selected</strong>
+        <p id="feedback-job-hypothesis">Choose an experiment slot.</p>
+        <code id="feedback-job-hash">selection only · no browser authorization surface</code>
+      </div>
+    </section>
+
+    <div class="etale-key" aria-label="Étale map key">
+      <span><i class="key-line selected-sheet-key"></i>selected sheet</span>
+      <span><i class="key-line peer-sheet-key"></i>peer sheets</span>
+      <span><i class="key-window"></i>local chart U</span>
+      <span><i class="key-line glued-sheet-key"></i>direct relation d<sub>U</sub> ≤ ε</span>
+      <span>◇ quotient transition</span>
+    </div>
+    <p id="etale-status" class="atlas-status" aria-live="polite"></p>
+    <script id="etale-analysis-json" type="application/json">{}</script>
+  </main>
+
+  <script src="../godel_globes_5d_character_lab/bonsai_mechinterp_data.js"></script>
+  <script src="../godel_globes_5d_character_lab/mechinterp_atlas.js"></script>
+  <script src="../godel_globes_5d_character_lab/mechinterp_manifold.js"></script>
+  <script src="../godel_globes_5d_character_lab/mechinterp_etale.js"></script>
+  <script src="sprint_catalog_data.js"></script>
+  <script src="../godel_globes_5d_character_lab/feedback_job_queue_data.js"></script>
+  <script src="../godel_globes_5d_character_lab/etale.js"></script>
+</body>
+</html>
