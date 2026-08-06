@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_mechanism_family_comparison_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "task_family_id", "winner", "description_length_reduction", "base", "pixie", "alignment", "isomorphism_verdict"],
+  "properties": {
+    "schema": {"const": "pixieology_mechanism_family_comparison_v1"},
+    "winner": {"enum": ["base_qwen_derived_1p7b", "pixie_rank8", "TIE", "UNDETERMINED"]},
+    "isomorphism_verdict": {"enum": ["USABLE_ISOMORPHISM", "POSSIBLE_ALGORITHM_CHANGE"]}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "pixieology_mechanism_capture_job_v1",
+  "job_id": "capture-base-pixie-fsm-traces-v0-1",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "protocol_path": "protocol.json",
+  "conditions": ["base_qwen_derived_1p7b", "pixie_rank8"],
+  "family_count": 32,
+  "splits": ["discovery", "held_out", "intervention"],
+  "outputs": ["trace_receipts.jsonl", "intervention_observations.jsonl"],
+  "resources": {"ram_mb": 8192, "cpu_pct": 50, "io_mb_s": 250, "timeout_seconds": 1800},
+  "gpu_guard": {"maximum_existing_memory_mib": 256, "maximum_peak_memory_mib": 3900, "require_no_compute_applications": true},
+  "authorization": {"required": true, "status": "NOT_AUTHORIZED", "automatic": false},
+  "claim_boundary": "This proposed job captures frozen traces and registered patches only. It cannot authorize itself or treat program compression alone as causal evidence."
+}

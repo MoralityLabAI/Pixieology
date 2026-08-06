@@ -1,0 +1,27 @@
+{
+  "case_count": 640,
+  "method": "normalized_exact_prompt_substring_v1",
+  "overlaps": [],
+  "schema": "pixieology_mechanism_contamination_report_v1",
+  "scope": "Declared checked-in Pixie corpora only; broad pretraining familiarity is not excluded.",
+  "sources": [
+    {
+      "path": "synthesized_pixie_dataset.jsonl",
+      "sha256": "1fb1c862fc2748b7cc980b28a805591b5fe89e8ba8f9ebbe8284dc38e6734dc4"
+    },
+    {
+      "path": "fae_kawaii_seed.jsonl",
+      "sha256": "c6ec8180ddba7d142e2b8ee6c7cf3abe263313fe3af69dd58af540884bfafaad"
+    },
+    {
+      "path": "fae_constitution_seed.jsonl",
+      "sha256": "3150418d4f33056da30da20960291b413b7f5f3ec32e8decd3e9d86c6204b637"
+    },
+    {
+      "path": "multi_persona_seed.jsonl",
+      "sha256": "64dc5f008194f5aa07d8d3ac53fe818a76088ddfe5a857e39c8a01fb4cba57cf"
+    }
+  ],
+  "status": "COMPLETED_NO_EXACT_OVERLAP",
+  "task_set_sha256": "ec4354a70bd270736c95601542fc0c46cc1008c0ec152ff6760f7094f46ee5e4"
+}

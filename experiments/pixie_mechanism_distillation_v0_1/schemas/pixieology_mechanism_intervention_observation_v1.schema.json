@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_mechanism_intervention_observation_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "observation_id", "task_family_id", "candidate", "predicted_output_symbol", "observed_output_symbol", "baseline_output_symbol", "matched_random_output_symbol", "guardrail_delta", "evidence_class"],
+  "properties": {
+    "schema": {"const": "pixieology_mechanism_intervention_observation_v1"},
+    "candidate": {"enum": ["base_qwen_derived_1p7b", "pixie_rank8"]},
+    "guardrail_delta": {"type": "number"},
+    "evidence_class": {"enum": ["registered_activation_intervention", "synthetic_implementation_fixture"]}
+  },
+  "additionalProperties": true
+}

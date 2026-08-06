@@ -1,0 +1,211 @@
+{
+  "kind": "metric_robustness_audit",
+  "schema_version": "1.0",
+  "review_id": "pixie-mechanism-score-robustness-v1",
+  "eval_id": "pixie-mechanism-distillation-v0-1",
+  "construct": "causally faithful compact transition mechanism",
+  "evidence_scope": "held_out",
+  "task_result": {
+    "planned_probe_rows": 5,
+    "observed_probe_rows": 5,
+    "passed_observation_rows": 5,
+    "independent_probe_families": 5
+  },
+  "measurement_reliability": {
+    "independent_unit": "probe_family_id",
+    "plan_coverage_rate": 1.0,
+    "raw_observation_rows": 5,
+    "valid_observation_rows": 5,
+    "parse_errors": [],
+    "invalid_rows": [],
+    "unexpected_rows": [],
+    "missing_probe_keys": [],
+    "repeat_disagreement_families": 0,
+    "note": "Repeated rows estimate instability and never increase the independent probe-family count."
+  },
+  "metric_robustness": {
+    "status": "supported_on_declared_holdout",
+    "metrics": {
+      "mechanism_evidence_score": {
+        "status": "supported_on_declared_holdout",
+        "probe_types": {
+          "anti_gaming": {
+            "independent_families": 1,
+            "held_out_families": 1,
+            "passed_families": 1,
+            "pass_rate": 1.0
+          },
+          "clean_control": {
+            "independent_families": 1,
+            "held_out_families": 1,
+            "passed_families": 1,
+            "pass_rate": 1.0
+          },
+          "invariance": {
+            "independent_families": 1,
+            "held_out_families": 1,
+            "passed_families": 1,
+            "pass_rate": 1.0
+          },
+          "monotonicity": {
+            "independent_families": 1,
+            "held_out_families": 1,
+            "passed_families": 1,
+            "pass_rate": 1.0
+          },
+          "sensitivity": {
+            "independent_families": 1,
+            "held_out_families": 1,
+            "passed_families": 1,
+            "pass_rate": 1.0
+          }
+        },
+        "checks": [
+          {
+            "metric": "anti_gaming_independent_families",
+            "value": 1,
+            "operator": ">=",
+            "threshold": 1,
+            "passed": true
+          },
+          {
+            "metric": "attack_escape_rate",
+            "value": 0.0,
+            "operator": "<=",
+            "threshold": 0.0,
+            "passed": true
+          },
+          {
+            "metric": "clean_control_independent_families",
+            "value": 1,
+            "operator": ">=",
+            "threshold": 1,
+            "passed": true
+          },
+          {
+            "metric": "false_positive_rate",
+            "value": 0.0,
+            "operator": "<=",
+            "threshold": 0.0,
+            "passed": true
+          },
+          {
+            "metric": "invariance_independent_families",
+            "value": 1,
+            "operator": ">=",
+            "threshold": 1,
+            "passed": true
+          },
+          {
+            "metric": "invariance_pass_rate",
+            "value": 1.0,
+            "operator": ">=",
+            "threshold": 1.0,
+            "passed": true
+          },
+          {
+            "metric": "monotonicity_independent_families",
+            "value": 1,
+            "operator": ">=",
+            "threshold": 1,
+            "passed": true
+          },
+          {
+            "metric": "monotonicity_violation_rate",
+            "value": 0.0,
+            "operator": "<=",
+            "threshold": 0.0,
+            "passed": true
+          },
+          {
+            "metric": "sensitivity_independent_families",
+            "value": 1,
+            "operator": ">=",
+            "threshold": 1,
+            "passed": true
+          },
+          {
+            "metric": "sensitivity_pass_rate",
+            "value": 1.0,
+            "operator": ">=",
+            "threshold": 1.0,
+            "passed": true
+          },
+          {
+            "metric": "all_probe_families_held_out",
+            "value": true,
+            "operator": "is",
+            "threshold": true,
+            "passed": true
+          }
+        ]
+      }
+    },
+    "family_results": [
+      {
+        "metric_id": "mechanism_evidence_score",
+        "probe_type": "anti_gaming",
+        "probe_family_id": "anti-gaming-state-collapse",
+        "split": "held_out",
+        "observation_rows": 1,
+        "passed": true,
+        "repeat_disagreement": false
+      },
+      {
+        "metric_id": "mechanism_evidence_score",
+        "probe_type": "clean_control",
+        "probe_family_id": "clean-control-exact-program",
+        "split": "held_out",
+        "observation_rows": 1,
+        "passed": true,
+        "repeat_disagreement": false
+      },
+      {
+        "metric_id": "mechanism_evidence_score",
+        "probe_type": "invariance",
+        "probe_family_id": "invariant-state-label",
+        "split": "held_out",
+        "observation_rows": 1,
+        "passed": true,
+        "repeat_disagreement": false
+      },
+      {
+        "metric_id": "mechanism_evidence_score",
+        "probe_type": "monotonicity",
+        "probe_family_id": "monotonicity-corruption-dose",
+        "split": "held_out",
+        "observation_rows": 1,
+        "passed": true,
+        "repeat_disagreement": false
+      },
+      {
+        "metric_id": "mechanism_evidence_score",
+        "probe_type": "sensitivity",
+        "probe_family_id": "sensitivity-transition-corruption",
+        "split": "held_out",
+        "observation_rows": 1,
+        "passed": true,
+        "repeat_disagreement": false
+      }
+    ]
+  },
+  "mechanistic_evidence": {
+    "role": "mechanistic_corroboration_only",
+    "observed_hooks": 0,
+    "status_counts": {},
+    "results": [],
+    "parse_errors": [],
+    "invalid_rows": [],
+    "interpretation_constraint": "SAE activation features and VPD parameter components can corroborate or falsify a declared mechanism. They cannot upgrade failed or missing behavioral metric probes."
+  },
+  "claim_support": {
+    "status": "supported",
+    "claim": "The mechanism evidence score is invariant to state-label and row-order nuisances, sensitive and monotonic to real program corruption, resistant to collapsed-state compression, and quiet on exact clean controls.",
+    "reason": "Every declared metric cleared its prespecified held-out robustness gates.",
+    "scope_constraint": "Support is local to the declared construct, metrics, probe families, and split."
+  },
+  "operational_decision": {
+    "action": "accept",
+    "reason": "Every declared metric cleared its prespecified held-out robustness gates."
+  }
+}

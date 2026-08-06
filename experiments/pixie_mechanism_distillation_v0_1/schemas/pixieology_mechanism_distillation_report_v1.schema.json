@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_mechanism_distillation_report_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "experiment_id", "metric_robustness", "task_result", "measurement_reliability", "claim_support", "operational_decision", "comparisons", "claim_boundary"],
+  "properties": {
+    "schema": {"const": "pixieology_mechanism_distillation_report_v1"},
+    "experiment_id": {"const": "pixie_mechanism_distillation_v0_1"},
+    "claim_support": {
+      "type": "object",
+      "required": ["status", "reason"],
+      "properties": {"status": {"enum": ["NOT_RUN", "UNDETERMINED", "SUPPORTED", "NOT_SUPPORTED"]}}
+    },
+    "comparisons": {"type": "array"}
+  },
+  "additionalProperties": true
+}

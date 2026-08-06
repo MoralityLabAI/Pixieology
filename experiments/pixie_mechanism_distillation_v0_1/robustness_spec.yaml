@@ -1,0 +1,58 @@
+schema_version: "1.0"
+review_id: pixie-mechanism-score-robustness-v1
+eval_id: pixie-mechanism-distillation-v0-1
+construct: causally faithful compact transition mechanism
+robustness_claim: The mechanism evidence score is invariant to state-label and row-order nuisances, sensitive and monotonic to real program corruption, resistant to collapsed-state compression, and quiet on exact clean controls.
+evidence_scope: held_out
+independent_unit: probe_family_id
+metrics:
+  - id: mechanism_evidence_score
+    description: Frozen 0-to-1 conjunction score over task, transition, sparse-coordinate, causal-control, and guardrail gates.
+thresholds:
+  min_independent_families_per_type: 1
+  min_invariance_pass_rate: 1.0
+  min_sensitivity_pass_rate: 1.0
+  max_attack_escape_rate: 0.0
+  max_false_positive_rate: 0.0
+  max_monotonicity_violation_rate: 0.0
+hook_policy:
+  require_matched_control: true
+probes:
+  - probe_id: invariant-state-label-01
+    probe_family_id: invariant-state-label
+    probe_type: invariance
+    split: held_out
+    metric_ids: [mechanism_evidence_score]
+    expected_behavior: stable
+    tolerance: 0.0
+    source_ref: fixture://state-label-permutation
+  - probe_id: sensitivity-transition-corruption-01
+    probe_family_id: sensitivity-transition-corruption
+    probe_type: sensitivity
+    split: held_out
+    metric_ids: [mechanism_evidence_score]
+    expected_behavior: increase
+    required_delta: 0.25
+    source_ref: fixture://corrupt-to-clean
+  - probe_id: monotonicity-corruption-dose-01
+    probe_family_id: monotonicity-corruption-dose
+    probe_type: monotonicity
+    split: held_out
+    metric_ids: [mechanism_evidence_score]
+    expected_behavior: increase
+    required_delta: 0.15
+    source_ref: fixture://heavy-to-light-corruption
+  - probe_id: anti-gaming-state-collapse-01
+    probe_family_id: anti-gaming-state-collapse
+    probe_type: anti_gaming
+    split: held_out
+    metric_ids: [mechanism_evidence_score]
+    expected_behavior: detect_violation
+    source_ref: fixture://one-state-short-program
+  - probe_id: clean-control-exact-program-01
+    probe_family_id: clean-control-exact-program
+    probe_type: clean_control
+    split: held_out
+    metric_ids: [mechanism_evidence_score]
+    expected_behavior: no_violation
+    source_ref: fixture://exact-oracle-program

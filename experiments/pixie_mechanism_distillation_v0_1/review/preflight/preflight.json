@@ -1,0 +1,25 @@
+{
+  "kind": "preflight_review",
+  "eval_id": "pixie-mechanism-distillation-v0-1",
+  "claim": "Pixie rank-8 admits a shorter causally faithful held-out transition program than its frozen Qwen-derived 1.7B base on the sealed finite-state family set.",
+  "policy": "base",
+  "status": "pass",
+  "release_blocking": false,
+  "summary": {
+    "finding_count": 0,
+    "blocking_count": 0,
+    "severity_counts": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "findings": [],
+  "manifest_path": "experiments/pixie_mechanism_distillation_v0_1/eval_manifest.yaml",
+  "provenance": {
+    "manifest_sha256": "7509f8de0c26b6e47c2d395a4bdd72ec21816e251c2a84b4d34eca6de7f1c62d",
+    "policy_path": "C:\\projects\\evals-reviewer\\src\\evals_reviewer\\resources\\policies\\base.yaml",
+    "policy_sha256": "d3dc8c3a699efe2a6ce46d54961e8edddd80e18b5f395ad263076cb9d7f30e45"
+  }
+}

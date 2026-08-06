@@ -1,0 +1,72 @@
+version: "1.0"
+eval_id: pixie-mechanism-distillation-v0-1
+claim: Pixie rank-8 admits a shorter causally faithful held-out transition program than its frozen Qwen-derived 1.7B base on the sealed finite-state family set.
+mode: pairwise
+
+candidates:
+  - id: base_qwen_derived_1p7b
+    model: prism-ml/Bonsai-1.7B-unpacked@a7f720bd688d7563714f3118edd97b83d06f0615
+    model_family: qwen-derived-bonsai
+    blinded_label: Mechanism M
+  - id: pixie_rank8
+    model: frozen-pixie-rank8@8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c
+    model_family: qwen-derived-bonsai
+    blinded_label: Mechanism N
+
+dataset:
+  path: data/pixie_mechanism_distillation_v0_1/task_cases.jsonl
+  size: 32
+  unit: task_family_id
+  held_out: true
+  contamination_check: completed
+  selection: Generated after adapter training with frozen seed 2026080601; rows and intervention outcomes remain unread before manifest freeze.
+  contamination_scope: Exact post-training generated prompts plus declared local-corpus scan; broad pretraining familiarity with finite-state algorithms is outside the claim.
+
+scoring:
+  deterministic:
+    - trace_schema_valid
+    - task_accuracy_floor
+    - heldout_transition_fidelity
+    - sparse_invariant_agreement
+    - program_description_length
+    - causal_patch_prediction
+    - matched_random_superiority
+    - guardrail_preservation
+  subjective_dimensions: []
+  llm_judges: []
+
+pairwise:
+  blind_identity: true
+  swap_positions: true
+  randomize_order: true
+  random_seed: 2026080604
+  allow_tie: true
+  allow_uncertain: true
+
+escalation:
+  missing_intervention: block
+  trace_schema_conflict: block
+  metric_robustness_failure: redesign
+  family_tie: retain_tie
+  non_bijective_alignment: report_possible_algorithm_change
+
+decision_rule:
+  primary_candidate: pixie_rank8
+  baseline_candidate: base_qwen_derived_1p7b
+  minimum_win_rate: 0.60
+  confidence: 0.95
+  reliability:
+    max_repeat_flip_rate: 0.0
+    max_position_sensitive_fraction: 0.0
+    cross_judge_required: false
+    max_hard_fail_selection_rate: 0.0
+    min_deterministic_coverage: 1.0
+
+data_contract:
+  judgments: mechanism_pairwise.jsonl
+  deterministic: deterministic_checks.jsonl
+
+provenance:
+  manifest_frozen_at: "2026-08-06T00:00:00-04:00"
+  code_revision: bound-by-protocol.lock.json
+  evaluator_policy: base

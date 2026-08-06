@@ -1,0 +1,82 @@
+{
+  "schema": "pixieology_mechanism_distillation_protocol_v1",
+  "experiment_id": "pixie_mechanism_distillation_v0_1",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "base_model": {
+    "condition_id": "base_qwen_derived_1p7b",
+    "id": "prism-ml/Bonsai-1.7B-unpacked",
+    "revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "weights_sha256": "cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b",
+    "config_sha256": "a9e37c13a2315353ae3fad3f33759e506598cf57b52abeae50d5318b7dd147fb"
+  },
+  "pixie_adapter": {
+    "condition_id": "pixie_rank8",
+    "rank": 8,
+    "alpha": 16,
+    "config_sha256": "34c8573e7b474b3a3c7bb03182fdfaf9117032daa76ce211303909528053c58e",
+    "weights_sha256": "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c"
+  },
+  "dataset": {
+    "generator": "post_training_seeded_fsm_v1",
+    "independent_unit": "task_family_id",
+    "family_count": 32,
+    "discovery_cases_per_family": 8,
+    "held_out_cases_per_family": 8,
+    "intervention_cases_per_family": 4,
+    "contamination_scope": "Exact generated prompts are post-training and checked against declared local Pixie corpora; broad algorithmic pretraining exposure is not excluded."
+  },
+  "capture": {
+    "status": "NOT_AUTHORIZED",
+    "sites": [
+      {"stream": "residual_post", "layers": [6, 13, 20, 27]},
+      {"stream": "module_input", "layers": [6, 13, 20, 27], "module_ids": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]}
+    ],
+    "token_positions": ["pre_state_marker", "post_state_marker"],
+    "conditions_run_sequentially": true,
+    "maximum_sequence_length": 256
+  },
+  "distillation": {
+    "codebook": "deterministic_euclidean_kmeans_farthest_first_v1",
+    "candidate_state_counts": [1, 2, 3, 4, 5, 6, 7, 8],
+    "discovery_fidelity_floor": 0.98,
+    "maximum_sparse_dimensions": 3,
+    "centroid_quantization_decimals": 3,
+    "program": "majority_transition_table_v1"
+  },
+  "thresholds": {
+    "minimum_task_accuracy": 0.8,
+    "minimum_heldout_program_fidelity": 0.9,
+    "minimum_sparse_invariant_agreement": 0.9,
+    "minimum_causal_prediction_accuracy": 0.8,
+    "minimum_matched_control_margin": 0.5,
+    "maximum_mean_absolute_guardrail_delta": 0.05,
+    "minimum_description_length_reduction": 0.1,
+    "minimum_isomorphism_fidelity": 0.9,
+    "minimum_family_win_rate": 0.6,
+    "confidence": 0.95
+  },
+  "resources": {
+    "capture_requested_not_authorized": {
+      "ram_mb": 8192,
+      "cpu_pct": 50,
+      "io_mb_s": 250,
+      "timeout_seconds": 1800
+    },
+    "gpu": {
+      "maximum_existing_memory_mib": 256,
+      "maximum_peak_memory_mib": 3900,
+      "require_no_compute_applications": true
+    }
+  },
+  "seeds": {
+    "task_families": 2026080601,
+    "task_cases": 2026080602,
+    "synthetic_smoke": 2026080604,
+    "replication_reserved": 2026080605
+  },
+  "authorization": {
+    "automatic_authorization": false,
+    "required_statement": "I explicitly authorize the exact Pixie mechanism distillation v0.1 capture and registered intervention job bound in this receipt under 8192 MiB RAM, 50 percent CPU, 250 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard."
+  },
+  "claim_boundary": "A shorter descriptive program is not a mechanism unless it predicts held-out transitions and registered interventions better than matched controls. Synthetic results are implementation evidence only."
+}

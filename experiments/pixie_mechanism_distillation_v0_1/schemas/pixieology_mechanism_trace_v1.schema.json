@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pixieology_mechanism_trace_v1.schema.json",
+  "type": "object",
+  "required": ["schema", "trace_id", "case_id", "task_family_id", "candidate", "split", "coordinate_source", "steps"],
+  "properties": {
+    "schema": {"const": "pixieology_mechanism_trace_v1"},
+    "candidate": {"enum": ["base_qwen_derived_1p7b", "pixie_rank8"]},
+    "split": {"enum": ["discovery", "held_out"]},
+    "coordinate_source": {"enum": ["registered_activation_capture", "synthetic_implementation_fixture"]},
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["step", "input_symbol", "output_symbol", "activation", "next_activation"],
+        "properties": {
+          "activation": {"type": "array", "minItems": 1, "items": {"type": "number"}},
+          "next_activation": {"type": "array", "minItems": 1, "items": {"type": "number"}}
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}
