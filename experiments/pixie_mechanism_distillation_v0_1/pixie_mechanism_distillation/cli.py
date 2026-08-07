@@ -15,6 +15,7 @@ from .protocol import build_lock, load_protocol, verify_lock, verify_staged_job
 from .report import aggregate_comparisons
 from .synthetic import run_synthetic_smoke
 from .tasks import build_task_cases, validate_cases
+from .ui_data import build_law_lab_dataset, write_law_lab_dataset
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,6 +69,9 @@ def main(argv: list[str] | None = None) -> int:
     smoke_parser = commands.add_parser("synthetic-smoke")
     smoke_parser.add_argument("--output-root", type=Path, required=True)
     smoke_parser.add_argument("--families", type=int, default=8)
+    ui_parser = commands.add_parser("build-ui-example")
+    ui_parser.add_argument("--output-root", type=Path, default=ROOT / "ui")
+    ui_parser.add_argument("--families", type=int, default=4)
     distill_parser = commands.add_parser("distill")
     distill_parser.add_argument("--traces", type=Path, required=True)
     distill_parser.add_argument("--output-root", type=Path, required=True)
@@ -112,6 +116,20 @@ def main(argv: list[str] | None = None) -> int:
         atomic_json(output / "synthetic_smoke.json", value)
         print(json.dumps(value, indent=2, sort_keys=True))
         return 0 if value["status"] == "PASS" else 1
+    if arguments.command == "build-ui-example":
+        protocol = load_protocol(ROOT)
+        value = build_law_lab_dataset(protocol, family_count=arguments.families)
+        write_law_lab_dataset(arguments.output_root, value)
+        print(json.dumps({
+            "status": "PASS",
+            "schema": value["schema"],
+            "evidence_class": value["evidence_class"],
+            "human_or_model_evidence": value["human_or_model_evidence"],
+            "family_count": len(value["families"]),
+            "dataset_sha256": value["dataset_sha256"],
+            "output_root": str(arguments.output_root),
+        }, indent=2, sort_keys=True))
+        return 0
     if arguments.command == "distill":
         protocol = load_protocol(ROOT)
         rows = load_jsonl(arguments.traces)

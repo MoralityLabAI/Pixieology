@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixie Mechanism Law Lab</title>
+  <link rel="stylesheet" href="law_lab.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Pixieology / mechanism distillation</p>
+      <h1>Mechanism Law Lab</h1>
+      <p class="subtitle">Observe → compress → align → falsify</p>
+    </div>
+    <div class="evidence-flag" aria-label="Evidence boundary">
+      <span class="evidence-dot" aria-hidden="true"></span>
+      Synthetic fixture
+    </div>
+  </header>
+
+  <nav class="workflow" aria-label="Mechanism workflow">
+    <ol>
+      <li class="is-current"><span>01</span>Phase scan</li>
+      <li><span>02</span>Executable law</li>
+      <li><span>03</span>State alignment</li>
+      <li><span>04</span>Falsification</li>
+    </ol>
+  </nav>
+
+  <main>
+    <section class="control-strip" aria-label="Experiment controls">
+      <label for="family-select">
+        Task family
+        <select id="family-select" data-agent-action="SELECT_FAMILY"></select>
+      </label>
+      <label class="complexity-control" for="complexity-range">
+        State complexity <output id="complexity-output" for="complexity-range">k = 3</output>
+        <input id="complexity-range" type="range" min="1" max="3" step="1" value="3" data-agent-action="SET_COMPLEXITY">
+      </label>
+      <div class="control-reading">
+        <span>Protocol choice</span>
+        <strong id="protocol-choice">—</strong>
+      </div>
+      <div class="control-reading">
+        <span>Current read</span>
+        <strong id="phase-status">—</strong>
+      </div>
+    </section>
+
+    <section class="phase-section" aria-labelledby="phase-heading">
+      <div class="section-heading">
+        <div>
+          <p class="section-index">01 / OBSERVE</p>
+          <h2 id="phase-heading">Where does a law appear?</h2>
+        </div>
+        <p>Move across state-count complexity. The first fidelity plateau is a candidate algorithmic phase, not proof of mechanism.</p>
+      </div>
+      <div class="phase-layout">
+        <div class="phase-chart-wrap">
+          <svg id="phase-chart" viewBox="0 0 720 300" role="img" aria-labelledby="phase-chart-title phase-chart-desc">
+            <title id="phase-chart-title">Held-out program fidelity by state count</title>
+            <desc id="phase-chart-desc">Base and Pixie fidelity curves with the discovery qualification floor and selected complexity.</desc>
+          </svg>
+          <div class="chart-legend" aria-label="Chart legend">
+            <span><i class="legend-mark base-mark" aria-hidden="true"></i>Base Qwen-derived 1.7B</span>
+            <span><i class="legend-mark pixie-mark" aria-hidden="true"></i>Pixie rank-8</span>
+            <span><i class="legend-line" aria-hidden="true"></i>Discovery floor</span>
+          </div>
+        </div>
+        <dl class="phase-reading">
+          <div><dt>Base fidelity</dt><dd id="base-fidelity">—</dd></div>
+          <div><dt>Pixie fidelity</dt><dd id="pixie-fidelity">—</dd></div>
+          <div><dt>Alignment</dt><dd id="alignment-fidelity">—</dd></div>
+          <div><dt>Description</dt><dd id="description-bits">—</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="law-section" aria-labelledby="law-heading">
+      <div class="section-heading">
+        <div>
+          <p class="section-index">02–03 / COMPRESS + ALIGN</p>
+          <h2 id="law-heading">Can the computation be read as a law?</h2>
+        </div>
+        <p>Each cell is executable: current state plus input predicts the next state and emitted symbol. State names may differ while the law stays the same.</p>
+      </div>
+      <div class="law-grid">
+        <article class="law-panel" aria-labelledby="base-law-heading">
+          <header>
+            <div>
+              <p class="candidate-label">BASE</p>
+              <h3 id="base-law-heading">Qwen-derived law</h3>
+            </div>
+            <button type="button" class="focus-button" id="focus-base" data-candidate="base_qwen_derived_1p7b" aria-pressed="false">Inspect</button>
+          </header>
+          <p class="invariant-line" id="base-invariant">Sparse coordinates —</p>
+          <div class="law-table-wrap" id="base-law-table"></div>
+        </article>
+
+        <aside class="alignment-rail" aria-labelledby="alignment-heading">
+          <p class="candidate-label">RELABELING</p>
+          <h3 id="alignment-heading">State isomorphism</h3>
+          <div id="alignment-map" class="alignment-map"></div>
+          <p id="alignment-note" class="alignment-note">—</p>
+        </aside>
+
+        <article class="law-panel pixie-panel" aria-labelledby="pixie-law-heading">
+          <header>
+            <div>
+              <p class="candidate-label">ADAPTER</p>
+              <h3 id="pixie-law-heading">Pixie rank-8 law</h3>
+            </div>
+            <button type="button" class="focus-button" id="focus-pixie" data-candidate="pixie_rank8" aria-pressed="true">Inspect</button>
+          </header>
+          <p class="invariant-line" id="pixie-invariant">Sparse coordinates —</p>
+          <div class="law-table-wrap" id="pixie-law-table"></div>
+        </article>
+      </div>
+      <p class="selection-detail" id="transition-detail" aria-live="polite">Select a transition cell to inspect it.</p>
+    </section>
+
+    <section class="falsify-section" aria-labelledby="falsify-heading">
+      <div class="section-heading">
+        <div>
+          <p class="section-index">04 / FALSIFY</p>
+          <h2 id="falsify-heading">Does the law survive an intervention?</h2>
+        </div>
+        <p>A useful mechanism predicts a targeted patch and beats a matched random patch without moving the guardrail.</p>
+      </div>
+      <div class="falsify-layout">
+        <div>
+          <h3 class="subheading">Registered observations</h3>
+          <div id="intervention-list" class="intervention-list"></div>
+        </div>
+        <article class="intervention-reading" id="intervention-reading">
+          <p class="candidate-label">SELECTED PATCH</p>
+          <h3 id="intervention-title">—</h3>
+          <dl>
+            <div><dt>Law predicts</dt><dd id="intervention-predicted">—</dd></div>
+            <div><dt>Observed</dt><dd id="intervention-observed">—</dd></div>
+            <div><dt>Random control</dt><dd id="intervention-random">—</dd></div>
+            <div><dt>Guardrail Δ</dt><dd id="intervention-guardrail">—</dd></div>
+          </dl>
+          <p id="intervention-verdict" class="intervention-verdict">—</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p id="claim-boundary"></p>
+    <p class="agent-status" id="agent-status" aria-live="polite"></p>
+  </footer>
+
+  <script src="example_data.js"></script>
+  <script src="law_lab_core.js"></script>
+  <script src="law_lab.js"></script>
+</body>
+</html>

@@ -28,6 +28,8 @@ def implementation_files(root: Path) -> list[Path]:
     patterns = [
         "*.md", "*.json", "*.jsonl", "*.yaml", "run.py",
         "pixie_mechanism_distillation/*.py", "schemas/*.json", "tests/*.py",
+        "ui/*.html", "ui/*.css", "ui/*.js", "ui/*.json", "ui/*.md",
+        "ui/tests/*.mjs",
     ]
     paths = set()
     for pattern in patterns:

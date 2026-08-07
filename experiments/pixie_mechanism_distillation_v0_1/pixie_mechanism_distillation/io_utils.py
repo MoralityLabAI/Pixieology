@@ -48,6 +48,16 @@ def atomic_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> None:
     temporary.replace(path)
 
 
+def atomic_text(path: Path, value: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(
+        "w", encoding="utf-8", dir=path.parent, delete=False, suffix=".tmp"
+    ) as handle:
+        handle.write(value)
+        temporary = Path(handle.name)
+    temporary.replace(path)
+
+
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     rows = []
     for line_number, line in enumerate(path.read_text(encoding="utf-8-sig").splitlines(), 1):

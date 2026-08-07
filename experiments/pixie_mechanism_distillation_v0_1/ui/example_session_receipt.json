@@ -1,0 +1,378 @@
+{
+  "schema": "pixieology_mechanism_law_lab_agent_session_v1",
+  "session_id": "law-lab-smoke-0b60a82688d1",
+  "status": "PASS",
+  "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+  "evidence_class": "synthetic_implementation_fixture",
+  "human_or_model_evidence": false,
+  "agent_contract": {
+    "actions_exercised": [
+      "SELECT_FAMILY",
+      "SET_COMPLEXITY",
+      "SELECT_CANDIDATE",
+      "SELECT_TRANSITION",
+      "SELECT_INTERVENTION"
+    ],
+    "event_count": 6
+  },
+  "events": [
+    {
+      "action": {
+        "type": "SELECT_FAMILY",
+        "familyId": "fsm-03"
+      },
+      "snapshot": {
+        "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+        "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+        "family_id": "fsm-03",
+        "complexity_state_count": 6,
+        "focus_candidate": "pixie_rank8",
+        "phase_status": "PROVISIONAL_ISOMORPHISM",
+        "selected_by_protocol": true,
+        "base_heldout_fidelity": 0.9836065573770492,
+        "pixie_heldout_fidelity": 0.9836065573770492,
+        "alignment_fidelity": 1,
+        "selected_transition": {
+          "input_symbol": "I0",
+          "next_state": 2,
+          "output_symbol": "O1",
+          "purity": 1,
+          "state": 0,
+          "support": 11
+        },
+        "selected_intervention": {
+          "baseline_output_symbol": "O0",
+          "candidate": "pixie_rank8",
+          "evidence_class": "synthetic_implementation_fixture",
+          "guardrail_delta": 0,
+          "matched_random_output_symbol": "O0",
+          "observation_id": "pixie_rank8-fsm-03-0",
+          "observed_output_symbol": "O1",
+          "predicted_output_symbol": "O1",
+          "schema": "pixieology_mechanism_intervention_observation_v1",
+          "task_family_id": "fsm-03"
+        },
+        "comparison_verdict": "USABLE_ISOMORPHISM",
+        "evidence_class": "synthetic_implementation_fixture",
+        "claim_status": "IMPLEMENTATION_ONLY"
+      }
+    },
+    {
+      "action": {
+        "type": "SET_COMPLEXITY",
+        "complexity": 1
+      },
+      "snapshot": {
+        "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+        "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+        "family_id": "fsm-03",
+        "complexity_state_count": 1,
+        "focus_candidate": "pixie_rank8",
+        "phase_status": "UNDERFIT_AT_K",
+        "selected_by_protocol": false,
+        "base_heldout_fidelity": 0.5245901639344263,
+        "pixie_heldout_fidelity": 0.5245901639344263,
+        "alignment_fidelity": 1,
+        "selected_transition": {
+          "input_symbol": "I0",
+          "next_state": 0,
+          "output_symbol": "O1",
+          "purity": 0.46875,
+          "state": 0,
+          "support": 32
+        },
+        "selected_intervention": {
+          "baseline_output_symbol": "O0",
+          "candidate": "pixie_rank8",
+          "evidence_class": "synthetic_implementation_fixture",
+          "guardrail_delta": 0,
+          "matched_random_output_symbol": "O0",
+          "observation_id": "pixie_rank8-fsm-03-0",
+          "observed_output_symbol": "O1",
+          "predicted_output_symbol": "O1",
+          "schema": "pixieology_mechanism_intervention_observation_v1",
+          "task_family_id": "fsm-03"
+        },
+        "comparison_verdict": "USABLE_ISOMORPHISM",
+        "evidence_class": "synthetic_implementation_fixture",
+        "claim_status": "IMPLEMENTATION_ONLY"
+      }
+    },
+    {
+      "action": {
+        "type": "SET_COMPLEXITY",
+        "complexity": 6
+      },
+      "snapshot": {
+        "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+        "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+        "family_id": "fsm-03",
+        "complexity_state_count": 6,
+        "focus_candidate": "pixie_rank8",
+        "phase_status": "PROVISIONAL_ISOMORPHISM",
+        "selected_by_protocol": true,
+        "base_heldout_fidelity": 0.9836065573770492,
+        "pixie_heldout_fidelity": 0.9836065573770492,
+        "alignment_fidelity": 1,
+        "selected_transition": {
+          "input_symbol": "I0",
+          "next_state": 2,
+          "output_symbol": "O1",
+          "purity": 1,
+          "state": 0,
+          "support": 11
+        },
+        "selected_intervention": {
+          "baseline_output_symbol": "O0",
+          "candidate": "pixie_rank8",
+          "evidence_class": "synthetic_implementation_fixture",
+          "guardrail_delta": 0,
+          "matched_random_output_symbol": "O0",
+          "observation_id": "pixie_rank8-fsm-03-0",
+          "observed_output_symbol": "O1",
+          "predicted_output_symbol": "O1",
+          "schema": "pixieology_mechanism_intervention_observation_v1",
+          "task_family_id": "fsm-03"
+        },
+        "comparison_verdict": "USABLE_ISOMORPHISM",
+        "evidence_class": "synthetic_implementation_fixture",
+        "claim_status": "IMPLEMENTATION_ONLY"
+      }
+    },
+    {
+      "action": {
+        "type": "SELECT_CANDIDATE",
+        "candidate": "pixie_rank8"
+      },
+      "snapshot": {
+        "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+        "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+        "family_id": "fsm-03",
+        "complexity_state_count": 6,
+        "focus_candidate": "pixie_rank8",
+        "phase_status": "PROVISIONAL_ISOMORPHISM",
+        "selected_by_protocol": true,
+        "base_heldout_fidelity": 0.9836065573770492,
+        "pixie_heldout_fidelity": 0.9836065573770492,
+        "alignment_fidelity": 1,
+        "selected_transition": {
+          "input_symbol": "I0",
+          "next_state": 2,
+          "output_symbol": "O1",
+          "purity": 1,
+          "state": 0,
+          "support": 11
+        },
+        "selected_intervention": {
+          "baseline_output_symbol": "O0",
+          "candidate": "pixie_rank8",
+          "evidence_class": "synthetic_implementation_fixture",
+          "guardrail_delta": 0,
+          "matched_random_output_symbol": "O0",
+          "observation_id": "pixie_rank8-fsm-03-0",
+          "observed_output_symbol": "O1",
+          "predicted_output_symbol": "O1",
+          "schema": "pixieology_mechanism_intervention_observation_v1",
+          "task_family_id": "fsm-03"
+        },
+        "comparison_verdict": "USABLE_ISOMORPHISM",
+        "evidence_class": "synthetic_implementation_fixture",
+        "claim_status": "IMPLEMENTATION_ONLY"
+      }
+    },
+    {
+      "action": {
+        "type": "SELECT_TRANSITION",
+        "key": "0:I0"
+      },
+      "snapshot": {
+        "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+        "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+        "family_id": "fsm-03",
+        "complexity_state_count": 6,
+        "focus_candidate": "pixie_rank8",
+        "phase_status": "PROVISIONAL_ISOMORPHISM",
+        "selected_by_protocol": true,
+        "base_heldout_fidelity": 0.9836065573770492,
+        "pixie_heldout_fidelity": 0.9836065573770492,
+        "alignment_fidelity": 1,
+        "selected_transition": {
+          "input_symbol": "I0",
+          "next_state": 2,
+          "output_symbol": "O1",
+          "purity": 1,
+          "state": 0,
+          "support": 11
+        },
+        "selected_intervention": {
+          "baseline_output_symbol": "O0",
+          "candidate": "pixie_rank8",
+          "evidence_class": "synthetic_implementation_fixture",
+          "guardrail_delta": 0,
+          "matched_random_output_symbol": "O0",
+          "observation_id": "pixie_rank8-fsm-03-0",
+          "observed_output_symbol": "O1",
+          "predicted_output_symbol": "O1",
+          "schema": "pixieology_mechanism_intervention_observation_v1",
+          "task_family_id": "fsm-03"
+        },
+        "comparison_verdict": "USABLE_ISOMORPHISM",
+        "evidence_class": "synthetic_implementation_fixture",
+        "claim_status": "IMPLEMENTATION_ONLY"
+      }
+    },
+    {
+      "action": {
+        "type": "SELECT_INTERVENTION",
+        "observationId": "pixie_rank8-fsm-03-0"
+      },
+      "snapshot": {
+        "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+        "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+        "family_id": "fsm-03",
+        "complexity_state_count": 6,
+        "focus_candidate": "pixie_rank8",
+        "phase_status": "PROVISIONAL_ISOMORPHISM",
+        "selected_by_protocol": true,
+        "base_heldout_fidelity": 0.9836065573770492,
+        "pixie_heldout_fidelity": 0.9836065573770492,
+        "alignment_fidelity": 1,
+        "selected_transition": {
+          "input_symbol": "I0",
+          "next_state": 2,
+          "output_symbol": "O1",
+          "purity": 1,
+          "state": 0,
+          "support": 11
+        },
+        "selected_intervention": {
+          "baseline_output_symbol": "O0",
+          "candidate": "pixie_rank8",
+          "evidence_class": "synthetic_implementation_fixture",
+          "guardrail_delta": 0,
+          "matched_random_output_symbol": "O0",
+          "observation_id": "pixie_rank8-fsm-03-0",
+          "observed_output_symbol": "O1",
+          "predicted_output_symbol": "O1",
+          "schema": "pixieology_mechanism_intervention_observation_v1",
+          "task_family_id": "fsm-03"
+        },
+        "comparison_verdict": "USABLE_ISOMORPHISM",
+        "evidence_class": "synthetic_implementation_fixture",
+        "claim_status": "IMPLEMENTATION_ONLY"
+      }
+    }
+  ],
+  "result": {
+    "family_id": "fsm-03",
+    "underfit_snapshot": {
+      "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+      "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+      "family_id": "fsm-03",
+      "complexity_state_count": 1,
+      "focus_candidate": "pixie_rank8",
+      "phase_status": "UNDERFIT_AT_K",
+      "selected_by_protocol": false,
+      "base_heldout_fidelity": 0.5245901639344263,
+      "pixie_heldout_fidelity": 0.5245901639344263,
+      "alignment_fidelity": 1,
+      "selected_transition": {
+        "input_symbol": "I0",
+        "next_state": 0,
+        "output_symbol": "O1",
+        "purity": 0.46875,
+        "state": 0,
+        "support": 32
+      },
+      "selected_intervention": {
+        "baseline_output_symbol": "O0",
+        "candidate": "pixie_rank8",
+        "evidence_class": "synthetic_implementation_fixture",
+        "guardrail_delta": 0,
+        "matched_random_output_symbol": "O0",
+        "observation_id": "pixie_rank8-fsm-03-0",
+        "observed_output_symbol": "O1",
+        "predicted_output_symbol": "O1",
+        "schema": "pixieology_mechanism_intervention_observation_v1",
+        "task_family_id": "fsm-03"
+      },
+      "comparison_verdict": "USABLE_ISOMORPHISM",
+      "evidence_class": "synthetic_implementation_fixture",
+      "claim_status": "IMPLEMENTATION_ONLY"
+    },
+    "selected_snapshot": {
+      "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+      "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+      "family_id": "fsm-03",
+      "complexity_state_count": 6,
+      "focus_candidate": "pixie_rank8",
+      "phase_status": "PROVISIONAL_ISOMORPHISM",
+      "selected_by_protocol": true,
+      "base_heldout_fidelity": 0.9836065573770492,
+      "pixie_heldout_fidelity": 0.9836065573770492,
+      "alignment_fidelity": 1,
+      "selected_transition": {
+        "input_symbol": "I0",
+        "next_state": 2,
+        "output_symbol": "O1",
+        "purity": 1,
+        "state": 0,
+        "support": 11
+      },
+      "selected_intervention": {
+        "baseline_output_symbol": "O0",
+        "candidate": "pixie_rank8",
+        "evidence_class": "synthetic_implementation_fixture",
+        "guardrail_delta": 0,
+        "matched_random_output_symbol": "O0",
+        "observation_id": "pixie_rank8-fsm-03-0",
+        "observed_output_symbol": "O1",
+        "predicted_output_symbol": "O1",
+        "schema": "pixieology_mechanism_intervention_observation_v1",
+        "task_family_id": "fsm-03"
+      },
+      "comparison_verdict": "USABLE_ISOMORPHISM",
+      "evidence_class": "synthetic_implementation_fixture",
+      "claim_status": "IMPLEMENTATION_ONLY"
+    },
+    "final_snapshot": {
+      "schema": "pixieology_mechanism_law_lab_agent_snapshot_v1",
+      "dataset_sha256": "0b60a82688d1b0b942e7fb61155ef976c365e2f45c2cab68e8ecd2dde34c1e9f",
+      "family_id": "fsm-03",
+      "complexity_state_count": 6,
+      "focus_candidate": "pixie_rank8",
+      "phase_status": "PROVISIONAL_ISOMORPHISM",
+      "selected_by_protocol": true,
+      "base_heldout_fidelity": 0.9836065573770492,
+      "pixie_heldout_fidelity": 0.9836065573770492,
+      "alignment_fidelity": 1,
+      "selected_transition": {
+        "input_symbol": "I0",
+        "next_state": 2,
+        "output_symbol": "O1",
+        "purity": 1,
+        "state": 0,
+        "support": 11
+      },
+      "selected_intervention": {
+        "baseline_output_symbol": "O0",
+        "candidate": "pixie_rank8",
+        "evidence_class": "synthetic_implementation_fixture",
+        "guardrail_delta": 0,
+        "matched_random_output_symbol": "O0",
+        "observation_id": "pixie_rank8-fsm-03-0",
+        "observed_output_symbol": "O1",
+        "predicted_output_symbol": "O1",
+        "schema": "pixieology_mechanism_intervention_observation_v1",
+        "task_family_id": "fsm-03"
+      },
+      "comparison_verdict": "USABLE_ISOMORPHISM",
+      "evidence_class": "synthetic_implementation_fixture",
+      "claim_status": "IMPLEMENTATION_ONLY"
+    },
+    "law_read": "pixie_rank8 q0 + I0 -> q2 / O1",
+    "intervention_read": "O1 predicted and observed; random control stayed at O0",
+    "claim_status": "IMPLEMENTATION_ONLY"
+  },
+  "claim_boundary": "This example validates the Mechanism Law Lab interaction and data contracts only; it is not evidence about Qwen or Pixie internals."
+}

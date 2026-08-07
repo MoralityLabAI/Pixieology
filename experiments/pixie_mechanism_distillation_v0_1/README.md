@@ -15,6 +15,15 @@ The checked-in lane is model-free and CPU-only. It can:
 5. score registered interventions against matched random controls;
 6. run synthetic pipeline tests and evaluation preflight.
 
+It also includes a second mech-interp UX concept, the **Mechanism Law Lab**.
+Where the etale atlas organizes local geometric coincidences, this interface
+organizes a scientific workflow: observe a phase scan, compress activations
+into an executable transition law, compare state-label isomorphisms, and try to
+falsify the law with registered interventions. The complexity scan is motivated
+by interpretable-hypernetwork phase structure; the law view follows MIPS; the
+behavior/mechanism split follows *Clock and Pizza*; sparse state coordinates
+follow the sparse-invariants program.
+
 It cannot load a model, adapter, or activation shard. The proposed capture job
 is `STAGED_NOT_AUTHORIZED` and has no automatic authorization path.
 
@@ -26,8 +35,15 @@ python experiments\pixie_mechanism_distillation_v0_1\run.py build-tasks `
   --output data\pixie_mechanism_distillation_v0_1\task_cases.jsonl
 python experiments\pixie_mechanism_distillation_v0_1\run.py synthetic-smoke `
   --output-root data\pixie_mechanism_distillation_v0_1\synthetic
+python experiments\pixie_mechanism_distillation_v0_1\run.py build-ui-example
 python -m pytest -q experiments\pixie_mechanism_distillation_v0_1\tests
+node experiments\pixie_mechanism_distillation_v0_1\ui\tests\page-contract.test.mjs
+node experiments\pixie_mechanism_distillation_v0_1\ui\tests\agent-smoke.mjs
 ```
+
+Open `ui/index.html` directly or serve the `ui` directory. The checked-in
+example contains four deterministic synthetic task families and a replayable
+agent-session receipt. It never implies that a model or adapter was loaded.
 
 After an authorized capture has produced versioned trace and intervention
 receipts, the model-free analysis path is:
