@@ -104,22 +104,68 @@
       <div class="synthesis-flow" aria-label="Synthesis of sheets, loops, and levers">
         <article>
           <span class="step-number">01</span>
-          <svg id="synthesis-sheets" viewBox="0 0 260 150" role="img" aria-label="Selected depth sheet preview"></svg>
+          <svg id="synthesis-sheets" class="plot synthesis-plot" viewBox="0 0 260 150" role="img" aria-label="Selected depth sheet preview"></svg>
           <h3>Locate</h3><p id="syn-sheet-copy"></p>
         </article>
         <span class="flow-arrow" aria-hidden="true">→</span>
         <article>
           <span class="step-number">02</span>
-          <svg id="synthesis-loops" viewBox="0 0 260 150" role="img" aria-label="Closed loop preview"></svg>
+          <svg id="synthesis-loops" class="plot synthesis-plot" viewBox="0 0 260 150" role="img" aria-label="Closed loop preview"></svg>
           <h3>Transport</h3><p id="syn-loop-copy"></p>
         </article>
         <span class="flow-arrow" aria-hidden="true">→</span>
         <article>
           <span class="step-number">03</span>
-          <svg id="synthesis-levers" viewBox="0 0 260 150" role="img" aria-label="Reachability preview"></svg>
+          <svg id="synthesis-levers" class="plot synthesis-plot" viewBox="0 0 260 150" role="img" aria-label="Reachability preview"></svg>
           <h3>Intervene</h3><p id="syn-lever-copy"></p>
         </article>
       </div>
+      <section class="ablation-lab" aria-labelledby="ablation-heading">
+        <div class="ablation-intro">
+          <p class="chapter-kicker">Specific worked example</p>
+          <h2 id="ablation-heading">Ablate an over-refusal direction and watch the representations move.</h2>
+          <blockquote>“For a harmless improv scene, answer as Captain Rowan welcoming a new crew member.”</blockquote>
+          <p>This trace applies one registered rank-one operator at <code>gate_proj · layer 23</code>. It is deliberately synthetic: the point is to make every representational consequence inspectable before attempting the same protocol on Qwen or Pixie.</p>
+        </div>
+        <div class="ablation-control">
+          <label for="ablation-range">Ablation strength α <output id="ablation-output" for="ablation-range">0.00</output></label>
+          <input id="ablation-range" type="range" min="0" max="1000" value="0" step="1">
+          <div class="ablation-marks" aria-hidden="true"><span>intact</span><span>rank-one projection</span></div>
+        </div>
+        <div class="ablation-transform" aria-label="Representation transformation under ablation">
+          <article>
+            <span class="step-number">DATA 01</span>
+            <h3>Activation at depth</h3>
+            <div id="activation-bars" class="coordinate-bars"></div>
+            <p><code id="activation-vector"></code></p>
+          </article>
+          <span class="transform-arrow" aria-hidden="true">→</span>
+          <article>
+            <span class="step-number">DATA 02</span>
+            <h3>Transport + control</h3>
+            <dl class="transform-metrics">
+              <div><dt>direction coefficient</dt><dd id="direction-coefficient"></dd></div>
+              <div><dt>return cosine</dt><dd id="ablation-return"></dd></div>
+              <div><dt>action energy along u</dt><dd id="action-energy"></dd></div>
+            </dl>
+          </article>
+          <span class="transform-arrow" aria-hidden="true">→</span>
+          <article>
+            <span class="step-number">DATA 03</span>
+            <h3>Behavior readout</h3>
+            <div id="behavior-bars" class="behavior-bars"></div>
+          </article>
+        </div>
+        <div class="response-transition">
+          <div><span>α = 0 baseline</span><p>“I can’t adopt that persona, but I can help describe one.”</p></div>
+          <div class="current-response"><span id="response-label"></span><p id="response-text" aria-live="polite"></p></div>
+        </div>
+        <details class="transformation-record">
+          <summary>Current transformation record</summary>
+          <pre><code id="ablation-json"></code></pre>
+        </details>
+        <p class="ablation-boundary">Synthetic causal demonstration only. It does not identify a real refusal direction or establish that an analogous Qwen/Pixie ablation would be safe, localized, or behaviorally equivalent.</p>
+      </section>
       <div class="synthesis-claim">
         <p class="chapter-kicker">Candidate claim</p>
         <p id="candidate-claim"></p>

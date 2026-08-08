@@ -18,6 +18,8 @@ class PageContract(unittest.TestCase):
         self.assertEqual(self.html.count('role="tablist"'), 1)
         for control in ("motif-select", "depth-range", "phase-range", "returned-toggle", "agent-toggle"):
             self.assertIn(f'id="{control}"', self.html)
+        self.assertIn('id="ablation-range"', self.html)
+        self.assertIn('id="ablation-json"', self.html)
 
     def test_responsive_accessible_svg_contract(self):
         self.assertGreaterEqual(self.html.count("viewBox="), 6)
@@ -32,6 +34,8 @@ class PageContract(unittest.TestCase):
         self.assertIn("not yet claimed", self.html)
         self.assertIn("singular-value uncertainty", self.html)
         self.assertIn("not camera motion", self.html)
+        self.assertIn("harmless improv scene", self.html)
+        self.assertIn("Synthetic causal demonstration only", self.html)
 
 
 if __name__ == "__main__":

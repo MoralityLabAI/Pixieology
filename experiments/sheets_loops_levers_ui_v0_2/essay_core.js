@@ -23,6 +23,68 @@
     return matrix.map((row) => dot(row, vector));
   }
 
+  function matMul(left, right) {
+    return left.map((row) => right[0].map((_, column) => row.reduce((sum, value, index) => sum + value * right[index][column], 0)));
+  }
+
+  function transpose(matrix) {
+    return matrix[0].map((_, column) => matrix.map((row) => row[column]));
+  }
+
+  function softmax(values) {
+    const peak = Math.max(...values);
+    const exponentials = values.map((value) => Math.exp(value - peak));
+    const total = exponentials.reduce((sum, value) => sum + value, 0);
+    return exponentials.map((value) => value / total);
+  }
+
+  function normalize(vector) {
+    const length = Math.sqrt(dot(vector, vector)) || 1;
+    return vector.map((value) => value / length);
+  }
+
+  function ablationState(data, alpha) {
+    const spec = data.ablation_case;
+    const motif = motifById(data, spec.motif_id);
+    const amount = clamp(alpha, 0, 1);
+    const u = normalize(spec.direction_u);
+    const beforePoint = motif.depth_points[spec.depth];
+    const before = [beforePoint.x, beforePoint.y, beforePoint.z];
+    const operator = u.map((rowValue, row) => u.map((columnValue, column) => (row === column ? 1 : 0) - amount * rowValue * columnValue));
+    const current = matVec(operator, before);
+    const removed = before.map((value, index) => value - current[index]);
+    const beforeCoefficient = dot(u, before);
+    const currentCoefficient = dot(u, current);
+    const association = normalize(matVec(operator, motif.association));
+    const returnedAssociation = matVec(motif.holonomy.matrix, association);
+    const associationReturnCosine = dot(association, returnedAssociation);
+    const gramian = matMul(matMul(operator, motif.control.gramian), transpose(operator));
+    const actionEnergy = dot(u, matVec(gramian, u));
+    const baselineEnergy = dot(u, matVec(motif.control.gramian, u));
+    const logits = spec.readout.weights.map((weights, index) => dot(weights, current) + spec.readout.bias[index]);
+    const probabilities = softmax(logits);
+    const winnerIndex = probabilities.indexOf(Math.max(...probabilities));
+    const roundVector = (vector) => vector.map((value) => Number(value.toFixed(4)));
+    return {
+      case_id: spec.id,
+      alpha: Number(amount.toFixed(3)),
+      target: { motif_id: spec.motif_id, depth: spec.depth },
+      operator: spec.operator,
+      activation: { before: roundVector(before), current: roundVector(current), removed: roundVector(removed) },
+      direction_coefficient: { before: Number(beforeCoefficient.toFixed(4)), current: Number(currentCoefficient.toFixed(4)) },
+      transported_association_return_cosine: Number(associationReturnCosine.toFixed(4)),
+      registered_action_energy: { before: Number(baselineEnergy.toFixed(4)), current: Number(actionEnergy.toFixed(4)) },
+      behavior: {
+        labels: spec.readout.labels,
+        logits: roundVector(logits),
+        probabilities: roundVector(probabilities),
+        winner: spec.readout.labels[winnerIndex],
+        response: spec.responses[spec.readout.labels[winnerIndex]],
+      },
+      claim_boundary: spec.claim_boundary,
+    };
+  }
+
   function axisAngle(axis, angle) {
     const norm = Math.sqrt(dot(axis, axis)) || 1;
     const [x, y, z] = axis.map((value) => value / norm);
@@ -117,6 +179,7 @@
         holonomy_coupling: motif.control.holonomy_coupling,
         status: motif.control.normalized_margin > 0.05 ? "resolved" : "abstain_on_measured_B",
       },
+      ablation: ablationState(data, state.ablationAlpha == null ? 0 : state.ablationAlpha),
       confirmation: data.confirmation,
       claim_boundary: data.claim_boundary,
       next_evidence_action: nextActions[chapter],
@@ -125,6 +188,7 @@
 
   return {
     CHAPTERS,
+    ablationState,
     axisAngle,
     bandRmsDistance,
     gluingPartners,

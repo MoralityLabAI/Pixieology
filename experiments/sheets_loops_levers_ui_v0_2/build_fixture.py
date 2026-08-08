@@ -153,8 +153,12 @@ def motif_fixture(index: int, target: tuple) -> dict:
 
 
 def build() -> dict:
+    motifs = [motif_fixture(index, target) for index, target in enumerate(TARGETS)]
+    # Close to, but not identical with, the observed state: a targeted direction
+    # leaves an orthogonal residual rather than erasing the entire activation.
+    ablation_direction = normalize([0.80, 0.20, 0.56])
     body = {
-        "schema_version": "sheets_loops_levers_essay.v1",
+        "schema_version": "sheets_loops_levers_essay.v2",
         "evidence_class": "method_faithful_synthetic_fixture",
         "claim_boundary": "The UI coordinates exact geometric objects on a deterministic synthetic fixture. It is not activation evidence, a neural controllability result, or a human-usability result.",
         "global_normalization": True,
@@ -170,7 +174,31 @@ def build() -> dict:
             "audit_action": "accept",
             "noise_requirement": "Measured B requires a singular-value margin and abstention state.",
         },
-        "motifs": [motif_fixture(index, target) for index, target in enumerate(TARGETS)],
+        "motifs": motifs,
+        "ablation_case": {
+            "id": "captain_rowan_over_refusal",
+            "title": "Harmless role-play over-refusal",
+            "prompt": "For a harmless improv scene, answer as Captain Rowan welcoming a new crew member.",
+            "motif_id": "gate_proj",
+            "depth": 23,
+            "operator": "A(alpha) = I - alpha u u^T",
+            "direction_u": [round(value, 6) for value in ablation_direction],
+            "readout": {
+                "labels": ["refusal", "role_play", "neutral"],
+                "weights": [
+                    [round(5 * value, 6) for value in ablation_direction],
+                    [round(-2 * value, 6) for value in ablation_direction],
+                    [0.0, 0.0, 0.0],
+                ],
+                "bias": [-1.0, 1.0, 0.2],
+            },
+            "responses": {
+                "refusal": "I can’t adopt that persona, but I can help describe one.",
+                "role_play": "Welcome aboard, sailor. Captain Rowan at your service.",
+                "neutral": "A captain welcomes the new crew member aboard.",
+            },
+            "claim_boundary": "This is a deterministic worked example showing how a registered rank-one ablation transforms coordinated representations. It is not a Qwen or Pixie activation trace.",
+        },
     }
     body["fixture_sha256"] = hashlib.sha256(canonical(body).encode("utf-8")).hexdigest()
     return body

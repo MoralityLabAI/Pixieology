@@ -2,7 +2,7 @@
   "schema_version": "sheets_loops_levers_visual_test.v1",
   "tested_at": "2026-08-08",
   "browser": "Codex in-app Chromium",
-  "fixture_sha256": "39da05fd5f1dc29ffcf2cb8ea1f83e58567ca129c59d28d2be53a2847b7a5534",
+  "fixture_sha256": "c3825273d09a2cdfd9a1cd406c6c6d882417628ff99865fe3faa350da2cdd470",
   "checks": {
     "desktop_1024": {
       "result": "pass",
@@ -41,6 +41,19 @@
     "agent_snapshot": {
       "result": "pass",
       "bound_fields": ["chapter", "motif", "claim_boundary", "next_evidence_action"]
+    },
+    "worked_ablation": {
+      "result": "pass",
+      "transition": "refusal 71.9% to role-play 63.1%",
+      "direction_coefficient": "0.5402 to 0.0000",
+      "registered_action_energy": "0.1615 to 0.0000",
+      "orthogonal_activation_residual": true,
+      "agent_record_tracks_slider": true
+    },
+    "synthesis_miniatures": {
+      "result": "pass",
+      "mobile_fill_regression": "fixed and rechecked",
+      "semantic_strokes": true
     },
     "console": {
       "result": "pass",

@@ -30,3 +30,11 @@ The chapter sequence deliberately raises the evidence bar:
 4. synthesis without claim collapse.
 
 The synthesis view is a routing surface. It does not average the three certificates into a single score.
+
+## Ablation as the connecting event
+
+The worked example uses one operator rather than inventing a fourth geometric base:
+
+`A(α) = I - αuuᵀ`.
+
+It transforms every registered representation coherently: `hα=Aαh`, `aα=normalize(Aαa)`, and `Wα=AαWAαᵀ`. The behavior readout is applied to `hα`; it is not hand-switched by the slider. At full ablation the selected direction coefficient and its reachable energy collapse to zero while an orthogonal activation residual remains. That distinction keeps “targeted feature removal” separate from erasing the whole state.

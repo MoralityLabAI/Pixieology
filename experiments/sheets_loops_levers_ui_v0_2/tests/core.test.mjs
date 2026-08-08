@@ -37,3 +37,21 @@ test("agent snapshot binds evidence and next action", () => {
   assert.match(snapshot.next_evidence_action, /Estimate B/);
   assert.match(snapshot.claim_boundary, /not activation evidence/);
 });
+
+test("rank-one ablation transforms representation and flips the worked behavior", () => {
+  const intact = core.ablationState(data, 0);
+  const ablated = core.ablationState(data, 1);
+  assert.equal(intact.behavior.winner, "refusal");
+  assert.equal(ablated.behavior.winner, "role_play");
+  assert.ok(ablated.behavior.probabilities[1] > 0.6);
+  assert.ok(Math.abs(ablated.direction_coefficient.current) < 1e-4);
+  assert.ok(Math.abs(ablated.registered_action_energy.current) < 1e-4);
+  assert.ok(ablated.activation.current.some((value) => Math.abs(value) > 0.05), "targeted ablation should retain orthogonal activation");
+  assert.notEqual(intact.transported_association_return_cosine, ablated.transported_association_return_cosine);
+});
+
+test("snapshot carries the exact current ablation strength", () => {
+  const snapshot = core.snapshot(data, { chapter: "synthesis", motifId: "gate_proj", depth: 23, phase: 0, ablationAlpha: 0.65 });
+  assert.equal(snapshot.ablation.alpha, 0.65);
+  assert.equal(snapshot.ablation.target.motif_id, "gate_proj");
+});

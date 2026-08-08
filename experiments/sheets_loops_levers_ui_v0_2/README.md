@@ -39,3 +39,13 @@ node --test tests/*.test.mjs
 - **Synthesis:** Does depth convergence predict transported control compatibility on held-out inputs?
 
 The final synthesis is deliberately a candidate claim. A real experiment must bind all three views to the same activation subspace, samples, and intervention registry.
+
+## Worked ablation trace
+
+The synthesis chapter now includes a concrete harmless-role-play example. A slider applies
+
+`A(α) = I - αuuᵀ`
+
+to the registered `gate_proj` activation at layer 23. The intact synthetic readout prefers an over-refusal response (71.9%); at full ablation it prefers the Captain Rowan role-play response (63.1%). The UI exposes the activation vector, removed component, transported-association return cosine, control energy along `u`, behavior probabilities, and the exact JSON transformation record at every slider position.
+
+This is a worked causal data transformation, not a discovered refusal direction. The corresponding Qwen/Pixie experiment would require matched prompts, a direction estimated without test leakage, layer and norm controls, registered intervention forwards, collateral-behavior evaluation, and held-out replication.

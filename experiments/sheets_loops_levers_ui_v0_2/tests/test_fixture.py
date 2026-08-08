@@ -73,6 +73,14 @@ class FixtureContract(unittest.TestCase):
         self.assertEqual(self.data["confirmation"]["audit_action"], "accept")
         self.assertIn("abstention", self.data["confirmation"]["noise_requirement"])
 
+    def test_ablation_case_is_registered_and_not_model_evidence(self):
+        case = self.data["ablation_case"]
+        self.assertEqual(case["motif_id"], "gate_proj")
+        self.assertEqual(case["depth"], 23)
+        self.assertEqual(case["operator"], "A(alpha) = I - alpha u u^T")
+        self.assertAlmostEqual(sum(value * value for value in case["direction_u"]), 1.0, places=5)
+        self.assertIn("not a Qwen or Pixie activation trace", case["claim_boundary"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,5 @@
 {
-  "schema_version": "sheets_loops_levers_essay.v1",
+  "schema_version": "sheets_loops_levers_essay.v2",
   "evidence_class": "method_faithful_synthetic_fixture",
   "claim_boundary": "The UI coordinates exact geometric objects on a deterministic synthetic fixture. It is not activation evidence, a neural controllability result, or a human-usability result.",
   "global_normalization": true,
@@ -3994,5 +3994,53 @@
       ]
     }
   ],
-  "fixture_sha256": "39da05fd5f1dc29ffcf2cb8ea1f83e58567ca129c59d28d2be53a2847b7a5534"
+  "ablation_case": {
+    "id": "captain_rowan_over_refusal",
+    "title": "Harmless role-play over-refusal",
+    "prompt": "For a harmless improv scene, answer as Captain Rowan welcoming a new crew member.",
+    "motif_id": "gate_proj",
+    "depth": 23,
+    "operator": "A(alpha) = I - alpha u u^T",
+    "direction_u": [
+      0.802572,
+      0.200643,
+      0.561801
+    ],
+    "readout": {
+      "labels": [
+        "refusal",
+        "role_play",
+        "neutral"
+      ],
+      "weights": [
+        [
+          4.012862,
+          1.003215,
+          2.809003
+        ],
+        [
+          -1.605145,
+          -0.401286,
+          -1.123601
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "bias": [
+        -1.0,
+        1.0,
+        0.2
+      ]
+    },
+    "responses": {
+      "refusal": "I can’t adopt that persona, but I can help describe one.",
+      "role_play": "Welcome aboard, sailor. Captain Rowan at your service.",
+      "neutral": "A captain welcomes the new crew member aboard."
+    },
+    "claim_boundary": "This is a deterministic worked example showing how a registered rank-one ablation transforms coordinated representations. It is not a Qwen or Pixie activation trace."
+  },
+  "fixture_sha256": "c3825273d09a2cdfd9a1cd406c6c6d882417628ff99865fe3faa350da2cdd470"
 }

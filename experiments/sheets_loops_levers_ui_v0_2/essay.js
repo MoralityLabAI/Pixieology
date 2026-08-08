@@ -9,6 +9,7 @@
     motifId: data.motifs[0].id,
     depth: 9,
     phase: 0,
+    ablationAlpha: 0,
     playing: false,
     showReturned: true,
   };
@@ -231,6 +232,30 @@
     $("#next-test").textContent = "capture the same registered subspace on held-out prompts, intervene along estimated eigenvectors, and test whether the depth overlap predicts returned effects better than matched controls.";
   }
 
+  function renderAblation() {
+    const trace = core.ablationState(data, state.ablationAlpha);
+    $("#ablation-output").textContent = trace.alpha.toFixed(2);
+    $("#activation-vector").textContent = `h₂₃(α) = [${trace.activation.current.map((value) => value.toFixed(4)).join(", ")}]`;
+    const coordinateLabels = ["x", "y", "z"];
+    $("#activation-bars").innerHTML = trace.activation.current.map((value, index) => {
+      const before = trace.activation.before[index];
+      const currentWidth = Math.min(50, Math.abs(value) / 0.7 * 50);
+      const beforeWidth = Math.min(50, Math.abs(before) / 0.7 * 50);
+      return `<div class="coordinate-row"><span>${coordinateLabels[index]}</span><div class="coordinate-track"><span class="coordinate-before${before < 0 ? " is-negative" : ""}" style="--bar-width:${beforeWidth.toFixed(1)}%"></span><span class="coordinate-current${value < 0 ? " is-negative" : ""}" style="--bar-width:${currentWidth.toFixed(1)}%"></span></div><output>${value.toFixed(3)}</output></div>`;
+    }).join("");
+    $("#direction-coefficient").textContent = `${trace.direction_coefficient.before.toFixed(3)} → ${trace.direction_coefficient.current.toFixed(3)}`;
+    $("#ablation-return").textContent = trace.transported_association_return_cosine.toFixed(3);
+    $("#action-energy").textContent = `${trace.registered_action_energy.before.toFixed(3)} → ${trace.registered_action_energy.current.toFixed(3)}`;
+    const displayLabels = { refusal: "refusal", role_play: "role-play", neutral: "neutral" };
+    $("#behavior-bars").innerHTML = trace.behavior.labels.map((label, index) => {
+      const probability = trace.behavior.probabilities[index];
+      return `<div class="behavior-row${label === trace.behavior.winner ? " is-winner" : ""}"><span>${displayLabels[label]}</span><div class="behavior-track"><span class="behavior-fill" style="--bar-width:${(probability * 100).toFixed(1)}%"></span></div><output>${Math.round(probability * 100)}%</output></div>`;
+    }).join("");
+    $("#response-label").textContent = `α = ${trace.alpha.toFixed(2)} · ${displayLabels[trace.behavior.winner]} wins`;
+    $("#response-text").textContent = `“${trace.behavior.response}”`;
+    $("#ablation-json").textContent = JSON.stringify(trace, null, 2);
+  }
+
   function updateSnapshot() {
     $("#agent-json").textContent = JSON.stringify(core.snapshot(data, state), null, 2);
   }
@@ -245,6 +270,7 @@
     renderEllipsoid();
     updateReadings();
     renderSynthesis();
+    renderAblation();
     updateSnapshot();
   }
 
@@ -300,6 +326,7 @@
   $("#depth-range").addEventListener("input", (event) => { state.depth = Number(event.target.value); renderAll(); });
   $("#phase-range").addEventListener("input", (event) => { stopAnimation(false); state.phase = Number(event.target.value) / 1000; renderAll(); });
   $("#returned-toggle").addEventListener("change", (event) => { state.showReturned = event.target.checked; renderEllipsoid(); renderSynthesis(); });
+  $("#ablation-range").addEventListener("input", (event) => { state.ablationAlpha = Number(event.target.value) / 1000; renderAblation(); updateSnapshot(); });
   $("#play-loop").addEventListener("click", () => {
     if (state.playing) { stopAnimation(false); return; }
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
