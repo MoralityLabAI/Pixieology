@@ -81,6 +81,24 @@ class FixtureContract(unittest.TestCase):
         self.assertAlmostEqual(sum(value * value for value in case["direction_u"]), 1.0, places=5)
         self.assertIn("not a Qwen or Pixie activation trace", case["claim_boundary"])
 
+    def test_persona_adapter_compiles_five_facts_and_signal_trace(self):
+        adapter = self.data["persona_adapter"]
+        self.assertEqual(len(adapter["facts"]), 5)
+        self.assertEqual(len(adapter["training_signal_trace"]), 21)
+        self.assertFalse(adapter["model_weights_loaded"])
+        self.assertEqual(adapter["run_status"], "closed_form_synthetic_rehearsal")
+        self.assertEqual(adapter["training_signal_trace"][0]["effective_ablation_alpha"], 0)
+        self.assertGreater(adapter["training_signal_trace"][-1]["effective_ablation_alpha"], 0.9)
+        self.assertLess(adapter["training_signal_trace"][-1]["signal_residual"], 1e-9)
+        self.assertTrue(all(fact["metta"].startswith("(fact captain_rowan") for fact in adapter["facts"]))
+
+    def test_generated_persona_assets_are_current(self):
+        adapter = self.data["persona_adapter"]
+        saved_adapter = json.loads((ROOT / "captain_rowan_prompt_adapter.json").read_text(encoding="utf-8"))
+        metta = (ROOT / "captain_rowan.metta").read_text(encoding="utf-8")
+        self.assertEqual(saved_adapter, adapter)
+        self.assertEqual(metta.count("!(add-atom &persona (fact captain_rowan"), 5)
+
 
 if __name__ == "__main__":
     unittest.main()

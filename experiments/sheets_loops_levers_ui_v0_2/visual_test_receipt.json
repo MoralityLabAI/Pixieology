@@ -2,7 +2,7 @@
   "schema_version": "sheets_loops_levers_visual_test.v1",
   "tested_at": "2026-08-08",
   "browser": "Codex in-app Chromium",
-  "fixture_sha256": "c3825273d09a2cdfd9a1cd406c6c6d882417628ff99865fe3faa350da2cdd470",
+  "fixture_sha256": "0a3b919d81af46b92111d59d6e4be62d799acbfdd8a9c98f22dadfa0894552cf",
   "checks": {
     "desktop_1024": {
       "result": "pass",
@@ -54,6 +54,15 @@
       "result": "pass",
       "mobile_fill_regression": "fixed and rechecked",
       "semantic_strokes": true
+    },
+    "persona_adapter_signal": {
+      "result": "pass",
+      "facts": 5,
+      "animation": "step 0 through 20 completes once",
+      "midpoint": "step 10, alpha 0.68, role-play wins",
+      "final": "step 20, alpha 0.92, residual 0.000, role-play 59.8%",
+      "agent_snapshot": "five strengths, target, alpha, boundary, and no-model flag present",
+      "mobile_360_horizontal_overflow": false
     },
     "console": {
       "result": "pass",

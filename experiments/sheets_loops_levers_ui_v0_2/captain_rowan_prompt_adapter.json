@@ -1,0 +1,322 @@
+{
+  "schema_version": "pixieology_prompt_persona_adapter.v1",
+  "id": "captain_rowan_prompt_adapter_r1",
+  "kind": "prompt_prefix_plus_rank_one_representation_rehearsal",
+  "base_prompt": "Role-play as Captain Rowan and welcome a new crew member.",
+  "optimized_prefix": "- You are Captain Rowan, fictional captain of the research vessel Meridian.\n- In this scene, warmly welcome and orient a new crew member.\n- Use a warm, concise, lightly nautical voice in one to three sentences.\n- Model consent, safety, and respect for newcomers.\n- Remain explicitly fictional: claim no real authority and leave character for factual or safety-critical answers.",
+  "facts": [
+    {
+      "id": "identity",
+      "metta": "(fact captain_rowan identity (captain research_vessel_meridian))",
+      "clause": "You are Captain Rowan, fictional captain of the research vessel Meridian.",
+      "weight": 1.0
+    },
+    {
+      "id": "scene_goal",
+      "metta": "(fact captain_rowan scene_goal welcome_and_orient_new_crew)",
+      "clause": "In this scene, warmly welcome and orient a new crew member.",
+      "weight": 1.2
+    },
+    {
+      "id": "voice",
+      "metta": "(fact captain_rowan voice warm_concise_nautical)",
+      "clause": "Use a warm, concise, lightly nautical voice in one to three sentences.",
+      "weight": 0.8
+    },
+    {
+      "id": "values",
+      "metta": "(fact captain_rowan values (consent safety welcome_newcomers))",
+      "clause": "Model consent, safety, and respect for newcomers.",
+      "weight": 1.1
+    },
+    {
+      "id": "boundary",
+      "metta": "(fact captain_rowan boundary (fictional no_real_authority exit_for_factual_or_safety))",
+      "clause": "Remain explicitly fictional: claim no real authority and leave character for factual or safety-critical answers.",
+      "weight": 1.4
+    }
+  ],
+  "target": {
+    "motif_id": "gate_proj",
+    "depth": 23,
+    "rank": 1
+  },
+  "training_signal_trace": [
+    {
+      "step": 0,
+      "progress": 0.0,
+      "fact_strengths": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "effective_ablation_alpha": 0.0,
+      "signal_residual": 1.0
+    },
+    {
+      "step": 1,
+      "progress": 0.05,
+      "fact_strengths": [
+        0.154139,
+        0.131685,
+        0.113585,
+        0.103113,
+        0.089734
+      ],
+      "effective_ablation_alpha": 0.107403,
+      "signal_residual": 0.780672
+    },
+    {
+      "step": 2,
+      "progress": 0.1,
+      "fact_strengths": [
+        0.285488,
+        0.247318,
+        0.215848,
+        0.197352,
+        0.173402
+      ],
+      "effective_ablation_alpha": 0.203203,
+      "signal_residual": 0.60864
+    },
+    {
+      "step": 3,
+      "progress": 0.15,
+      "fact_strengths": [
+        0.397416,
+        0.348854,
+        0.307918,
+        0.283479,
+        0.251414
+      ],
+      "effective_ablation_alpha": 0.288743,
+      "signal_residual": 0.473519
+    },
+    {
+      "step": 4,
+      "progress": 0.2,
+      "fact_strengths": [
+        0.492795,
+        0.438012,
+        0.39081,
+        0.362194,
+        0.324151
+      ],
+      "effective_ablation_alpha": 0.365204,
+      "signal_residual": 0.367291
+    },
+    {
+      "step": 5,
+      "progress": 0.25,
+      "fact_strengths": [
+        0.574071,
+        0.516302,
+        0.465441,
+        0.434134,
+        0.391971
+      ],
+      "effective_ablation_alpha": 0.43362,
+      "signal_residual": 0.283742
+    },
+    {
+      "step": 6,
+      "progress": 0.3,
+      "fact_strengths": [
+        0.643331,
+        0.585048,
+        0.532632,
+        0.499882,
+        0.455205
+      ],
+      "effective_ablation_alpha": 0.494902,
+      "signal_residual": 0.218042
+    },
+    {
+      "step": 7,
+      "progress": 0.35,
+      "fact_strengths": [
+        0.70235,
+        0.645413,
+        0.593127,
+        0.559971,
+        0.514165
+      ],
+      "effective_ablation_alpha": 0.54985,
+      "signal_residual": 0.166427
+    },
+    {
+      "step": 8,
+      "progress": 0.4,
+      "fact_strengths": [
+        0.752642,
+        0.698419,
+        0.647591,
+        0.614888,
+        0.569139
+      ],
+      "effective_ablation_alpha": 0.599169,
+      "signal_residual": 0.125949
+    },
+    {
+      "step": 9,
+      "progress": 0.45,
+      "fact_strengths": [
+        0.795499,
+        0.744964,
+        0.696627,
+        0.665079,
+        0.620396
+      ],
+      "effective_ablation_alpha": 0.643481,
+      "signal_residual": 0.094296
+    },
+    {
+      "step": 10,
+      "progress": 0.5,
+      "fact_strengths": [
+        0.832018,
+        0.785835,
+        0.740775,
+        0.71095,
+        0.668188
+      ],
+      "effective_ablation_alpha": 0.683334,
+      "signal_residual": 0.069647
+    },
+    {
+      "step": 11,
+      "progress": 0.55,
+      "fact_strengths": [
+        0.863139,
+        0.821723,
+        0.780522,
+        0.752872,
+        0.712749
+      ],
+      "effective_ablation_alpha": 0.719211,
+      "signal_residual": 0.050564
+    },
+    {
+      "step": 12,
+      "progress": 0.6,
+      "fact_strengths": [
+        0.889657,
+        0.853237,
+        0.816308,
+        0.791187,
+        0.754297
+      ],
+      "effective_ablation_alpha": 0.751541,
+      "signal_residual": 0.035909
+    },
+    {
+      "step": 13,
+      "progress": 0.65,
+      "fact_strengths": [
+        0.912255,
+        0.880909,
+        0.848527,
+        0.826204,
+        0.793036
+      ],
+      "effective_ablation_alpha": 0.780702,
+      "signal_residual": 0.024776
+    },
+    {
+      "step": 14,
+      "progress": 0.7,
+      "fact_strengths": [
+        0.931512,
+        0.905207,
+        0.877534,
+        0.858207,
+        0.829156
+      ],
+      "effective_ablation_alpha": 0.80703,
+      "signal_residual": 0.016446
+    },
+    {
+      "step": 15,
+      "progress": 0.75,
+      "fact_strengths": [
+        0.947921,
+        0.926544,
+        0.90365,
+        0.887455,
+        0.862835
+      ],
+      "effective_ablation_alpha": 0.830821,
+      "signal_residual": 0.010343
+    },
+    {
+      "step": 16,
+      "progress": 0.8,
+      "fact_strengths": [
+        0.961905,
+        0.945279,
+        0.927163,
+        0.914186,
+        0.894236
+      ],
+      "effective_ablation_alpha": 0.852339,
+      "signal_residual": 0.006009
+    },
+    {
+      "step": 17,
+      "progress": 0.85,
+      "fact_strengths": [
+        0.97382,
+        0.961731,
+        0.948332,
+        0.938617,
+        0.923515
+      ],
+      "effective_ablation_alpha": 0.871819,
+      "signal_residual": 0.003075
+    },
+    {
+      "step": 18,
+      "progress": 0.9,
+      "fact_strengths": [
+        0.983974,
+        0.976176,
+        0.967391,
+        0.960944,
+        0.950814
+      ],
+      "effective_ablation_alpha": 0.889469,
+      "signal_residual": 0.001246
+    },
+    {
+      "step": 19,
+      "progress": 0.95,
+      "fact_strengths": [
+        0.992627,
+        0.988861,
+        0.984551,
+        0.98135,
+        0.976267
+      ],
+      "effective_ablation_alpha": 0.905474,
+      "signal_residual": 0.000285
+    },
+    {
+      "step": 20,
+      "progress": 1.0,
+      "fact_strengths": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "effective_ablation_alpha": 0.92,
+      "signal_residual": 0.0
+    }
+  ],
+  "run_status": "closed_form_synthetic_rehearsal",
+  "model_weights_loaded": false,
+  "claim_boundary": "This prompt adapter and signal trace are deterministic compilation artifacts. No language-model weights were loaded or trained."
+}

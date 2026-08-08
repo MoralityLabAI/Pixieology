@@ -55,3 +55,22 @@ test("snapshot carries the exact current ablation strength", () => {
   assert.equal(snapshot.ablation.alpha, 0.65);
   assert.equal(snapshot.ablation.target.motif_id, "gate_proj");
 });
+
+test("persona adapter signal grounds five facts and drives the structural rehearsal", () => {
+  const start = core.personaAdapterState(data, 0);
+  const finish = core.personaAdapterState(data, 20);
+  assert.equal(start.facts.length, 5);
+  assert.equal(start.effective_ablation_alpha, 0);
+  assert.ok(finish.effective_ablation_alpha > 0.9);
+  assert.ok(finish.facts.every((fact) => fact.strength === 1));
+  assert.equal(finish.model_weights_loaded, false);
+  const behavior = core.ablationState(data, finish.effective_ablation_alpha).behavior;
+  assert.equal(behavior.winner, "role_play");
+});
+
+test("agent snapshot exposes fact strengths and rehearsal boundaries", () => {
+  const snapshot = core.snapshot(data, { chapter: "synthesis", motifId: "gate_proj", depth: 23, phase: 0, ablationAlpha: 0.92, adapterStep: 20 });
+  assert.equal(snapshot.persona_adapter.facts.length, 5);
+  assert.equal(snapshot.persona_adapter.step, 20);
+  assert.match(snapshot.persona_adapter.claim_boundary, /No language-model weights/);
+});

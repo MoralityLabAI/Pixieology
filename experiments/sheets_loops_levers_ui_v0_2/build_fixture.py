@@ -22,6 +22,44 @@ TARGETS = [
     ("down_proj", "Down", "down", 140, [1, 1, 1], [1.1, 0.18, 0.0], 2.12),
 ]
 
+PERSONA_FACTS = [
+    {
+        "id": "identity",
+        "metta": "(fact captain_rowan identity (captain research_vessel_meridian))",
+        "clause": "You are Captain Rowan, fictional captain of the research vessel Meridian.",
+        "rate": 3.2,
+        "weight": 1.0,
+    },
+    {
+        "id": "scene_goal",
+        "metta": "(fact captain_rowan scene_goal welcome_and_orient_new_crew)",
+        "clause": "In this scene, warmly welcome and orient a new crew member.",
+        "rate": 2.6,
+        "weight": 1.2,
+    },
+    {
+        "id": "voice",
+        "metta": "(fact captain_rowan voice warm_concise_nautical)",
+        "clause": "Use a warm, concise, lightly nautical voice in one to three sentences.",
+        "rate": 2.1,
+        "weight": 0.8,
+    },
+    {
+        "id": "values",
+        "metta": "(fact captain_rowan values (consent safety welcome_newcomers))",
+        "clause": "Model consent, safety, and respect for newcomers.",
+        "rate": 1.8,
+        "weight": 1.1,
+    },
+    {
+        "id": "boundary",
+        "metta": "(fact captain_rowan boundary (fictional no_real_authority exit_for_factual_or_safety))",
+        "clause": "Remain explicitly fictional: claim no real authority and leave character for factual or safety-critical answers.",
+        "rate": 1.4,
+        "weight": 1.4,
+    },
+]
+
 
 def canonical(value: object) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
@@ -60,6 +98,42 @@ def frobenius(matrix: list[list[float]]) -> float:
 
 def rounded_matrix(matrix: list[list[float]]) -> list[list[float]]:
     return [[round(value, 6) for value in row] for row in matrix]
+
+
+def persona_adapter_fixture() -> dict:
+    optimized_prefix = "\n".join(f"- {fact['clause']}" for fact in PERSONA_FACTS)
+    trace = []
+    for step in range(21):
+        progress = step / 20
+        strengths = []
+        for fact in PERSONA_FACTS:
+            denominator = 1 - math.exp(-fact["rate"])
+            strength = (1 - math.exp(-fact["rate"] * progress)) / denominator
+            strengths.append(round(strength, 6))
+        weighted = sum(fact["weight"] * strength for fact, strength in zip(PERSONA_FACTS, strengths))
+        total_weight = sum(fact["weight"] for fact in PERSONA_FACTS)
+        effective_alpha = 0.92 * weighted / total_weight
+        residual = sum(fact["weight"] * (1 - strength) ** 2 for fact, strength in zip(PERSONA_FACTS, strengths)) / total_weight
+        trace.append({
+            "step": step,
+            "progress": round(progress, 6),
+            "fact_strengths": strengths,
+            "effective_ablation_alpha": round(effective_alpha, 6),
+            "signal_residual": round(residual, 6),
+        })
+    return {
+        "schema_version": "pixieology_prompt_persona_adapter.v1",
+        "id": "captain_rowan_prompt_adapter_r1",
+        "kind": "prompt_prefix_plus_rank_one_representation_rehearsal",
+        "base_prompt": "Role-play as Captain Rowan and welcome a new crew member.",
+        "optimized_prefix": optimized_prefix,
+        "facts": [{key: value for key, value in fact.items() if key != "rate"} for fact in PERSONA_FACTS],
+        "target": {"motif_id": "gate_proj", "depth": 23, "rank": 1},
+        "training_signal_trace": trace,
+        "run_status": "closed_form_synthetic_rehearsal",
+        "model_weights_loaded": False,
+        "claim_boundary": "This prompt adapter and signal trace are deterministic compilation artifacts. No language-model weights were loaded or trained.",
+    }
 
 
 def raw_depth_coordinates(target_index: int, layer: int) -> list[float]:
@@ -199,6 +273,7 @@ def build() -> dict:
             },
             "claim_boundary": "This is a deterministic worked example showing how a registered rank-one ablation transforms coordinated representations. It is not a Qwen or Pixie activation trace.",
         },
+        "persona_adapter": persona_adapter_fixture(),
     }
     body["fixture_sha256"] = hashlib.sha256(canonical(body).encode("utf-8")).hexdigest()
     return body
@@ -209,4 +284,14 @@ if __name__ == "__main__":
     pretty = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
     (ROOT / "fixture.json").write_text(pretty, encoding="utf-8")
     (ROOT / "fixture.js").write_text("window.SLL_FIXTURE = " + pretty.rstrip() + ";\n", encoding="utf-8")
+    adapter = data["persona_adapter"]
+    (ROOT / "captain_rowan_prompt_adapter.json").write_text(json.dumps(adapter, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    metta = ["; Five grounded facts for the Captain Rowan prompt adapter", "!(bind! &persona (new-space))"]
+    metta.extend(f"!(add-atom &persona {fact['metta']})" for fact in PERSONA_FACTS)
+    metta.extend([
+        "",
+        "; Query all registered facts for a persona",
+        "(= (persona-facts $persona) (match &persona (fact $persona $key $value) (fact $key $value)))",
+    ])
+    (ROOT / "captain_rowan.metta").write_text("\n".join(metta) + "\n", encoding="utf-8")
     print(data["fixture_sha256"])

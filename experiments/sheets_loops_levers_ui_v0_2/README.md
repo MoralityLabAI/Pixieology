@@ -49,3 +49,11 @@ The synthesis chapter now includes a concrete harmless-role-play example. A slid
 to the registered `gate_proj` activation at layer 23. The intact synthetic readout prefers an over-refusal response (71.9%); at full ablation it prefers the Captain Rowan role-play response (63.1%). The UI exposes the activation vector, removed component, transported-association return cosine, control energy along `u`, behavior probabilities, and the exact JSON transformation record at every slider position.
 
 This is a worked causal data transformation, not a discovered refusal direction. The corresponding Qwen/Pixie experiment would require matched prompts, a direction estimated without test leakage, layer and norm controls, registered intervention forwards, collateral-behavior evaluation, and held-out replication.
+
+## Five-fact persona prompt adapter
+
+`captain_rowan.metta` registers exactly five persona facts: identity, scene goal, voice, values, and a fictional-authority boundary. `captain_rowan_prompt_adapter.json` compiles them into a concise system-prefix adapter and a 21-step signal trace.
+
+Playing **Adapter signal** accumulates the five fact channels at different rates. Their weighted signal drives the effective structural-ablation value from 0 to 0.92, which updates the layer-23 activation, loop return association, reachable energy, behavior probabilities, and agent snapshot together. At the final rehearsal step, the synthetic role-play probability is 59.8% versus 11.0% refusal.
+
+No model is loaded and no neural weights are trained in this lane. [PERSONA_ADAPTER_PLAN.md](PERSONA_ADAPTER_PLAN.md) separates the implemented prompt adapter from the authorization-bound TinyLoRA/QLoRA experiment that would be needed to make a neural-learning claim.

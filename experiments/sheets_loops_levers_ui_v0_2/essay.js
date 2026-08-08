@@ -10,11 +10,15 @@
     depth: 9,
     phase: 0,
     ablationAlpha: 0,
+    adapterStep: 0,
     playing: false,
+    adapterPlaying: false,
     showReturned: true,
   };
   let animationFrame = null;
   let animationStart = null;
+  let adapterAnimationFrame = null;
+  let adapterAnimationStart = null;
 
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => Array.from(document.querySelectorAll(selector));
@@ -256,6 +260,19 @@
     $("#ablation-json").textContent = JSON.stringify(trace, null, 2);
   }
 
+  function renderPersonaAdapter() {
+    const adapter = data.persona_adapter;
+    const trace = core.personaAdapterState(data, state.adapterStep);
+    $("#optimized-prefix").textContent = adapter.optimized_prefix;
+    $("#metta-facts").textContent = adapter.facts.map((fact) => fact.metta).join("\n");
+    $("#adapter-output").textContent = `${trace.step} / ${trace.total_steps}`;
+    $("#adapter-residual").textContent = trace.signal_residual.toFixed(3);
+    $("#fact-signals").innerHTML = trace.facts.map((fact) => {
+      const label = fact.id.replaceAll("_", " ");
+      return `<li class="fact-signal"><strong>${label}</strong><span class="fact-track"><span class="fact-fill" style="--bar-width:${(fact.strength * 100).toFixed(1)}%"></span></span><output>${Math.round(fact.strength * 100)}%</output></li>`;
+    }).join("");
+  }
+
   function updateSnapshot() {
     $("#agent-json").textContent = JSON.stringify(core.snapshot(data, state), null, 2);
   }
@@ -270,6 +287,7 @@
     renderEllipsoid();
     updateReadings();
     renderSynthesis();
+    renderPersonaAdapter();
     renderAblation();
     updateSnapshot();
   }
@@ -300,6 +318,37 @@
     $("#play-loop").textContent = finished ? "Replay one circuit" : "Play one circuit";
   }
 
+  function stopAdapterAnimation(finished) {
+    if (adapterAnimationFrame) cancelAnimationFrame(adapterAnimationFrame);
+    adapterAnimationFrame = null;
+    adapterAnimationStart = null;
+    state.adapterPlaying = false;
+    $("#play-adapter").setAttribute("aria-pressed", "false");
+    $("#play-adapter").textContent = finished ? "Replay signal" : "Play signal";
+  }
+
+  function setAdapterStep(step, syncAblation) {
+    state.adapterStep = Math.max(0, Math.min(20, Math.round(step)));
+    $("#adapter-range").value = state.adapterStep;
+    if (syncAblation) {
+      const trace = core.personaAdapterState(data, state.adapterStep);
+      state.ablationAlpha = trace.effective_ablation_alpha;
+      $("#ablation-range").value = Math.round(state.ablationAlpha * 1000);
+    }
+    renderPersonaAdapter();
+    renderAblation();
+    updateSnapshot();
+  }
+
+  function animateAdapter(timestamp) {
+    if (!state.adapterPlaying) return;
+    if (adapterAnimationStart === null) adapterAnimationStart = timestamp;
+    const progress = Math.min(1, (timestamp - adapterAnimationStart) / 4800);
+    setAdapterStep(progress * 20, true);
+    if (progress >= 1) stopAdapterAnimation(true);
+    else adapterAnimationFrame = requestAnimationFrame(animateAdapter);
+  }
+
   function animateLoop(timestamp) {
     if (!state.playing) return;
     if (animationStart === null) animationStart = timestamp;
@@ -327,6 +376,20 @@
   $("#phase-range").addEventListener("input", (event) => { stopAnimation(false); state.phase = Number(event.target.value) / 1000; renderAll(); });
   $("#returned-toggle").addEventListener("change", (event) => { state.showReturned = event.target.checked; renderEllipsoid(); renderSynthesis(); });
   $("#ablation-range").addEventListener("input", (event) => { state.ablationAlpha = Number(event.target.value) / 1000; renderAblation(); updateSnapshot(); });
+  $("#adapter-range").addEventListener("input", (event) => { stopAdapterAnimation(false); setAdapterStep(Number(event.target.value), true); });
+  $("#play-adapter").addEventListener("click", () => {
+    if (state.adapterPlaying) { stopAdapterAnimation(false); return; }
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setAdapterStep(state.adapterStep === 20 ? 0 : 20, true);
+      $("#play-adapter").textContent = state.adapterStep === 20 ? "Reset signal" : "Complete signal";
+      return;
+    }
+    if (state.adapterStep >= 20) setAdapterStep(0, true);
+    state.adapterPlaying = true;
+    $("#play-adapter").setAttribute("aria-pressed", "true");
+    $("#play-adapter").textContent = "Pause";
+    adapterAnimationFrame = requestAnimationFrame(animateAdapter);
+  });
   $("#play-loop").addEventListener("click", () => {
     if (state.playing) { stopAnimation(false); return; }
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {

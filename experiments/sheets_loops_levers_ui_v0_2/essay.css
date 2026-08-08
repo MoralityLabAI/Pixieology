@@ -107,6 +107,24 @@ figcaption { max-width: 680px; margin-top: 12px; color: var(--muted); font-size:
 .ablation-intro h2 { font-size: clamp(2rem, 3.3vw, 4rem); }
 .ablation-intro blockquote { grid-column: 2; grid-row: 1 / span 2; align-self: end; margin: 0; border-left: 3px solid var(--accent); padding-left: 24px; font-family: var(--serif); font-size: clamp(1.35rem, 2.4vw, 2.25rem); line-height: 1.28; }
 .ablation-intro > p:last-child { grid-column: 2; margin-top: 24px; color: var(--muted); line-height: 1.6; }
+.persona-adapter { display: grid; grid-template-columns: minmax(260px, .75fr) minmax(420px, 1.25fr); gap: clamp(32px, 6vw, 90px); margin-top: 58px; border-block: 1px solid var(--line); padding: 36px 0; }
+.persona-adapter-copy h3 { margin: 0 0 18px; font-family: var(--serif); font-size: clamp(1.75rem, 2.7vw, 2.8rem); font-weight: 400; line-height: 1.08; }
+.persona-adapter-copy > p:not(.chapter-kicker) { color: var(--muted); font-size: .86rem; line-height: 1.6; }
+.persona-adapter details { margin-top: 22px; }
+.persona-adapter summary { cursor: pointer; font-size: .8rem; font-weight: 700; }
+.persona-adapter pre { overflow: auto; max-height: 300px; font-size: .72rem; line-height: 1.5; white-space: pre-wrap; }
+.adapter-control { margin-bottom: 24px; }
+.adapter-control label { display: flex; justify-content: space-between; gap: 16px; font-weight: 700; }
+.adapter-control input { width: 100%; margin: 13px 0 8px; accent-color: var(--teal); }
+.adapter-control-line { display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--muted); font-size: .73rem; }
+.adapter-control-line button { border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 8px 12px; cursor: pointer; }
+.adapter-control-line button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.fact-signals { margin: 0; padding: 0; list-style: none; }
+.fact-signal { display: grid; grid-template-columns: 95px 1fr 48px; align-items: center; gap: 10px; border-top: 1px solid var(--line); padding: 9px 0; }
+.fact-signal strong { font-size: .72rem; font-weight: 700; }
+.fact-signal output { text-align: right; color: var(--muted); font-size: .7rem; font-variant-numeric: tabular-nums; }
+.fact-track { height: 8px; background: var(--line); }
+.fact-fill { display: block; width: var(--bar-width); height: 100%; background: var(--teal); transition: width 180ms ease-out; }
 .ablation-control { margin: 52px 0 40px; }
 .ablation-control label { display: flex; justify-content: space-between; gap: 16px; font-weight: 700; }
 .ablation-control output { color: var(--accent); font-variant-numeric: tabular-nums; }
@@ -159,6 +177,7 @@ figcaption { max-width: 680px; margin-top: 12px; color: var(--muted); font-size:
   .ablation-intro { grid-template-columns: 1fr; }
   .ablation-intro .chapter-kicker, .ablation-intro h2, .ablation-intro blockquote, .ablation-intro > p:last-child { grid-column: 1; grid-row: auto; }
   .ablation-intro blockquote { margin-top: 24px; }
+  .persona-adapter { grid-template-columns: 1fr; }
   .ablation-transform { grid-template-columns: 1fr; }
   .transform-arrow { transform: rotate(90deg); justify-self: center; }
 }

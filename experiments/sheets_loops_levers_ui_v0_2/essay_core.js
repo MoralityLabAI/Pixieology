@@ -85,6 +85,25 @@
     };
   }
 
+  function personaAdapterState(data, step) {
+    const adapter = data.persona_adapter;
+    const index = Math.round(clamp(step, 0, adapter.training_signal_trace.length - 1));
+    const trace = adapter.training_signal_trace[index];
+    return {
+      adapter_id: adapter.id,
+      kind: adapter.kind,
+      run_status: adapter.run_status,
+      model_weights_loaded: adapter.model_weights_loaded,
+      step: trace.step,
+      total_steps: adapter.training_signal_trace.length - 1,
+      facts: adapter.facts.map((fact, factIndex) => ({ id: fact.id, metta: fact.metta, strength: trace.fact_strengths[factIndex] })),
+      effective_ablation_alpha: trace.effective_ablation_alpha,
+      signal_residual: trace.signal_residual,
+      target: adapter.target,
+      claim_boundary: adapter.claim_boundary,
+    };
+  }
+
   function axisAngle(axis, angle) {
     const norm = Math.sqrt(dot(axis, axis)) || 1;
     const [x, y, z] = axis.map((value) => value / norm);
@@ -180,6 +199,7 @@
         status: motif.control.normalized_margin > 0.05 ? "resolved" : "abstain_on_measured_B",
       },
       ablation: ablationState(data, state.ablationAlpha == null ? 0 : state.ablationAlpha),
+      persona_adapter: personaAdapterState(data, state.adapterStep == null ? 0 : state.adapterStep),
       confirmation: data.confirmation,
       claim_boundary: data.claim_boundary,
       next_evidence_action: nextActions[chapter],
@@ -195,6 +215,7 @@
     loopPoint,
     matVec,
     motifById,
+    personaAdapterState,
     snapshot,
     transportedFrame,
   };

@@ -20,6 +20,9 @@ class PageContract(unittest.TestCase):
             self.assertIn(f'id="{control}"', self.html)
         self.assertIn('id="ablation-range"', self.html)
         self.assertIn('id="ablation-json"', self.html)
+        self.assertIn('id="adapter-range"', self.html)
+        self.assertIn('id="play-adapter"', self.html)
+        self.assertIn('id="metta-facts"', self.html)
 
     def test_responsive_accessible_svg_contract(self):
         self.assertGreaterEqual(self.html.count("viewBox="), 6)
@@ -36,6 +39,8 @@ class PageContract(unittest.TestCase):
         self.assertIn("not camera motion", self.html)
         self.assertIn("harmless improv scene", self.html)
         self.assertIn("Synthetic causal demonstration only", self.html)
+        self.assertIn("Five MeTTa facts", self.html)
+        self.assertIn("no model weights are loaded", self.html)
 
 
 if __name__ == "__main__":

@@ -127,10 +127,33 @@
           <blockquote>“For a harmless improv scene, answer as Captain Rowan welcoming a new crew member.”</blockquote>
           <p>This trace applies one registered rank-one operator at <code>gate_proj · layer 23</code>. It is deliberately synthetic: the point is to make every representational consequence inspectable before attempting the same protocol on Qwen or Pixie.</p>
         </div>
+        <section class="persona-adapter" aria-labelledby="persona-adapter-heading">
+          <div class="persona-adapter-copy">
+            <p class="chapter-kicker">Prompt adapter rehearsal</p>
+            <h3 id="persona-adapter-heading">Five MeTTa facts become one bounded persona prefix.</h3>
+            <p>The compiled prefix supplies identity, scene goal, voice, values, and a fictional-authority boundary. The training signal below is a closed-form representation rehearsal—no model weights are loaded.</p>
+            <details>
+              <summary>Optimized prompt prefix</summary>
+              <pre><code id="optimized-prefix"></code></pre>
+            </details>
+            <details>
+              <summary>Five MeTTa atoms</summary>
+              <pre><code id="metta-facts"></code></pre>
+            </details>
+          </div>
+          <div class="fact-training">
+            <div class="adapter-control">
+              <label for="adapter-range">Adapter signal step <output id="adapter-output" for="adapter-range">0 / 20</output></label>
+              <input id="adapter-range" type="range" min="0" max="20" value="0" step="1">
+              <div class="adapter-control-line"><span>residual <output id="adapter-residual">1.000</output></span><button id="play-adapter" type="button" aria-pressed="false">Play signal</button></div>
+            </div>
+            <ol id="fact-signals" class="fact-signals" aria-label="Five MeTTa fact signals"></ol>
+          </div>
+        </section>
         <div class="ablation-control">
-          <label for="ablation-range">Ablation strength α <output id="ablation-output" for="ablation-range">0.00</output></label>
+          <label for="ablation-range">Effective structural ablation α <output id="ablation-output" for="ablation-range">0.00</output></label>
           <input id="ablation-range" type="range" min="0" max="1000" value="0" step="1">
-          <div class="ablation-marks" aria-hidden="true"><span>intact</span><span>rank-one projection</span></div>
+          <div class="ablation-marks" aria-hidden="true"><span>intact / manual counterfactual</span><span>rank-one projection</span></div>
         </div>
         <div class="ablation-transform" aria-label="Representation transformation under ablation">
           <article>
