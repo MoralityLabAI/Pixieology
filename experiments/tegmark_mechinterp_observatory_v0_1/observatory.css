@@ -82,7 +82,7 @@ h3 { font-size: 0.95rem; letter-spacing: 0.02em; }
 
 .paper-tabs {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   border-block: 1px solid var(--line);
   overflow-x: auto;
 }
@@ -197,6 +197,24 @@ select, .segmented button, .agent-actions button {
 .axis-track { background: var(--surface-2); height: 0.55rem; }
 .axis-fill { height: 100%; background: var(--green); }
 
+.control-proof-pair { display: grid; grid-template-columns: repeat(2, minmax(15rem, 1fr)); gap: 1rem; }
+.control-system-panel {
+  appearance: none;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--muted);
+  background: transparent;
+  color: var(--text);
+  padding: 0.75rem;
+  text-align: left;
+}
+.control-system-panel[aria-pressed="true"] { border-top-color: var(--green); background: rgba(116,237,176,0.05); }
+.control-system-panel h3 { margin: 0 0 0.25rem; }
+.control-system-panel p { color: var(--muted); font-size: 0.76rem; margin-bottom: 0.5rem; }
+.control-system-panel svg { min-height: 17rem; }
+.proof-equivalence { text-align: center; color: var(--amber); margin: 0 0 1rem; font-size: 0.82rem; }
+.matrix { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre; }
+
 .agent-drawer { border-bottom: 1px solid var(--line); margin-top: 1.2rem; }
 .agent-drawer summary { padding: 0.8rem 0; cursor: pointer; color: var(--green); }
 .agent-actions { display: flex; justify-content: space-between; align-items: center; gap: 1rem; color: var(--muted); }
@@ -213,6 +231,7 @@ footer #fixture-id { margin-right: auto; font-family: ui-monospace, monospace; }
   .instrument { grid-template-columns: 1fr; grid-template-areas: "controls" "visual" "inspector"; }
   .inspector { border-left: 0; border-top: 1px solid var(--line); }
   .compiler-body { grid-template-columns: 1fr; }
+  .control-proof-pair { grid-template-columns: 1fr; }
   .agent-actions { align-items: start; flex-direction: column; }
   .axis-row { grid-template-columns: 1fr 3rem; }
   .axis-track { grid-column: 1 / -1; }
@@ -240,4 +259,5 @@ footer #fixture-id { margin-right: auto; font-family: ui-monospace, monospace; }
   }
   .phase-cell { color: #08100f; }
   .code, .agent-drawer pre { background: #e4ece7; color: #122019; }
+  .instrument { background: linear-gradient(145deg, rgba(255,255,255,0.96), rgba(232,240,235,0.96)); }
 }

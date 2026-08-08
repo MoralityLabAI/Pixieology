@@ -11,6 +11,8 @@ import json
 import math
 from pathlib import Path
 
+from control_proof import build_certificate as build_control_certificate
+
 
 ROOT = Path(__file__).resolve().parent
 
@@ -22,6 +24,7 @@ SOURCES = {
     "mips": "https://arxiv.org/abs/2402.05110",
     "sid": "https://arxiv.org/abs/2305.19525",
     "open_problems": "https://arxiv.org/abs/2501.16496",
+    "control_certificate": "CONTROL_INFORMATION_THEOREM.md",
 }
 
 
@@ -284,6 +287,7 @@ def build() -> dict:
             "mips": mips_fixture(),
             "sid": sid_fixture(),
             "open_problems": open_problems_fixture(),
+            "control_certificate": build_control_certificate(),
         },
     }
     body["fixture_sha256"] = hashlib.sha256(canonical(body).encode("utf-8")).hexdigest()
@@ -296,6 +300,10 @@ if __name__ == "__main__":
     (ROOT / "example_data.json").write_text(pretty, encoding="utf-8")
     (ROOT / "example_data.js").write_text(
         "window.TEGMARK_OBSERVATORY_DATA = " + pretty.rstrip() + ";\n",
+        encoding="utf-8",
+    )
+    (ROOT / "control_proof_receipt.json").write_text(
+        json.dumps(data["lenses"]["control_certificate"], indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
     print(data["fixture_sha256"])

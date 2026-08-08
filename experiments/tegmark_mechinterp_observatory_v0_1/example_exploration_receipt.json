@@ -1,7 +1,7 @@
 {
   "schema_version": "tegmark_mechinterp_observatory.example_exploration.v1",
   "run_kind": "deterministic_agent_contract_test",
-  "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923",
+  "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c",
   "evidence_class": "method_faithful_synthetic_fixture",
   "steps": [
     {
@@ -28,7 +28,7 @@
       "evidence_class": "method_faithful_synthetic_fixture",
       "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
       "next_evidence_action": "Train matched seeds under vanilla, L1, local, swap, and BIMT conditions; ingest weights and edge-ablation outcomes.",
-      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+      "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c"
     },
     {
       "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
@@ -52,7 +52,7 @@
       "evidence_class": "method_faithful_synthetic_fixture",
       "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
       "next_evidence_action": "Sweep attention rate, width, and seed on modular addition; compute circularity, gradient symmetricity, and distance irrelevance q.",
-      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+      "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c"
     },
     {
       "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
@@ -76,7 +76,7 @@
       "evidence_class": "method_faithful_synthetic_fixture",
       "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
       "next_evidence_action": "Train a hypernetwork ensemble across β and time; retain seed distributions and test sizes outside the training support.",
-      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+      "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c"
     },
     {
       "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
@@ -98,7 +98,7 @@
       "evidence_class": "method_faithful_synthetic_fixture",
       "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
       "next_evidence_action": "Run simplification, integer/Boolean autoencoding, FSM extraction, symbolic regression, and held-out execution on captured state.",
-      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+      "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c"
     },
     {
       "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
@@ -128,7 +128,7 @@
       "evidence_class": "method_faithful_synthetic_fixture",
       "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
       "next_evidence_action": "Build the directional-derivative matrix from measured dynamics, rotate its nullspace sparsely, and test functional independence and held-out constancy.",
-      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+      "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c"
     },
     {
       "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
@@ -178,12 +178,81 @@
       "evidence_class": "method_faithful_synthetic_fixture",
       "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
       "next_evidence_action": "Pre-register the chosen goal's counterfactual, replacement, held-out, and competitive-baseline tests.",
-      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+      "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c"
+    },
+    {
+      "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
+      "lens": "control_certificate",
+      "paper": "Proven portfolio addition · finite-horizon control",
+      "source": "CONTROL_INFORMATION_THEOREM.md",
+      "question": "Can identical passive state geometry conceal a provably different intervention-reachable subspace?",
+      "selection": {
+        "view": "action",
+        "system": "coupled_actuator",
+        "horizon": 2
+      },
+      "observations": {
+        "A": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "B": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "reachability_matrix": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "gramian": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "reachable_dimension": 2,
+        "fully_controllable": true,
+        "passive_views_identical": true,
+        "uniform_prior_information_gain_bits": 1,
+        "proof_checks": {
+          "axis_W_equals_CCT": true,
+          "coupled_W_equals_CCT": true,
+          "axis_rank_is_one": true,
+          "coupled_rank_is_two": true,
+          "passive_equality": true,
+          "strict_information_witness": true
+        }
+      },
+      "evidence_class": "method_faithful_synthetic_fixture",
+      "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
+      "next_evidence_action": "Estimate local transition Jacobian A and registered intervention Jacobian B from a model, then validate the predicted reachable subspace with held-out interventions.",
+      "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c"
     }
   ],
   "conclusion": {
-    "useful_chain": "training geometry → algorithm phase → program compiler → invariant → validation route",
+    "useful_chain": "training geometry → algorithm phase → program compiler → invariant → validation route → exact reachability certificate",
     "empirical_claim": false,
-    "next_gate": "Replace exactly one synthetic lens with registered model evidence before making a mechanism claim."
+    "proven_addition": "The control certificate adds one bit on the exact uniform witness pair and exactly reports the finite-horizon reachable dimension.",
+    "next_gate": "Estimate local A and registered-intervention B on a model before making a model-control claim."
   }
 }

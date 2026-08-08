@@ -229,6 +229,59 @@
     ])}`;
   }
 
+  function matrixText(matrix) {
+    return "[" + matrix.map((row, index) => `${index ? " " : ""}[${row.join(", ")}]`).join("\n") + "]";
+  }
+
+  function passiveChart(system) {
+    const points = system.passive_trajectory;
+    const x = point => 42 + point.t * 130;
+    const y = value => 250 - Number(value) / 4 * 200;
+    const first = linePath(points, x, point => y(point.x[0]));
+    const second = linePath(points, x, point => y(point.x[1]));
+    return `<svg viewBox="0 0 340 285" role="img" aria-label="Passive state coordinates for ${system.label}"><line x1="42" y1="250" x2="315" y2="250" stroke="var(--line)"/><line x1="42" y1="35" x2="42" y2="250" stroke="var(--line)"/><path d="${first}" fill="none" stroke="var(--amber)" stroke-width="4"/><path d="${second}" fill="none" stroke="var(--blue)" stroke-width="4"/>${points.map(point => `<circle cx="${x(point)}" cy="${y(point.x[0])}" r="5" fill="var(--amber)"/><circle cx="${x(point)}" cy="${y(point.x[1])}" r="5" fill="var(--blue)"/>`).join("")}<text x="278" y="275" fill="var(--muted)" font-size="11">time t</text><text x="10" y="28" fill="var(--muted)" font-size="11">state</text><text x="250" y="82" fill="var(--blue)" font-size="11">x₂</text><text x="250" y="194" fill="var(--amber)" font-size="11">x₁</text></svg>`;
+  }
+
+  function reachableChart(system) {
+    const mapX = point => 180 + point.x / 2.6 * 135;
+    const mapY = point => 145 - point.y / 2.6 * 110;
+    const boundary = linePath(system.reachable_boundary, mapX, mapY);
+    return `<svg viewBox="0 0 360 290" role="img" aria-label="Two-step unit-energy reachable set for ${system.label}"><line x1="28" y1="145" x2="332" y2="145" stroke="var(--line)"/><line x1="180" y1="22" x2="180" y2="268" stroke="var(--line)"/><path d="${boundary}" fill="rgba(116,237,176,0.12)" stroke="var(--green)" stroke-width="4"/><circle cx="180" cy="145" r="5" fill="var(--text)"/><text x="294" y="136" fill="var(--muted)" font-size="11">x₁</text><text x="188" y="30" fill="var(--muted)" font-size="11">x₂</text><text x="18" y="282" fill="var(--muted)" font-size="11">unit action energy · H=${system.horizon}</text></svg>`;
+  }
+
+  function renderControlCertificate() {
+    const certificate = data.lenses.control_certificate;
+    const selected = certificate.systems.find(system => system.id === state.selection.controlSystem);
+    els.controls.innerHTML = segmented("control-view", "Evidence surface", [["passive", "Passive trajectories"], ["action", "Registered-action reachability"]], state.selection.controlView);
+    bindSegmented("control-view", "controlView");
+    const passive = state.selection.controlView === "passive";
+    const relation = passive
+      ? "Exact equality: both panels show the same A and the same u=0 trajectory."
+      : `Strict separation: reachable ranks ${certificate.systems.map(system => system.reachability_rank).join(" and ")}.`;
+    const panels = certificate.systems.map((system, index) => `<button type="button" class="control-system-panel" data-system="${system.id}" aria-pressed="${system.id === state.selection.controlSystem}"><h3>${passive ? `Candidate ${index ? "β" : "α"}` : system.label}</h3><p>${passive ? "passive signature: identical; action identity hidden" : `reachable dimension: ${system.reachability_rank} / ${certificate.state_dimension}`}</p>${passive ? passiveChart({...system, label: `Candidate ${index ? "beta" : "alpha"}`}) : reachableChart(system)}</button>`).join("");
+    els.visual.innerHTML = `<p class="proof-equivalence">${relation}</p><div class="control-proof-pair">${panels}</div>`;
+    els.visual.querySelectorAll("[data-system]").forEach(button => button.addEventListener("click", () => { state.selection.controlSystem = button.dataset.system; render(); }));
+    if (passive) {
+      const selectedIndex = certificate.systems.findIndex(system => system.id === selected.id);
+      els.inspector.innerHTML = `<h3>Candidate ${selectedIndex ? "β" : "α"}</h3>${dl([
+        ["passive dynamics A", `<span class="matrix">${matrixText(selected.A)}</span>`],
+        ["registered action B", "not observable in this view", "warning"],
+        ["passive signature", JSON.stringify(selected.passive_trajectory)],
+        ["model-identifying information", "0 bits"],
+        ["proof state", "two mechanisms remain indistinguishable"]
+      ])}`;
+    } else {
+      els.inspector.innerHTML = `<h3>${selected.label}</h3>${dl([
+        ["intervention Jacobian B", `<span class="matrix">${matrixText(selected.B)}</span>`],
+        ["reachability C₂", `<span class="matrix">${matrixText(selected.reachability_matrix)}</span>`],
+        ["Gramian W₂ = C₂C₂ᵀ", `<span class="matrix">${matrixText(selected.gramian)}</span>`],
+        ["reachable dimension", `${selected.reachability_rank} / ${certificate.state_dimension}`, "metric-large"],
+        ["det(W₂)", selected.gramian_determinant],
+        ["strict witness information gain", `${certificate.exact_claims.uniform_prior_information_gain_bits} bit`, "metric-large"]
+      ])}`;
+    }
+  }
+
   function updateSnapshot() {
     const snap = core.snapshot(data, state.lens, state.selection);
     els.snapshot.textContent = JSON.stringify(snap, null, 2);
@@ -247,7 +300,7 @@
     els.question.textContent = meta.question;
     els.source.href = data.sources[state.lens];
     els.visual.setAttribute("data-active-lens", state.lens);
-    ({bimt: renderBimt, clock_pizza: renderClockPizza, hypernetwork: renderHypernetwork, mips: renderMips, sid: renderSid, open_problems: renderOpenProblems})[state.lens]();
+    ({bimt: renderBimt, clock_pizza: renderClockPizza, hypernetwork: renderHypernetwork, mips: renderMips, sid: renderSid, open_problems: renderOpenProblems, control_certificate: renderControlCertificate})[state.lens]();
     updateSnapshot();
   }
 

@@ -3,24 +3,34 @@
   "tested_on": "2026-08-08",
   "target": "http://localhost:8765/",
   "browser_surface": "Codex in-app browser",
-  "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923",
+  "fixture_sha256": "8010250fb570205dd7a2a6b6bbb21fbfe26f0d703e660f83b2c4a87e2f30b72c",
   "checks": {
-    "six_lenses_rendered": true,
-    "paper_source_links_present": true,
+    "seven_lenses_rendered": true,
+    "source_links_present": true,
     "agent_snapshot_present": true,
     "continuous_state_failure_rendered_unavailable": true,
     "no_invariant_negative_control_rendered": true,
     "small_nonzero_residual_preserved": "2.00e-8",
+    "passive_control_snapshot_leaks_intervention_jacobian": false,
+    "action_view_reachable_dimensions": [1, 2],
+    "action_view_information_gain_bits": 1,
+    "light_theme_instrument_contrast_fixed": true,
     "console_errors_or_warnings": 0,
     "responsive_viewport": {
       "width": 375,
       "height": 812,
       "body_scroll_width": 360,
-      "instrument_columns": "332.95px",
+      "instrument_columns": "326.4px",
+      "proof_pair_columns": "300.8px",
+      "proof_panel_widths": [301, 301],
       "inspector_left_border": "0px",
       "unexpected_page_overflow": false
     }
   },
-  "defect_found_and_fixed": "The 2e-8 invariant residual was displayed as 0 by the generic formatter; small nonzero values now use scientific notation.",
+  "defects_found_and_fixed": [
+    "The 2e-8 invariant residual was displayed as 0 by the generic formatter; small nonzero values now use scientific notation.",
+    "The light theme combined dark instrument surfaces with dark text; the shared instrument now receives a light theme-aware surface.",
+    "The first passive control view exposed actuator identities in labels and agent state; passive mode now uses anonymous candidates and withholds B and reachability fields."
+  ],
   "claim_boundary": "This receipt validates rendering and interaction behavior only, not a paper result or a model mechanism."
 }

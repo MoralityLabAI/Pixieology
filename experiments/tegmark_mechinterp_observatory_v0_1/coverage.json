@@ -43,6 +43,14 @@
       "coverage": "method-faithful claim-governance interaction",
       "exposes": ["decomposition-description-validation", "goal-specific evidence route", "progress axes", "competitive baseline rung"],
       "missing_gate": "registered interventions, held-out outcomes, and task-relevant baselines"
+    },
+    {
+      "id": "control_certificate",
+      "title": "Exact finite-horizon reachability certificate",
+      "coverage": "mathematically proven strict portfolio addition",
+      "exposes": ["passive indistinguishability witness", "registered intervention Jacobian", "reachability matrix", "controllability Gramian", "reachable dimension", "unit-energy reachable set", "conditional information gain"],
+      "proved": ["rank(W_H) = dimension of the H-step reachable subspace", "I(M;P,R) - I(M;P) = I(M;R|P) >= 0", "the exact uniform witness pair gains 1 bit"],
+      "missing_gate": "measured local A and registered-intervention B before applying the certificate to a neural model"
     }
   ],
   "holonomy_boundary": "Holonomy becomes testable only after a state space and transport rule are identified; loop-dependent display alone is not algorithm, conservation, or control evidence."

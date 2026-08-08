@@ -1,6 +1,6 @@
 # Physics of Mechanisms Observatory v0.1
 
-A focused six-lens UI study translating the Tegmark-lineage mechanistic-interpretability papers into testable interactions.
+A focused six-paper UI study plus a formally certified control lens. The papers are translated into testable interactions; the added reachability lens proves that registered-action information can strictly refine an otherwise identical passive manifold view.
 
 The observatory is designed around one question per paper:
 
@@ -10,6 +10,7 @@ The observatory is designed around one question per paper:
 4. Can the latent mechanism compile into executable, verified code?
 5. Is a sparse expression genuinely conserved along the dynamics?
 6. What evidence is still missing before the interpretation supports a control claim?
+7. Can two identical passive views have provably different intervention-reachable dimensions?
 
 ## Run
 
@@ -30,15 +31,18 @@ python build_example.py
 Run the contracts:
 
 ```powershell
-python -m unittest tests/test_example_data.py
+python -m unittest discover tests
 node --test tests/*.test.mjs
 ```
 
 ## Captured run
 
-- `example_exploration_receipt.json` records a deterministic six-step agent traversal from BIMT wiring through the control-claim route.
-- `visual_test_receipt.json` records a real browser pass over all six lenses, the continuous-state and no-invariant negative controls, the 375 × 812 responsive layout, and console status.
+- `example_exploration_receipt.json` records a deterministic seven-step agent traversal from BIMT wiring through the exact reachability certificate.
+- `visual_test_receipt.json` records a real browser pass over all seven lenses, the continuous-state and no-invariant negative controls, the 375 × 812 responsive layout, and console status.
 - `coverage.json` is the compact machine-readable answer to “what is covered, and what would turn it into evidence?”
+- `CONTROL_INFORMATION_THEOREM.md` proves that `rank(W_H)` equals reachable dimension, that adding the certificate cannot decrease information, and that the bundled witness adds exactly one bit under a uniform two-system prior.
+- `control_proof_receipt.json` contains the exact witness matrices, ranks, determinants, proof checks, and claim boundary consumed by the UI.
+- `PORTFOLIO_INFORMATION_AUDIT.md` establishes non-redundancy against the checked-in globe, étale, holonomy, mechanism-law, and six-paper surfaces.
 
 The browser pass found and fixed one claim-significant display issue: a residual of `2e-8` was initially rendered as `0`. Small nonzero quantities now use scientific notation.
 

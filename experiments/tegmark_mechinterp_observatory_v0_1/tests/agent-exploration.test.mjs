@@ -39,3 +39,13 @@ test("MIPS failure never invents downstream output", () => {
   assert.equal(snapshot.observations.symbolic_law, "Unavailable");
   assert.equal(snapshot.observations.verification, "not run");
 });
+
+test("control snapshot carries the exact strict witness", () => {
+  const selection = core.defaultSelection(data);
+  selection.controlView = "action";
+  selection.controlSystem = "coupled_actuator";
+  const snapshot = core.snapshot(data, "control_certificate", selection);
+  assert.equal(snapshot.observations.reachable_dimension, 2);
+  assert.equal(snapshot.observations.uniform_prior_information_gain_bits, 1);
+  assert.ok(Object.values(snapshot.observations.proof_checks).every(Boolean));
+});

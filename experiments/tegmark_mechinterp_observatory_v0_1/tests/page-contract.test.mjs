@@ -9,9 +9,9 @@ const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const css = fs.readFileSync(path.join(root, "observatory.css"), "utf8");
 const js = fs.readFileSync(path.join(root, "observatory.js"), "utf8");
 
-test("page provides six keyboard-addressable paper tabs", () => {
+test("page provides seven keyboard-addressable method tabs", () => {
   const tabs = [...html.matchAll(/data-lens="([^"]+)"/g)].map(match => match[1]);
-  assert.deepEqual(tabs, ["bimt", "clock_pizza", "hypernetwork", "mips", "sid", "open_problems"]);
+  assert.deepEqual(tabs, ["bimt", "clock_pizza", "hypernetwork", "mips", "sid", "open_problems", "control_certificate"]);
   assert.match(html, /role="tablist"/);
   assert.match(js, /ArrowLeft/);
   assert.match(js, /ArrowRight/);

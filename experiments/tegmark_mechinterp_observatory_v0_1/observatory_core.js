@@ -41,6 +41,12 @@
       title: "Route a picture into a claim",
       question: "What validation evidence is missing before an interpretation can support monitoring, prediction, or control?",
       next: "Pre-register the chosen goal's counterfactual, replacement, held-out, and competitive-baseline tests."
+    },
+    control_certificate: {
+      kicker: "Proven portfolio addition · finite-horizon control",
+      title: "Passive sameness, actionable difference",
+      question: "Can identical passive state geometry conceal a provably different intervention-reachable subspace?",
+      next: "Estimate local transition Jacobian A and registered intervention Jacobian B from a model, then validate the predicted reachable subspace with held-out interventions."
     }
   };
 
@@ -56,7 +62,9 @@
     mipsStage: 0,
     sidSystem: data.lenses.sid.systems[0].id,
     sidView: "spectrum",
-    claimGoal: data.lenses.open_problems.goals[1].id
+    claimGoal: data.lenses.open_problems.goals[1].id,
+    controlView: "passive",
+    controlSystem: data.lenses.control_certificate.systems[0].id
   });
 
   function findClockCell(data, selection) {
@@ -97,10 +105,31 @@
       const item = data.lenses.sid.systems.find(s => s.id === selection.sidSystem);
       selected = {system: item.id, view: selection.sidView};
       observations = {dynamics: item.dynamics, basis: item.basis, nullity: item.nullity, independent_rank: item.independent_rank, law: item.law, max_residual: item.max_residual};
-    } else {
+    } else if (lens === "open_problems") {
       const goal = data.lenses.open_problems.goals.find(g => g.id === selection.claimGoal);
       selected = {goal: goal.id};
       observations = {pipeline: data.lenses.open_problems.pipeline, evidence_route: goal.evidence_route, progress_axes: data.lenses.open_problems.axes, strongest_validation_rung: data.lenses.open_problems.validation_ladder.at(-1)};
+    } else {
+      const certificate = data.lenses.control_certificate;
+      const system = certificate.systems.find(item => item.id === selection.controlSystem);
+      selected = {view: selection.controlView, system: system.id, horizon: certificate.horizon};
+      observations = selection.controlView === "passive" ? {
+        A: system.A,
+        passive_trajectory: system.passive_trajectory,
+        passive_views_identical: certificate.exact_claims.passive_views_identical,
+        registered_action_visible: false,
+        model_identifying_information_bits: 0
+      } : {
+        A: system.A,
+        B: system.B,
+        reachability_matrix: system.reachability_matrix,
+        gramian: system.gramian,
+        reachable_dimension: system.reachability_rank,
+        fully_controllable: system.fully_controllable,
+        passive_views_identical: certificate.exact_claims.passive_views_identical,
+        uniform_prior_information_gain_bits: certificate.exact_claims.uniform_prior_information_gain_bits,
+        proof_checks: certificate.proof_checks
+      };
     }
     return {
       schema_version: "tegmark_mechinterp_observatory.snapshot.v1",

@@ -73,6 +73,14 @@ The six papers form a usable sequence for the Pixieology strategy:
 
 Holonomy is valuable only after this sequence identifies a state space and transport rule. A loop-dependent readout can then diagnose context-sensitive transport. It cannot by itself establish an algorithm, a conservation law, or control.
 
+## Proven portfolio addition: reachability certificate
+
+The six papers motivate an action-sensitive display but do not by themselves prove that a particular added panel strictly increases the information content of this portfolio. `CONTROL_INFORMATION_THEOREM.md` closes that gap for finite-horizon local control.
+
+For a local linearization `x(t+1)=Ax(t)+Bu(t)`, the lens renders `W_H=C_H C_Hᵀ`, where `C_H=[B,AB,…,A^(H-1)B]`. Its rank is exactly the reachable-subspace dimension, and its nonzero eigenpairs exactly specify the unit-action-energy reachable ellipsoid. The bundled witness fixes `A` while changing `B`, so both systems have identical passive trajectories but reachability ranks one and two. Under a uniform prior over the pair, the passive view carries zero identifying bits and the registered-action certificate carries one bit. This is a strict refinement of the passive visualization, not an aesthetic claim.
+
+The proof does not transfer automatically to a trained model. A model-facing use must estimate local `A`, measure registered-intervention `B`, and validate predicted endpoints on held-out interventions.
+
 ## Claim boundary
 
 Every number in `example_data.json` is a deterministic, method-faithful synthetic fixture. It tests interaction design and machine-readable contracts. It is not a reproduction of the papers, not a result from a trained model, and not evidence about Pixie or Qwen.

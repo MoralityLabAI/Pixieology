@@ -70,6 +70,17 @@ class ExampleDataContractTests(unittest.TestCase):
         self.assertEqual(len(routes), len(lens["goals"]))
         self.assertEqual(lens["validation_ladder"][-1], "competitive real-task baseline")
 
+    def test_control_certificate_is_a_strict_exact_witness(self):
+        lens = self.data["lenses"]["control_certificate"]
+        receipt = json.loads((ROOT / "control_proof_receipt.json").read_text(encoding="utf-8"))
+        self.assertEqual(receipt, lens)
+        self.assertTrue(lens["exact_claims"]["passive_views_identical"])
+        self.assertTrue(lens["exact_claims"]["control_signatures_distinct"])
+        self.assertEqual([system["reachability_rank"] for system in lens["systems"]], [1, 2])
+        self.assertEqual([system["gramian_determinant"] for system in lens["systems"]], [0, 1])
+        self.assertEqual(lens["exact_claims"]["uniform_prior_information_gain_bits"], 1)
+        self.assertTrue(all(lens["proof_checks"].values()))
+
 
 if __name__ == "__main__":
     unittest.main()
