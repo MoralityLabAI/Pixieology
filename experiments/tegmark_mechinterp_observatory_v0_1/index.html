@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="data:,">
+  <title>Physics of Mechanisms Observatory</title>
+  <link rel="stylesheet" href="observatory.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to observatory</a>
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">Pixieology · six-paper UX study</p>
+      <h1>Physics of Mechanisms Observatory</h1>
+      <p class="lede">Move from a legible representation to an executable law, a conserved coordinate, and finally a defensible control claim.</p>
+    </div>
+    <div class="boundary" role="note">
+      <span class="status-dot" aria-hidden="true"></span>
+      <strong>Synthetic method fixture</strong>
+      <span>Interaction evidence only—no trained-model result.</span>
+    </div>
+  </header>
+
+  <nav class="paper-tabs" aria-label="Paper lens" role="tablist">
+    <button role="tab" aria-selected="true" aria-controls="workspace" data-lens="bimt">01 · Wiring</button>
+    <button role="tab" aria-selected="false" aria-controls="workspace" data-lens="clock_pizza">02 · Algorithm</button>
+    <button role="tab" aria-selected="false" aria-controls="workspace" data-lens="hypernetwork">03 · Phase</button>
+    <button role="tab" aria-selected="false" aria-controls="workspace" data-lens="mips">04 · Compiler</button>
+    <button role="tab" aria-selected="false" aria-controls="workspace" data-lens="sid">05 · Invariant</button>
+    <button role="tab" aria-selected="false" aria-controls="workspace" data-lens="open_problems">06 · Claim route</button>
+  </nav>
+
+  <main id="workspace" tabindex="-1">
+    <section class="lens-head" aria-labelledby="lens-title">
+      <div>
+        <p id="lens-kicker" class="eyebrow"></p>
+        <h2 id="lens-title"></h2>
+        <p id="lens-question" class="question"></p>
+      </div>
+      <a id="paper-source" class="source-link" href="#" target="_blank" rel="noreferrer">Read primary paper ↗</a>
+    </section>
+
+    <section class="instrument">
+      <div id="controls" class="controls" aria-label="Lens controls"></div>
+      <div id="visual" class="visual" aria-live="polite"></div>
+      <aside id="inspector" class="inspector" aria-label="Selected observation"></aside>
+    </section>
+
+    <details class="agent-drawer">
+      <summary>Agent-readable state</summary>
+      <div class="agent-actions">
+        <p>Exact selection, observations, claim boundary, and the next evidence-producing action.</p>
+        <button id="copy-snapshot" type="button">Copy snapshot JSON</button>
+      </div>
+      <pre id="agent-snapshot"></pre>
+    </details>
+  </main>
+
+  <footer>
+    <span id="fixture-id"></span>
+    <a href="PAPER_METHOD_AUDIT.md">Method audit</a>
+    <a href="example_data.json">Fixture JSON</a>
+  </footer>
+
+  <script src="example_data.js"></script>
+  <script src="observatory_core.js"></script>
+  <script src="observatory.js"></script>
+</body>
+</html>

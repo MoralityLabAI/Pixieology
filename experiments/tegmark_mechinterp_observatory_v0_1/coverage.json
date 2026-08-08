@@ -1,0 +1,49 @@
+{
+  "schema_version": "tegmark_mechinterp_observatory.coverage.v1",
+  "evidence_class": "design_coverage_audit",
+  "papers": [
+    {
+      "id": "bimt",
+      "title": "Seeing is Believing",
+      "coverage": "method-faithful synthetic interaction",
+      "exposes": ["L1/local/swap ablation", "task loss", "connection cost", "signed wiring", "edge ablation"],
+      "missing_gate": "matched-seed training and measured weight/ablation ingestion"
+    },
+    {
+      "id": "clock_pizza",
+      "title": "The Clock and the Pizza",
+      "coverage": "method-faithful synthetic interaction",
+      "exposes": ["attention-rate × width phase map", "gradient symmetricity", "distance irrelevance q", "circularity", "fixed behavior"],
+      "missing_gate": "modular-addition sweep across seeds with paper metrics"
+    },
+    {
+      "id": "hypernetwork",
+      "title": "Generating Interpretable Networks using Hypernetworks",
+      "coverage": "method-faithful synthetic interaction",
+      "exposes": ["β × training-step phase map", "categorical algorithms", "order parameters", "seed dependence", "systematic generalization"],
+      "missing_gate": "trained hypernetwork ensemble with seed-level uncertainty"
+    },
+    {
+      "id": "mips",
+      "title": "MIPS / Opening the AI Black Box",
+      "coverage": "method-faithful synthetic interaction",
+      "exposes": ["simplification", "integer autoencoding", "FSM", "symbolic regression", "code", "verification", "continuous failure"],
+      "missing_gate": "compiler pipeline applied to captured recurrent or transformer state"
+    },
+    {
+      "id": "sid",
+      "title": "Discovering New Interpretable Conservation Laws as Sparse Invariants",
+      "coverage": "method-faithful synthetic interaction",
+      "exposes": ["proposed basis", "singular spectrum", "nullity", "sparse coefficients", "functional rank", "trajectory constancy", "negative control"],
+      "missing_gate": "directional-derivative matrix and held-out trajectories from measured dynamics"
+    },
+    {
+      "id": "open_problems",
+      "title": "Open Problems in Mechanistic Interpretability",
+      "coverage": "method-faithful claim-governance interaction",
+      "exposes": ["decomposition-description-validation", "goal-specific evidence route", "progress axes", "competitive baseline rung"],
+      "missing_gate": "registered interventions, held-out outcomes, and task-relevant baselines"
+    }
+  ],
+  "holonomy_boundary": "Holonomy becomes testable only after a state space and transport rule are identified; loop-dependent display alone is not algorithm, conservation, or control evidence."
+}

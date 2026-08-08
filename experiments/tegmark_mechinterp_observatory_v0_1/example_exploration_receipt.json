@@ -1,0 +1,189 @@
+{
+  "schema_version": "tegmark_mechinterp_observatory.example_exploration.v1",
+  "run_kind": "deterministic_agent_contract_test",
+  "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923",
+  "evidence_class": "method_faithful_synthetic_fixture",
+  "steps": [
+    {
+      "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
+      "lens": "bimt",
+      "paper": "Seeing is Believing",
+      "source": "https://arxiv.org/abs/2305.08746",
+      "question": "Did geometry-aware training simplify the circuit without silently changing the task?",
+      "selection": {
+        "method": "bimt",
+        "edge_index": 0
+      },
+      "observations": {
+        "task_loss": 0.0031,
+        "connection_cost": 3.4,
+        "active_edges": 10,
+        "selected_edge": {
+          "source": "x0",
+          "target": "h0",
+          "weight": 0.92,
+          "ablation_delta": 0.16
+        }
+      },
+      "evidence_class": "method_faithful_synthetic_fixture",
+      "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
+      "next_evidence_action": "Train matched seeds under vanilla, L1, local, swap, and BIMT conditions; ingest weights and edge-ablation outcomes.",
+      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+    },
+    {
+      "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
+      "lens": "clock_pizza",
+      "paper": "The Clock and the Pizza",
+      "source": "https://arxiv.org/abs/2306.17844",
+      "question": "Where does the internal algorithm change while validation accuracy remains essentially fixed?",
+      "selection": {
+        "width": 64,
+        "attention_rate": 1
+      },
+      "observations": {
+        "width": 64,
+        "attention_rate": 1,
+        "algorithm": "clock",
+        "gradient_symmetricity": 0.18,
+        "distance_irrelevance_q": 0.78,
+        "circularity": 0.943,
+        "validation_accuracy": 0.997
+      },
+      "evidence_class": "method_faithful_synthetic_fixture",
+      "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
+      "next_evidence_action": "Sweep attention rate, width, and seed on modular addition; compute circularity, gradient symmetricity, and distance irrelevance q.",
+      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+    },
+    {
+      "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
+      "lens": "hypernetwork",
+      "paper": "Interpretable networks using hypernetworks",
+      "source": "https://arxiv.org/abs/2312.03051",
+      "question": "Which discrete solution family emerges as complexity pressure and training time change?",
+      "selection": {
+        "beta": 0.0001,
+        "training_step": 3200,
+        "view": "phase"
+      },
+      "observations": {
+        "beta": 0.0001,
+        "step": 3200,
+        "algorithm": "double-sided",
+        "double_sidedness": 1,
+        "strongest_connection": 0.756,
+        "seed_dependence": 0.534
+      },
+      "evidence_class": "method_faithful_synthetic_fixture",
+      "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
+      "next_evidence_action": "Train a hypernetwork ensemble across β and time; retain seed distributions and test sizes outside the training support.",
+      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+    },
+    {
+      "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
+      "lens": "mips",
+      "paper": "MIPS · Opening the AI Black Box",
+      "source": "https://arxiv.org/abs/2402.05110",
+      "question": "Can the latent dynamics be converted into exact state, executable code, and a passing verification test?",
+      "selection": {
+        "case": "binary_addition",
+        "stage_index": 5,
+        "stage": "verify"
+      },
+      "observations": {
+        "status": "compiled",
+        "integer_code": "carry ∈ {0, 1}",
+        "symbolic_law": "out = carry ⊕ a ⊕ b; next = (carry + a + b > 1)",
+        "verification": "8 / 8 Boolean transitions"
+      },
+      "evidence_class": "method_faithful_synthetic_fixture",
+      "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
+      "next_evidence_action": "Run simplification, integer/Boolean autoencoding, FSM extraction, symbolic regression, and held-out execution on captured state.",
+      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+    },
+    {
+      "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
+      "lens": "sid",
+      "paper": "Sparse invariant detector",
+      "source": "https://arxiv.org/abs/2305.19525",
+      "question": "Does a sparse expression live in the dynamics' nullspace and remain constant on held-out trajectories?",
+      "selection": {
+        "system": "harmonic_oscillator",
+        "view": "trajectories"
+      },
+      "observations": {
+        "dynamics": "q̇ = p, ṗ = −q",
+        "basis": [
+          "1",
+          "q",
+          "p",
+          "q²",
+          "qp",
+          "p²"
+        ],
+        "nullity": 1,
+        "independent_rank": 1,
+        "law": "H(q,p) = ½q² + ½p²",
+        "max_residual": 2e-8
+      },
+      "evidence_class": "method_faithful_synthetic_fixture",
+      "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
+      "next_evidence_action": "Build the directional-derivative matrix from measured dynamics, rotate its nullspace sparsely, and test functional independence and held-out constancy.",
+      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+    },
+    {
+      "schema_version": "tegmark_mechinterp_observatory.snapshot.v1",
+      "lens": "open_problems",
+      "paper": "Open Problems in Mechanistic Interpretability",
+      "source": "https://arxiv.org/abs/2501.16496",
+      "question": "What validation evidence is missing before an interpretation can support monitoring, prediction, or control?",
+      "selection": {
+        "goal": "control"
+      },
+      "observations": {
+        "pipeline": [
+          "decomposition",
+          "description",
+          "validation"
+        ],
+        "evidence_route": [
+          "causal intervention",
+          "specificity control",
+          "behavioral recovery",
+          "competitive baseline"
+        ],
+        "progress_axes": [
+          {
+            "id": "depth",
+            "label": "description depth",
+            "value": 0.45
+          },
+          {
+            "id": "extent",
+            "label": "network extent",
+            "value": 0.25
+          },
+          {
+            "id": "distribution",
+            "label": "task-distribution extent",
+            "value": 0.35
+          },
+          {
+            "id": "timing",
+            "label": "during-training access",
+            "value": 0.15
+          }
+        ],
+        "strongest_validation_rung": "competitive real-task baseline"
+      },
+      "evidence_class": "method_faithful_synthetic_fixture",
+      "claim_boundary": "Interaction and data-contract demonstration only; not a paper reproduction and not evidence about Pixie or Qwen.",
+      "next_evidence_action": "Pre-register the chosen goal's counterfactual, replacement, held-out, and competitive-baseline tests.",
+      "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923"
+    }
+  ],
+  "conclusion": {
+    "useful_chain": "training geometry → algorithm phase → program compiler → invariant → validation route",
+    "empirical_claim": false,
+    "next_gate": "Replace exactly one synthetic lens with registered model evidence before making a mechanism claim."
+  }
+}

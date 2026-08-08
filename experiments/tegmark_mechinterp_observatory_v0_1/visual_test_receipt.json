@@ -1,0 +1,26 @@
+{
+  "schema_version": "tegmark_mechinterp_observatory.visual_test.v1",
+  "tested_on": "2026-08-08",
+  "target": "http://localhost:8765/",
+  "browser_surface": "Codex in-app browser",
+  "fixture_sha256": "b7501e9030591e4980b09cbe6bcfbc3b464c7e8afafea6876cd855783d760923",
+  "checks": {
+    "six_lenses_rendered": true,
+    "paper_source_links_present": true,
+    "agent_snapshot_present": true,
+    "continuous_state_failure_rendered_unavailable": true,
+    "no_invariant_negative_control_rendered": true,
+    "small_nonzero_residual_preserved": "2.00e-8",
+    "console_errors_or_warnings": 0,
+    "responsive_viewport": {
+      "width": 375,
+      "height": 812,
+      "body_scroll_width": 360,
+      "instrument_columns": "332.95px",
+      "inspector_left_border": "0px",
+      "unexpected_page_overflow": false
+    }
+  },
+  "defect_found_and_fixed": "The 2e-8 invariant residual was displayed as 0 by the generic formatter; small nonzero values now use scientific notation.",
+  "claim_boundary": "This receipt validates rendering and interaction behavior only, not a paper result or a model mechanism."
+}
