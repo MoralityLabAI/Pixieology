@@ -1,0 +1,55 @@
+{
+  "schema_version": "sheets_loops_levers_visual_test.v1",
+  "tested_at": "2026-08-08",
+  "browser": "Codex in-app Chromium",
+  "fixture_sha256": "39da05fd5f1dc29ffcf2cb8ea1f83e58567ca129c59d28d2be53a2847b7a5534",
+  "checks": {
+    "desktop_1024": {
+      "result": "pass",
+      "horizontal_overflow": false,
+      "active_panel_count": 1,
+      "dominant_visual": "etale depth atlas"
+    },
+    "responsive_736": {
+      "result": "pass",
+      "horizontal_overflow": false,
+      "chapter_layout": "stacked",
+      "loop_animation_advanced": true
+    },
+    "mobile_360": {
+      "result": "pass",
+      "horizontal_overflow": false,
+      "synthesis_layout": "single column",
+      "agent_panel_fits_viewport": true
+    },
+    "chapter_isolation": {
+      "result": "pass",
+      "computed_visible_panels": 1
+    },
+    "shared_selection": {
+      "result": "pass",
+      "tested_motifs": ["down_proj", "gate_proj"]
+    },
+    "keyboard_navigation": {
+      "result": "pass",
+      "tested": "ArrowRight from Levers to Synthesis"
+    },
+    "returned_gramian_toggle": {
+      "result": "pass",
+      "secondary_paths_after_disable": 0
+    },
+    "agent_snapshot": {
+      "result": "pass",
+      "bound_fields": ["chapter", "motif", "claim_boundary", "next_evidence_action"]
+    },
+    "console": {
+      "result": "pass",
+      "errors_or_warnings": 0
+    },
+    "theme": {
+      "light_runtime": "pass",
+      "dark_contract": "static_only",
+      "note": "The active browser exposed the light preference. Dark tokens use CSS light-dark() and remain a static contract, not a runtime screenshot claim."
+    }
+  }
+}

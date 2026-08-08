@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Sheets, Loops, and Levers</title>
+  <link rel="stylesheet" href="essay.css">
+</head>
+<body>
+  <main class="essay-shell">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">A geometric field guide for mechanistic interpretation</p>
+        <h1>Sheets, Loops, and Levers</h1>
+        <p class="dek">Follow one mechanism through depth, around a closed context, and into the actions that can actually move it.</p>
+      </div>
+      <button id="agent-toggle" class="quiet-button" type="button" aria-expanded="false" aria-controls="agent-panel">Agent view</button>
+    </header>
+
+    <p class="evidence-boundary"><strong>Method-faithful synthetic fixture.</strong> Geometry is exact here; activation evidence, neural controllability, and human usability are not yet claimed.</p>
+
+    <div class="essay-toolbar" aria-label="Shared mechanism selection">
+      <label for="motif-select">Carry one motif through the essay</label>
+      <select id="motif-select"></select>
+      <span id="motif-token" class="motif-token" aria-live="polite"></span>
+    </div>
+
+    <nav class="chapter-tabs" aria-label="Essay chapters" role="tablist">
+      <button type="button" role="tab" id="tab-sheets" aria-controls="chapter-sheets" aria-selected="true" data-chapter="sheets"><span>01</span> Sheets</button>
+      <button type="button" role="tab" id="tab-loops" aria-controls="chapter-loops" aria-selected="false" data-chapter="loops"><span>02</span> Loops</button>
+      <button type="button" role="tab" id="tab-levers" aria-controls="chapter-levers" aria-selected="false" data-chapter="levers"><span>03</span> Levers</button>
+      <button type="button" role="tab" id="tab-synthesis" aria-controls="chapter-synthesis" aria-selected="false" data-chapter="synthesis"><span>04</span> Synthesis</button>
+    </nav>
+
+    <section id="chapter-sheets" class="chapter is-active" role="tabpanel" aria-labelledby="tab-sheets">
+      <div class="chapter-copy">
+        <p class="chapter-kicker">Depth is the base</p>
+        <h2>Where does this mechanism become locally indistinguishable?</h2>
+        <p>Each target is a sheet over ordered layer depth. The chart window asks whether globally normalized sections approach within ε. It is local comparison, not a claim that the targets become globally identical.</p>
+        <div class="chapter-control">
+          <label for="depth-range">Chart center <output id="depth-output" for="depth-range">9</output></label>
+          <input id="depth-range" type="range" min="0" max="27" value="9" step="1">
+          <p>Window radius 2 layers · ε = 0.22 RMS</p>
+        </div>
+        <div id="sheets-reading" class="reading" aria-live="polite"></div>
+      </div>
+      <figure class="dominant-figure">
+        <svg id="sheets-svg" class="plot" viewBox="0 0 900 520" role="img" aria-labelledby="sheets-title sheets-desc">
+          <title id="sheets-title">Étale depth atlas</title>
+          <desc id="sheets-desc">Seven target sheets traced over transformer depth with a selected local chart window.</desc>
+        </svg>
+        <figcaption>Vertical position shows one section coordinate for legibility; overlap is computed from all three globally normalized coordinates.</figcaption>
+      </figure>
+    </section>
+
+    <section id="chapter-loops" class="chapter" role="tabpanel" aria-labelledby="tab-loops" hidden>
+      <div class="chapter-copy">
+        <p class="chapter-kicker">Time is the path</p>
+        <h2>What returns changed after a genuine closed traversal?</h2>
+        <p>The state follows a closed phase loop while an association frame is transported. The camera stays fixed. The residual frame rotation after one circuit is the holonomy.</p>
+        <div class="chapter-control loop-controls">
+          <label for="phase-range">Loop phase <output id="phase-output" for="phase-range">0%</output></label>
+          <input id="phase-range" type="range" min="0" max="1000" value="0" step="1">
+          <button id="play-loop" type="button" aria-pressed="false">Play one circuit</button>
+        </div>
+        <div id="loops-reading" class="reading" aria-live="polite"></div>
+      </div>
+      <figure class="dominant-figure">
+        <svg id="loops-svg" class="plot" viewBox="0 0 900 520" role="img" aria-labelledby="loops-title loops-desc">
+          <title id="loops-title">Closed mechanism loop with transported frame</title>
+          <desc id="loops-desc">A fixed-camera projection of a closed three-dimensional state loop and a transported local frame.</desc>
+        </svg>
+        <figcaption>The dotted tripod is the starting frame. The solid tripod is transported; it is not camera motion.</figcaption>
+      </figure>
+    </section>
+
+    <section id="chapter-levers" class="chapter" role="tabpanel" aria-labelledby="tab-levers" hidden>
+      <div class="chapter-copy">
+        <p class="chapter-kicker">Actions live in the tangent fiber</p>
+        <h2>Which local directions can registered interventions reach?</h2>
+        <p>The controllability Gramian turns intervention directions into an ellipsoid. Rank counts reachable dimensions; axis lengths show relative effort. The ghost ellipsoid is the same action geometry returned by the loop.</p>
+        <div class="chapter-control">
+          <label class="check-label"><input id="returned-toggle" type="checkbox" checked> Show loop-returned Gramian HWHᵀ</label>
+          <p>Measured B must carry singular-value uncertainty and an abstention state.</p>
+        </div>
+        <div id="levers-reading" class="reading" aria-live="polite"></div>
+      </div>
+      <figure class="dominant-figure">
+        <svg id="levers-svg" class="plot" viewBox="0 0 900 520" role="img" aria-labelledby="levers-title levers-desc">
+          <title id="levers-title">Reachability ellipsoid</title>
+          <desc id="levers-desc">A projected controllability ellipsoid and its holonomy-transported counterpart.</desc>
+        </svg>
+        <figcaption>Ellipsoid axes scale with √λ. A collapsed axis means the registered action set cannot resolve that direction.</figcaption>
+      </figure>
+    </section>
+
+    <section id="chapter-synthesis" class="chapter synthesis" role="tabpanel" aria-labelledby="tab-synthesis" hidden>
+      <div class="synthesis-intro">
+        <p class="chapter-kicker">One motif, three questions</p>
+        <h2>Coordinate the evidence without collapsing the bases.</h2>
+        <p>Depth locates a motif, a loop tests transport, and registered actions test control. Agreement becomes a research hypothesis only after all three refer to the same subspace and samples.</p>
+      </div>
+      <div class="synthesis-flow" aria-label="Synthesis of sheets, loops, and levers">
+        <article>
+          <span class="step-number">01</span>
+          <svg id="synthesis-sheets" viewBox="0 0 260 150" role="img" aria-label="Selected depth sheet preview"></svg>
+          <h3>Locate</h3><p id="syn-sheet-copy"></p>
+        </article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article>
+          <span class="step-number">02</span>
+          <svg id="synthesis-loops" viewBox="0 0 260 150" role="img" aria-label="Closed loop preview"></svg>
+          <h3>Transport</h3><p id="syn-loop-copy"></p>
+        </article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article>
+          <span class="step-number">03</span>
+          <svg id="synthesis-levers" viewBox="0 0 260 150" role="img" aria-label="Reachability preview"></svg>
+          <h3>Intervene</h3><p id="syn-lever-copy"></p>
+        </article>
+      </div>
+      <div class="synthesis-claim">
+        <p class="chapter-kicker">Candidate claim</p>
+        <p id="candidate-claim"></p>
+        <p class="next-test"><strong>Next falsifier:</strong> <span id="next-test"></span></p>
+      </div>
+    </section>
+
+    <footer class="essay-footer">
+      <span>← → chapters · 1–4 direct access</span>
+      <span>Exact synthetic confirmation: passive 50% → certificate 100% across 256 held-out pairs</span>
+    </footer>
+  </main>
+
+  <aside id="agent-panel" class="agent-panel" aria-label="Agent-readable state" hidden>
+    <div class="agent-header"><div><p class="eyebrow">Machine handoff</p><h2>Agent snapshot</h2></div><button id="agent-close" type="button">Close</button></div>
+    <p>Bound selection, evidence class, claim boundary, and next evidence action. No display-only state is omitted.</p>
+    <button id="copy-snapshot" type="button">Copy JSON</button>
+    <pre><code id="agent-json"></code></pre>
+  </aside>
+
+  <script src="fixture.js"></script>
+  <script src="essay_core.js"></script>
+  <script src="essay.js"></script>
+</body>
+</html>
