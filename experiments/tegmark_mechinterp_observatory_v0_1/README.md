@@ -46,6 +46,8 @@ node --test tests/*.test.mjs
 
 The browser pass found and fixed one claim-significant display issue: a residual of `2e-8` was initially rendered as `0`. Small nonzero quantities now use scientific notation.
 
+The reachability certificate now also has a seed-held-out 256-pair confirmation in `../reachability_information_gain_v0_1/`: passive 50%, certificate 100%, exactly one bit added, and an accepted independent evaluation audit. This confirms the synthetic information claim, not neural-model controllability or human usability.
+
 ## Evidence boundary
 
 The bundled data is a `method_faithful_synthetic_fixture`. It demonstrates the UI and agent-facing data contract only. It contains no paper reproduction, activation capture, Qwen/Pixie result, or empirical control evidence.

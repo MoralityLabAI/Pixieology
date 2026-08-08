@@ -1,0 +1,19 @@
+{
+  "schema_version": "reachability_information_gain.stage.v1",
+  "staged_before_outcomes": true,
+  "seed": 20260809,
+  "independent_items": 256,
+  "counterbalanced_full_candidate_A": 128,
+  "counterbalanced_full_candidate_B": 128,
+  "dataset_sha256": "c882576e7c04b5a098ec56312198ec672bf579023a4206fa54e6dd0ceae6c24d",
+  "runner_sha256": "0dbd753a4936aebb6d8ccdbbb7ddf4748c44640d04de05b78744ffaf071d5234",
+  "manifest_sha256": "313feb002ee85c7a82bd227090fbd2c0366b1ffbd3a6e86de79e98bb25fb0902",
+  "contamination_check_sha256": "8f15bab0e05f76313b0d78115a724d76d6f9600726c64873ad60fc8e3dfd1afe",
+  "decision_rule": {
+    "passive_accuracy": 0.5,
+    "control_accuracy": 1.0,
+    "conditional_information_gain_bits": 1.0,
+    "coordinate_invariance_fraction": 1.0,
+    "passive_identity_leaks": 0
+  }
+}

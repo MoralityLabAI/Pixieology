@@ -1,0 +1,6721 @@
+{
+  "kind": "evaluation_audit",
+  "schema_version": "1.0",
+  "eval_id": "reachability-information-gain-v0-1",
+  "claim": "A registered-action reachability certificate strictly improves identification of finite-horizon control class over a passive manifold view when passive dynamics are held fixed.",
+  "policy": "base",
+  "task_result": {
+    "judgments": 256,
+    "decisive_judgments": 256,
+    "tie_count": 0,
+    "uncertain_count": 0,
+    "tie_rate": 0.0,
+    "uncertain_rate": 0.0,
+    "first_position_win_rate": 0.5,
+    "candidate_wins": {
+      "control_view": 256
+    },
+    "candidate_win_rates": {
+      "control_view": 1.0
+    },
+    "unique_items": 256,
+    "judge_ids": [
+      "exact_information_judge_v1"
+    ],
+    "prompt_variants": [
+      "default"
+    ],
+    "declared_dataset_size": 256,
+    "dataset_item_count_delta": 0,
+    "dataset_item_coverage_rate": 1.0
+  },
+  "measurement_reliability": {
+    "repeat_flip_rate": null,
+    "repeat_disagreements": 0,
+    "repeat_pair_comparisons": 0,
+    "eligible_repeat_groups": 0,
+    "position_sensitive_fraction": null,
+    "position_sensitive_groups": 0,
+    "position_eligible_groups": 0,
+    "prompt_sensitive_fraction": null,
+    "prompt_sensitive_groups": 0,
+    "prompt_eligible_groups": 0,
+    "cross_judge_kappa": null,
+    "judge_pairs": [],
+    "same_family_exposures": 0,
+    "same_family_selections": 0,
+    "same_family_preference_rate": null,
+    "same_family_preference_delta_from_half": null,
+    "by_judge": {},
+    "hard_failure_candidate_items": 0,
+    "hard_fail_selections": 0,
+    "decisive_judgments": 256,
+    "hard_fail_selection_rate": 0.0,
+    "declared_deterministic_checks": [
+      "control_rank_matches_oracle",
+      "coordinate_change_rank_invariant",
+      "decoder_identification_correct",
+      "observation_contract_valid",
+      "output_schema_valid",
+      "passive_pair_exactly_identical",
+      "task_completion"
+    ],
+    "expected_deterministic_rows": 3584,
+    "covered_deterministic_rows": 3328,
+    "deterministic_coverage_rate": 0.9285714285714286,
+    "missing_deterministic_rows": 256,
+    "missing_deterministic_examples": [
+      {
+        "item_id": "reach-0000",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0001",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0002",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0003",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0004",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0005",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0006",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0007",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0008",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0009",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0010",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0011",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0012",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0013",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0014",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0015",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0016",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0017",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0018",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      },
+      {
+        "item_id": "reach-0019",
+        "candidate": "passive_view",
+        "check": "control_rank_matches_oracle"
+      }
+    ],
+    "undeclared_check_rows": 0,
+    "undeclared_checks": {},
+    "duplicate_deterministic_rows": 0,
+    "invalid_deterministic_rows": 0,
+    "examples": [],
+    "observed_dataset_items": 256,
+    "declared_dataset_items": 256,
+    "grade": "D",
+    "meets_declared_limits": false,
+    "thresholds": {
+      "max_repeat_flip_rate": 0.0,
+      "max_position_sensitive_fraction": 0.0,
+      "min_cross_judge_kappa": 1.0,
+      "cross_judge_required": true,
+      "max_hard_fail_selection_rate": 0.0,
+      "min_deterministic_coverage": 1.0
+    },
+    "checks": [
+      {
+        "metric": "repeat_flip_rate",
+        "value": null,
+        "operator": "<=",
+        "threshold": 0.0,
+        "passed": false
+      },
+      {
+        "metric": "position_sensitive_fraction",
+        "value": null,
+        "operator": "<=",
+        "threshold": 0.0,
+        "passed": false
+      },
+      {
+        "metric": "cross_judge_kappa",
+        "value": null,
+        "operator": ">=",
+        "threshold": 1.0,
+        "passed": false
+      },
+      {
+        "metric": "hard_fail_selection_rate",
+        "value": 0.0,
+        "operator": "<=",
+        "threshold": 0.0,
+        "passed": true
+      },
+      {
+        "metric": "deterministic_coverage_rate",
+        "value": 0.9285714285714286,
+        "operator": ">=",
+        "threshold": 1.0,
+        "passed": false
+      },
+      {
+        "metric": "dataset_item_count",
+        "value": 256,
+        "operator": "==",
+        "threshold": 256,
+        "passed": true
+      }
+    ]
+  },
+  "claim_support": {
+    "status": "directional",
+    "reason": "The point estimate clears the threshold, but the lower confidence bound does not.",
+    "primary_candidate": "control_view",
+    "baseline_candidate": "passive_view",
+    "apparent_winner": "control_view",
+    "apparent_winner_role": "primary",
+    "independent_item_verdicts": 256,
+    "decisive_items": 256,
+    "primary_wins": 256,
+    "baseline_wins": 0,
+    "ties": 0,
+    "primary_win_rate": 1.0,
+    "confidence": 0.95,
+    "confidence_interval": {
+      "lower": 0.9852161435741286,
+      "upper": 0.9999999999999999
+    },
+    "required_win_rate": 1.0,
+    "item_verdicts": {
+      "reach-0000": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0001": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0002": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0003": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0004": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0005": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0006": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0007": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0008": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0009": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0010": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0011": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0012": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0013": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0014": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0015": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0016": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0017": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0018": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0019": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0020": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0021": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0022": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0023": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0024": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0025": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0026": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0027": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0028": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0029": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0030": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0031": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0032": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0033": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0034": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0035": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0036": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0037": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0038": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0039": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0040": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0041": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0042": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0043": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0044": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0045": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0046": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0047": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0048": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0049": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0050": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0051": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0052": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0053": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0054": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0055": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0056": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0057": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0058": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0059": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0060": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0061": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0062": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0063": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0064": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0065": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0066": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0067": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0068": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0069": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0070": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0071": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0072": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0073": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0074": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0075": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0076": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0077": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0078": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0079": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0080": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0081": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0082": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0083": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0084": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0085": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0086": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0087": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0088": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0089": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0090": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0091": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0092": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0093": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0094": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0095": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0096": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0097": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0098": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0099": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0100": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0101": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0102": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0103": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0104": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0105": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0106": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0107": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0108": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0109": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0110": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0111": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0112": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0113": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0114": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0115": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0116": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0117": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0118": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0119": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0120": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0121": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0122": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0123": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0124": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0125": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0126": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0127": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0128": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0129": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0130": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0131": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0132": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0133": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0134": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0135": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0136": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0137": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0138": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0139": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0140": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0141": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0142": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0143": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0144": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0145": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0146": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0147": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0148": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0149": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0150": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0151": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0152": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0153": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0154": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0155": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0156": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0157": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0158": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0159": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0160": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0161": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0162": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0163": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0164": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0165": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0166": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0167": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0168": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0169": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0170": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0171": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0172": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0173": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0174": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0175": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0176": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0177": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0178": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0179": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0180": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0181": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0182": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0183": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0184": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0185": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0186": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0187": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0188": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0189": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0190": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0191": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0192": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0193": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0194": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0195": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0196": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0197": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0198": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0199": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0200": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0201": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0202": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0203": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0204": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0205": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0206": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0207": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0208": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0209": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0210": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0211": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0212": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0213": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0214": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0215": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0216": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0217": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0218": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0219": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0220": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0221": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0222": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0223": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0224": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0225": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0226": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0227": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0228": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0229": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0230": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0231": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0232": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0233": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0234": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0235": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0236": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0237": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0238": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0239": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0240": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0241": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0242": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0243": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0244": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0245": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0246": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0247": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0248": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0249": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0250": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0251": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0252": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0253": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0254": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      },
+      "reach-0255": {
+        "verdict": "control_view",
+        "consensus_margin": 1.0,
+        "votes": {
+          "control_view": 1
+        }
+      }
+    },
+    "independence_note": "Repeated judge calls, prompt variants, display orders, and judge identities are collapsed to one modal verdict per dataset item."
+  },
+  "operational_decision": {
+    "action": "targeted_rerun",
+    "reason": "Evaluator reliability does not meet declared limits; 256 item(s) are queued for adjudication or counterbalanced rerun."
+  },
+  "data_quality": {
+    "judgments_path": "results\\judgments.jsonl",
+    "deterministic_path": "results\\deterministic.jsonl",
+    "raw_judgment_rows": 256,
+    "valid_judgment_rows": 256,
+    "jsonl_parse_errors": 0,
+    "invalid_judgment_rows": 0,
+    "deterministic_rows": 3328,
+    "deterministic_parse_errors": 0,
+    "error_examples": []
+  },
+  "provenance": {
+    "manifest_path": "manifest.yaml",
+    "manifest_sha256": "3621e9c46296d6443b2167ede27ac66ff65b3e6ed4ba468562973809454b5772",
+    "policy_path": "C:\\projects\\evals-reviewer\\src\\evals_reviewer\\resources\\policies\\base.yaml",
+    "policy_sha256": "d3dc8c3a699efe2a6ce46d54961e8edddd80e18b5f395ad263076cb9d7f30e45",
+    "judgments_sha256": "bccb08d4c50dfc6c75f7458fd3cbb77cebb101ce2599fcf6817dba6fbf5f777e",
+    "deterministic_sha256": "cd299cec5fc69587fc6b6efbbe42c26b9585d5296395f8845c194ab1d6330126"
+  },
+  "preflight": {
+    "kind": "preflight_review",
+    "eval_id": "reachability-information-gain-v0-1",
+    "claim": "A registered-action reachability certificate strictly improves identification of finite-horizon control class over a passive manifold view when passive dynamics are held fixed.",
+    "policy": "base",
+    "status": "warn",
+    "release_blocking": false,
+    "summary": {
+      "finding_count": 1,
+      "blocking_count": 0,
+      "severity_counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 1
+      }
+    },
+    "findings": [
+      {
+        "id": "adapter_subjective_dimension_gap",
+        "severity": "low",
+        "release_blocking": false,
+        "message": "The 'generic' adapter recommends subjective dimensions that are not declared.",
+        "recommendation": "Add the applicable dimensions or record a scoped omission in the manifest.",
+        "evidence": {
+          "missing_dimensions": [
+            "completeness",
+            "epistemic_honesty",
+            "style"
+          ]
+        }
+      }
+    ],
+    "manifest_path": "manifest.yaml"
+  },
+  "adjudication_queue": [
+    {
+      "item_id": "reach-0000",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        1
+      ]
+    },
+    {
+      "item_id": "reach-0001",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        2
+      ]
+    },
+    {
+      "item_id": "reach-0002",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        3
+      ]
+    },
+    {
+      "item_id": "reach-0003",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        4
+      ]
+    },
+    {
+      "item_id": "reach-0004",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        5
+      ]
+    },
+    {
+      "item_id": "reach-0005",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        6
+      ]
+    },
+    {
+      "item_id": "reach-0006",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        7
+      ]
+    },
+    {
+      "item_id": "reach-0007",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        8
+      ]
+    },
+    {
+      "item_id": "reach-0008",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        9
+      ]
+    },
+    {
+      "item_id": "reach-0009",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        10
+      ]
+    },
+    {
+      "item_id": "reach-0010",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        11
+      ]
+    },
+    {
+      "item_id": "reach-0011",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        12
+      ]
+    },
+    {
+      "item_id": "reach-0012",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        13
+      ]
+    },
+    {
+      "item_id": "reach-0013",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        14
+      ]
+    },
+    {
+      "item_id": "reach-0014",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        15
+      ]
+    },
+    {
+      "item_id": "reach-0015",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        16
+      ]
+    },
+    {
+      "item_id": "reach-0016",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        17
+      ]
+    },
+    {
+      "item_id": "reach-0017",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        18
+      ]
+    },
+    {
+      "item_id": "reach-0018",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        19
+      ]
+    },
+    {
+      "item_id": "reach-0019",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        20
+      ]
+    },
+    {
+      "item_id": "reach-0020",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        21
+      ]
+    },
+    {
+      "item_id": "reach-0021",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        22
+      ]
+    },
+    {
+      "item_id": "reach-0022",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        23
+      ]
+    },
+    {
+      "item_id": "reach-0023",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        24
+      ]
+    },
+    {
+      "item_id": "reach-0024",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        25
+      ]
+    },
+    {
+      "item_id": "reach-0025",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        26
+      ]
+    },
+    {
+      "item_id": "reach-0026",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        27
+      ]
+    },
+    {
+      "item_id": "reach-0027",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        28
+      ]
+    },
+    {
+      "item_id": "reach-0028",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        29
+      ]
+    },
+    {
+      "item_id": "reach-0029",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        30
+      ]
+    },
+    {
+      "item_id": "reach-0030",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        31
+      ]
+    },
+    {
+      "item_id": "reach-0031",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        32
+      ]
+    },
+    {
+      "item_id": "reach-0032",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        33
+      ]
+    },
+    {
+      "item_id": "reach-0033",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        34
+      ]
+    },
+    {
+      "item_id": "reach-0034",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        35
+      ]
+    },
+    {
+      "item_id": "reach-0035",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        36
+      ]
+    },
+    {
+      "item_id": "reach-0036",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        37
+      ]
+    },
+    {
+      "item_id": "reach-0037",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        38
+      ]
+    },
+    {
+      "item_id": "reach-0038",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        39
+      ]
+    },
+    {
+      "item_id": "reach-0039",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        40
+      ]
+    },
+    {
+      "item_id": "reach-0040",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        41
+      ]
+    },
+    {
+      "item_id": "reach-0041",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        42
+      ]
+    },
+    {
+      "item_id": "reach-0042",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        43
+      ]
+    },
+    {
+      "item_id": "reach-0043",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        44
+      ]
+    },
+    {
+      "item_id": "reach-0044",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        45
+      ]
+    },
+    {
+      "item_id": "reach-0045",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        46
+      ]
+    },
+    {
+      "item_id": "reach-0046",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        47
+      ]
+    },
+    {
+      "item_id": "reach-0047",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        48
+      ]
+    },
+    {
+      "item_id": "reach-0048",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        49
+      ]
+    },
+    {
+      "item_id": "reach-0049",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        50
+      ]
+    },
+    {
+      "item_id": "reach-0050",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        51
+      ]
+    },
+    {
+      "item_id": "reach-0051",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        52
+      ]
+    },
+    {
+      "item_id": "reach-0052",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        53
+      ]
+    },
+    {
+      "item_id": "reach-0053",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        54
+      ]
+    },
+    {
+      "item_id": "reach-0054",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        55
+      ]
+    },
+    {
+      "item_id": "reach-0055",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        56
+      ]
+    },
+    {
+      "item_id": "reach-0056",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        57
+      ]
+    },
+    {
+      "item_id": "reach-0057",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        58
+      ]
+    },
+    {
+      "item_id": "reach-0058",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        59
+      ]
+    },
+    {
+      "item_id": "reach-0059",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        60
+      ]
+    },
+    {
+      "item_id": "reach-0060",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        61
+      ]
+    },
+    {
+      "item_id": "reach-0061",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        62
+      ]
+    },
+    {
+      "item_id": "reach-0062",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        63
+      ]
+    },
+    {
+      "item_id": "reach-0063",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        64
+      ]
+    },
+    {
+      "item_id": "reach-0064",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        65
+      ]
+    },
+    {
+      "item_id": "reach-0065",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        66
+      ]
+    },
+    {
+      "item_id": "reach-0066",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        67
+      ]
+    },
+    {
+      "item_id": "reach-0067",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        68
+      ]
+    },
+    {
+      "item_id": "reach-0068",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        69
+      ]
+    },
+    {
+      "item_id": "reach-0069",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        70
+      ]
+    },
+    {
+      "item_id": "reach-0070",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        71
+      ]
+    },
+    {
+      "item_id": "reach-0071",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        72
+      ]
+    },
+    {
+      "item_id": "reach-0072",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        73
+      ]
+    },
+    {
+      "item_id": "reach-0073",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        74
+      ]
+    },
+    {
+      "item_id": "reach-0074",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        75
+      ]
+    },
+    {
+      "item_id": "reach-0075",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        76
+      ]
+    },
+    {
+      "item_id": "reach-0076",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        77
+      ]
+    },
+    {
+      "item_id": "reach-0077",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        78
+      ]
+    },
+    {
+      "item_id": "reach-0078",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        79
+      ]
+    },
+    {
+      "item_id": "reach-0079",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        80
+      ]
+    },
+    {
+      "item_id": "reach-0080",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        81
+      ]
+    },
+    {
+      "item_id": "reach-0081",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        82
+      ]
+    },
+    {
+      "item_id": "reach-0082",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        83
+      ]
+    },
+    {
+      "item_id": "reach-0083",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        84
+      ]
+    },
+    {
+      "item_id": "reach-0084",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        85
+      ]
+    },
+    {
+      "item_id": "reach-0085",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        86
+      ]
+    },
+    {
+      "item_id": "reach-0086",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        87
+      ]
+    },
+    {
+      "item_id": "reach-0087",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        88
+      ]
+    },
+    {
+      "item_id": "reach-0088",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        89
+      ]
+    },
+    {
+      "item_id": "reach-0089",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        90
+      ]
+    },
+    {
+      "item_id": "reach-0090",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        91
+      ]
+    },
+    {
+      "item_id": "reach-0091",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        92
+      ]
+    },
+    {
+      "item_id": "reach-0092",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        93
+      ]
+    },
+    {
+      "item_id": "reach-0093",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        94
+      ]
+    },
+    {
+      "item_id": "reach-0094",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        95
+      ]
+    },
+    {
+      "item_id": "reach-0095",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        96
+      ]
+    },
+    {
+      "item_id": "reach-0096",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        97
+      ]
+    },
+    {
+      "item_id": "reach-0097",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        98
+      ]
+    },
+    {
+      "item_id": "reach-0098",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        99
+      ]
+    },
+    {
+      "item_id": "reach-0099",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        100
+      ]
+    },
+    {
+      "item_id": "reach-0100",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        101
+      ]
+    },
+    {
+      "item_id": "reach-0101",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        102
+      ]
+    },
+    {
+      "item_id": "reach-0102",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        103
+      ]
+    },
+    {
+      "item_id": "reach-0103",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        104
+      ]
+    },
+    {
+      "item_id": "reach-0104",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        105
+      ]
+    },
+    {
+      "item_id": "reach-0105",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        106
+      ]
+    },
+    {
+      "item_id": "reach-0106",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        107
+      ]
+    },
+    {
+      "item_id": "reach-0107",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        108
+      ]
+    },
+    {
+      "item_id": "reach-0108",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        109
+      ]
+    },
+    {
+      "item_id": "reach-0109",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        110
+      ]
+    },
+    {
+      "item_id": "reach-0110",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        111
+      ]
+    },
+    {
+      "item_id": "reach-0111",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        112
+      ]
+    },
+    {
+      "item_id": "reach-0112",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        113
+      ]
+    },
+    {
+      "item_id": "reach-0113",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        114
+      ]
+    },
+    {
+      "item_id": "reach-0114",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        115
+      ]
+    },
+    {
+      "item_id": "reach-0115",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        116
+      ]
+    },
+    {
+      "item_id": "reach-0116",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        117
+      ]
+    },
+    {
+      "item_id": "reach-0117",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        118
+      ]
+    },
+    {
+      "item_id": "reach-0118",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        119
+      ]
+    },
+    {
+      "item_id": "reach-0119",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        120
+      ]
+    },
+    {
+      "item_id": "reach-0120",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        121
+      ]
+    },
+    {
+      "item_id": "reach-0121",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        122
+      ]
+    },
+    {
+      "item_id": "reach-0122",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        123
+      ]
+    },
+    {
+      "item_id": "reach-0123",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        124
+      ]
+    },
+    {
+      "item_id": "reach-0124",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        125
+      ]
+    },
+    {
+      "item_id": "reach-0125",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        126
+      ]
+    },
+    {
+      "item_id": "reach-0126",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        127
+      ]
+    },
+    {
+      "item_id": "reach-0127",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        128
+      ]
+    },
+    {
+      "item_id": "reach-0128",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        129
+      ]
+    },
+    {
+      "item_id": "reach-0129",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        130
+      ]
+    },
+    {
+      "item_id": "reach-0130",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        131
+      ]
+    },
+    {
+      "item_id": "reach-0131",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        132
+      ]
+    },
+    {
+      "item_id": "reach-0132",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        133
+      ]
+    },
+    {
+      "item_id": "reach-0133",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        134
+      ]
+    },
+    {
+      "item_id": "reach-0134",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        135
+      ]
+    },
+    {
+      "item_id": "reach-0135",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        136
+      ]
+    },
+    {
+      "item_id": "reach-0136",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        137
+      ]
+    },
+    {
+      "item_id": "reach-0137",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        138
+      ]
+    },
+    {
+      "item_id": "reach-0138",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        139
+      ]
+    },
+    {
+      "item_id": "reach-0139",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        140
+      ]
+    },
+    {
+      "item_id": "reach-0140",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        141
+      ]
+    },
+    {
+      "item_id": "reach-0141",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        142
+      ]
+    },
+    {
+      "item_id": "reach-0142",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        143
+      ]
+    },
+    {
+      "item_id": "reach-0143",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        144
+      ]
+    },
+    {
+      "item_id": "reach-0144",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        145
+      ]
+    },
+    {
+      "item_id": "reach-0145",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        146
+      ]
+    },
+    {
+      "item_id": "reach-0146",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        147
+      ]
+    },
+    {
+      "item_id": "reach-0147",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        148
+      ]
+    },
+    {
+      "item_id": "reach-0148",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        149
+      ]
+    },
+    {
+      "item_id": "reach-0149",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        150
+      ]
+    },
+    {
+      "item_id": "reach-0150",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        151
+      ]
+    },
+    {
+      "item_id": "reach-0151",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        152
+      ]
+    },
+    {
+      "item_id": "reach-0152",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        153
+      ]
+    },
+    {
+      "item_id": "reach-0153",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        154
+      ]
+    },
+    {
+      "item_id": "reach-0154",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        155
+      ]
+    },
+    {
+      "item_id": "reach-0155",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        156
+      ]
+    },
+    {
+      "item_id": "reach-0156",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        157
+      ]
+    },
+    {
+      "item_id": "reach-0157",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        158
+      ]
+    },
+    {
+      "item_id": "reach-0158",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        159
+      ]
+    },
+    {
+      "item_id": "reach-0159",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        160
+      ]
+    },
+    {
+      "item_id": "reach-0160",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        161
+      ]
+    },
+    {
+      "item_id": "reach-0161",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        162
+      ]
+    },
+    {
+      "item_id": "reach-0162",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        163
+      ]
+    },
+    {
+      "item_id": "reach-0163",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        164
+      ]
+    },
+    {
+      "item_id": "reach-0164",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        165
+      ]
+    },
+    {
+      "item_id": "reach-0165",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        166
+      ]
+    },
+    {
+      "item_id": "reach-0166",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        167
+      ]
+    },
+    {
+      "item_id": "reach-0167",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        168
+      ]
+    },
+    {
+      "item_id": "reach-0168",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        169
+      ]
+    },
+    {
+      "item_id": "reach-0169",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        170
+      ]
+    },
+    {
+      "item_id": "reach-0170",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        171
+      ]
+    },
+    {
+      "item_id": "reach-0171",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        172
+      ]
+    },
+    {
+      "item_id": "reach-0172",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        173
+      ]
+    },
+    {
+      "item_id": "reach-0173",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        174
+      ]
+    },
+    {
+      "item_id": "reach-0174",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        175
+      ]
+    },
+    {
+      "item_id": "reach-0175",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        176
+      ]
+    },
+    {
+      "item_id": "reach-0176",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        177
+      ]
+    },
+    {
+      "item_id": "reach-0177",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        178
+      ]
+    },
+    {
+      "item_id": "reach-0178",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        179
+      ]
+    },
+    {
+      "item_id": "reach-0179",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        180
+      ]
+    },
+    {
+      "item_id": "reach-0180",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        181
+      ]
+    },
+    {
+      "item_id": "reach-0181",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        182
+      ]
+    },
+    {
+      "item_id": "reach-0182",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        183
+      ]
+    },
+    {
+      "item_id": "reach-0183",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        184
+      ]
+    },
+    {
+      "item_id": "reach-0184",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        185
+      ]
+    },
+    {
+      "item_id": "reach-0185",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        186
+      ]
+    },
+    {
+      "item_id": "reach-0186",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        187
+      ]
+    },
+    {
+      "item_id": "reach-0187",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        188
+      ]
+    },
+    {
+      "item_id": "reach-0188",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        189
+      ]
+    },
+    {
+      "item_id": "reach-0189",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        190
+      ]
+    },
+    {
+      "item_id": "reach-0190",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        191
+      ]
+    },
+    {
+      "item_id": "reach-0191",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        192
+      ]
+    },
+    {
+      "item_id": "reach-0192",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        193
+      ]
+    },
+    {
+      "item_id": "reach-0193",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        194
+      ]
+    },
+    {
+      "item_id": "reach-0194",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        195
+      ]
+    },
+    {
+      "item_id": "reach-0195",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        196
+      ]
+    },
+    {
+      "item_id": "reach-0196",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        197
+      ]
+    },
+    {
+      "item_id": "reach-0197",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        198
+      ]
+    },
+    {
+      "item_id": "reach-0198",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        199
+      ]
+    },
+    {
+      "item_id": "reach-0199",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        200
+      ]
+    },
+    {
+      "item_id": "reach-0200",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        201
+      ]
+    },
+    {
+      "item_id": "reach-0201",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        202
+      ]
+    },
+    {
+      "item_id": "reach-0202",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        203
+      ]
+    },
+    {
+      "item_id": "reach-0203",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        204
+      ]
+    },
+    {
+      "item_id": "reach-0204",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        205
+      ]
+    },
+    {
+      "item_id": "reach-0205",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        206
+      ]
+    },
+    {
+      "item_id": "reach-0206",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        207
+      ]
+    },
+    {
+      "item_id": "reach-0207",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        208
+      ]
+    },
+    {
+      "item_id": "reach-0208",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        209
+      ]
+    },
+    {
+      "item_id": "reach-0209",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        210
+      ]
+    },
+    {
+      "item_id": "reach-0210",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        211
+      ]
+    },
+    {
+      "item_id": "reach-0211",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        212
+      ]
+    },
+    {
+      "item_id": "reach-0212",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        213
+      ]
+    },
+    {
+      "item_id": "reach-0213",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        214
+      ]
+    },
+    {
+      "item_id": "reach-0214",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        215
+      ]
+    },
+    {
+      "item_id": "reach-0215",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        216
+      ]
+    },
+    {
+      "item_id": "reach-0216",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        217
+      ]
+    },
+    {
+      "item_id": "reach-0217",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        218
+      ]
+    },
+    {
+      "item_id": "reach-0218",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        219
+      ]
+    },
+    {
+      "item_id": "reach-0219",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        220
+      ]
+    },
+    {
+      "item_id": "reach-0220",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        221
+      ]
+    },
+    {
+      "item_id": "reach-0221",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        222
+      ]
+    },
+    {
+      "item_id": "reach-0222",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        223
+      ]
+    },
+    {
+      "item_id": "reach-0223",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        224
+      ]
+    },
+    {
+      "item_id": "reach-0224",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        225
+      ]
+    },
+    {
+      "item_id": "reach-0225",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        226
+      ]
+    },
+    {
+      "item_id": "reach-0226",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        227
+      ]
+    },
+    {
+      "item_id": "reach-0227",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        228
+      ]
+    },
+    {
+      "item_id": "reach-0228",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        229
+      ]
+    },
+    {
+      "item_id": "reach-0229",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        230
+      ]
+    },
+    {
+      "item_id": "reach-0230",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        231
+      ]
+    },
+    {
+      "item_id": "reach-0231",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        232
+      ]
+    },
+    {
+      "item_id": "reach-0232",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        233
+      ]
+    },
+    {
+      "item_id": "reach-0233",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        234
+      ]
+    },
+    {
+      "item_id": "reach-0234",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        235
+      ]
+    },
+    {
+      "item_id": "reach-0235",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        236
+      ]
+    },
+    {
+      "item_id": "reach-0236",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        237
+      ]
+    },
+    {
+      "item_id": "reach-0237",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        238
+      ]
+    },
+    {
+      "item_id": "reach-0238",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        239
+      ]
+    },
+    {
+      "item_id": "reach-0239",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        240
+      ]
+    },
+    {
+      "item_id": "reach-0240",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        241
+      ]
+    },
+    {
+      "item_id": "reach-0241",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        242
+      ]
+    },
+    {
+      "item_id": "reach-0242",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        243
+      ]
+    },
+    {
+      "item_id": "reach-0243",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        244
+      ]
+    },
+    {
+      "item_id": "reach-0244",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        245
+      ]
+    },
+    {
+      "item_id": "reach-0245",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        246
+      ]
+    },
+    {
+      "item_id": "reach-0246",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        247
+      ]
+    },
+    {
+      "item_id": "reach-0247",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        248
+      ]
+    },
+    {
+      "item_id": "reach-0248",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        249
+      ]
+    },
+    {
+      "item_id": "reach-0249",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        250
+      ]
+    },
+    {
+      "item_id": "reach-0250",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        251
+      ]
+    },
+    {
+      "item_id": "reach-0251",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        252
+      ]
+    },
+    {
+      "item_id": "reach-0252",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        253
+      ]
+    },
+    {
+      "item_id": "reach-0253",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        254
+      ]
+    },
+    {
+      "item_id": "reach-0254",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        255
+      ]
+    },
+    {
+      "item_id": "reach-0255",
+      "reasons": [
+        "deterministic_coverage_gap"
+      ],
+      "priority": "medium",
+      "candidates": [
+        "control_view",
+        "passive_view"
+      ],
+      "judgment_count": 1,
+      "vote_counts": {
+        "control_view": 1
+      },
+      "source_lines": [
+        256
+      ]
+    }
+  ],
+  "metric_definitions": {
+    "repeat_flip_rate": "Unordered-pair disagreement probability among repeated non-UNCERTAIN verdicts under the same item, judge, prompt variant, and displayed order.",
+    "position_sensitive_fraction": "Fraction of matched item/judge/prompt/candidate-pair groups whose resolved modal normalized verdict differs across A/B and B/A display orders; unresolved repeated-vote ties are excluded.",
+    "prompt_sensitive_fraction": "Fraction of matched item/judge/display-order groups whose resolved modal normalized verdict differs across prompt variants; unresolved repeated-vote ties are excluded.",
+    "cross_judge_kappa": "Matched-condition, repetition-collapsed pairwise Cohen's kappa, weighted by overlap across judge pairs.",
+    "claim_interval": "Wilson interval over one collapsed modal verdict per independent dataset item; repeated judge calls are not independent task samples."
+  }
+}

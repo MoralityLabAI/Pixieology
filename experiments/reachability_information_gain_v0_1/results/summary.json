@@ -1,0 +1,102 @@
+{
+  "schema_version": "reachability_information_gain.summary.v1",
+  "independent_items": 256,
+  "candidate_observations": 512,
+  "task_result": {
+    "passive_correct": 128,
+    "passive_accuracy": 0.5,
+    "passive_wilson_95": [
+      0.439206,
+      0.560794
+    ],
+    "control_correct": 256,
+    "control_accuracy": 1.0,
+    "control_wilson_95": [
+      0.985216,
+      1.0
+    ],
+    "accuracy_gain": 0.5,
+    "H_control_class_given_passive_bits": 1.0,
+    "H_control_class_given_certificate_bits": 0.0,
+    "conditional_information_gain_bits": 1.0
+  },
+  "measurement_reliability": {
+    "passive_identity_leaks": 0,
+    "counterbalanced_full_A": 128,
+    "counterbalanced_full_B": 128,
+    "coordinate_invariance_fraction": 1.0,
+    "exact_certificate_fraction": 1.0
+  },
+  "metric_robustness": {
+    "noise_sweep": [
+      {
+        "sigma": 0.0,
+        "threshold": 0.001,
+        "candidate_accuracy": 1.0,
+        "pair_accuracy": 1.0,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 1e-06,
+        "threshold": 0.001,
+        "candidate_accuracy": 1.0,
+        "pair_accuracy": 1.0,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.0001,
+        "threshold": 0.001,
+        "candidate_accuracy": 1.0,
+        "pair_accuracy": 1.0,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.001,
+        "threshold": 0.001,
+        "candidate_accuracy": 0.954296875,
+        "pair_accuracy": 1.0,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.01,
+        "threshold": 0.001,
+        "candidate_accuracy": 0.64423828125,
+        "pair_accuracy": 0.9986328125,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.05,
+        "threshold": 0.001,
+        "candidate_accuracy": 0.53193359375,
+        "pair_accuracy": 0.9314453125,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.1,
+        "threshold": 0.001,
+        "candidate_accuracy": 0.5150390625,
+        "pair_accuracy": 0.8435546875,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      }
+    ]
+  },
+  "claim_support": "pass",
+  "operational_decision": "admit exact reachability lens; require uncertainty-aware rank for measured model Jacobians",
+  "claim_boundary": "Synthetic exact linear systems prove the view-level information addition. No neural-model controllability claim is tested.",
+  "artifact_sha256": {
+    "passive_observations.jsonl": "97c8389462cfb9b5da8effcf9e1b432066e216b262140aa2ddd3a71ffcb702d9",
+    "control_observations.jsonl": "12d7eed28f54f8d29321440f22e7ad7d0b94d3277b05a4631ad769b23bc0eb62",
+    "predictions.jsonl": "887d0b6d5678095d6af1b06cbc2887d50f5edbc6db9eba22de49853bb179da77",
+    "exact_certificates.jsonl": "572df13827ab90e2fc8148125a4e54b5a88525d8d73653bf6bbd3aa9bd5d723c",
+    "judgments.jsonl": "bccb08d4c50dfc6c75f7458fd3cbb77cebb101ce2599fcf6817dba6fbf5f777e",
+    "deterministic.jsonl": "cd299cec5fc69587fc6b6efbbe42c26b9585d5296395f8845c194ab1d6330126",
+    "noise_robustness.jsonl": "e457dace6c6e807ecae64b2542f52f550bf0b44da8f46aa34458a1577559d9a2"
+  }
+}

@@ -35,3 +35,9 @@ test("all generated SVGs use viewBox semantics", () => {
   const viewBoxes = [...js.matchAll(/<svg viewBox=/g)].length;
   assert.equal(svgStarts, viewBoxes);
 });
+
+test("measured control data receives an uncertainty warning", () => {
+  assert.match(js, /singular-value margin/);
+  assert.match(js, /abstention state/);
+  assert.match(js, /noise invalidates a bare exact-rank badge/);
+});

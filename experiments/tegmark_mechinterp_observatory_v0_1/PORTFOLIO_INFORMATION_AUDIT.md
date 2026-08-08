@@ -40,3 +40,11 @@ This establishes a strict addition to the audited passive/action-unspecified por
 3. **strict witness:** a pair indistinguishable to passive views becomes perfectly distinguishable.
 
 The next empirical gate is a model-derived local `(A,B)` pair with held-out intervention endpoints. Until that gate passes, the lens is a proven UX primitive with a synthetic witness—not evidence that a particular neural mechanism is controllable.
+
+## Seed-held-out experimental confirmation
+
+`../reachability_information_gain_v0_1/` tested the strict witness construction on 256 independently generated held-out pairs after freezing the observation masks and exact decision rules. Passive identification was 128/256; the certificate was 256/256; conditional information gain was exactly one bit; all 512 exact certificates preserved rank under a second unimodular coordinate change; and passive records leaked no action or oracle fields.
+
+The first generic evaluation audit requested a targeted rerun and was preserved. A new-seed confirmation with repaired measurement semantics was independently accepted with reliability grade B, zero repeat flips, zero position sensitivity, complete deterministic coverage, and no adjudication items. The noise sweep further shows why a model-facing view must display numerical-rank uncertainty: at `σ=0.01` noise on `B`, pairwise ordering remained above 99.9% while absolute thresholded class accuracy fell below 65%.
+
+This confirms the exact portfolio admission while leaving the neural-model and human-usability gates open.

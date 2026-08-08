@@ -1,0 +1,7 @@
+{"sigma": 0.0, "threshold": 0.001, "candidate_accuracy": 1.0, "pair_accuracy": 1.0, "candidate_trials": 10240, "pair_trials": 5120}
+{"sigma": 1e-06, "threshold": 0.001, "candidate_accuracy": 1.0, "pair_accuracy": 1.0, "candidate_trials": 10240, "pair_trials": 5120}
+{"sigma": 0.0001, "threshold": 0.001, "candidate_accuracy": 1.0, "pair_accuracy": 1.0, "candidate_trials": 10240, "pair_trials": 5120}
+{"sigma": 0.001, "threshold": 0.001, "candidate_accuracy": 0.96181640625, "pair_accuracy": 1.0, "candidate_trials": 10240, "pair_trials": 5120}
+{"sigma": 0.01, "threshold": 0.001, "candidate_accuracy": 0.64873046875, "pair_accuracy": 0.9990234375, "candidate_trials": 10240, "pair_trials": 5120}
+{"sigma": 0.05, "threshold": 0.001, "candidate_accuracy": 0.5357421875, "pair_accuracy": 0.9259765625, "candidate_trials": 10240, "pair_trials": 5120}
+{"sigma": 0.1, "threshold": 0.001, "candidate_accuracy": 0.51845703125, "pair_accuracy": 0.83046875, "candidate_trials": 10240, "pair_trials": 5120}

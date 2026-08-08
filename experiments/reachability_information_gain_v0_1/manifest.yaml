@@ -1,0 +1,81 @@
+version: "1.0"
+eval_id: reachability-information-gain-v0-1
+claim: A registered-action reachability certificate strictly improves identification of finite-horizon control class over a passive manifold view when passive dynamics are held fixed.
+mode: pairwise
+adapter: generic
+candidates:
+  - id: passive_view
+    model: deterministic-passive-decoder-v1
+    model_family: exact-algebra-decoder
+    blinded_label: view_A_or_B
+  - id: control_view
+    model: deterministic-reachability-decoder-v1
+    model_family: exact-algebra-decoder
+    blinded_label: view_A_or_B
+dataset:
+  path: results/frozen_items.jsonl
+  size: 256
+  unit: independently generated paired linear system with fixed A and distinct B
+  held_out: true
+  contamination_check: completed
+  selection: deterministic seed 20260808; unimodular coordinate bases; distinct integer eigenvalues
+scoring:
+  deterministic:
+    - observation_contract_valid
+    - passive_pair_exactly_identical
+    - control_rank_matches_oracle
+    - coordinate_change_rank_invariant
+    - decoder_identification_correct
+    - output_schema_valid
+    - task_completion
+  subjective_dimensions:
+    - correctness
+    - task_completion
+    - identity_blinding
+    - information_sufficiency
+  subjective_only_justification: Dimensions are resolved by frozen exact predicates rather than subjective model judgment; style and policy compliance are out of scope because outputs are algebraic records.
+  llm_judges:
+    - id: exact_information_judge_v1
+      model: frozen-conditional-entropy-rule
+      model_family: deterministic-exact-judge
+      temperature: 0
+      repetitions: 1
+pairwise:
+  blind_identity: true
+  swap_positions: true
+  randomize_order: true
+  random_seed: 20260808
+  allow_tie: true
+  allow_uncertain: false
+escalation:
+  position_disagreement: block
+  judge_disagreement: block
+  repeat_disagreement: block
+  deterministic_conflict: block
+  consensus_margin_below: 1.0
+decision_rule:
+  primary_candidate: control_view
+  baseline_candidate: passive_view
+  minimum_win_rate: 1.0
+  confidence: 0.95
+  exact_requirements:
+    passive_accuracy: 0.5
+    control_accuracy: 1.0
+    conditional_information_gain_bits: 1.0
+    coordinate_invariance_fraction: 1.0
+    passive_identity_leaks: 0
+  reliability:
+    max_repeat_flip_rate: 0.0
+    max_position_sensitive_fraction: 0.0
+    min_cross_judge_kappa: 1.0
+    max_hard_fail_selection_rate: 0.0
+    min_deterministic_coverage: 1.0
+data_contract:
+  judgments: judgments.jsonl
+  deterministic: deterministic.jsonl
+provenance:
+  theorem: ../tegmark_mechinterp_observatory_v0_1/CONTROL_INFORMATION_THEOREM.md
+  exact_arithmetic: Python fractions.Fraction
+  robustness_threshold: normalized_sigma_min_over_sigma_max_at_least_0.001
+  noise_sigmas: [0.0, 0.000001, 0.0001, 0.001, 0.01, 0.05, 0.1]
+  noise_repetitions_per_item_candidate: 20

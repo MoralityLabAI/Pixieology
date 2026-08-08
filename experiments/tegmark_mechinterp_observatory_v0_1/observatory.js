@@ -278,7 +278,7 @@
         ["reachable dimension", `${selected.reachability_rank} / ${certificate.state_dimension}`, "metric-large"],
         ["det(W₂)", selected.gramian_determinant],
         ["strict witness information gain", `${certificate.exact_claims.uniform_prior_information_gain_bits} bit`, "metric-large"]
-      ])}`;
+      ])}<p class="warning">Held-out confirmation: passive 50%, certificate 100%. For measured B, show singular-value margin and an abstention state; noise invalidates a bare exact-rank badge.</p>`;
     }
   }
 

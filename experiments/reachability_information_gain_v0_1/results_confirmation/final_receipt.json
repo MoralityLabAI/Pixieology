@@ -1,0 +1,111 @@
+{
+  "schema_version": "reachability_information_gain.final_receipt.v1",
+  "experiment_id": "reachability-information-gain-confirmation-v0-2",
+  "development_audit_action": "targeted_rerun",
+  "confirmation": {
+    "seed": 20260809,
+    "independent_items": 256,
+    "preflight_status": "warn",
+    "preflight_release_blocking": false,
+    "task_result": {
+      "passive_correct": 128,
+      "passive_accuracy": 0.5,
+      "passive_wilson_95": [
+        0.439206,
+        0.560794
+      ],
+      "control_correct": 256,
+      "control_accuracy": 1.0,
+      "control_wilson_95": [
+        0.985216,
+        1.0
+      ],
+      "accuracy_gain": 0.5,
+      "H_control_class_given_passive_bits": 1.0,
+      "H_control_class_given_certificate_bits": 0.0,
+      "conditional_information_gain_bits": 1.0
+    },
+    "measurement_reliability": {
+      "audit_grade": "B",
+      "declared_limits_met": true,
+      "repeat_flip_rate": 0.0,
+      "position_sensitive_fraction": 0.0,
+      "deterministic_coverage_rate": 1.0,
+      "passive_identity_leaks": 0,
+      "coordinate_invariance_fraction": 1.0
+    },
+    "claim_support": "supported",
+    "audit_operational_action": "accept",
+    "adjudication_queue_items": 0,
+    "contamination_check_passed": true,
+    "noise_robustness": [
+      {
+        "sigma": 0.0,
+        "threshold": 0.001,
+        "candidate_accuracy": 1.0,
+        "pair_accuracy": 1.0,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 1e-06,
+        "threshold": 0.001,
+        "candidate_accuracy": 1.0,
+        "pair_accuracy": 1.0,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.0001,
+        "threshold": 0.001,
+        "candidate_accuracy": 1.0,
+        "pair_accuracy": 1.0,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.001,
+        "threshold": 0.001,
+        "candidate_accuracy": 0.96181640625,
+        "pair_accuracy": 1.0,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.01,
+        "threshold": 0.001,
+        "candidate_accuracy": 0.64873046875,
+        "pair_accuracy": 0.9990234375,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.05,
+        "threshold": 0.001,
+        "candidate_accuracy": 0.5357421875,
+        "pair_accuracy": 0.9259765625,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      },
+      {
+        "sigma": 0.1,
+        "threshold": 0.001,
+        "candidate_accuracy": 0.51845703125,
+        "pair_accuracy": 0.83046875,
+        "candidate_trials": 10240,
+        "pair_trials": 5120
+      }
+    ]
+  },
+  "artifact_sha256": {
+    "manifest_confirmation.yaml": "313feb002ee85c7a82bd227090fbd2c0366b1ffbd3a6e86de79e98bb25fb0902",
+    "stage_receipt.json": "f9ca5788e26a001e157838ec872a7728c74ee05fe7e1bdfce6cb38a083b64cdd",
+    "contamination_check.json": "8f15bab0e05f76313b0d78115a724d76d6f9600726c64873ad60fc8e3dfd1afe",
+    "summary.json": "3afa053b66f7921b739326fbb400ab898b38fcf3988c368ecf83fed976084eb6",
+    "preflight.json": "248941364045c917f78782fb2675edb9f57fd4b065ac8d1e9b72832dbe07e124",
+    "audit.json": "2c6224820d80c52f8b495456a0230a2bd00feba935979f5666910a249f692b31",
+    "development_audit.json": "85eef8fa25da683dea421b332bac478dcc93250c2b06b870d15a03d4ced35392"
+  },
+  "claim_boundary": "The experiment confirms strict information addition on exact synthetic linear systems. It does not establish neural-model controllability or human usability.",
+  "next_model_gate": "Estimate local A and registered-intervention B, calibrate numerical-rank uncertainty on a development split, then test predicted endpoints on a sequestered intervention split."
+}

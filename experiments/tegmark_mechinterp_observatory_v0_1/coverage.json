@@ -50,6 +50,14 @@
       "coverage": "mathematically proven strict portfolio addition",
       "exposes": ["passive indistinguishability witness", "registered intervention Jacobian", "reachability matrix", "controllability Gramian", "reachable dimension", "unit-energy reachable set", "conditional information gain"],
       "proved": ["rank(W_H) = dimension of the H-step reachable subspace", "I(M;P,R) - I(M;P) = I(M;R|P) >= 0", "the exact uniform witness pair gains 1 bit"],
+      "confirmed_experiment": {
+        "path": "../reachability_information_gain_v0_1/results_confirmation/final_receipt.json",
+        "independent_pairs": 256,
+        "passive_accuracy": 0.5,
+        "certificate_accuracy": 1.0,
+        "conditional_information_gain_bits": 1.0,
+        "audit_action": "accept"
+      },
       "missing_gate": "measured local A and registered-intervention B before applying the certificate to a neural model"
     }
   ],

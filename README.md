@@ -18,6 +18,7 @@ The script workflows and the installable evaluator share one portable config sur
 - `experiments/mechinterp_ux_strategy_sprint_v0_1/`: offline, receipt-based sprint comparing the dense étale explorer with progressive case-to-intervention triage on sealed synthetic UX fixtures, including component decisions and an agent-readable smoke path.
 - `experiments/pixie_mechanism_distillation_v0_1/`: staged base-versus-Pixie mechanism extraction bench for finite-state program distillation, sparse state coordinates, state-label isomorphism, and matched-control intervention checks.
 - `experiments/tegmark_mechinterp_observatory_v0_1/`: six-paper method-to-visualization observatory covering BIMT wiring, Clock/Pizza algorithm phases, hypernetwork phase maps, the MIPS compiler, sparse invariants, goal-specific validation routes, and an exact finite-horizon reachability certificate that strictly adds one bit on its passive-indistinguishability witness.
+- `experiments/reachability_information_gain_v0_1/`: blinded 256-pair confirmation of the reachability UX primitive, with exact passive-versus-certificate information accounting, coordinate and noise probes, preserved failed development audit, accepted seed-held-out audit, and hash-bound row-level receipts.
 - `generate_reflective_buddy_distill.py`: generates teacher traces for the reflective-buddy lane.
 - `build_reflective_buddy_experiment.py`: turns teacher traces into train and holdout assets.
 - `run_pixie_snacksack.ps1`: syncs and runs the main remote workflows on `snacksack`.

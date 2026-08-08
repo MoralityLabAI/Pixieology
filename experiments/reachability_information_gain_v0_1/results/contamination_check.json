@@ -1,0 +1,11 @@
+{
+  "schema_version": "reachability_information_gain.contamination_check.v1",
+  "status": "completed",
+  "passed": true,
+  "training_items": 0,
+  "heldout_items": 256,
+  "decoder_has_training_phase": false,
+  "unique_passive_signatures": 256,
+  "duplicate_passive_signatures": 0,
+  "oracle_fields_present_in_passive_contract": false
+}

@@ -103,3 +103,7 @@ The lens earns a place in the UX portfolio because it carries:
 4. a bounded agent-readable proof receipt.
 
 For a neural model, `A` must come from a measured local transition Jacobian and `B` from a registered intervention Jacobian. Without those measurements, the UI may demonstrate the theorem but must not report model controllability.
+
+## Experimental status
+
+The exact addition was subsequently confirmed on a separate 256-pair generated ensemble in `../reachability_information_gain_v0_1/`: passive accuracy 50%, certificate accuracy 100%, and conditional information gain one bit. The seed-held-out confirmation audit accepted the claim with complete deterministic coverage. Its noise sweep does not extend the exact theorem; instead it establishes the UX requirement to expose singular-value margin and estimator uncertainty before using the certificate on measured neural Jacobians.

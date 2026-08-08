@@ -1,0 +1,40 @@
+{
+  "kind": "preflight_review",
+  "eval_id": "reachability-information-gain-confirmation-v0-2",
+  "claim": "On a seed-held-out paired ensemble, a registered-action reachability certificate strictly improves identification of finite-horizon control class over a passive manifold view when passive dynamics are fixed.",
+  "policy": "base",
+  "status": "warn",
+  "release_blocking": false,
+  "summary": {
+    "finding_count": 1,
+    "blocking_count": 0,
+    "severity_counts": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 1
+    }
+  },
+  "findings": [
+    {
+      "id": "adapter_subjective_dimension_gap",
+      "severity": "low",
+      "release_blocking": false,
+      "message": "The 'generic' adapter recommends subjective dimensions that are not declared.",
+      "recommendation": "Add the applicable dimensions or record a scoped omission in the manifest.",
+      "evidence": {
+        "missing_dimensions": [
+          "completeness",
+          "epistemic_honesty",
+          "style"
+        ]
+      }
+    }
+  ],
+  "manifest_path": "manifest_confirmation.yaml",
+  "provenance": {
+    "manifest_sha256": "313feb002ee85c7a82bd227090fbd2c0366b1ffbd3a6e86de79e98bb25fb0902",
+    "policy_path": "C:\\projects\\evals-reviewer\\src\\evals_reviewer\\resources\\policies\\base.yaml",
+    "policy_sha256": "d3dc8c3a699efe2a6ce46d54961e8edddd80e18b5f395ad263076cb9d7f30e45"
+  }
+}
