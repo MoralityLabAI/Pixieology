@@ -1,0 +1,98 @@
+{
+  "schema": "pixieology_lora_feedback_job_v1",
+  "status": "PROPOSED",
+  "job_type": "TRAIN_ADAPTER",
+  "method": "tinylora",
+  "job_id": "train-captain_rowan-five_fact-gate23-r2",
+  "label": "Captain Rowan five-fact gate-projection TinyLoRA",
+  "hypothesis": "Five registered persona facts reduce harmless role-play over-refusal without regressing boundary or factual-scope behavior.",
+  "origin": {
+    "motif_id": "gate_proj",
+    "case_id": "captain_rowan_over_refusal",
+    "selection_role": "worked_ablation"
+  },
+  "model": {
+    "base_id": "prism-ml/Bonsai-1.7B-unpacked",
+    "base_revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "adapter_initialization": "fresh_zero_effect_lora_on_frozen_base"
+  },
+  "dataset": {
+    "training_input_ids": [
+      "identity-train-01",
+      "identity-train-02",
+      "goal-train-01",
+      "goal-train-02",
+      "voice-train-01",
+      "voice-train-02",
+      "values-train-01",
+      "values-train-02",
+      "boundary-train-01",
+      "boundary-train-02"
+    ],
+    "training_input_ids_sha256": "c91fdebb37f2dc3edfb7e27907be787fecbd828092ae674e9dd11f78fa2c1976",
+    "training_split": "discovery",
+    "forbidden_training_splits": [
+      "confirmation",
+      "transfer"
+    ],
+    "evaluation_split": "transfer",
+    "registered_corpus_path": "experiments/captain_rowan_tinylora_v0_1/corpus.jsonl",
+    "registered_corpus_sha256": "81a65ff3cf4b5c8edaafcd36d30dfa48d7cef9384f1b46b5a87ec643156afcac"
+  },
+  "adapter": {
+    "rank": 2,
+    "alpha": 4,
+    "dropout": 0.0,
+    "target_modules": [
+      "gate_proj"
+    ],
+    "layers_to_transform": [
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "target_policy": "captain_rowan_gate23_chart_window"
+  },
+  "training": {
+    "sequence_length": 256,
+    "optimizer_steps": 20,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "checkpoint_steps": 5,
+    "checkpoint_seconds": 60,
+    "maximum_checkpoints": 2,
+    "seed": 2026080801,
+    "assistant_only_loss": true
+  },
+  "resources": {
+    "ram_mb": 8192,
+    "cpu_pct": 50,
+    "io_mb_s": 50,
+    "timeout_seconds": 1800
+  },
+  "gpu_guard": {
+    "maximum_existing_memory_mib": 256,
+    "maximum_peak_memory_mib": 3900,
+    "require_no_compute_applications": true
+  },
+  "success_criteria": {
+    "required_evidence": [
+      "persona_transfer_vs_base_and_pixie",
+      "boundary_and_scope_non_regression",
+      "candidate_activation_topology_receipt"
+    ],
+    "topology_only_is_success": false,
+    "confirmation_or_transfer_training_rows": 0
+  },
+  "authorization": {
+    "required": true,
+    "status": "NOT_AUTHORIZED",
+    "job_sha256": "492dd218b923057bbc87fe2d96d5b3154c01d7af5369a68a76243884dd12d970"
+  },
+  "protocol_sha256": "f91301fd04a4686127316840ff2afbeb8c1a663fb91a4e4e203ab766bb30f59f",
+  "implementation_lock_sha256": "2dc7d1a3641012d101b3e69567de34ca0f19a7b0f4d0c0dbd1e8800f9fc0fc24"
+}

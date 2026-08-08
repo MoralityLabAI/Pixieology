@@ -1,0 +1,27 @@
+# Captain Rowan five-fact TinyLoRA v0.1
+
+This packet turns the synthetic prompt-adapter rehearsal into a concrete, hash-bound neural-adapter proposal. It does **not** run the proposal.
+
+## Bound job
+
+- frozen base: `prism-ml/Bonsai-1.7B-unpacked` at revision `a7f720...`;
+- reference: the existing Pixie rank-8 adapter;
+- candidate: fresh rank-2, alpha-4 LoRA on `gate_proj`, layers 21–25;
+- training: 20 steps, gradient accumulation 8, checkpoint every 5 steps or 60 seconds;
+- data: 10 discovery rows and 10 frozen transfer rows covering five facts, composition, over-refusal, and scope preservation;
+- guards: 8192 MiB RAM, 50% CPU, 50 MiB/s I/O, 1800 seconds, 3900 MiB peak VRAM;
+- automatic authorization: disabled.
+
+Run `python build_job.py` to regenerate `corpus.jsonl`, `job.json`, and `authorization.template.json` deterministically.
+
+## Current stop condition
+
+The existing v0.2 feedback runner remains unchanged and sealed to its original corpus. This packet supplies a hash-bound continuation entrypoint that injects only the registered `corpus.jsonl` rows while reusing the sealed model loader, trainer, evaluator, checkpoint writer, resource wrapper, and PID-scoped cleanup. `job.json` binds the continuation runner, wrapper, and compatible feedback job by SHA-256.
+
+The job now reports `READY_AWAITING_EXACT_AUTHORIZATION`. Model loading or training must not begin until the exact statement in `authorization.template.json` is supplied as a new active authorization with concrete run, attempt, and expiry values plus every acknowledgement set to `true`.
+
+Once authorized, the Windows entrypoint is:
+
+```powershell
+.\scripts\run_capped.ps1 -Mode Train -Authorization path\to\active.authorization.json
+```

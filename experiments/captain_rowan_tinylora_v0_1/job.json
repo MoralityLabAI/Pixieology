@@ -1,0 +1,119 @@
+{
+  "schema": "captain_rowan_tinylora_job.v1",
+  "status": "STAGED_NOT_AUTHORIZED",
+  "automatic_authorization": false,
+  "training_task_id": "captain-rowan-five-fact-tinylora-v1",
+  "job_id": "train-captain_rowan-five_fact-gate23-r2",
+  "base_model": {
+    "label": "Frozen Qwen-derived Bonsai 1.7B base",
+    "id": "prism-ml/Bonsai-1.7B-unpacked",
+    "revision": "a7f720bd688d7563714f3118edd97b83d06f0615",
+    "weights_sha256": "cf9a24cbd02e6e257bcfd3177475aaca7f8bd1a63a745441f30d3e40f4313a6b",
+    "config_sha256": "a9e37c13a2315353ae3fad3f33759e506598cf57b52abeae50d5318b7dd147fb"
+  },
+  "reference_adapter": {
+    "label": "Existing Pixie rank-8 LoRA",
+    "config_sha256": "34c8573e7b474b3a3c7bb03182fdfaf9117032daa76ce211303909528053c58e",
+    "weights_sha256": "8c2d6f805cf58c60a369a93f23894282384ba02b9d56a7efb8bdaac31b8b888c"
+  },
+  "source_artifacts": {
+    "prompt_adapter": "experiments/sheets_loops_levers_ui_v0_2/captain_rowan_prompt_adapter.json",
+    "prompt_adapter_sha256": "e5dfae9f6340c9c33c2adcf76665ad6c999c37f24ad173c3a12d146a56073952",
+    "metta_facts": "experiments/sheets_loops_levers_ui_v0_2/captain_rowan.metta",
+    "metta_facts_sha256": "07cbec614a0f368d044798715ba736fa69ac7a74a3c7ad7f323878da65685ffe",
+    "feedback_protocol_sha256": "f91301fd04a4686127316840ff2afbeb8c1a663fb91a4e4e203ab766bb30f59f",
+    "feedback_lock_sha256": "2dc7d1a3641012d101b3e69567de34ca0f19a7b0f4d0c0dbd1e8800f9fc0fc24"
+  },
+  "dataset": {
+    "path": "experiments/captain_rowan_tinylora_v0_1/corpus.jsonl",
+    "sha256": "81a65ff3cf4b5c8edaafcd36d30dfa48d7cef9384f1b46b5a87ec643156afcac",
+    "training_split": "discovery",
+    "training_rows": 10,
+    "evaluation_split": "transfer",
+    "evaluation_rows": 10,
+    "forbidden_training_splits": [
+      "transfer"
+    ],
+    "semantic_groups": [
+      "boundary",
+      "composition",
+      "identity",
+      "overrefusal",
+      "scene_goal",
+      "scope",
+      "values",
+      "voice"
+    ]
+  },
+  "adapter": {
+    "method": "tinylora",
+    "rank": 2,
+    "alpha": 4,
+    "dropout": 0.0,
+    "target_modules": [
+      "gate_proj"
+    ],
+    "layers_to_transform": [
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "initialization": "fresh_zero_effect_lora_on_frozen_base"
+  },
+  "training": {
+    "sequence_length": 256,
+    "optimizer_steps": 20,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "checkpoint_steps": 5,
+    "checkpoint_seconds": 60,
+    "maximum_checkpoints": 2,
+    "chunk_strategy": "one semantic fact family per chunk, then mixed consolidation",
+    "seed": 2026080801,
+    "assistant_only_loss": true
+  },
+  "resources": {
+    "ram_mb": 8192,
+    "cpu_pct": 50,
+    "io_mb_s": 50,
+    "timeout_seconds": 1800
+  },
+  "gpu_guard": {
+    "maximum_existing_memory_mib": 256,
+    "maximum_peak_memory_mib": 3900,
+    "require_no_compute_applications": true
+  },
+  "evaluation": {
+    "contrasts": [
+      "frozen_base",
+      "existing_pixie_rank8",
+      "captain_rowan_tinylora"
+    ],
+    "required_metrics": [
+      "fact_exact_match",
+      "persona_log_likelihood",
+      "boundary_pass_rate",
+      "overrefusal_rate",
+      "scope_preservation"
+    ],
+    "promotion_rule": "held-out persona gain with no boundary or scope regression; topology alone is insufficient"
+  },
+  "execution": {
+    "state": "READY_AWAITING_EXACT_AUTHORIZATION",
+    "continuation_runner": "experiments/captain_rowan_tinylora_v0_1/run.py",
+    "continuation_runner_sha256": "acbc817875fa53dcab7ddec95ac5a621d85d2167d98231afd0b96065dd25b5c3",
+    "continuation_wrapper": "experiments/captain_rowan_tinylora_v0_1/scripts/run_capped.ps1",
+    "continuation_wrapper_sha256": "2d3190f5749ec2e228a61571b60a0c4b452cea0703b26be23a484f1ccf233249",
+    "feedback_job": "experiments/captain_rowan_tinylora_v0_1/feedback_job.json",
+    "feedback_job_file_sha256": "a02affe2c52baf62077205dc9c1f1d72d44aabef67fefc134e77429109eeed12",
+    "hard_cap_paths": [
+      "experiments/captain_rowan_tinylora_v0_1/scripts/run_capped.ps1"
+    ]
+  },
+  "claim_boundary": "The job is a sealed proposal. It does not authorize model loading, training, paid compute, or promotion from the synthetic UI rehearsal.",
+  "job_sha256": "343ba8d18744b4465976bd88861265552de1e1300b5fb3424bcb94e0e7ef7c41"
+}
