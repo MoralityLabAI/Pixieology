@@ -1,0 +1,30 @@
+{
+  "schema": "captain_rowan_tinylora_authorization.v1",
+  "authorized": true,
+  "statement": "I explicitly authorize the exact Captain Rowan five-fact TinyLoRA v0.1 job 343ba8d18744b4465976bd88861265552de1e1300b5fb3424bcb94e0e7ef7c41 under 8192 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard. I acknowledge frozen discovery/transfer splits, model loading, rank-2 gate_proj training at layers 21 through 25, checkpointing every five steps or 60 seconds, abort as a valid outcome, PID-scoped cleanup, and no automatic authorization.",
+  "job_id": "train-captain_rowan-five_fact-gate23-r2",
+  "job_sha256": "343ba8d18744b4465976bd88861265552de1e1300b5fb3424bcb94e0e7ef7c41",
+  "run_id": "captain-rowan-r1-20260808T234756Z",
+  "attempt_id": "captain-rowan-local-01",
+  "expires_utc": "2026-08-09T01:47:56Z",
+  "caps": {
+    "ram_mb": 8192,
+    "cpu_pct": 50,
+    "io_mb_s": 50,
+    "timeout_seconds": 1800
+  },
+  "gpu_guard": {
+    "maximum_existing_memory_mib": 256,
+    "maximum_peak_memory_mib": 3900,
+    "require_no_compute_applications": true
+  },
+  "acknowledgements": {
+    "model_load": true,
+    "rank2_gate_training": true,
+    "frozen_splits": true,
+    "checkpointing": true,
+    "abort_is_valid_outcome": true,
+    "pid_scoped_cleanup": true,
+    "no_automatic_authorization": true
+  }
+}

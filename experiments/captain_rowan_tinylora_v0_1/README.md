@@ -25,3 +25,18 @@ Once authorized, the Windows entrypoint is:
 ```powershell
 .\scripts\run_capped.ps1 -Mode Train -Authorization path\to\active.authorization.json
 ```
+
+## Attempt 01 result
+
+The exact authorized attempt `captain-rowan-local-01` ran on 2026-08-08 and
+ended `ABORTED` when Windows Job Object accounting reached 8211.64 MiB against
+the 8192 MiB hard RAM cap. Peak observed GPU memory was 2995 MiB, below the
+3900 MiB guard. The process was still loading model weights, so it completed no
+optimizer step, emitted no adapter checkpoint, and produced no behavioral or
+mechanistic comparison result.
+
+The follow-up PID-scoped audit passed after Job Object termination settled:
+both owned PIDs were absent and no owned GPU process remained. See
+`attempt_01_result.json` for the bounded claim and receipt hashes. Retrying,
+changing the cap, or changing the loading strategy requires a new exact
+authorization.

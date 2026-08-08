@@ -1,0 +1,45 @@
+{
+  "schema": "captain_rowan_tinylora_attempt_result.v1",
+  "job_contract_sha256": "343ba8d18744b4465976bd88861265552de1e1300b5fb3424bcb94e0e7ef7c41",
+  "feedback_job_sha256": "492dd218b923057bbc87fe2d96d5b3154c01d7af5369a68a76243884dd12d970",
+  "run_id": "captain-rowan-r1-20260808T234756Z",
+  "attempt_id": "captain-rowan-local-01",
+  "started_utc": "2026-08-08T23:49:23.8868630Z",
+  "ended_utc": "2026-08-08T23:51:11.6709486Z",
+  "status": "ABORTED",
+  "abort_reason": "job_memory_accounting_cap_exceeded",
+  "phase_reached": "model_weight_loading",
+  "optimizer_steps_completed": 0,
+  "adapter_checkpoints_emitted": 0,
+  "behavioral_evaluation_completed": false,
+  "mechanistic_capture_completed": false,
+  "caps": {
+    "ram_mb": 8192,
+    "cpu_percent": 50,
+    "io_mb_per_second": 50,
+    "timeout_seconds": 1800,
+    "peak_vram_guard_mib": 3900
+  },
+  "observed": {
+    "peak_job_ram_mb": 8211.640625,
+    "ram_cap_excess_mb": 19.640625,
+    "peak_gpu_memory_mib": 2995,
+    "process_exit_code": 137
+  },
+  "cleanup": {
+    "status": "PASS",
+    "lingering_owned_count": 0,
+    "owned_gpu_process_count": 0,
+    "audited_utc": "2026-08-08T23:52:44.6084427Z"
+  },
+  "artifact_receipts": {
+    "authorization_active_sha256": "029a2d4da3a3c760b064e17d2cd88f0610f64d2a0d65a0834e5084a3f187859a",
+    "resource_summary_sha256": "70eedc5b62424031a5f6c3349d4b2a212338aaa5b500176f9b6bc5bb6c0e27b3",
+    "cleanup_summary_sha256": "0d568da4fa999035558f79f0abfb6818aa162e274831549698ab6abb105574e8",
+    "execution_summary_sha256": "48e58ed19aa74edfca9af723ae50f157f6d5d4e441e25dade6359604eaad5c16",
+    "events_sha256": "fbaa759074b394c09ec1c053d1ed0f0f220ce1e8dc61fd0a25683ed8b8b4529f",
+    "stderr_sha256": "62a1c771f769ad83041ac36bce3faf6dc8a7069dcbbdff0515b7a4e2e3f10e46"
+  },
+  "claim_boundary": "This attempt only establishes that the sealed job reached model loading and that the 8192 MiB RAM guard terminated it safely. It provides no evidence about adapter quality, fact acquisition, transfer, ablation geometry, or mechinterp motifs.",
+  "automatic_retry_authorized": false
+}
