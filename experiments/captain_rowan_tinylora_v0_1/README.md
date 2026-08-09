@@ -40,3 +40,13 @@ both owned PIDs were absent and no owned GPU process remained. See
 `attempt_01_result.json` for the bounded claim and receipt hashes. Retrying,
 changing the cap, or changing the loading strategy requires a new exact
 authorization.
+
+## Staged v0.1.1 retry
+
+After explicit approval of a 10 GiB cap, `job_v0_1_1.json` stages a retry with
+10240 MiB RAM. This is the only changed resource or training parameter. The
+retry launcher binds the original sealed trainer, the attempt-01 abort receipt,
+the new Windows Job Object wrapper, and the unchanged PID-scoped cleanup path.
+
+The packet remains inactive. Its exact statement is stored in
+`authorization_v0_1_1.template.json`; a generic approval cannot activate it.

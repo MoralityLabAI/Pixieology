@@ -1,0 +1,32 @@
+{
+  "schema": "captain_rowan_tinylora_authorization.v1_1",
+  "authorized": false,
+  "statement": "I explicitly authorize the exact Captain Rowan five-fact TinyLoRA v0.1.1 job 14ed7c3bc212ed823b4b3ba8d23c86dd8a7befab2327993060672137e4ce744f under 10240 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard. I acknowledge frozen discovery/transfer splits, model loading, rank-2 gate_proj training at layers 21 through 25, checkpointing every five steps or 60 seconds, abort as a valid outcome, PID-scoped cleanup, the prior 8 GiB memory-cap abort, and no automatic authorization.",
+  "job_id": "train-captain_rowan-five_fact-gate23-r2",
+  "job_sha256": "14ed7c3bc212ed823b4b3ba8d23c86dd8a7befab2327993060672137e4ce744f",
+  "required_statement": "I explicitly authorize the exact Captain Rowan five-fact TinyLoRA v0.1.1 job 14ed7c3bc212ed823b4b3ba8d23c86dd8a7befab2327993060672137e4ce744f under 10240 MiB RAM, 50 percent CPU, 50 MiB/s I/O, 1800 seconds, and a 3900 MiB peak VRAM guard. I acknowledge frozen discovery/transfer splits, model loading, rank-2 gate_proj training at layers 21 through 25, checkpointing every five steps or 60 seconds, abort as a valid outcome, PID-scoped cleanup, the prior 8 GiB memory-cap abort, and no automatic authorization.",
+  "run_id": "replace-me",
+  "attempt_id": "replace-me",
+  "expires_utc": "replace-me",
+  "caps": {
+    "ram_mb": 10240,
+    "cpu_pct": 50,
+    "io_mb_s": 50,
+    "timeout_seconds": 1800
+  },
+  "gpu_guard": {
+    "maximum_existing_memory_mib": 256,
+    "maximum_peak_memory_mib": 3900,
+    "require_no_compute_applications": true
+  },
+  "acknowledgements": {
+    "model_load": false,
+    "rank2_gate_training": false,
+    "frozen_splits": false,
+    "checkpointing": false,
+    "abort_is_valid_outcome": false,
+    "pid_scoped_cleanup": false,
+    "prior_memory_abort": false,
+    "no_automatic_authorization": false
+  }
+}
