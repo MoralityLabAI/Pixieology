@@ -2,6 +2,13 @@
 
 Pixieology is the local orchestration repo for the current Pixue product lane: storyworld SFT data building, faebench evaluation, and reflective-buddy distillation assets.
 
+## Live Gödel Globes lab
+
+The production character lab is available at
+`https://pixieology-godel-globes-5d.vercel.app/`. The repository also contains
+the companion `etale.html`, `manifold.html`, and `mechinterp.html` surfaces in
+`experiments/godel_globes_5d_character_lab/`.
+
 The script workflows and the installable evaluator share one portable config surface instead of a fixed workstation layout.
 
 ## Repo Layout
